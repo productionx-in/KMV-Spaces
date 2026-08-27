@@ -32,11 +32,17 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 
 | # | Document | Status |
 | --- | --- | --- |
-| 2 | Positioning, audience and product mix | Not started |
-| 3 | Pricing and commercial model | Not started |
-| 4 | Channel, performance and creative strategy | Not started |
+| 2 | [`02-residential-market.md`](02-residential-market.md) — segment-level pricing & product evidence | **Complete** |
+| 3 | Positioning, audience and product mix | Not started |
+| 4 | Pricing and commercial model | Not started |
+| 5 | Channel, performance and creative strategy | Not started |
 
 ## Method notes
+
+**Bottom-up pricing.** Phase 2 derives every ₹/sq ft figure as *published ticket price ÷ published unit size*
+for named, RERA-registered projects, rather than quoting locality averages — because published
+averages for the same micro-market disagree by up to 40%. Seven of the eight projects that publish
+both ends of a range agree internally within 0.7%, which is why the derived bands are preferred.
 
 **Evidence grading.** Every infrastructure and development claim in Phase 1 is graded
 CONFIRMED / UNDER CONSTRUCTION / APPROVED / PROPOSED / REPORTED / SPECULATIVE. The grades
