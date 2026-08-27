@@ -1,0 +1,46 @@
+Level,Category,KPI,Formula,Cadence,Audience,Initial Target,Target Basis,Priority
+1,Business,Revenue booked,Sum of booking values,Monthly,Promoters,Set by leadership,Internal target,Core
+1,Business,Bookings,Count of confirmed bookings,Weekly,Promoters,Set by leadership,Internal target,TOP 5
+1,Business,Average booking value,Revenue / Bookings,Monthly,Promoters,~Rs 3 Cr,VERIFIED Vivaan villa pricing,Core
+1,Business,Sales velocity,Bookings / Month,Monthly,Promoters,Set by leadership,Internal target,Core
+1,Business,Inventory movement,Units sold / Total units x 100,Monthly,Promoters,Set by leadership,Internal target,Core
+1,Business,Marketing cost ratio,Marketing spend / Revenue x 100,Monthly,Promoters,1.5-2% steady; up to 3% launch,INFERENCE vs 2%+ typical brokerage,Core
+1,Business,Forecast vs target,Projected / Target x 100,Monthly,Promoters,100%,Internal target,Core
+2,Funnel,Total leads,Count,Weekly,Leadership,Derived from booking target,Reverse funnel model,Core
+2,Funnel,Qualified leads (MQL),Count meeting all 4 criteria,Weekly,Leadership,Derived from booking target,Reverse funnel model,TOP 5
+2,Funnel,Lead qualification rate,MQL / Leads x 100,Weekly,Leadership,25-35%,ASSUMPTION - rebaseline at 90 days,TOP 5
+2,Funnel,SQL acceptance rate,SQL / MQL x 100,Weekly,Leadership,>=70%,ASSUMPTION - SLA commitment,Core
+2,Funnel,Site visits scheduled,Count,Weekly,Leadership,Derived,Reverse funnel model,Core
+2,Funnel,Site visits completed,Count,Weekly,Leadership,Derived,Best leading indicator of revenue,TOP 5
+2,Funnel,Site visit show rate,Completed / Scheduled x 100,Weekly,Leadership,>=80%,ASSUMPTION,Core
+2,Funnel,Site visit to booking rate,Bookings / Visits completed x 100,Monthly,Leadership,15-20%,ASSUMPTION - rebaseline,Core
+2,Funnel,Lead to booking rate,Bookings / Leads x 100,Monthly,Leadership,1.3-3.1%,ASSUMPTION - model range,Core
+2,Funnel,CAC,Total S&M cost / New customers,Monthly,Leadership,<Rs 4.5 lakh,INFERENCE at 1.5% cost ratio,Core
+2,Funnel,Pipeline value,Open opportunities x avg value,Weekly,Leadership,3x monthly target,ASSUMPTION,Core
+3,Marketing,Spend by channel,Sum,Daily,Marketing,Per plan,Budget,Core
+3,Marketing,CPL by channel,Spend / Leads,Daily,Marketing,Rs 1500-3000 premium,VERIFIED India benchmark,DIAGNOSTIC ONLY
+3,Marketing,CPQL by channel,Spend / MQL,Weekly,Marketing,Derived,Model,Core
+3,Marketing,CPSV by channel,Spend / Site visits completed,Weekly,Marketing,Derived,PRIMARY OPTIMISATION METRIC,Core
+3,Marketing,Cost per booking by channel,Spend / Bookings,Monthly,Marketing,<Rs 4.5 lakh,INFERENCE at 1.5% cost ratio,TOP 5
+3,Marketing,ROAS by channel,Attributed revenue / Spend,Monthly,Marketing,Channel dependent,Post-baseline,Core
+3,Marketing,CTR,Clicks / Impressions x 100,Daily,Marketing,Platform benchmark,Platform data,Support
+3,Marketing,CPC,Spend / Clicks,Daily,Marketing,Rs 25-35 blended,ASSUMPTION,Support
+3,Marketing,Landing page conversion rate,Leads / Sessions x 100,Weekly,Marketing,3-5%,VERIFIED real estate avg 4.7%,Core
+3,Marketing,Mobile page load time,Seconds,Weekly,Marketing,<2 seconds,VERIFIED - cuts CPL 20-35%,Core
+4,Brand,Brand search volume,Searches for brand terms,Monthly,Leadership,Growth MoM,Best honest brand-health metric,Core
+4,Brand,Non-brand organic sessions,GA4 organic minus brand,Monthly,Leadership,Growth MoM,Largest untapped channel,Core
+4,Brand,Keyword rankings,Position for priority set,Monthly,Marketing,Top 3 for priority terms,SEO target,Core
+4,Brand,Share of voice,KMV mentions / category mentions,Quarterly,Leadership,Growth QoQ,Competitive tracking,Core
+4,Brand,Google review count,Count,Monthly,Leadership,150+ within 12 months,INFERENCE vs 454 Justdial ratings,Core
+4,Brand,Google review rating,Average,Monthly,Leadership,Maintain >=4.5,VERIFIED current 4.7,Core
+4,Brand,Referral share of bookings,Referral bookings / Total x 100,Monthly,Leadership,Growth,Cheapest channel,Core
+4,Brand,Video completion rate,% watched >50%,Monthly,Marketing,Platform benchmark,Content quality,Support
+5,Sales,Speed-to-lead (median),Enquiry to first contact,Daily,Sales + CMO,<5 minutes business hours,VERIFIED - 4x site visit conversion,TOP 5
+5,Sales,Speed-to-lead SLA breaches,Count >5 min,Daily,Sales,0,SLA commitment,Core
+5,Sales,Contact rate,Contacted / Received x 100,Daily,Sales,>95%,SLA commitment,Core
+5,Sales,Attempts per lead,Sum attempts / Leads,Weekly,Sales,>=5 before unreachable,SLA commitment,Core
+5,Sales,Site visit show rate,Completed / Scheduled x 100,Weekly,Sales,>=80%,ASSUMPTION,Core
+5,Sales,Visit to booking rate by RM,Bookings / Visits per RM x 100,Monthly,Sales,15-20%,ASSUMPTION,Core
+5,Sales,Time to booking,Median lead to booking days,Monthly,Sales,Baseline then reduce,Post-baseline,Core
+5,Sales,Reason for loss distribution,% by code,Monthly,Leadership,Track shifts,Diagnostic,Core
+5,Sales,CRM hygiene,% records complete,Weekly,Sales,>95%,Data integrity,Core
