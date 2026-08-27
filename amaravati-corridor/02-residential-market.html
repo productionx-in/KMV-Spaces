@@ -1,0 +1,1166 @@
+<title>Amaravati Price Ladder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style>
+<style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style>
+<style>
+/* ---------- Phase 2 components ---------- */
+.conf{font-family:var(--f-mono);font-size:.62rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  padding:.13rem .42rem;border-radius:3px;white-space:nowrap;display:inline-block;border:1px solid transparent;line-height:1.5}
+.conf-h{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.conf-m{background:transparent;color:var(--brand);border-color:var(--brand)}
+.conf-l{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* range-band chart */
+.ladder{display:flex;flex-direction:column;gap:2px;position:relative}
+.lrow{display:grid;grid-template-columns:minmax(8.5rem,13rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:4px 0;border-radius:3px}
+.lrow:hover{background:var(--surface-2)}
+.lname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.lname b{display:block;color:var(--ink);font-weight:600}
+.ltrack{position:relative;height:1.5rem;display:flex;align-items:center}
+.lband{position:absolute;height:.95rem;border-radius:3px;background:var(--series);transition:filter .15s ease}
+.lrow:hover .lband{filter:brightness(1.1)}
+.lband.villa{background:transparent;border:1.5px solid var(--series)}
+.lval{position:absolute;font-family:var(--f-mono);font-size:.72rem;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);white-space:nowrap;line-height:1}
+.refline{position:absolute;top:0;bottom:0;width:0;border-left:1.5px dashed var(--emphasis);z-index:2;pointer-events:none}
+.reflabel{position:absolute;top:-1.15rem;transform:translateX(-50%);font-family:var(--f-mono);font-size:.64rem;
+  color:var(--emphasis);white-space:nowrap;letter-spacing:.03em}
+.lscale{display:grid;grid-template-columns:minmax(8.5rem,13rem) minmax(0,1fr);gap:.7rem;margin-top:.5rem}
+.lscale .bar{display:flex;justify-content:space-between;padding-top:.45rem;border-top:1px solid var(--rule);
+  font-family:var(--f-mono);font-size:.67rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.ladderwrap{position:relative;padding-top:1.3rem}
+
+/* density chart */
+.drow{display:grid;grid-template-columns:minmax(8.5rem,13.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.drow:hover{background:var(--surface-2)}
+.dname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.dname b{display:block;color:var(--ink);font-weight:600}
+.dtrack{height:1.45rem;display:flex;align-items:center;gap:.55rem}
+.dfill{height:1rem;border-radius:0 4px 4px 0;background:var(--series);flex:none}
+.dfill.subject{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.dval{font-family:var(--f-mono);font-size:.77rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.dval .u{color:var(--ink-3);font-weight:400}
+
+.derive{font-family:var(--f-mono);font-size:.78rem}
+.agree{color:var(--good);font-weight:600}
+.conflict{color:var(--accent);font-weight:600}
+.gapband{background:var(--accent-soft)}
+tbody tr:hover .gapband{background:var(--accent-soft);filter:brightness(.97)}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">
+    Phase 2 of 4
+    <strong>Price Evidence</strong>
+  </div>
+
+  <div class="toc">
+    <a href="#s0"><span class="n">§0</span><span>Method</span></a>
+    <a href="#s1"><span class="n">§1</span><span>Why not one average</span></a>
+    <a href="#s2"><span class="n">§2</span><span>Apartment evidence</span></a>
+    <a href="#s3"><span class="n">§3</span><span>Villa evidence</span></a>
+    <a href="#s4"><span class="n">§4</span><span>The segment ladder</span></a>
+    <a href="#s5"><span class="n">§5</span><span>Project size &amp; density</span></a>
+    <a href="#s6"><span class="n">§6</span><span>Sizes &amp; ticket sizes</span></a>
+    <a href="#s7"><span class="n">§7</span><span>Demand &amp; supply</span></a>
+    <a href="#s8"><span class="n">§8</span><span>Absorption &amp; pipeline</span></a>
+    <a href="#s9"><span class="n">§9</span><span>Rental potential</span></a>
+    <a href="#s10"><span class="n">§10</span><span>Resale</span></a>
+    <a href="#s11"><span class="n">§11</span><span>What this revises</span></a>
+    <a href="#s12"><span class="n">§12</span><span>Price architecture</span></a>
+    <a href="#s13"><span class="n">§13</span><span>Competitive set</span></a>
+    <a href="#s14"><span class="n">§14</span><span>Carry-forward</span></a>
+    <a href="#s15"><span class="n">§15</span><span>Evidence gaps</span></a>
+  </div>
+
+  <div>
+    <h4>Confidence</h4>
+    <div class="legend-stack">
+      <span class="conf conf-h">High</span>
+      <span class="conf conf-m">Medium</span>
+      <span class="conf conf-l">Low / thin</span>
+    </div>
+  </div>
+
+  <div>
+    <h4>Rate convention</h4>
+    <p style="font-size:.76rem;line-height:1.5;color:var(--ink-3);margin:0;max-width:none">
+      Every ₹/sq&nbsp;ft here is <strong style="color:var(--ink-2)">ticket price ÷ unit size</strong>,
+      computed from published figures — not quoted from a locality average.
+    </p>
+  </div>
+</nav>
+
+<main class="main">
+
+<header class="masthead">
+  <p class="eyebrow">Amaravati · Mangalagiri · Vijayawada · Guntur · Tadepalli</p>
+  <h1>What homes here actually sell for</h1>
+  <p class="sub">Segment-level pricing built from nineteen named projects, because the published averages disagree by up to 40%.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 2 of 4 — evidence only</span>
+    <span><strong>Projects</strong> 19 named</span>
+    <span><strong>Segments</strong> 8 banded</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> Research foundation for a hypothetical 25-acre, ₹500 crore, four-community development. Nothing here describes an actual KMV Spaces project, land holding or launch. Named third-party projects are cited as public market comparables only.
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head">
+    <div class="sec-num">§0</div>
+    <div>
+      <h2>Method</h2>
+      <p class="dek">Why this is built bottom-up from projects rather than top-down from averages — and what that buys.</p>
+    </div>
+  </div>
+  <div class="body">
+    <p>The brief asked for ranges, not a generic average. The data makes that mandatory rather than merely preferable: published locality averages for the same micro-market, in the same period, <strong>disagree by up to 40%</strong> (§1).</p>
+    <p>So this phase inverts the usual method. It starts from <strong>named, RERA-registered projects with published unit sizes and ticket prices</strong>, derives ₹/sq ft arithmetically, and builds segment bands from the resulting cloud of points. Three advantages:</p>
+    <ol>
+      <li><strong>It is checkable.</strong> Every rate can be recomputed from a stated size and a stated price. The full derivation is in the appendix.</li>
+      <li><strong>It exposes contradictions.</strong> Where a portal's stated rate disagrees with its own price ÷ size, that is recorded rather than smoothed.</li>
+      <li><strong>It produces bands, not points</strong> — which is what a pricing decision actually needs.</li>
+    </ol>
+
+    <h3>Source hierarchy applied</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">Tier</th><th>Source class</th><th>Used for</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td>Government — AP Registration &amp; Stamps (IGRS), guideline values</td><td>Transaction volume and value trends</td><td><span class="conf conf-h">High</span></td></tr>
+          <tr><td class="n">2</td><td>RERA registration numbers, project size, unit counts</td><td>Project existence, scale, legal status</td><td><span class="conf conf-h">High</span></td></tr>
+          <tr><td class="n">3</td><td>Established market reports — Magicbricks PropIndex</td><td>Demand / supply / price direction</td><td><span class="conf conf-m">Medium-high</span> — see §7.2 on currency</td></tr>
+          <tr><td class="n">4</td><td>Developers' own project pages</td><td>Configurations, sizes, positioning</td><td><span class="conf conf-m">Medium</span> — marketing material</td></tr>
+          <tr><td class="n">5</td><td>Property portals (99acres, SquareYards, CommonFloor)</td><td>Ticket ranges, unit sizes</td><td><span class="conf conf-m">Medium</span> — asking prices, mutually inconsistent</td></tr>
+          <tr><td class="n">6</td><td>Broker aggregators and SEO listing sites</td><td>Cross-check only</td><td><span class="conf conf-l">Low</span> — never used alone</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <span class="lbl">Environment limitation, restated</span>
+      <p>As in Phase 1, direct retrieval of primary documents was not possible — outbound access was restricted to search. <strong>The AP RERA project register was not directly queried.</strong> RERA numbers below come from portal listings that cite them: strong evidence a project is registered, but not verified against the authority's own database. §15 lists this and every other gap.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">§1</div>
+    <div>
+      <h2>Why there is no single average price</h2>
+      <p class="dek">Four sources, four answers, same market.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Micro-market</th><th class="n">Source A</th><th class="n">Source B</th><th class="n">Source C</th><th class="n">Spread</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vijayawada city</strong></td><td class="n">₹4,700<br><span style="color:var(--ink-3);font-size:.85em">99acres, Aug 2026</span></td><td class="n">₹5,750<br><span style="color:var(--ink-3);font-size:.85em">ghar.tv, 2025</span></td><td class="n">₹5,759<br><span style="color:var(--ink-3);font-size:.85em">Magicbricks, Q3 2024</span></td><td class="n mk mk-n">~22%</td></tr>
+          <tr><td><strong>Mangalagiri</strong></td><td class="n">₹4,062<br><span style="color:var(--ink-3);font-size:.85em">SquareYards, Sep 2025</span></td><td class="n">₹2,900<br><span style="color:var(--ink-3);font-size:.85em">99acres, 2BHK basket</span></td><td class="n">—</td><td class="n mk mk-n">~40%</td></tr>
+          <tr><td>Guntur</td><td class="n">₹5,150<br><span style="color:var(--ink-3);font-size:.85em">media, Oct 2024</span></td><td class="n">₹4,962<br><span style="color:var(--ink-3);font-size:.85em">Magicbricks, Q3 2024</span></td><td class="n">—</td><td class="n">~4%</td></tr>
+          <tr><td>Amaravati</td><td class="n">₹4,470<br><span style="color:var(--ink-3);font-size:.85em">Magicbricks, Q3 2024</span></td><td class="n" colspan="2">Plots quoted per sq yd — not comparable</td><td class="n">—</td></tr>
+        </tbody>
+        <caption>All figures ₹ per sq ft unless noted.</caption>
+      </table>
+    </div>
+    <div class="finding">
+      <span class="lbl">These are not errors</span>
+      <p>They are <strong>different questions being answered.</strong> A locality average depends entirely on the basket: all stock vs new projects only; 2BHK vs all configurations; asking vs transacted; Mangalagiri classified as a Guntur-district town or a Vijayawada suburb. The 40% Mangalagiri spread is almost certainly a small-unit resale basket (₹2,900) measured against a new-gated-project basket (₹4,062).</p>
+      <p class="big">Working rule for everything that follows: never quote a locality average as a pricing input. Quote the project band for the relevant segment.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">§2</div>
+    <div>
+      <h2>Apartment evidence base</h2>
+      <p class="dek">Twelve named projects. Every rate in the derived column is ticket ÷ size, recomputable from the two columns to its left.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Project</th><th>Micro-market</th><th class="n">Land</th><th class="n">Units</th><th>Sizes (sq ft)</th><th class="n">Ticket</th><th class="n">Derived ₹/sq ft</th><th>RERA</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sai Bharathi Capital Edge</strong><br><span style="color:var(--ink-3);font-size:.9em">2, 3 BHK · ready</span></td><td>Mangalagiri</td><td class="n">2.71 ac</td><td class="n">—</td><td>1,260–1,670</td><td class="n">from ₹47.88 L</td><td class="n">~₹3,800</td><td class="derive">registered</td></tr>
+          <tr><td><strong>Samruddhi Nexa</strong><br><span style="color:var(--ink-3);font-size:.9em">3 BHK · completed</span></td><td>Kunchanapalli / Tadepalli</td><td class="n">5.60 ac</td><td class="n">350</td><td>1,769–2,750</td><td class="n">₹67.22 L – 1.04 Cr</td><td class="n">₹3,782–3,800</td><td class="derive">P07110040647</td></tr>
+          <tr><td><strong>Raintree Park Dwaraka Krishna II</strong><br><span style="color:var(--ink-3);font-size:.9em">2–3.5 BHK · completed</span></td><td>NH-16, nr Nagarjuna Univ.</td><td class="n">5.67 ac</td><td class="n">632</td><td>2BHK 1,119–1,411</td><td class="n">3BHK ₹50.58–56.29 L</td><td class="n">~₹3,900 <span style="color:var(--ink-3)">stated</span></td><td class="derive">P07270020004</td></tr>
+          <tr><td><strong>Aparna Amaravati One</strong><br><span style="color:var(--ink-3);font-size:.9em">3, 4 BHK · ready</span></td><td>Tadepalli, on NH-16</td><td class="n">9.29 ac</td><td class="n">612</td><td>1,562–2,050</td><td class="n">₹62.48 L – 82 L</td><td class="n"><strong>₹4,000</strong> <span class="agree">✓</span></td><td class="derive">P07110030185</td></tr>
+          <tr><td><strong>Sri Hari Kousthubham</strong><br><span style="color:var(--ink-3);font-size:.9em">3 BHK</span></td><td>Ippatam Main Rd, Tadepalli</td><td class="n">—</td><td class="n">205</td><td>1,611 / 1,908 / 2,007</td><td class="n">₹72.5 – 90.3 L</td><td class="n">₹4,500 <span style="color:var(--accent)">"negotiable"</span></td><td class="derive">registered</td></tr>
+          <tr><td><strong>Prime Hill Crest</strong><br><span style="color:var(--ink-3);font-size:.9em">3 BHK</span></td><td>Vaddeswaram / Mangalagiri</td><td class="n">1.20 ac</td><td class="n">—</td><td>1,830–2,605</td><td class="n">₹82.35 L – 1.17 Cr</td><td class="n">₹4,491–4,500 <span class="agree">✓</span></td><td class="derive">P07110060055</td></tr>
+          <tr><td><strong>Sree Amaravati Icon</strong><br><span style="color:var(--ink-3);font-size:.9em">2, 3 BHK · ready Dec 2024</span></td><td>Tadepalli, 0.7 km off NH-16</td><td class="n">4.00 ac</td><td class="n">315</td><td>1,092–1,630</td><td class="n">₹50.23 – 74.98 L</td><td class="n"><strong>₹4,600</strong> <span class="agree">✓</span><br><span style="color:var(--ink-3)">asking → ₹5,150 in Q1 2026</span></td><td class="derive">P07260060663</td></tr>
+          <tr><td><strong>Jayabheri The Capital</strong><br><span style="color:var(--ink-3);font-size:.9em">3, 4 BHK · resale</span></td><td>Kunchanapalli, Tadepalli</td><td class="n">7.00 ac</td><td class="n">370</td><td>1,840–3,755</td><td class="n">from ₹92 L</td><td class="n">~₹5,000 <span style="color:var(--ink-3)">entry</span></td><td class="derive">P07110030011</td></tr>
+          <tr><td><strong>Manjeera Monarch</strong><br><span style="color:var(--ink-3);font-size:.9em">2, 3, 4 BHK · ready</span></td><td>Mangalagiri</td><td class="n">5.00 ac</td><td class="n">567</td><td>1,070–2,724</td><td class="n">from ₹54.57 L<br>3BHK ₹91.22 L – 1.12 Cr</td><td class="n"><strong>₹5,100 asking</strong> <span class="conflict">!</span></td><td class="derive">P07120040007</td></tr>
+          <tr><td><strong>KMV Vivaan</strong> (tower)<br><span style="color:var(--ink-3);font-size:.9em">3 BHK · ready / resale</span></td><td>Enikepadu–Poranki, Vijayawada</td><td class="n">in 10-ac scheme</td><td class="n">—</td><td>2,251 (resale unit)</td><td class="n">from ₹1.3 Cr</td><td class="n">~₹5,775</td><td class="derive">registered</td></tr>
+          <tr class="col-win"><td><strong>Vertex Siris Signa</strong><br><span style="color:var(--ink-3);font-size:.9em">2, 2.5, 3 BHK · ready Dec 2023</span></td><td>Ayyappa Nagar, Vijayawada</td><td class="n">3.00 ac</td><td class="n">184</td><td>1,345–2,275</td><td class="n">₹84.73 L – 1.43 Cr</td><td class="n"><strong>₹6,286–6,300</strong> <span class="agree">✓</span></td><td class="derive">P06170010034</td></tr>
+          <tr><td><strong>Alekhya Grand</strong><br><span style="color:var(--ink-3);font-size:.9em">4 BHK</span></td><td>Vijayawada</td><td class="n">—</td><td class="n">—</td><td>3,300–4,000</td><td class="n">not published</td><td class="n">— <span style="color:var(--ink-3)">comparable 4BHK at ₹6,500</span></td><td class="derive">—</td></tr>
+        </tbody>
+        <caption><span class="agree">✓</span> = both ends of the published range derive to the same rate independently. <span class="conflict">!</span> = internal conflict, see below.</caption>
+      </table>
+    </div>
+
+    <h3>The three internal contradictions found</h3>
+    <p>These matter because they show how portal data behaves, and they are why the derivation convention exists.</p>
+    <ul>
+      <li><strong>Manjeera Monarch.</strong> One portal states ₹4,800/sq ft; the same project's stated 3BHK range derives to ₹5,732–5,822; a third source gives <strong>₹5,100 asking</strong>. The ₹4,800 is most likely a stale base rate excluding floor rise, parking, corpus and amenity charges. <strong>₹5,100 is carried forward</strong> — the only source describing itself as a current asking rate.</li>
+      <li><strong>Prime Hill Crest.</strong> Ticket ÷ size gives ₹4,491–4,500 at both ends; the same page separately states "average ₹5k/sq ft." <strong>The derived figure is preferred</strong>, because it is reproducible.</li>
+      <li><strong>Raintree Park.</strong> Listed 2BHK "from ₹63 L" sits <em>above</em> the listed 3BHK band (₹50.58–56.29 L) — arithmetically impossible within one project. Treated as a portal data error; only the ~₹3,900 average is carried, at low confidence.</li>
+    </ul>
+
+    <div class="finding">
+      <span class="lbl">The general lesson, and it scales the whole revenue model</span>
+      <p class="big">A stated ₹/sq ft on a portal is frequently a base rate. The ticket price is what a buyer pays.</p>
+      <p>All-in realisation typically runs <strong>8–15% above base rate</strong> once floor rise, car parking, club membership, corpus fund and GST are added. <strong>Any pricing model built on portal base rates will understate achievable revenue.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">§3</div>
+    <div>
+      <h2>Villa evidence base</h2>
+      <p class="dek">The thinnest and most important dataset, because Phase 1 identified villas as both the demand engine and the margin engine.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Project</th><th>Micro-market</th><th class="n">Land</th><th class="n">Units</th><th>Sizes</th><th class="n">Ticket</th><th class="n">Derived ₹/sq ft</th></tr></thead>
+        <tbody>
+          <tr class="col-win"><td><strong>Prime Grandeur</strong><br><span style="color:var(--ink-3);font-size:.9em">3, 4 BHK villas · P07120050381</span></td><td>Mangalagiri</td><td class="n"><strong>10.00 ac</strong></td><td class="n">—</td><td>2,480–3,374</td><td class="n"><strong>₹1.34 – 1.82 Cr</strong></td><td class="n"><strong>₹5,394–5,403</strong> <span class="agree">✓</span></td></tr>
+          <tr><td><strong>IJM RTPDK Villas 26</strong><br><span style="color:var(--ink-3);font-size:.9em">4BHK triplex · poss. 2025</span></td><td>Vijayawada–Guntur</td><td class="n">—</td><td class="n">26</td><td>3,467–3,575</td><td class="n">not published</td><td class="n">—</td></tr>
+          <tr><td><strong>Golden Villas</strong><br><span style="color:var(--ink-3);font-size:.9em">4BHK + theatre, triplex · CRDA + RERA</span></td><td>Mustabada Rd, Vijayawada</td><td class="n">4.75 ac</td><td class="n">50</td><td>4,500 on 237 sq yd</td><td class="n">not published</td><td class="n">—</td></tr>
+          <tr><td><strong>TAG AIRA</strong><br><span style="color:var(--ink-3);font-size:.9em">G+2 triplex, smart-home</span></td><td>Pedda Kakani, VJA–Guntur Hwy</td><td class="n">—</td><td class="n">55</td><td>3,817 (listing)</td><td class="n">₹2.79 Cr</td><td class="n"><strong>~₹7,309</strong></td></tr>
+          <tr><td><strong>Anvi Homes</strong></td><td>Kesarapalli (nr airport)</td><td class="n">11.69 ac</td><td class="n">40 + plots</td><td>—</td><td class="n">—</td><td class="n">—</td></tr>
+          <tr class="col-win"><td><strong>KMV Vivaan Phase 1</strong><br><span style="color:var(--ink-3);font-size:.9em">3, 4 BHK · delivered</span></td><td>Enikepadu–Poranki, Vijayawada</td><td class="n">10.00 ac</td><td class="n">66</td><td>3,652–4,594</td><td class="n"><strong>₹3.0 Cr</strong> (250 sq yd)<br><strong>₹3.8 Cr</strong> (300 sq yd)</td><td class="n"><strong>₹8,214–8,271</strong> <span class="agree">✓</span></td></tr>
+          <tr><td><em>(unnamed listing)</em></td><td>Kolanukonda, Mangalagiri</td><td class="n">—</td><td class="n">—</td><td>luxury villas</td><td class="n">₹3.3 Cr</td><td class="n">—</td></tr>
+        </tbody>
+        <caption>Cross-checks: Tadepalli villa asking average ₹5,901/sq ft, +8.39% YoY (SquareYards, Mar 2026). Vijayawada villa listing average ₹2.2 crore across ~68 listings.</caption>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Two villa markets, ~50% apart</span>
+      <p><strong>Mid-premium:</strong> ₹5,400–5,900/sq ft · ₹1.34–2.2 Cr · 2,480–3,575 sq ft — Prime Grandeur, Tadepalli asking average, Vijayawada listing average.</p>
+      <p><strong>Luxury / ultra:</strong> ₹7,300–8,300/sq ft · ₹2.8–3.8 Cr · 3,650–4,600 sq ft — TAG AIRA, KMV Vivaan.</p>
+      <p class="big">There is almost nothing between ₹5,900 and ₹7,300 per sq ft — roughly the ₹2.2–2.8 crore ticket band. That is the least contested price territory found anywhere in this research.</p>
+      <p>Whether it is empty because nobody has tried, or because buyers refuse it, <strong>cannot be determined from listing data alone</strong>. Resolving that is the highest-value item in §15.</p>
+    </div>
+
+    <p><strong>Villa project scale is uniformly small.</strong> The largest villa counts found are 66 (KMV Vivaan), 55 (TAG AIRA), 50 (Golden Villas), 26 (IJM), on parcels of 4.75–11.69 acres. <strong>No villa community above ~70 units was found anywhere in the corridor.</strong></p>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">§4</div>
+    <div>
+      <h2>The segment ladder</h2>
+      <p class="dek">The core output. Every band is derived from the named projects in §2 and §3, cross-checked against locality asking rates where those exist.</p>
+    </div>
+  </div>
+  <div class="body">
+
+    <div class="figure">
+      <div class="figure-head">
+        <span class="kicker">Figure 1 · Eight segments</span>
+        <h5>What each product type actually clears at, ₹ per sq ft</h5>
+        <p class="sub">Bands span the evidenced low and high for each segment. Apartments solid, villas outlined.</p>
+      </div>
+      <div class="chart-legend">
+        <span class="k"><span class="swatch obs"></span> Apartment segment</span>
+        <span class="k"><span class="swatch" style="background:transparent;border:1.5px solid var(--series)"></span> Villa segment</span>
+        <span class="k"><span class="swatch" style="background:transparent;border-left:1.5px dashed var(--emphasis);border-radius:0;width:.2rem"></span> ₹500 cr target needs ₹5,900–6,000</span>
+      </div>
+
+      <div class="tw" style="border:0;background:transparent;margin:0">
+      <div class="ladderwrap" style="min-width:32rem">
+        <div class="ladder" id="ladder">
+          <div class="refline" style="left:calc(13rem + .7rem + (100% - 13rem - .7rem) * 0.595)"><span class="reflabel">₹5,950</span></div>
+
+          <div class="lrow" data-tip="Mangalagiri 2BHK basket avg ₹26.1 L · a 1,175 sq ft ready 2BHK listed ₹47.5 L" data-ticket="₹29 – 49 L">
+            <div class="lname"><b>2BHK</b>non-gated / resale</div>
+            <div class="ltrack"><span class="lband" style="left:29%;width:9%"></span><span class="lval" style="left:calc(38% + .5rem)">₹2,900–3,800</span></div>
+          </div>
+
+          <div class="lrow" data-tip="Sai Bharathi from ₹47.88 L · Sree Amaravati Icon ₹4,600 · Manjeera from ₹54.57 L" data-ticket="₹45 – 68 L">
+            <div class="lname"><b>2BHK</b>gated community</div>
+            <div class="ltrack"><span class="lband" style="left:38%;width:10%"></span><span class="lval" style="left:calc(48% + .5rem)">₹3,800–4,800</span></div>
+          </div>
+
+          <div class="lrow" data-tip="Aparna ₹4,000 · Samruddhi ₹3,782–3,800 · Sri Hari ₹4,500 · Amaravati Icon ₹4,600" data-ticket="₹62 – 95 L">
+            <div class="lname"><b>3BHK</b>mid gated</div>
+            <div class="ltrack"><span class="lband" style="left:38%;width:8%"></span><span class="lval" style="left:calc(46% + .5rem)">₹3,800–4,600</span></div>
+          </div>
+
+          <div class="lrow" data-tip="Prime Hill Crest ₹4,500 · Jayabheri ~₹5,000 · Manjeera ₹5,100 asking" data-ticket="₹82 L – 1.45 Cr">
+            <div class="lname"><b>3BHK</b>premium gated</div>
+            <div class="ltrack"><span class="lband" style="left:45%;width:9%"></span><span class="lval" style="left:calc(54% + .5rem)">₹4,500–5,400</span></div>
+          </div>
+
+          <div class="lrow" data-tip="Vertex Siris Signa ₹6,286–6,300 · KMV Vivaan ~₹5,775 · a comparable 4BHK at ₹6,500" data-ticket="₹1.25 – 1.95 Cr">
+            <div class="lname"><b>Premium apartments</b>3.5 / 4 BHK</div>
+            <div class="ltrack"><span class="lband" style="left:54%;width:11%"></span><span class="lval" style="left:calc(65% + .5rem)">₹5,400–6,500</span></div>
+          </div>
+
+          <div class="lrow" data-tip="Thin evidence — Vertex top end ₹1.43 Cr; Alekhya Grand 4BHK 3,300–4,000 sq ft, price not published" data-ticket="₹1.9 – 2.8 Cr">
+            <div class="lname"><b>Luxury apartments</b>thin evidence</div>
+            <div class="ltrack"><span class="lband" style="left:63%;width:7%;opacity:.55"></span><span class="lval" style="left:calc(70% + .5rem)">₹6,300–7,000</span></div>
+          </div>
+
+          <div class="lrow" data-tip="Prime Grandeur ₹5,394–5,403 (both ends) · Tadepalli villa asking ₹5,901 · Vijayawada villa listing avg ₹2.2 Cr" data-ticket="₹1.34 – 2.2 Cr">
+            <div class="lname"><b>Villas</b>mid-premium</div>
+            <div class="ltrack"><span class="lband villa" style="left:54%;width:5%"></span><span class="lval" style="left:calc(59% + .5rem)">₹5,400–5,900</span></div>
+          </div>
+
+          <div class="lrow" data-tip="TAG AIRA ₹7,309 · KMV Vivaan ₹8,214–8,271" data-ticket="₹2.8 – 3.8 Cr">
+            <div class="lname"><b>Villas</b>luxury / ultra</div>
+            <div class="ltrack"><span class="lband villa" style="left:73%;width:10%"></span><span class="lval" style="left:calc(83% + .5rem)">₹7,300–8,300</span></div>
+          </div>
+        </div>
+        <div class="lscale"><span aria-hidden="true"></span><span class="bar"><span>₹0</span><span>₹5,000</span><span>₹10,000 / sq ft</span></span></div>
+      </div>
+      </div>
+
+      <div class="figure-foot">The gap between the two villa bands — <strong>₹5,900 to ₹7,300</strong>, roughly the ₹2.2–2.8 crore ticket — is the emptiest territory in the corridor. Hover any band for its ticket range and anchoring projects.</div>
+    </div>
+
+    <h3>Four things the ladder makes visible</h3>
+
+    <p><strong>1 · The 2BHK and mid-3BHK bands overlap almost completely</strong> (₹3,800–4,800 against ₹3,800–4,600). Moving from 2BHK to 3BHK here buys <em>more area at roughly the same rate</em>, not a better rate. <strong>Configuration is not a pricing lever in this corridor — size and address are.</strong></p>
+
+    <p><strong>2 · The step from mid to premium gated is ₹700–800/sq ft</strong> (≈18%). The step from premium apartments to luxury villas is roughly <strong>₹2,000/sq ft</strong> (≈35%). <strong>The villa premium is where the pricing power sits</strong>, and it dwarfs any apartment-tier premium available.</p>
+
+    <p><strong>3 · The apartment ceiling is ₹6,300–6,500/sq ft</strong>, set by Vertex Siris Signa — a 3-acre, 184-unit ready scheme <em>in Vijayawada city</em>. Nothing found in Mangalagiri or Tadepalli reaches it. <strong>The premium apartment ceiling is currently a city-centre phenomenon, not a corridor one.</strong> Whether it can be imported into the corridor is the central pricing risk for the hypothetical project's premium apartment communities.</p>
+
+    <p><strong>4 · Villas break that ceiling by a wide margin.</strong> KMV Vivaan achieved ₹8,200/sq ft — <strong>30% above the best apartment rate found anywhere in the region.</strong> Villas are the only product type in this evidence base that reliably clears ₹7,000.</p>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">§5</div>
+    <div>
+      <h2>Project size and density</h2>
+      <p class="dek">Land area and unit counts are published for most projects. The resulting density comparison is the most structurally revealing table in Phase 2.</p>
+    </div>
+  </div>
+  <div class="body">
+
+    <div class="figure">
+      <div class="figure-head">
+        <span class="kicker">Figure 2 · Density</span>
+        <h5>Homes per acre across the corridor's named projects</h5>
+        <p class="sub">The single number that separates the hypothetical scheme from everything competing with it</p>
+      </div>
+      <div class="chart-legend">
+        <span class="k"><span class="swatch obs"></span> Existing corridor project</span>
+        <span class="k"><span class="swatch req"></span> The hypothetical project</span>
+      </div>
+      <div class="tw" style="border:0;background:transparent;margin:0">
+      <div id="density" style="min-width:30rem">
+        <div class="drow" data-tip="5.00 acres · 567 units · apartments · Mangalagiri"><div class="dname"><b>Manjeera Monarch</b>apartments</div><div class="dtrack"><span class="dfill" style="width:100%"></span><span class="dval">113.4<span class="u"> /ac</span></span></div></div>
+        <div class="drow" data-tip="5.67 acres · 632 units · apartments · NH-16"><div class="dname"><b>Raintree Park II</b>apartments</div><div class="dtrack"><span class="dfill" style="width:98.3%"></span><span class="dval">111.5<span class="u"> /ac</span></span></div></div>
+        <div class="drow" data-tip="4.00 acres · 315 units · apartments · Tadepalli"><div class="dname"><b>Sree Amaravati Icon</b>apartments</div><div class="dtrack"><span class="dfill" style="width:69.5%"></span><span class="dval">78.8<span class="u"> /ac</span></span></div></div>
+        <div class="drow" data-tip="9.29 acres · 612 units · apartments · Tadepalli"><div class="dname"><b>Aparna Amaravati One</b>apartments</div><div class="dtrack"><span class="dfill" style="width:58.1%"></span><span class="dval">65.9<span class="u"> /ac</span></span></div></div>
+        <div class="drow" data-tip="5.60 acres · 350 units · apartments · Kunchanapalli"><div class="dname"><b>Samruddhi Nexa</b>apartments</div><div class="dtrack"><span class="dfill" style="width:55.1%"></span><span class="dval">62.5<span class="u"> /ac</span></span></div></div>
+        <div class="drow" data-tip="3.00 acres · 184 units · apartments · Vijayawada city"><div class="dname"><b>Vertex Siris Signa</b>apartments</div><div class="dtrack"><span class="dfill" style="width:54.1%"></span><span class="dval">61.3<span class="u"> /ac</span></span></div></div>
+        <div class="drow" data-tip="7.00 acres · 370 units · apartments · Tadepalli"><div class="dname"><b>Jayabheri The Capital</b>apartments</div><div class="dtrack"><span class="dfill" style="width:46.6%"></span><span class="dval">52.9<span class="u"> /ac</span></span></div></div>
+        <div class="drow" data-tip="25 acres · ~400–550 units · mixed apartments and villas"><div class="dname"><b>Hypothetical project</b>mixed</div><div class="dtrack"><span class="dfill subject" style="width:19.4%"></span><span class="dval">16–22<span class="u"> /ac</span></span></div></div>
+        <div class="drow" data-tip="4.75 acres · 50 villas · Mustabada Rd, Vijayawada"><div class="dname"><b>Golden Villas</b>villas</div><div class="dtrack"><span class="dfill" style="width:9.3%"></span><span class="dval">10.5<span class="u"> /ac</span></span></div></div>
+        <div class="drow" data-tip="10.00 acres · 66 villas · Enikepadu–Poranki"><div class="dname"><b>KMV Vivaan Phase 1</b>villas</div><div class="dtrack"><span class="dfill" style="width:5.8%"></span><span class="dval">6.6<span class="u"> /ac</span></span></div></div>
+      </div>
+      </div>
+      <div class="figure-foot">Corridor apartment schemes run <strong>53–113 homes per acre</strong>; villa schemes run <strong>6.6–10.5</strong>. The hypothetical project's implied density sits in the empty band between the two formats.</div>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The finding that reframes the product story</span>
+      <p>A 25-acre, ~475-unit scheme would <strong>not</strong> be the corridor's biggest by unit count — Aparna already delivers 612 and Raintree 632. It would be the biggest by land, by roughly <strong>2.5×</strong>, and the <strong>least dense mixed project in the corridor by a factor of three to five.</strong></p>
+      <p>That implied density is independently consistent with the 50:50 to 60:40 apartment/villa land split that Phase 1 derived from the ₹500 crore GDV. <strong>Two separate calculations converge on the same product shape</strong> — a meaningful consistency check.</p>
+      <p class="big">A buyer comparing a ₹1.5 crore 3BHK here against Manjeera Monarch is choosing between roughly 20 homes per acre and 113.</p>
+      <p>That is a difference visible from the site gate — open space, distance between blocks, parking, tree cover, noise. It needs no brochure to explain, and it is the most defensible basis found for the price premium Phase 1 identified as this project's central problem.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">§6</div>
+    <div>
+      <h2>Unit sizes and ticket sizes</h2>
+      <p class="dek">The observed distribution, and the two gaps it reveals.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cards">
+      <div class="card">
+        <h6>Observed size bands</h6>
+        <ul>
+          <li><strong>2BHK</strong> 1,070–1,430 sq ft · modal <strong>1,100–1,300</strong></li>
+          <li><strong>3BHK</strong> 1,550–2,750 sq ft · modal <strong>1,600–2,050</strong></li>
+          <li><strong>4BHK</strong> 2,512–4,000 sq ft · modal <strong>2,500–3,300</strong></li>
+          <li><strong>Villas</strong> 2,480–4,594 sq ft · modal <strong>2,800–3,600</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Guntur reference</h6>
+        <ul>
+          <li>Average 3BHK ticket <strong>₹85.5 lakh</strong></li>
+          <li>Preferred localities: Amaravati Road, Brodipet, Arundelpet, Pattabhipuram, Lakshmipuram, Gorantla, Nallapadu</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Observed ticket entry points, corridor-wide</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">Entry ticket</th><th>Project</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td class="n">₹47.88 L</td><td>Sai Bharathi Capital Edge, Mangalagiri</td><td>Lowest gated entry found</td></tr>
+          <tr><td class="n">₹50.23 L</td><td>Sree Amaravati Icon, Tadepalli</td><td></td></tr>
+          <tr><td class="n">₹54.57 L</td><td>Manjeera Monarch, Mangalagiri</td><td></td></tr>
+          <tr><td class="n">₹62.48 L</td><td>Aparna Amaravati One, Tadepalli</td><td></td></tr>
+          <tr><td class="n">₹67.22 L</td><td>Samruddhi Nexa, Kunchanapalli</td><td></td></tr>
+          <tr><td class="n">₹82.35 L</td><td>Prime Hill Crest, Mangalagiri</td><td>Step into premium apartments</td></tr>
+          <tr><td class="n">₹92.00 L</td><td>Jayabheri The Capital, Tadepalli</td><td></td></tr>
+          <tr class="gapband"><td class="n" colspan="3"><em>₹1.15 – 1.35 crore — thinly populated</em></td></tr>
+          <tr><td class="n">₹1.34 Cr</td><td>Prime Grandeur villas, Mangalagiri</td><td>Lowest villa entry found</td></tr>
+          <tr class="gapband"><td class="n" colspan="3"><em>₹2.2 – 2.8 crore — the emptiest band in the corridor</em></td></tr>
+          <tr><td class="n">₹2.79 Cr</td><td>TAG AIRA villas</td><td></td></tr>
+          <tr><td class="n">₹3.00 Cr</td><td>KMV Vivaan villas</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Gated entry is remarkably consistent at <strong>₹48–55 lakh</strong>, with a clear step at <strong>₹82–92 lakh</strong> into premium apartments. The <strong>₹1.15–1.35 crore band is thin</strong> — above the premium apartment cluster, below villa entry. Unlike the ₹2.2–2.8 crore gap, this one is probably a <strong>genuine buyer-behaviour boundary</strong>: at ₹1.3 crore in this corridor a buyer can choose a villa instead of a large apartment, and the evidence suggests many do.</p>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">§7</div>
+    <div>
+      <h2>Demand, supply and price trends</h2>
+      <p class="dek">One government dataset, one market report, and a warning about both.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Government transaction data — the best available demand proxy</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Metric</th><th class="n">Figure</th><th>Tier</th></tr></thead>
+        <tbody>
+          <tr class="col-win"><td>AP Registration &amp; Stamps revenue, <strong>FY2025–26</strong></td><td class="n"><strong>₹9,331 cr · +27% YoY</strong></td><td><span class="conf conf-h">Tier 1</span></td></tr>
+          <tr><td>Against annual target</td><td class="n">₹11,221 cr — <strong>84.45% achieved</strong></td><td><span class="conf conf-h">Tier 1</span></td></tr>
+          <tr><td>Registrations handled annually (IGRS)</td><td class="n">500,000+ · ~+15% p.a. since 2020</td><td><span class="conf conf-h">Tier 1</span></td></tr>
+          <tr><td>Guideline (circle) values</td><td class="n">Revised up statewide, <strong>1 Feb 2026</strong></td><td><span class="conf conf-h">Tier 1</span></td></tr>
+          <tr><td>Transaction cost</td><td class="n">5% + 1% + 1.5% = <strong>7.5%</strong></td><td><span class="conf conf-h">Tier 1</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">How to read the +27%, honestly</span>
+      <p class="big">The guideline-value revision took effect on 1 February 2026 — inside the same financial year. Registration revenue is charged on the higher of consideration or guideline value.</p>
+      <p>So a meaningful part of the +27% is <strong>the same number of transactions being taxed on higher recorded values</strong>, not more transactions. Volume growth and value growth <strong>cannot be separated</strong> from the published figure. And the department landed at <strong>84.45% of its own target</strong> — the state itself expected more.</p>
+      <p>The defensible reading: <strong>transaction activity in AP is genuinely growing, at a rate somewhere below 27%, and the state's own forecast was not met.</strong></p>
+    </div>
+
+    <h3>Magicbricks PropIndex — the only established report covering these cities</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>City</th><th class="n">Demand (searches) YoY</th><th class="n">Supply (listings) YoY</th><th class="n">Average price</th><th class="n">Price YoY</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Amaravati</strong></td><td class="n mk mk-y">+49.10%</td><td class="n mk mk-n">−6.70%</td><td class="n">₹4,470</td><td class="n">+3.29%</td></tr>
+          <tr><td><strong>Guntur</strong></td><td class="n mk mk-y">+38.27%</td><td class="n mk mk-n">−22.57%</td><td class="n">₹4,962</td><td class="n">+3.27%</td></tr>
+          <tr><td><strong>Vijayawada</strong></td><td class="n mk mk-y">+31.95%</td><td class="n mk mk-n">−18.46%</td><td class="n">₹5,759</td><td class="n mk mk-y">+20.06%</td></tr>
+        </tbody>
+        <caption>Magicbricks PropIndex, Q3 2024 (Jul–Sep). ₹ per sq ft.</caption>
+      </table>
+    </div>
+
+    <div class="note">
+      <span class="lbl">Two cautions, both material</span>
+      <p><strong>"Demand" here means search activity on a portal, not transactions.</strong> A 49.10% rise in people searching Amaravati listings after the capital was revived is entirely believable and tells you about <em>attention</em>. It does not tell you anyone bought anything. Corridor marketing routinely quotes the 49% figure as "residential demand growth" without that qualifier. <strong>It should not be used that way.</strong></p>
+      <p><strong>This data is from Q3 2024 — nearly two years stale.</strong> It predates the May 2025 relaunch, the April 2026 gazette notification and the February 2026 guideline revision. <strong>There is no equivalent 2026 read for this corridor</strong>, because these cities are not in the ongoing 13-city PropIndex panel. That is the single largest evidence gap in Phase 2.</p>
+    </div>
+
+    <p>What the Q3 2024 data does establish is a <strong>structural scissors</strong> — demand rising 32–49% while listings fell 7–23% — which is the mechanism behind Vijayawada's +20% price move. <strong>Whether that scissors is still open in 2026 is unknown.</strong></p>
+
+    <h3>National context, for calibration</h3>
+    <p>Magicbricks PropIndex <strong>Q1 2026</strong>, 13 major cities: active supply <strong>+6.8% QoQ, +10.1% YoY</strong> to 110,821 listings; national average <strong>₹14,633/sq ft, +14.1% YoY</strong>; demand <strong>−2.2% QoQ, +1.5% YoY</strong>. Largest supply increases: Bengaluru +22.3%, Hyderabad +19.8%.</p>
+    <p>Cross-read with Phase 1's Knight Frank data (unsold inventory +4% YoY to 525,695 units; <strong>₹2–5 crore inventory +43%</strong>), the national picture is consistent: <strong>supply expanding faster than demand, with the build-up concentrated in premium.</strong> Note also that agencies disagree sharply — for Q1 2026 Knight Frank reported sales <strong>+2%</strong> while PropEquity and ANAROCK reported <strong>−23%</strong> and <strong>−28%</strong>. Any single agency number is one reading, not the reading.</p>
+
+    <h3>Where the corridor has actually moved</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Locality</th><th class="n">Current asking</th><th>Recent movement</th><th class="n">3-year</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Poranki</strong> <span style="color:var(--ink-3)">(east Vijayawada)</span></td><td class="n">₹5,500</td><td>+48.6% YoY</td><td class="n mk mk-y">+52.8%</td></tr>
+          <tr><td><strong>Penamaluru</strong> <span style="color:var(--ink-3)">(east Vijayawada)</span></td><td class="n">₹3,300</td><td>+22.2% YoY</td><td class="n mk mk-y">+53.5%</td></tr>
+          <tr><td><strong>Tadepalli</strong> <span style="color:var(--ink-3)">(capital-facing)</span></td><td class="n">₹5,653</td><td>villas <strong>+8.39%</strong>, apartments <strong>+2.99%</strong></td><td class="n">+34.2%</td></tr>
+          <tr><td><strong>Mangalagiri</strong></td><td class="n">₹4,062</td><td>₹4,098 (Jun 2025) → ₹4,062 (Sep 2025) — <strong>flat to down</strong></td><td class="n">—</td></tr>
+          <tr><td>Gannavaram</td><td class="n">₹3,100–5,200</td><td>—</td><td class="n">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Better evidence than locality movement:</strong> Sree Amaravati Icon's average asking moved <strong>₹4,700 → ₹5,150/sq ft during Q1 2026 (+9.57%)</strong> — a single ready project in Tadepalli re-pricing within a quarter. That is the most current price-direction evidence found anywhere in this research.</p>
+
+    <div class="finding">
+      <span class="lbl">The uncomfortable geography</span>
+      <p class="big">The corridor's strongest three-year appreciation is in Poranki (+52.8%) and Penamaluru (+53.5%) — both east of Vijayawada, on the opposite side of the city from Amaravati.</p>
+      <p>Tadepalli, the capital-facing address, appreciated +34.2%. <strong>The capital story is not the corridor's best-performing real-estate trade.</strong> That does not make the capital irrelevant — but the appreciation argument cannot be attributed to Amaravati adjacency without evidence that does not currently exist.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-head">
+    <div class="sec-num">§8</div>
+    <div>
+      <h2>Absorption, inventory and pipeline</h2>
+      <p class="dek">What can be inferred, how strongly, and where the signals contradict each other.</p>
+    </div>
+  </div>
+  <div class="body">
+    <p><strong>No corridor-level absorption or unsold-inventory dataset is publicly available.</strong> AP RERA publishes project registrations but quarterly sales disclosures were not retrievable here, and the corridor sits outside every agency panel — Knight Frank, ANAROCK, PropEquity, Magicbricks PropIndex — that publishes absorption metrics.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Signal</th><th>Observation</th><th>Inference</th><th>Strength</th></tr></thead>
+        <tbody>
+          <tr><td>Long-completed projects still marketed</td><td>Aparna Amaravati One was expected ready <strong>Aug 2022</strong>; still listed ready-to-move with a published price range in 2026</td><td>Roughly <strong>four years</strong> of post-completion selling on a 612-unit scheme</td><td><span class="conf conf-m">Moderate</span></td></tr>
+          <tr><td>Dedicated resale pages</td><td>Jayabheri The Capital and Samruddhi Nexa both carry resale listing pages</td><td>Completed premium stock turns over — <strong>an exit market exists</strong></td><td><span class="conf conf-m">Moderate</span></td></tr>
+          <tr class="col-win"><td><strong>Explicit price flexibility</strong></td><td>Sri Hari Kousthubham quotes ₹4,500/sq ft <strong>"negotiable"</strong></td><td>Published rates in the premium-3BHK band are <strong>not firm</strong>; discounting is expected</td><td><span class="conf conf-h">Strong</span> — a developer's own quote</td></tr>
+          <tr><td>Supply contraction (Q3 2024)</td><td>Listings down 7–23% YoY across the three cities</td><td>Either genuine absorption, or sellers withdrawing to await higher prices</td><td><span class="conf conf-l">Weak</span> — indistinguishable</td></tr>
+          <tr><td>National premium build-up</td><td>₹2–5 crore unsold inventory <strong>+43% YoY</strong></td><td>The segment this project depends on is accumulating nationally</td><td><span class="conf conf-m">Strong nationally, unverified locally</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Honest conclusion</span>
+      <p class="big">Absorption in this corridor is unmeasured, and the two strongest available signals point in opposite directions.</p>
+      <p>Supply contraction and rising search demand suggest a tight market. A four-year-old ready project still selling, negotiable pricing in the premium band, and national premium inventory build-up suggest a slow one. <strong>Phase 3 pricing should be modelled against the slow case and treat the tight case as upside.</strong></p>
+    </div>
+
+    <h3>New launches and pipeline</h3>
+    <p>Portal listing counts — <strong>not a supply register</strong>, and heavily double-counted across platforms: Mangalagiri 13–24 projects depending on source; Tadepalli 12+; Vijayawada 57+ under construction and 84+ upcoming; Guntur 66–174.</p>
+    <p>These establish that the pipeline is <strong>numerous and fragmented</strong> — dozens of small schemes rather than a handful of large ones — consistent with the density table in §5 and with Phase 1's finding of white space at 25-acre scale.</p>
+    <p>One broker source reports <strong>"over 2,500 units expected to enter the market in 2025–26"</strong> across the APCRDA region. <span class="conf conf-l">Tier 6, uncorroborated</span> — flagged, not relied on. If accurate, a 400–550 unit project would be roughly <strong>16–22% of two years' regional supply</strong>, a material absorption consideration. Worth verifying properly before any launch decision.</p>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="sec-head">
+    <div class="sec-num">§9</div>
+    <div>
+      <h2>Rental potential</h2>
+      <p class="dek">One inversion in the yield data determines whether rental income can be sold at all.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Locality</th><th class="n">Gross rental yield</th></tr></thead>
+        <tbody>
+          <tr><td>Kanuru</td><td class="n mk mk-y">3.2%</td></tr>
+          <tr><td>Gannavaram</td><td class="n">3.1%</td></tr>
+          <tr><td>Prasadampadu</td><td class="n">2.9%</td></tr>
+          <tr><td>Currency Nagar</td><td class="n">2.4%</td></tr>
+          <tr class="gapband"><td><strong>Tadepalli</strong> <span style="color:var(--ink-3)">— the corridor's highest-priced micro-market</span></td><td class="n mk mk-n"><strong>2.2%</strong></td></tr>
+          <tr class="tot"><td>Premium localities, average</td><td class="n">~3.0%</td></tr>
+        </tbody>
+        <caption>Observed rents (wide dispersion): 2BHK Mangalagiri ₹19,500/mo · 2BHK Poranki ₹10,000 · 3BHK Suryaraopet ₹35,000 + ₹2,500 maintenance · a 3BHK at ₹12,000.</caption>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The yield inversion</span>
+      <p class="big">Tadepalli — the corridor's highest-priced micro-market — has its lowest rental yield. Kanuru, at materially lower capital values, yields 3.2% against Tadepalli's 2.2%.</p>
+      <p>That inversion is the classic signature of <strong>capital values running ahead of rental fundamentals.</strong> Tadepalli prices rose 34.2% over three years; rents did not follow.</p>
+    </div>
+
+    <p><strong>Sense-check the arithmetic.</strong> A ₹1.5 crore 3BHK at 2.2% gross generates roughly <strong>₹27,500/month</strong> before maintenance, vacancy and management — consistent with the observed ₹12,000–35,000 band. Net of costs that is a <strong>~1.5–2.0% net yield</strong>. Against home loan rates of 7.15–7.35%, <strong>a leveraged buy-to-let in this corridor is materially cash-flow negative.</strong></p>
+
+    <div class="cards">
+      <div class="card">
+        <h6>Implication 1</h6>
+        <ul><li><strong>Investor messaging built on rental yield will not survive a spreadsheet.</strong> The investor case here is appreciation — and appreciation is the argument Phase 1 established this product should not be leading with.</li></ul>
+      </div>
+      <div class="card">
+        <h6>Implication 2</h6>
+        <ul><li><strong>The 2BHK community is the only segment where rental economics are arguable</strong> — smaller ticket, proportionally higher yield, and a real tenant pool from AIIMS, SRM, NRI Medical College, KIMS and government offices. If any part of this project is sold on rental logic, it is that one.</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="sec-head">
+    <div class="sec-num">§10</div>
+    <div>
+      <h2>Resale considerations</h2>
+      <p class="dek">A resale market demonstrably functions here. What will shape it for a product like this.</p>
+    </div>
+  </div>
+  <div class="body">
+    <p><strong>Evidence a resale market functions:</strong> Jayabheri The Capital (370 units) and Samruddhi Nexa (350 units) both carry dedicated resale listing pages; KMV Vivaan has an active 2,251 sq ft 3BHK resale listing while the project's own entry is quoted from ₹1.3 crore; and three-year locality appreciation of <strong>+34% to +53%</strong> means early buyers in Tadepalli, Poranki and Penamaluru are substantially in the money.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Factor</th><th>Direction</th><th>Reasoning</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Scarcity of the format</strong></td><td class="mk mk-y">Favourable</td><td>If no comparable low-density 25-acre community exists (§5), resale units have no direct substitute — the strongest structural support for resale value</td></tr>
+          <tr><td>Villa segment depth</td><td class="mk mk-y">Favourable</td><td>Villas outperform apartments ~3:1 on appreciation (+8.39% vs +2.99%), and villa supply is capped at ~70 units per scheme corridor-wide</td></tr>
+          <tr><td>Competition from plots</td><td class="mk mk-n">Adverse</td><td>Capital-area plots at ₹23,000–70,000/sq yd compete for the same resale rupee with better pure-appreciation math</td></tr>
+          <tr><td>Premium inventory overhang</td><td class="mk mk-n">Adverse</td><td>National ₹2–5 crore unsold inventory <strong>+43% YoY</strong>; a resale seller competes with developer stock that can offer payment plans and freebies</td></tr>
+          <tr><td>7.5% transaction cost</td><td class="mk mk-n">Adverse</td><td>A resale buyer needs ~7.5% appreciation just to break even on entry costs</td></tr>
+          <tr><td>Guideline-value revision</td><td>Mixed</td><td>Raises recorded values (supports valuation and loan eligibility) but raises buyer cost</td></tr>
+          <tr><td>Post-2028 capital completion</td><td>Unknown</td><td>If the capital's Phase I completes on target (Aug 2028), the corridor's resale story strengthens materially</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The most useful resale observation for phasing</span>
+      <p>A project launching in 2026 and delivering in phases through 2029–30 would see its <strong>first resale cycle coincide with the capital's own Phase I completion.</strong> That is a favourable alignment — and an argument for structuring early phases to attract buyers who will still be <em>holding</em> in 2029, rather than short-horizon investors who will be trying to exit into the same window.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s11">
+  <div class="sec-head">
+    <div class="sec-num">§11</div>
+    <div>
+      <h2>What this revises about Phase 1</h2>
+      <p class="dek">Three refinements. The first changes the project's risk profile.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>11.1 · The premium gap is roughly a third of what Phase 1 estimated</h3>
+    <p>Phase 1 established that ₹500 crore on 25 acres requires a blended <strong>~₹5,900–6,000/sq ft</strong>, and benchmarked that against the <strong>Mangalagiri locality average of ₹4,062</strong> — a required premium of about <strong>45%</strong>.</p>
+    <p><strong>That was the wrong comparator</strong>, and §1 explains why: a locality average blends resale stock, standalone buildings and small units with new gated product. The right comparison is against <em>what comparable product actually achieves</em>.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Benchmark</th><th class="n">Rate</th><th class="n">Required blended vs benchmark</th></tr></thead>
+        <tbody>
+          <tr><td>Mangalagiri locality average <span style="color:var(--ink-3)">← Phase 1's comparator</span></td><td class="n">₹4,062</td><td class="n mk mk-n">+46%</td></tr>
+          <tr><td>Prime Hill Crest — premium 3BHK, Mangalagiri</td><td class="n">₹4,500</td><td class="n">+32%</td></tr>
+          <tr class="col-win"><td><strong>Manjeera Monarch asking</strong> — Mangalagiri</td><td class="n">₹5,100</td><td class="n"><strong>+16%</strong></td></tr>
+          <tr class="col-win"><td><strong>Prime Grandeur villas</strong> — Mangalagiri</td><td class="n">₹5,400</td><td class="n"><strong>+10%</strong></td></tr>
+          <tr><td>Tadepalli villa asking average</td><td class="n">₹5,901</td><td class="n">+1%</td></tr>
+          <tr><td>Vertex Siris Signa — Vijayawada</td><td class="n">₹6,300</td><td class="n mk mk-y">−6%</td></tr>
+          <tr><td>TAG AIRA villas</td><td class="n">₹7,309</td><td class="n mk mk-y">−18%</td></tr>
+          <tr><td>KMV Vivaan villas</td><td class="n">₹8,200</td><td class="n mk mk-y">−27%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Corrected finding</span>
+      <p class="big">The ₹500 crore target requires a blended rate roughly 10–16% above the best comparable product in the same micro-market — and below what premium apartments and villas already achieve elsewhere in the region.</p>
+      <p>That is an ordinary, achievable positioning task. It is not the 45% stretch Phase 1 described. <strong>Phase 1's risk 9.2 — "the premium-pricing gap", rated High impact / High probability — should be downgraded to High impact / Medium probability</strong>, conditional on the project delivering a product that genuinely justifies sitting alongside Vertex and above Manjeera.</p>
+    </div>
+
+    <h3>11.2 · The differentiation argument is now quantified</h3>
+    <p>Phase 1 argued that scale (25 acres vs competitors' 5–7) was the structural differentiator. §5 sharpens it: the real differentiator is not acreage but <strong>density — 16–22 units/acre against a corridor apartment norm of 53–113.</strong> A three-to-five-fold difference, visible on site, and the concrete thing the price premium is <em>for</em>.</p>
+
+    <h3>11.3 · Unit count and sales rate revise down</h3>
+    <p>Phase 1 estimated ~490–700 units and <strong>10–12 bookings/month</strong>. Applying the observed size distribution (§6) to 8.33 lakh sq ft of saleable area gives <strong>≈400–550 units</strong> — the corridor's modal 3BHK and villa are larger than Phase 1 assumed.</p>
+    <div class="cards">
+      <div class="card"><h6>Revised sales task</h6><ul><li>400–550 units over 4–5 years</li><li>80–140 units a year</li><li><strong>7–11 confirmed bookings a month</strong></li></ul></div>
+      <div class="card"><h6>Revised marketing envelope</h6><ul><li>Unchanged at ₹20–25 crore (4–5% of GDV)</li><li>Allowable cost per unit sold rises to <strong>₹3.6–6.2 lakh</strong></li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-head">
+    <div class="sec-num">§12</div>
+    <div>
+      <h2>Indicative price architecture</h2>
+      <p class="dek">Not a pricing recommendation — Phase 3 does that with cost data this phase lacks. This is a feasibility test: does a four-community structure priced against the §4 evidence actually reach ₹500 crore?</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Community</th><th>Product</th><th class="n">Size band</th><th class="n">Area share</th><th class="n">₹/sq ft</th><th class="n">Revenue</th><th class="n">Ticket band</th><th>Benchmarked against</th></tr></thead>
+        <tbody>
+          <tr><td class="n"><strong>A</strong></td><td>2BHK + compact 3BHK</td><td class="n">1,150–1,400</td><td class="n">15%</td><td class="n"><strong>₹5,000</strong></td><td class="n">₹62.5 Cr</td><td class="n">₹58 – 70 L</td><td>Manjeera ₹5,100 · Amaravati Icon ₹5,150</td></tr>
+          <tr><td class="n"><strong>B</strong></td><td>3BHK premium</td><td class="n">1,650–1,950</td><td class="n">30%</td><td class="n"><strong>₹5,400</strong></td><td class="n">₹135 Cr</td><td class="n">₹89 L – 1.05 Cr</td><td>Manjeera ₹5,100 · Prime Grandeur ₹5,400</td></tr>
+          <tr><td class="n"><strong>C</strong></td><td>3.5 / 4BHK premium apartments</td><td class="n">2,300–2,800</td><td class="n">25%</td><td class="n"><strong>₹6,250</strong></td><td class="n">₹130 Cr</td><td class="n">₹1.44 – 1.75 Cr</td><td>Vertex ₹6,300</td></tr>
+          <tr class="col-win"><td class="n"><strong>D</strong></td><td><strong>Villas</strong></td><td class="n">2,800–3,600</td><td class="n">30%</td><td class="n"><strong>₹7,150</strong></td><td class="n"><strong>₹178.8 Cr</strong></td><td class="n">₹2.00 – 2.57 Cr</td><td>TAG AIRA ₹7,309 · below KMV Vivaan ₹8,200</td></tr>
+          <tr class="tot"><td class="n"></td><td>8.33 lakh sq ft saleable</td><td class="n"></td><td class="n">100%</td><td class="n"><strong>₹6,078 blended</strong></td><td class="n"><strong>₹506 Cr</strong></td><td class="n">~400–450 units</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>1 · It closes.</strong> ₹506 crore against a ₹500 crore target, with every rate anchored to a named comparable and <strong>none of them at the top of its band</strong>. Community D at ₹7,150 sits <em>below</em> TAG AIRA and <strong>13% below</strong> KMV Vivaan. Community C at ₹6,250 sits <em>below</em> Vertex Siris Signa. <strong>No community in this structure needs to set a corridor record.</strong></p>
+
+    <p><strong>2 · Community D carries 35% of revenue on 30% of area.</strong> The villa component is the project's economic engine — consistent with Phase 1 — and it is also the component with the thinnest competitive set and the deepest evidence of pricing power.</p>
+
+    <div class="finding">
+      <span class="lbl">3 · The one thing this structure bets on</span>
+      <p class="big">Community D lands squarely in the ₹2.2–2.8 crore gap identified in §3 — between the mid-premium villa cluster that tops out around ₹2.2 crore and the luxury cluster that starts at ₹2.79 crore.</p>
+      <p>That is either the project's best opportunity or its biggest pricing risk, and <strong>the evidence base cannot currently distinguish between the two.</strong> Resolving it is the highest-value item in §15.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s13">
+  <div class="sec-head">
+    <div class="sec-num">§13</div>
+    <div>
+      <h2>Competitive set</h2>
+      <p class="dek">Ranked by how directly each competes — and where each is beatable.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Tier</th><th>Project</th><th>Why it competes</th><th>Where it is beatable</th></tr></thead>
+        <tbody>
+          <tr class="col-win"><td><strong>Direct — villas</strong></td><td><strong>Prime Grandeur</strong><br><span style="color:var(--ink-3);font-size:.9em">Mangalagiri · 10 ac · ₹1.34–1.82 Cr · ₹5,400</span></td><td>The only sizeable villa community in the same micro-market</td><td>Sits below the target villa band; a low-density 25-acre scheme with a full amenity programme outclasses it on masterplan and open space</td></tr>
+          <tr class="col-win"><td><strong>Direct — apartments</strong></td><td><strong>Manjeera Monarch</strong><br><span style="color:var(--ink-3);font-size:.9em">Mangalagiri · 5 ac · 567 units · ₹5,100</span></td><td>Same micro-market, same buyer, ready stock</td><td><strong>113 units/acre.</strong> The density contrast is the single most legible differentiator available</td></tr>
+          <tr><td>Direct — apartments</td><td>Prime Hill Crest<br><span style="color:var(--ink-3);font-size:.9em">1.20 ac · ₹82 L–1.17 Cr</span></td><td>Premium 3BHK on NH-16</td><td>1.2 acres — no community, no amenity scale</td></tr>
+          <tr><td>Benchmark — ceiling</td><td>Vertex Siris Signa<br><span style="color:var(--ink-3);font-size:.9em">Vijayawada · 3 ac · 184 units · ₹6,300</span></td><td>Sets the region's apartment price ceiling</td><td>City-centre; 3 acres cannot offer low-density living</td></tr>
+          <tr><td>Benchmark — villa ceiling</td><td>KMV Vivaan<br><span style="color:var(--ink-3);font-size:.9em">Vijayawada · 10 ac · 66 villas · ₹8,200</span></td><td>Proves ₹8,000+/sq ft is achievable regionally</td><td>East Vijayawada — not a capital-corridor address</td></tr>
+          <tr><td>Scale comparator</td><td>Aparna Amaravati One<br><span style="color:var(--ink-3);font-size:.9em">Tadepalli · 9.29 ac · 612 units · ₹4,000</span></td><td>Largest branded scheme in the corridor; a national developer's benchmark</td><td>Ready since ~2022 and still selling; priced 34% below target — a volume play, not a premium one</td></tr>
+          <tr><td><strong>Indirect — the real one</strong></td><td><strong>CRDA plots</strong><br><span style="color:var(--ink-3);font-size:.9em">₹23,000–70,000/sq yd</span></td><td>Competes for the same rupee with better pure-appreciation math</td><td>Offers no home, no community, no delivery — and no rental or use value</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s14">
+  <div class="sec-head">
+    <div class="sec-num">§14</div>
+    <div>
+      <h2>What carries into Phase 3</h2>
+      <p class="dek">Six usable inputs, five binding constraints.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Established as usable pricing inputs</h3>
+    <ol>
+      <li><strong>Corridor segment bands</strong> — eight segments, each anchored to named RERA-registered projects with derived rates (§4).</li>
+      <li><strong>The premium required is ~10–16% over the best local comparable</strong>, not 45% over a locality average (§11.1).</li>
+      <li><strong>Density is the differentiator, and it is quantified</strong> — 16–22 units/acre against a corridor norm of 53–113 (§5).</li>
+      <li><strong>Villas carry the economics</strong> — the only product type clearing ₹7,000+/sq ft, appreciating ~3× faster than apartments, with no corridor community exceeding ~70 units (§3).</li>
+      <li><strong>A four-community structure priced against real comparables reaches ₹506 crore</strong> with no community needing to set a record (§12).</li>
+      <li><strong>Portal base rates understate realisation by 8–15%</strong> once floor rise, parking, club, corpus and GST are added (§2).</li>
+    </ol>
+
+    <h3>Established as constraints</h3>
+    <ol>
+      <li><strong>Rental yield does not support the premium</strong> — 2.2% in Tadepalli, ~3% at best, against 7.15–7.35% loan rates. Do not sell on rental income except, arguably, in Community A (§9).</li>
+      <li><strong>Absorption is unmeasured and the signals conflict.</strong> Model against the slow case (§8).</li>
+      <li><strong>The ₹2.2–2.8 crore villa band is empty</strong> — opportunity or buyer boundary, currently indistinguishable (§12).</li>
+      <li><strong>The ₹6,300/sq ft apartment ceiling is a Vijayawada city phenomenon.</strong> Importing it into the corridor is Community C's central assumption, and it is unproven (§4).</li>
+      <li><strong>The corridor's best appreciation is east of Vijayawada, not toward the capital</strong> (§7). The capital-adjacency price argument is not yet supported by comparative appreciation data.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="s15">
+  <div class="sec-head">
+    <div class="sec-num">§15</div>
+    <div>
+      <h2>Evidence gaps</h2>
+      <p class="dek">Ten, ranked by what they would change. Each names the source that closes it.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Gap</th><th>Why it matters</th><th>Source that closes it</th></tr></thead>
+        <tbody>
+          <tr class="col-win"><td class="n">1</td><td><strong>Transaction prices vs asking prices</strong></td><td>Every rate here is a published asking or ticket price. Achieved prices are unknown</td><td><strong>IGRS AP registration data by mandal, 24-month series</strong> — the highest-value item on this list</td></tr>
+          <tr class="col-win"><td class="n">2</td><td><strong>Whether the ₹2.2–2.8 Cr villa gap is opportunity or resistance</strong></td><td>Community D's entire pricing rests on it</td><td>Primary buyer research; velocity data from TAG AIRA and Prime Grandeur</td></tr>
+          <tr><td class="n">3</td><td>No 2026 market report covers this corridor</td><td>The only structured demand/supply data is Magicbricks Q3 2024 — pre-relaunch, pre-gazette, pre-guideline-revision</td><td>Commissioned Magicbricks / PropEquity custom cut; Housing.com Research locality data</td></tr>
+          <tr><td class="n">4</td><td>Project-level absorption and velocity</td><td>§8 can only infer. Aparna's four-year sell may mean slow absorption or persistent stale listings</td><td>AP RERA quarterly project sales disclosures; mystery shopping the top six comparables</td></tr>
+          <tr><td class="n">5</td><td>Real corridor supply pipeline</td><td>The "2,500 units in 2025–26" figure is Tier 6, yet would imply this project is 16–22% of two years' supply</td><td>AP RERA registration register filtered by mandal and date</td></tr>
+          <tr><td class="n">6</td><td>Rental depth, not just yield</td><td>Yields are published; tenant volume is not. Community A's rental argument depends on absolute demand from AIIMS / SRM / KIMS / government</td><td>Local letting-agent interviews; institutional staff housing surveys</td></tr>
+          <tr><td class="n">7</td><td>Achieved vs base-rate realisation</td><td>§2 estimates 8–15% uplift from other charges. This directly scales GDV</td><td>Competitor cost sheets obtained through mystery shopping</td></tr>
+          <tr><td class="n">8</td><td>Luxury apartment band (₹6,300–7,000)</td><td>Only Vertex anchors the corridor's apartment ceiling; Community C is priced against a single data point</td><td>Alekhya Grand and comparable 4BHK pricing; Vijayawada high-rise cost sheets</td></tr>
+          <tr><td class="n">9</td><td>Construction cost benchmarks</td><td>Phase 2 establishes revenue. Margin is untested</td><td>Contractor quotations; recent comparable tender awards</td></tr>
+          <tr><td class="n">10</td><td>RERA verification</td><td>RERA numbers are cited from portals, not verified against the authority register</td><td>Direct query of the AP RERA project database</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s16">
+  <div class="sec-head">
+    <div class="sec-num">A</div>
+    <div>
+      <h2>Appendix — every rate, derived</h2>
+      <p class="dek">Reproducible from the stated inputs. This is why the derived bands are preferred over any published locality average.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Project</th><th class="n">Low end</th><th class="n">High end</th><th class="n">Derived low</th><th class="n">Derived high</th><th class="n">Agreement</th></tr></thead>
+        <tbody>
+          <tr><td>Aparna Amaravati One</td><td class="n">₹62.48 L ÷ 1,562</td><td class="n">₹82.00 L ÷ 2,050</td><td class="n">₹4,000</td><td class="n">₹4,000</td><td class="n agree">Exact</td></tr>
+          <tr><td>Sree Amaravati Icon</td><td class="n">₹50.23 L ÷ 1,092</td><td class="n">₹74.98 L ÷ 1,630</td><td class="n">₹4,600</td><td class="n">₹4,600</td><td class="n agree">Exact</td></tr>
+          <tr><td>Prime Grandeur <span style="color:var(--ink-3)">(villas)</span></td><td class="n">₹1.34 Cr ÷ 2,480</td><td class="n">₹1.82 Cr ÷ 3,374</td><td class="n">₹5,403</td><td class="n">₹5,394</td><td class="n agree">0.17%</td></tr>
+          <tr><td>Prime Hill Crest</td><td class="n">₹82.35 L ÷ 1,830</td><td class="n">₹1.17 Cr ÷ 2,605</td><td class="n">₹4,500</td><td class="n">₹4,491</td><td class="n agree">0.19%</td></tr>
+          <tr><td>Vertex Siris Signa</td><td class="n">₹84.73 L ÷ 1,345</td><td class="n">₹1.43 Cr ÷ 2,275</td><td class="n">₹6,300</td><td class="n">₹6,286</td><td class="n agree">0.22%</td></tr>
+          <tr><td>Samruddhi Nexa</td><td class="n">₹67.22 L ÷ 1,769</td><td class="n">₹1.04 Cr ÷ 2,750</td><td class="n">₹3,800</td><td class="n">₹3,782</td><td class="n agree">0.48%</td></tr>
+          <tr><td>KMV Vivaan <span style="color:var(--ink-3)">(villas)</span></td><td class="n">₹3.00 Cr ÷ 3,652</td><td class="n">₹3.80 Cr ÷ 4,594</td><td class="n">₹8,215</td><td class="n">₹8,272</td><td class="n agree">0.69%</td></tr>
+          <tr><td>Manjeera Monarch</td><td class="n">₹91.22 L ÷ 1,567</td><td class="n">₹1.12 Cr ÷ 1,954</td><td class="n">₹5,821</td><td class="n">₹5,732</td><td class="n conflict">1.56% — vs ₹5,100 stated asking</td></tr>
+          <tr><td>Sai Bharathi Capital Edge</td><td class="n">₹47.88 L ÷ 1,260</td><td class="n">—</td><td class="n">₹3,800</td><td class="n">—</td><td class="n">single point</td></tr>
+          <tr><td>Sri Hari Kousthubham</td><td class="n">₹4,500 × 1,611 = ₹72.5 L</td><td class="n">× 2,007 = ₹90.3 L</td><td class="n">₹4,500</td><td class="n">₹4,500</td><td class="n">stated rate</td></tr>
+          <tr><td>Jayabheri The Capital</td><td class="n">₹92 L ÷ 1,840</td><td class="n">—</td><td class="n">₹5,000</td><td class="n">—</td><td class="n">entry only</td></tr>
+          <tr><td>TAG AIRA <span style="color:var(--ink-3)">(villas)</span></td><td class="n">₹2.79 Cr ÷ 3,817</td><td class="n">—</td><td class="n">₹7,309</td><td class="n">—</td><td class="n">single listing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <p class="big">Seven of the eight projects that publish both ends of a price range show internal agreement within 0.7% between the two independently derived rates.</p>
+      <p>Only Manjeera Monarch conflicts. That internal consistency is the main reason to trust the derived bands in §4 over any published locality average.</p>
+    </div>
+  </div>
+</section>
+
+<div class="close">
+  <p>Phase 2 of a multi-part assignment. Phase 1 established the corridor evidence base and the micro-location; this phase establishes segment-level pricing and product evidence. Positioning, audience definition, product mix, pricing strategy, channel and creative follow — constrained by both.</p>
+</div>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var tip = document.createElement('div');
+  tip.className = 'tip';
+  tip.setAttribute('role','status');
+  document.body.appendChild(tip);
+
+  function show(row, e){
+    var name = row.querySelector('b') ? row.querySelector('b').textContent : '';
+    var val  = row.querySelector('.lval') || row.querySelector('.dval');
+    var head = name + (val ? ' · ' + val.textContent.trim() : '');
+    var t = row.dataset.ticket ? '<span class="t2">Ticket: ' + row.dataset.ticket + '</span>' : '';
+    tip.innerHTML = '<strong>' + head + '</strong>' + t + '<span class="t2">' + row.dataset.tip + '</span>';
+    tip.classList.add('on');
+    var r = row.getBoundingClientRect();
+    var x = (e && e.clientX ? e.clientX : r.left + r.width/2);
+    var tr = tip.getBoundingClientRect();
+    var left = Math.min(Math.max(8, x - tr.width/2), window.innerWidth - tr.width - 8);
+    tip.style.left = (left + window.scrollX) + 'px';
+    tip.style.top  = (r.top + window.scrollY - tr.height - 8) + 'px';
+  }
+  function hide(){ tip.classList.remove('on'); }
+
+  document.querySelectorAll('.lrow, .drow').forEach(function(row){
+    if(!row.dataset.tip) return;
+    row.tabIndex = 0;
+    row.addEventListener('mousemove', function(e){ show(row, e); });
+    row.addEventListener('mouseleave', hide);
+    row.addEventListener('focus', function(){ show(row, null); });
+    row.addEventListener('blur', hide);
+  });
+  window.addEventListener('scroll', hide, {passive:true});
+})();
+</script>

@@ -32,7 +32,7 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 
 | # | Document | Status |
 | --- | --- | --- |
-| 2 | [`02-residential-market.md`](02-residential-market.md) — segment-level pricing & product evidence | **Complete** |
+| 2 | [`02-residential-market.md`](02-residential-market.md) — segment-level pricing & product evidence (also [`.html`](02-residential-market.html)) | **Complete** |
 | 3 | Positioning, audience and product mix | Not started |
 | 4 | Pricing and commercial model | Not started |
 | 5 | Channel, performance and creative strategy | Not started |
