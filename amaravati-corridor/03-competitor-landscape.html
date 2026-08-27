@@ -1,0 +1,1015 @@
+<title>Amaravati Positioning Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style>
+<style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style>
+<style>
+/* ---------- carried: confidence chips ---------- */
+.conf{font-family:var(--f-mono);font-size:.62rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  padding:.13rem .42rem;border-radius:3px;white-space:nowrap;display:inline-block;border:1px solid transparent;line-height:1.5}
+.conf-h{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.conf-m{background:transparent;color:var(--brand);border-color:var(--brand)}
+.conf-l{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+.gapband{background:var(--accent-soft)}
+tbody tr:hover .gapband{background:var(--accent-soft);filter:brightness(.97)}
+
+/* ---------- Phase 3: positioning map ---------- */
+.mapwrap{position:relative;padding:1.6rem 0 0 3.2rem}
+.plot{position:relative;width:100%;aspect-ratio:1.45/1;min-height:20rem;
+  border-left:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2);background:var(--chart-surface)}
+.gl{position:absolute;left:0;right:0;border-top:1px dashed var(--rule);pointer-events:none}
+.gv{position:absolute;top:0;bottom:0;border-left:1px dashed var(--rule);pointer-events:none}
+.zone{position:absolute;border:1.5px dashed var(--emphasis);border-radius:6px;background:var(--accent-soft);opacity:.55;pointer-events:none}
+.zone-lbl{position:absolute;font-family:var(--f-mono);font-size:.65rem;color:var(--accent);letter-spacing:.04em;pointer-events:none;line-height:1.35}
+.pt{position:absolute;transform:translate(-50%,-50%);cursor:default}
+.dot{width:.72rem;height:.72rem;border-radius:50%;background:var(--series);display:block;transition:transform .15s ease}
+.dot.villa{background:transparent;border:2px solid var(--series)}
+.dot.mixed{background:var(--series);box-shadow:0 0 0 2px var(--chart-surface),0 0 0 3.5px var(--series)}
+.dot.subject{width:.95rem;height:.95rem;background:transparent;border:2px dashed var(--emphasis)}
+.pt:hover .dot,.pt:focus-visible .dot{transform:scale(1.35)}
+.pl{position:absolute;left:50%;transform:translateX(-50%);top:1.05rem;white-space:nowrap;max-width:11rem;
+  font-family:var(--f-mono);font-size:.63rem;color:var(--ink-2);line-height:1.3;text-align:center}
+.pl.up{top:auto;bottom:1.05rem}
+.pl.lft{left:auto;right:1rem;top:-.35rem;transform:none;text-align:right}
+.pl.rgt{left:1rem;right:auto;top:-.35rem;transform:none;text-align:left}
+.pl b{color:var(--ink);font-weight:600;display:block}
+.axl-x{margin-left:3.2rem;display:flex;justify-content:space-between;padding-top:.4rem;
+  font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.axt-x{margin-left:3.2rem;text-align:center;font-family:var(--f-mono);font-size:.66rem;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);padding-top:.7rem}
+.axt-y{position:absolute;left:0;top:1.6rem;bottom:0;width:3rem;
+  font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.axt-y span{position:absolute;right:.45rem;transform:translateY(-50%);white-space:nowrap}
+.ylabel{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:.5rem}
+
+/* ---------- crowding bars ---------- */
+.crow{display:grid;grid-template-columns:minmax(8.5rem,13rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.crow:hover{background:var(--surface-2)}
+.cname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.cname b{display:block;color:var(--ink);font-weight:600}
+.ctrack{height:1.4rem;display:flex;align-items:center;gap:.55rem}
+.cfill{height:.95rem;border-radius:0 4px 4px 0;background:var(--series);flex:none}
+.cfill.villa{background:transparent;border:1.5px solid var(--series);border-left:0;box-sizing:border-box}
+.cval{font-family:var(--f-mono);font-size:.77rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.cval .u{color:var(--ink-3);font-weight:400}
+.csplit{display:flex;align-items:center;gap:.6rem;margin:1rem 0 .3rem;padding-top:.7rem;border-top:1px solid var(--rule);
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.85rem;margin:1.4rem 0}
+.tile{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.tile .k{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.45rem}
+.tile .v{font-family:var(--f-display);font-size:1.85rem;font-weight:600;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.tile .v small{font-size:.9rem;font-weight:400;color:var(--ink-3);font-family:var(--f-body)}
+.tile .n{font-size:.79rem;color:var(--ink-2);margin:.5rem 0 0;line-height:1.45}
+.tile.accent{border-left:3px solid var(--accent)}
+
+.verdict{font-family:var(--f-mono);font-size:.68rem;font-weight:500;letter-spacing:.05em;white-space:nowrap}
+.v-no{color:var(--accent)}
+.v-yes{color:var(--good)}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">
+    Phase 3 of 4
+    <strong>Competitor Field</strong>
+  </div>
+  <div class="toc">
+    <a href="#s0"><span class="n">§0</span><span>Method &amp; corrections</span></a>
+    <a href="#s1"><span class="n">§1</span><span>The screen</span></a>
+    <a href="#s2"><span class="n">§2</span><span>Competitor profiles</span></a>
+    <a href="#s3"><span class="n">§3</span><span>The positioning map</span></a>
+    <a href="#s4"><span class="n">§4</span><span>Where it's crowded</span></a>
+    <a href="#s5"><span class="n">§5</span><span>The white space</span></a>
+    <a href="#s6"><span class="n">§6</span><span>Digital landscape</span></a>
+    <a href="#s7"><span class="n">§7</span><span>Carry-forward</span></a>
+    <a href="#s8"><span class="n">§8</span><span>Evidence gaps</span></a>
+  </div>
+  <div>
+    <h4>Map legend</h4>
+    <div class="legend-stack" style="gap:.5rem">
+      <span style="display:inline-flex;align-items:center;gap:.5rem;font-size:.76rem;color:var(--ink-2)"><span class="dot" style="flex:none"></span> Apartments</span>
+      <span style="display:inline-flex;align-items:center;gap:.5rem;font-size:.76rem;color:var(--ink-2)"><span class="dot villa" style="flex:none"></span> Villas</span>
+      <span style="display:inline-flex;align-items:center;gap:.5rem;font-size:.76rem;color:var(--ink-2)"><span class="dot mixed" style="flex:none;margin:0 .12rem"></span> Both</span>
+      <span style="display:inline-flex;align-items:center;gap:.5rem;font-size:.76rem;color:var(--ink-2)"><span class="dot subject" style="flex:none"></span> Hypothetical</span>
+    </div>
+  </div>
+  <div>
+    <h4>Screened in</h4>
+    <p style="font-size:.76rem;line-height:1.5;color:var(--ink-3);margin:0;max-width:none">
+      <strong style="color:var(--ink-2)">11 of 300+</strong> listed projects overlap on four or more of six dimensions. Four overlap on all six.
+    </p>
+  </div>
+</nav>
+
+<main class="main">
+<header class="masthead">
+  <p class="eyebrow">Competitor landscape · Vijayawada–Mangalagiri–Guntur</p>
+  <h1>Who actually competes, and what is left unoccupied</h1>
+  <p class="sub">Eleven projects clear the screen. Four white spaces survive a defensibility test. Three earlier conclusions do not.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 3 of 4</span>
+    <span><strong>Screened</strong> 11 of 300+</span>
+    <span><strong>Corrections</strong> 3</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> Competitive analysis for a hypothetical 25-acre, ₹500 crore, four-community development. Nothing here describes an actual KMV Spaces project. Named third-party projects are analysed as public market comparables using published information.
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head">
+    <div class="sec-num">§0</div>
+    <div>
+      <h2>Method, and three corrections that come first</h2>
+      <p class="dek">Phase 3 research contradicted three conclusions from earlier phases. All three trace to the same error.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="finding">
+      <span class="lbl">The error</span>
+      <p class="big">I searched project-by-project rather than developer-by-developer. Large townships list on portals as several separately-named projects, which masks their true scale.</p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:3.5rem"></th><th>Earlier conclusion</th><th>What the evidence actually shows</th></tr></thead>
+        <tbody>
+          <tr><td class="mk mk-n">✕</td><td><strong>Phase 1 §8:</strong> "Large integrated townships — none identified at 25+ acres"</td><td><strong>Raintree Park Dwaraka Krishna is a 120-acre integrated township</strong> (118.41 ac per one source) with <strong>3,300 planned apartments</strong>, by <strong>IJM Lingamaneni</strong> — a JV of IJM (India) Infrastructure (Malaysia's IJM Corporation) and LEPL Projects. Phase 1 alone delivered <strong>964 flats + 116 villas, ~₹285 crore</strong>. Missed because its phases list as "Phase 1", "Willows Grande", "Phase 3", "Villas 26", "Villas 64"</td></tr>
+          <tr><td class="mk mk-n">✕</td><td><strong>Phase 2 §3:</strong> "No villa community above ~70 units was found"</td><td><strong>Prime Grandeur has 119 villas</strong> on 10 acres in Mangalagiri; <strong>RTPDK Phase 1 delivered 116</strong>. The villa segment is less thin than reported</td></tr>
+          <tr><td class="mk mk-n">✕</td><td><strong>Phase 2 §4:</strong> Villa ceiling ₹8,300/sq ft</td><td><strong>IJM Villas 64: from ₹3.75 crore</strong> for 3,697–7,242 sq ft → derived entry <strong>₹10,143/sq ft</strong>. The ceiling is above ₹10,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <span class="lbl">What the corrections change — and what they don't</span>
+      <p>They remove three claims from the white-space argument: <em>largest project</em>, <em>lowest density</em>, and <em>thin villa supply</em>. They do <strong>not</strong> damage the commercial case. Correction 3 makes the Phase 2 price architecture materially <em>more</em> conservative — Community D at ₹7,150/sq ft now sits <strong>29% below a proven corridor ceiling</strong> rather than 13%. The real white space, restated in §5, is narrower and more defensible than the one Phase 1 described.</p>
+    </div>
+
+    <h3>The screen</h3>
+    <p>There are 300+ residential projects listed across portals in this catchment. Almost none compete with a 25-acre, ₹500 crore, four-community development. A competitor here overlaps on <strong>at least four of six dimensions</strong>:</p>
+    <div class="cards">
+      <div class="card"><h6>Location</h6><ul><li>Within the Vijayawada–Mangalagiri–Guntur triangle or the capital area</li></ul></div>
+      <div class="card"><h6>Price</h6><ul><li>Overlapping the ₹5,000–7,200/sq ft realisation band</li></ul></div>
+      <div class="card"><h6>Product</h6><ul><li>Villas, or premium apartments above ₹5,000/sq ft, or both</li></ul></div>
+      <div class="card"><h6>Audience</h6><ul><li>End-user family, upgrade buyer, or NRI</li></ul></div>
+      <div class="card"><h6>Scale</h6><ul><li>5+ acres, or 50+ villas, or 300+ units</li></ul></div>
+      <div class="card"><h6>Lifestyle</h6><ul><li>Sells community, masterplan and amenity — not just a flat</li></ul></div>
+    </div>
+
+    <h3>Evidence quality for this phase</h3>
+    <p>Competitor intelligence is the weakest evidence class in the assignment, and the grading is correspondingly harsh.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>What</th><th>Source</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>Scale, configuration, RERA</td><td>Developer sites + multiple portals, cross-checked</td><td><span class="conf conf-h">High</span></td></tr>
+          <tr><td>Pricing</td><td>Published ticket ranges, derived per Phase 2 convention</td><td><span class="conf conf-m">Medium-high</span></td></tr>
+          <tr><td>Positioning &amp; brand promise</td><td>Developers' own sites and taglines</td><td><span class="conf conf-h">High</span> — it is what they say</td></tr>
+          <tr><td>Digital footprint</td><td>Observable microsites, portals, social handles</td><td><span class="conf conf-m">Medium</span> — presence observed, <em>performance</em> not measurable</td></tr>
+          <tr><td>Lead generation</td><td>Inferred from observed channel infrastructure</td><td><span class="conf conf-l">Low-medium</span> — inference</td></tr>
+          <tr><td>Reviews &amp; perception</td><td>Portal aggregations, MouthShut, Justdial</td><td><span class="conf conf-l">Low</span> — small, self-selected samples</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>No competitor ad-library, traffic, spend or CRM data was obtainable.</strong> Statements about digital <em>performance</em> are inference from observable infrastructure, and are labelled as such.</p>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">§1</div>
+    <div>
+      <h2>The screen</h2>
+      <p class="dek">Eleven clear it. Why the rest don't is itself a finding.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Project</th><th>Developer</th><th class="n">Overlap</th></tr></thead>
+        <tbody>
+          <tr class="col-win"><td class="n">1</td><td><strong>Raintree Park Dwaraka Krishna</strong></td><td>IJM Lingamaneni (IJM + LEPL)</td><td class="n"><strong>6/6</strong></td></tr>
+          <tr class="col-win"><td class="n">2</td><td><strong>IJM Villas 64</strong></td><td>IJM Lingamaneni</td><td class="n"><strong>6/6</strong></td></tr>
+          <tr class="col-win"><td class="n">3</td><td><strong>Prime Grandeur</strong></td><td>Prime Constructions</td><td class="n"><strong>6/6</strong></td></tr>
+          <tr class="col-win"><td class="n">4</td><td><strong>Srivalli Pravas</strong></td><td>Undavalli Constructions</td><td class="n"><strong>6/6</strong></td></tr>
+          <tr><td class="n">5</td><td>Manjeera Monarch</td><td>Manjeera Constructions</td><td class="n">5/6</td></tr>
+          <tr><td class="n">6</td><td>Jayabheri The Capital</td><td>Jayabheri Group</td><td class="n">5/6</td></tr>
+          <tr><td class="n">7</td><td>Grand Project Capitol</td><td>Kalidindi Real Konsult</td><td class="n">5/6</td></tr>
+          <tr><td class="n">8</td><td>KMV Vivaan</td><td>KMV Spaces</td><td class="n">5/6</td></tr>
+          <tr><td class="n">9</td><td>Aparna Amaravati One</td><td>Aparna Constructions</td><td class="n">4/6</td></tr>
+          <tr><td class="n">10</td><td>TAG AIRA</td><td>TAG Projects</td><td class="n">4/6</td></tr>
+          <tr><td class="n">11</td><td>CRDA plots</td><td><em>category</em></td><td class="n">2/6 — <em>included: same rupee</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Screened out — and what that tells us</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Screened out</th><th>Why</th><th>What it still tells us</th></tr></thead>
+        <tbody>
+          <tr><td>Sree Amaravati Icon (315), Samruddhi Nexa (350), Sai Bharathi, Raintree Ph2/Ph3, Prime Hill Crest</td><td>₹3,800–4,600/sq ft — a full tier below the band</td><td>They compete <strong>only for Community A</strong> — and there are many of them (§4)</td></tr>
+          <tr><td>Golden Villas (50), IJM Villas 26 (26), Belmont Villas, Anvi Homes (40)</td><td>Sub-scale villa enclaves; no mixed proposition</td><td>The villa market is <strong>fragmented into small enclaves</strong></td></tr>
+          <tr><td>Vertex Siris Signa</td><td>3 acres, city centre — cannot offer low density</td><td>Retained as the <strong>apartment price ceiling benchmark</strong></td></tr>
+          <tr><td>Alekhya Grand, SLV, AR Homes, Himaja, OSV, SRK SreeCity</td><td>Sub-scale, wrong product, or plots only</td><td>The corridor's long tail</td></tr>
+          <tr><td>Gannavaram-belt projects</td><td>Wrong side of Vijayawada; ₹3,100–5,200 cannot reach the band</td><td>Different market</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <p class="big">Of 300+ listed projects, eleven compete — and of those, four overlap on all six dimensions. The corridor is crowded at the bottom and thin at the top.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">§2</div>
+    <div>
+      <h2>Competitor profiles</h2>
+      <p class="dek">The four six-of-six competitors in full; the rest by what makes them matter.</p>
+    </div>
+  </div>
+  <div class="body">
+
+    <h3>Raintree Park Dwaraka Krishna — the one that changes the analysis</h3>
+    <div class="tw">
+      <table>
+        <tbody>
+          <tr><th style="width:11rem">Developer</th><td>IJM Lingamaneni Township Pvt Ltd — JV of <strong>IJM (India) Infrastructure</strong> (Malaysia's IJM Corporation) and <strong>LEPL Projects</strong> (Vijayawada, founded 1983; owns LEPL Icon Mall and LEPL Centro)</td></tr>
+          <tr><th>Scale</th><td><strong>120 acres · 3,300 planned apartments</strong> plus villa enclaves. Phase 1 delivered <strong>964 flats + 116 villas, ~₹285 crore</strong>, 2008–2012</td></tr>
+          <tr><th>Product &amp; price</th><td>Apartments ~₹3,900/sq ft → villas ₹10,143/sq ft. Tickets ₹50 L – ₹3.75 Cr+</td></tr>
+          <tr><th>Positioning</th><td><em>"International class integrated township"</em> — the only project in the corridor entitled to the word</td></tr>
+          <tr><th>Digital</th><td>ijmprop.com · lepl.in · <strong>villas64.in and villas64.com</strong> as separate microsites. Heavy portal syndication. Broker pages rank on its own project names</td></tr>
+          <tr><th>Content</th><td>Minimal — product pages, no narrative, no blog</td></tr>
+          <tr><th>Strengths</th><td>Unmatched scale; the corridor's only <em>delivered</em> township; mature landscaping new projects cannot fake; institutional balance sheet; a full ₹50 L–₹3.75 Cr ladder</td></tr>
+          <tr><th>Weakness</th><td><strong>The ladder is never told as a ladder.</strong> Five project names, five microsites, 18 years apart. A buyer does not experience one community</td></tr>
+          <tr><th>Positioning gap</th><td>Sells "international standards" and "luxury" — both generic. Does not own the one thing only it can claim: <em>the corridor's only proven township, with 18 years of delivery behind it</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Why it matters most:</strong> it invalidates any lazy "we're the only integrated community" claim. Positioning that ignores Raintree Park will be dismantled by the first informed buyer or channel partner.</p>
+
+    <h3>IJM Villas 64 — the price ceiling</h3>
+    <div class="tw">
+      <table>
+        <tbody>
+          <tr><th style="width:11rem">Scale</th><td><strong>33.69 acres · 64 villas · 1.9 units per acre</strong></td></tr>
+          <tr><th>Product</th><td>3 &amp; 4 BHK, <strong>3,697–7,242 sq ft</strong> — multi-level, double-height lounges, home theatres, private terraces</td></tr>
+          <tr><th>Price</th><td><strong>From ₹3.75 crore</strong> → derived entry <strong>₹10,143/sq ft</strong>. RERA P07120073027 · CRDA · SBI/HDFC/ICICI</td></tr>
+          <tr><th>Positioning</th><td><em>"A private enclave of just 64 homes"</em> — scarcity, explicitly. <em>"International construction standards to the Guntur–Vijayawada corridor"</em></td></tr>
+          <tr><th>Digital</th><td>The corridor's most deliberate setup: <strong>two dedicated domains</strong>, price-led page titles ("₹3.75 cr Onwards"), and campaign landers under <code>/l/</code> paths — a structure consistent with paid traffic <em>(inferred)</em></td></tr>
+          <tr><th>Strengths</th><td>Owns the top of the market outright; the density and scarcity story is real and unmatched</td></tr>
+          <tr><th>Weaknesses</th><td>₹3.75 Cr floor excludes almost the entire corridor buyer base; 64 units means thin resale liquidity; copy is generic luxury boilerplate</td></tr>
+          <tr><th>Marketing gap</th><td><strong>No proof layer</strong> — no construction updates, no owner stories, no delivery evidence, despite the parent's genuine 18-year local record being its strongest available asset</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Villas 64 sets the ceiling and takes the top slice. It does <strong>not</strong> compete for a ₹2.0–2.6 crore buyer — it is nearly double. Its existence <em>raises</em> the credible ceiling for everyone below.</p>
+
+    <h3>Prime Grandeur — the most direct competitor</h3>
+    <div class="tw">
+      <table>
+        <tbody>
+          <tr><th style="width:11rem">Developer</th><td>Prime Constructions / Prime Group — established <strong>1995</strong>, Hyderabad and Vijayawada</td></tr>
+          <tr><th>Scale &amp; location</th><td><strong>Mangalagiri</strong> — the Phase 1 recommended micro-location. <strong>10 acres · 119 villas · 11.9 per acre</strong></td></tr>
+          <tr><th>Product &amp; price</th><td>3 &amp; 4 BHK villas, 2,480–3,374 sq ft. <strong>₹1.34–1.82 Cr</strong> → <strong>₹5,394–5,403/sq ft</strong> (both ends agree within 0.2%). RERA P07120050381</td></tr>
+          <tr><th>Digital</th><td><strong>Thin.</strong> No dedicated microsite found; portal-dependent; no content programme; no distinctive advertising line</td></tr>
+          <tr><th>Strengths</th><td><strong>Owns the ₹1.3–1.8 Cr villa band in the exact target micro-market.</strong> 30 years of local operation. Villa scale</td></tr>
+          <tr><th>Weaknesses</th><td>Priced ~₹1,750/sq ft below the target band — competes on value, not experience; standard amenity set; invisible outside portals</td></tr>
+          <tr><th>Positioning gap</th><td>119 villas is genuinely notable here and <strong>it does not say so.</strong> Occupies the most contested villa band with no defensible story</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The most direct threat — and simultaneously the clearest demonstration of the corridor's marketing weakness: <strong>a well-priced 10-acre, 119-villa community in the target micro-market, with essentially no brand.</strong></p>
+
+    <h3>Srivalli Pravas (Undavalli) — the competitor to watch</h3>
+    <div class="tw">
+      <table>
+        <tbody>
+          <tr><th style="width:11rem">Developer</th><td>Undavalli Constructions, founded <strong>2013</strong>, Vijayawada — describes itself as a real-estate-tech company</td></tr>
+          <tr><th>Location</th><td><strong>Kaza Toll Plaza, NH-16</strong> — the Western Bypass terminus identified in Phase 1</td></tr>
+          <tr><th>Scale</th><td><strong>9 acres · 702 units · 78 per acre</strong></td></tr>
+          <tr><th>Product &amp; price</th><td>2, 3, 4 BHK and duplex — 1,200 to 3,895 sq ft. <strong>₹54 L – ₹1.85 Cr</strong>, ~₹4,500/sq ft. RERA P07270030008</td></tr>
+          <tr><th>Amenities</th><td><strong>38,000 sq ft clubhouse</strong> — gym, convention hall, guest rooms; pool, jogging tracks, box cricket, squash, library, grocery</td></tr>
+          <tr><th>Digital</th><td>undavalliconstructions.com + <strong>dedicated microsite srivallipravas.com</strong>; active Facebook with video; founder-led LinkedIn presence</td></tr>
+          <tr><th>Strengths</th><td><strong>The closest existing analogue to the ladder concept</strong> — one address, 2BHK through duplex. Genuinely differentiated amenity scale. A real microsite. Founder visibility</td></tr>
+          <tr><th>Weaknesses</th><td><strong>78 units/acre</strong> — the amenity story is delivered at high density, so open space is bought with clubhouse square footage rather than land. No villa product. Short delivery record</td></tr>
+          <tr><th>Positioning gap</th><td>The ladder exists in the product but is <strong>not the story</strong> — sold as "luxury apartments", not as a community you can move within</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <p class="big">Undavalli has stumbled into the product ladder without articulating it. If they name that idea — and add villas — the strongest white space in §5 narrows sharply.</p>
+      <p><strong>They are the competitor to watch, not Aparna.</strong></p>
+    </div>
+
+    <h3>The rest, by what makes them matter</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Project</th><th>Scale &amp; price</th><th>Positioning</th><th>The thing that matters</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Manjeera Monarch</strong><br><span style="color:var(--ink-3);font-size:.9em">Manjeera Constructions</span></td><td>Mangalagiri · 5 ac · 567 units · <strong>113/acre</strong> · ₹5,100/sq ft</td><td>Premium mixed-use at "the epicentre of the highway"; includes retail and hospitality</td><td><strong>The most instructive reviews in the set.</strong> Safety 4/5 and praise for power/water — but residents report <em>"the area advertised is not what residents actually get"</em> (super-built-up including corridors), no local market, no medical facility, and developer-level satisfaction described as <em>"very low"</em>. Its own project page is an <strong>agent-built microsite</strong>, not the developer's</td></tr>
+          <tr><td><strong>Jayabheri The Capital</strong><br><span style="color:var(--ink-3);font-size:.9em">Jayabheri Group, est. 1987</span></td><td>Tadepalli · 7 ac · 375 units · 54/acre · ₹5,000–5,006/sq ft <span class="agree">✓</span></td><td><em>"We are future ready"</em> — design-led; deepest amenity list in the apartment set</td><td><strong>The only developer running a consistent owned-content programme.</strong> Strongest brand in the corridor. But it is completed and trading resale, so it competes as a <em>comparable</em>, not a rival — and "unfulfilled amenity promises" is a dangerous complaint for an amenity-led brand</td></tr>
+          <tr><td><strong>Aparna Amaravati One</strong><br><span style="color:var(--ink-3);font-size:.9em">Aparna Constructions, ~30 yrs</span></td><td>Tadepalli · 9.29 ac · 612 units · 66/acre · ₹4,000/sq ft <span class="agree">✓</span></td><td><em>"Building Dreams. Creating Memories. Bringing People Together."</em> — "a sustainable balance between affordability and luxury"</td><td><strong>≈30% occupancy while ready-to-move.</strong> Rated 4.3 (71 reviews) and 4.4 (49) — good on paper — alongside reports of poor maintenance, wall cracks, seepage, a Dec-2021 handover incomplete in Dec-2022, and an allegation the company removed itself from Google reviews. <strong>The corridor's clearest evidence of slow premium absorption</strong></td></tr>
+          <tr><td><strong>Grand Project Capitol</strong><br><span style="color:var(--ink-3);font-size:.9em">Kalidindi Real Konsult</span></td><td>Mangalagiri, beside NRI Hospital · 6.9 ac · 658 units · <strong>95/acre</strong> · from ₹56.55 L</td><td><em>"68% open spaces with greenery, only 32% construction"</em></td><td><strong>Proves the open-space message works here</strong> — someone already found it worth leading with. But 68% open space at 95 units/acre is achieved by building tall on a small footprint: defensible technically, vulnerable experientially</td></tr>
+          <tr><td><strong>KMV Vivaan</strong><br><span style="color:var(--ink-3);font-size:.9em">KMV Spaces</span></td><td>East Vijayawada · 10 ac · 66 villas + tower · ₹8,214–8,271/sq ft · ₹3.0–3.8 Cr</td><td><strong>India's first Net Zero Energy residential villa community</strong> — IGBC certified; rooftop solar at 100% of annual consumption</td><td>Not a location competitor — but it holds <strong>the only certified sustainability differentiator in the entire set</strong>, and proves a certified environmental claim can support ₹8,000+/sq ft</td></tr>
+          <tr><td><strong>TAG AIRA</strong><br><span style="color:var(--ink-3);font-size:.9em">TAG Projects</span></td><td>Pedda Kakani · 55 G+2 triplex villas · ₹7,309/sq ft · ₹2.79 Cr</td><td><strong>AI-enabled smart villas</strong> — smart lighting, voice control, EV charging, rainwater harvesting, waste treatment</td><td><strong>The nearest competitor to Community D</strong>, and the one occupying the technology-and-sustainability territory. But 55 units is sub-scale for community life, and "AI-enabled" ages quickly</td></tr>
+          <tr><td><strong>CRDA plots</strong><br><span style="color:var(--ink-3);font-size:.9em">category competitor</span></td><td>₹23,000–70,000/sq yd · 900+ listings</td><td>Land ownership, appreciation, no delivery risk</td><td>A ₹2 crore villa decision here is frequently made <strong>against a ₹2 crore plot</strong>, not against another villa. An entire broker SEO ecosystem serves it</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">§3</div>
+    <div>
+      <h2>The positioning map</h2>
+      <p class="dek">Price against density — the two dimensions on which every competitor is publicly measurable, and the two that a finished project cannot change.</p>
+    </div>
+  </div>
+  <div class="body">
+
+    <div class="figure">
+      <div class="figure-head">
+        <span class="kicker">Figure 1 · The field</span>
+        <h5>Where every screened competitor sits, and what is left empty</h5>
+        <p class="sub">Realisation rate against homes per acre. Ten projects where both are published, plus the hypothetical scheme.</p>
+      </div>
+      <div class="ylabel">← fewer homes per acre</div>
+      <div class="tw" style="border:0;background:transparent;margin:0">
+      <div class="mapwrap" style="min-width:33rem" id="pmap">
+        <div class="axt-y">
+          <span style="top:1.6%">2</span><span style="top:25%">30</span><span style="top:50%">60</span><span style="top:75%">90</span><span style="top:100%">120</span>
+        </div>
+        <div class="plot">
+          <div class="gl" style="top:25%"></div><div class="gl" style="top:50%"></div><div class="gl" style="top:75%"></div>
+          <div class="gv" style="left:21.4%"></div><div class="gv" style="left:50%"></div><div class="gv" style="left:78.6%"></div>
+
+          <div class="zone" style="left:30%;top:6%;width:26%;height:26%"></div>
+          <div class="zone-lbl" style="left:30%;top:-1.1rem">unoccupied: mixed product,<br>low density, mid-premium rate</div>
+
+          <div class="pt" style="left:22.9%;top:94.5%" tabindex="0" data-tip="Mangalagiri · 5 ac · 567 units · apartments · the densest in the set"><span class="dot"></span><span class="pl up"><b>Manjeera Monarch</b>₹5,100 · 113/ac</span></div>
+          <div class="pt" style="left:15.7%;top:79.5%" tabindex="0" data-tip="Mangalagiri · 6.9 ac · 658 units · claims 68% open space"><span class="dot"></span><span class="pl rgt"><b>Grand Project Capitol</b>~₹4,600 · 95/ac</span></div>
+          <div class="pt" style="left:14.3%;top:65%" tabindex="0" data-tip="Kaza, NH-16 · 9 ac · 702 units · 38,000 sq ft clubhouse"><span class="pl rgt"><b>Srivalli Pravas</b>₹4,500 · 78/ac</span><span class="dot"></span></div>
+          <div class="pt" style="left:7.1%;top:54.9%" tabindex="0" data-tip="Tadepalli · 9.29 ac · 612 units · ~30% occupancy while ready"><span class="dot"></span><span class="pl"><b>Aparna Amaravati One</b>₹4,000 · 66/ac</span></div>
+          <div class="pt" style="left:40%;top:51.1%" tabindex="0" data-tip="Vijayawada city · 3 ac · 184 units · sets the apartment price ceiling"><span class="dot"></span><span class="pl rgt"><b>Vertex Siris Signa</b>₹6,300 · 61/ac</span></div>
+          <div class="pt" style="left:21.4%;top:44.7%" tabindex="0" data-tip="Tadepalli · 7 ac · 375 units · completed, now trading resale"><span class="dot"></span><span class="pl"><b>Jayabheri The Capital</b>₹5,000 · 54/ac</span></div>
+          <div class="pt" style="left:5.7%;top:22.9%" tabindex="0" data-tip="NH-16 · 120 acres · 3,300 planned apartments plus villa enclaves · IJM + LEPL"><span class="dot mixed"></span><span class="pl rgt"><b>Raintree Park township</b>₹3,900 apts · 27/ac</span></div>
+          <div class="pt" style="left:27.1%;top:9.9%" tabindex="0" data-tip="Mangalagiri · 10 ac · 119 villas · the most direct competitor"><span class="dot villa"></span><span class="pl"><b>Prime Grandeur</b>₹5,400 · 12/ac</span></div>
+          <div class="pt" style="left:67.7%;top:5.5%" tabindex="0" data-tip="East Vijayawada · 10 ac · 66 villas · IGBC Net Zero Energy certified"><span class="dot villa"></span><span class="pl"><b>KMV Vivaan</b>₹8,240 · 6.6/ac</span></div>
+          <div class="pt" style="left:94.9%;top:1.6%" tabindex="0" data-tip="33.69 ac · 64 villas · from ₹3.75 Cr · the corridor's price ceiling"><span class="dot villa"></span><span class="pl lft"><b>IJM Villas 64</b>₹10,143 · 1.9/ac</span></div>
+
+          <div class="pt" style="left:36.8%;top:15.8%" tabindex="0" data-tip="25 acres · ~400–550 units · apartments and villas in one masterplan"><span class="dot subject"></span><span class="pl rgt"><b style="color:var(--accent)">Hypothetical project</b>₹6,078 · 16–22/ac</span></div>
+        </div>
+        <div class="axl-x"><span>₹3,500</span><span>₹5,000</span><span>₹7,000</span><span>₹9,000</span><span>₹10,500</span></div>
+        <div class="axt-x">Blended realisation, ₹ per sq ft →</div>
+      </div>
+      </div>
+      <div class="figure-foot">TAG AIRA (₹7,309, 55 villas) and Golden Villas are omitted — their land area is not published, so density cannot be computed. Both are discussed in §2.</div>
+    </div>
+
+    <h3>Reading the map</h3>
+    <p><strong>The apartment cluster runs diagonally along the bottom-left</strong> — five projects between ₹4,000 and ₹6,300/sq ft at 54–113 homes per acre. That is the corridor's centre of gravity, and it is dense in both senses.</p>
+    <p><strong>The villa players sit along the top</strong> — Prime Grandeur, KMV Vivaan and Villas 64 at 1.9 to 12 homes per acre, spanning ₹5,400 to ₹10,143/sq ft. Low density is <em>not</em> unoccupied; it is where villas live.</p>
+    <p><strong>What is empty is the middle-upper region:</strong> mid-premium rate, low density, <em>and mixed product</em>. Raintree Park is the only other mixed-product mark on the map, and it sits far to the left at ₹3,900 apartment pricing across 120 acres and 18 years of phases.</p>
+    <div class="note">
+      <span class="lbl">The honest caveat</span>
+      <p><strong>Prime Grandeur is closer to the hypothetical project than the map's empty zone suggests</strong> — ₹5,400 against ₹6,078, and 12 homes per acre against 16–22. On price and density alone they are neighbours. <strong>The separation is product type</strong>, which a two-axis map cannot show: Prime Grandeur is villas only. That distinction is the whole argument of §5.2, and it is why the mark shapes matter more than the positions.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">§4</div>
+    <div>
+      <h2>Where is the market crowded?</h2>
+      <p class="dek">Crowded by supply, crowded by message, and crowded at the top.</p>
+    </div>
+  </div>
+  <div class="body">
+
+    <div class="tiles">
+      <div class="tile"><span class="k">Mid-market apartments</span><div class="v">3,269 <small>units</small></div><p class="n">₹3,800–4,600/sq ft, within ~15 km. Most ready or near-ready</p></div>
+      <div class="tile"><span class="k">Villas, corridor-wide</span><div class="v">≈420 <small>units</small></div><p class="n">Every current or recent villa project combined</p></div>
+      <div class="tile accent"><span class="k">The ratio</span><div class="v">8 : 1</div><p class="n">Mid-market apartments per villa</p></div>
+    </div>
+
+    <div class="figure">
+      <div class="figure-head">
+        <span class="kicker">Figure 2 · Supply by project</span>
+        <h5>Where the corridor's units actually are</h5>
+        <p class="sub">Unit counts for the competitive set, apartments against villas</p>
+      </div>
+      <div class="chart-legend">
+        <span class="k"><span class="swatch obs"></span> Apartment units</span>
+        <span class="k"><span class="swatch" style="background:transparent;border:1.5px solid var(--series)"></span> Villa units</span>
+      </div>
+      <div class="tw" style="border:0;background:transparent;margin:0">
+      <div id="crowd" style="min-width:29rem">
+        <div class="csplit">Mid-market apartments · ₹3,800–4,600 /sq ft</div>
+        <div class="crow" data-tip="Kaza, NH-16 · 9 acres · Undavalli Constructions"><div class="cname"><b>Srivalli Pravas</b>9 ac</div><div class="ctrack"><span class="cfill" style="width:100%"></span><span class="cval">702</span></div></div>
+        <div class="crow" data-tip="Mangalagiri, beside NRI Hospital · 6.9 acres · Kalidindi"><div class="cname"><b>Grand Project Capitol</b>6.9 ac</div><div class="ctrack"><span class="cfill" style="width:93.7%"></span><span class="cval">658</span></div></div>
+        <div class="crow" data-tip="NH-16, Nagarjuna University · 5.67 acres · IJM + LEPL"><div class="cname"><b>Raintree Park Ph 2</b>5.67 ac</div><div class="ctrack"><span class="cfill" style="width:90.0%"></span><span class="cval">632</span></div></div>
+        <div class="crow" data-tip="Tadepalli · 9.29 acres · Aparna · ~30% occupancy while ready"><div class="cname"><b>Aparna Amaravati One</b>9.29 ac</div><div class="ctrack"><span class="cfill" style="width:87.2%"></span><span class="cval">612</span></div></div>
+        <div class="crow" data-tip="Kunchanapalli / Tadepalli · 5.60 acres"><div class="cname"><b>Samruddhi Nexa</b>5.6 ac</div><div class="ctrack"><span class="cfill" style="width:49.9%"></span><span class="cval">350</span></div></div>
+        <div class="crow" data-tip="Tadepalli, 0.7 km off NH-16 · 4 acres"><div class="cname"><b>Sree Amaravati Icon</b>4 ac</div><div class="ctrack"><span class="cfill" style="width:44.9%"></span><span class="cval">315</span></div></div>
+
+        <div class="csplit">Villas · entire corridor</div>
+        <div class="crow" data-tip="Mangalagiri · 10 acres · Prime Constructions · ₹1.34–1.82 Cr"><div class="cname"><b>Prime Grandeur</b>10 ac</div><div class="ctrack"><span class="cfill villa" style="width:16.9%"></span><span class="cval">119</span></div></div>
+        <div class="crow" data-tip="East Vijayawada · 10 acres · IGBC Net Zero · ₹3.0–3.8 Cr"><div class="cname"><b>KMV Vivaan</b>10 ac</div><div class="ctrack"><span class="cfill villa" style="width:9.4%"></span><span class="cval">66</span></div></div>
+        <div class="crow" data-tip="33.69 acres · IJM + LEPL · from ₹3.75 Cr"><div class="cname"><b>IJM Villas 64</b>33.69 ac</div><div class="ctrack"><span class="cfill villa" style="width:9.1%"></span><span class="cval">64</span></div></div>
+        <div class="crow" data-tip="Pedda Kakani · TAG Projects · ₹2.79 Cr · AI-enabled"><div class="cname"><b>TAG AIRA</b>—</div><div class="ctrack"><span class="cfill villa" style="width:7.8%"></span><span class="cval">55</span></div></div>
+        <div class="crow" data-tip="Mustabada Rd, Vijayawada · 4.75 acres · possession Dec 2026"><div class="cname"><b>Golden Villas</b>4.75 ac</div><div class="ctrack"><span class="cfill villa" style="width:7.1%"></span><span class="cval">50</span></div></div>
+        <div class="crow" data-tip="Kesarapalli, near the airport · 11.69 acres · villas plus plots"><div class="cname"><b>Anvi Homes</b>11.69 ac</div><div class="ctrack"><span class="cfill villa" style="width:5.7%"></span><span class="cval">40</span></div></div>
+        <div class="crow" data-tip="Vijayawada–Guntur · IJM · 4BHK triplex, possession 2025"><div class="cname"><b>IJM Villas 26</b>—</div><div class="ctrack"><span class="cfill villa" style="width:3.7%"></span><span class="cval">26</span></div></div>
+      </div>
+      </div>
+      <div class="figure-foot">Bars share one scale. Every villa project in the corridor combined is smaller than any one of the four largest apartment schemes.</div>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The sequencing consequence</span>
+      <p>The hypothetical project's <strong>Communities A and B (~240 units) would enter the corridor's most oversupplied segment.</strong> Community D (~78 villas) would enter its thinnest — adding roughly <strong>19% to the corridor's villa universe</strong> rather than a rounding error to a 3,269-unit glut.</p>
+      <p class="big">Lead with villas, not with the entry product.</p>
+      <p>That inverts the conventional Indian launch sequence — open with affordable inventory to build velocity — and the reason is specific to this market: velocity in A and B must be won from 3,269 competing units, while velocity in D contests roughly 420, most of which is either 40% cheaper or 47% more expensive.</p>
+    </div>
+
+    <h3>Crowded by message</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Claim</th><th>Who says it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>"Luxury"</strong></td><td>Villas 64 · Srivalli Pravas · Golden Villas · TAG AIRA · KMV Vivaan · Jayabheri · Amaravati Properties — and essentially every listing in the corridor</td></tr>
+          <tr><td><strong>Amenity list</strong> <span style="color:var(--ink-3)">clubhouse · pool · gym · courts · play area · 24/7 security</span></td><td>All eleven. Undavalli escalates to a 38,000 sq ft clubhouse; Jayabheri adds spa, salon, guest rooms, amphitheatre</td></tr>
+          <tr><td><strong>Capital adjacency</strong></td><td>Aparna <em>Amaravati</em> One · <em>Amaravati</em> Icon · Grand Project Capitol ("in the new Capital Amaravati") · Villas 64 ("20 mins from Amaravati Secretariat") · Srivalli Pravas</td></tr>
+          <tr><td><strong>NH-16 connectivity</strong></td><td>All eleven — NH-16 is the corridor's spine, so proximity is a fact, not an advantage</td></tr>
+          <tr><td><strong>"International standards" / national brand</strong></td><td>IJM · Aparna · Jayabheri · Manjeera · Vertex</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>"Amaravati" in a project name is now a category descriptor, not a differentiator.</strong> At least three competitors carry it. A buyer cannot distinguish between them on that basis.</p>
+
+    <h3>Crowded at the top</h3>
+    <p>Phase 2 identified an empty band above ₹2.8 crore. Phase 3 finds it <strong>occupied by four players</strong>: TAG AIRA (₹2.79 Cr), KMV Vivaan (₹3.0–3.8 Cr), a Kolanukonda listing (₹3.3 Cr) and IJM Villas 64 (₹3.75 Cr+).</p>
+    <p><strong>Do not position at the top of the villa market.</strong> It is contested by an international developer with a 33.69-acre enclave, and the project's economics do not require it.</p>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">§5</div>
+    <div>
+      <h2>Where is there defensible white space?</h2>
+      <p class="dek">A white space only counts if it is unoccupied, valuable, and hard to copy inside 24 months. Six candidates tested — two fail, four survive.</p>
+    </div>
+  </div>
+  <div class="body">
+
+    <h3>What is <em>not</em> white space — stated first, because Phase 1 got some of this wrong</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Claimed advantage</th><th class="n">Verdict</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>"The corridor's largest project"</td><td class="n verdict v-no">FALSE</td><td>Raintree Park is 120 acres</td></tr>
+          <tr><td>"The lowest density in the corridor"</td><td class="n verdict v-no">FALSE</td><td>IJM Villas 64 is 1.9 units/acre; Prime Grandeur 11.9</td></tr>
+          <tr><td>"The only large villa community"</td><td class="n verdict v-no">FALSE</td><td>Prime Grandeur 119 villas; RTPDK Phase 1 delivered 116</td></tr>
+          <tr><td>"Premium amenities"</td><td class="n verdict v-no">COMMODITISED</td><td>All eleven competitors; Undavalli at 38,000 sq ft</td></tr>
+          <tr><td>"Luxury living"</td><td class="n verdict v-no">MEANINGLESS</td><td>Universal</td></tr>
+          <tr><td>"Close to the new capital"</td><td class="n verdict v-no">UNIVERSAL</td><td>Three competitors have it in their name</td></tr>
+          <tr><td>"Smart homes / AI-enabled"</td><td class="n verdict v-no">OCCUPIED</td><td>TAG AIRA owns it — and the claim ages quickly</td></tr>
+          <tr><td>"The highest price point"</td><td class="n verdict v-no">OCCUPIED</td><td>Villas 64 at ₹10,143/sq ft — and unnecessary</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>1 · The ladder in one address <span class="conf conf-h">Strongest</span></h3>
+    <p><strong>The gap.</strong> Nobody in this corridor sells <em>a community you can move within</em>. Every competitor sells a single product tier at a single price band. The two apparent exceptions prove it:</p>
+    <ul>
+      <li><strong>Raintree Park has the full ladder</strong> — ₹50 lakh apartments to ₹3.75 crore villas — but built across <strong>18 years</strong> under five project names, five microsites and two eras of design. A buyer does not experience it as one community, and IJM has never marketed it as one.</li>
+      <li><strong>Srivalli Pravas has 2BHK through duplex</strong> on one site — but no villas, and sells itself as "luxury apartments" rather than as a ladder.</li>
+    </ul>
+    <p><strong>Why it is valuable.</strong> Extended-family living is a documented pattern here (Phase 2 §7.3), alongside a strong land-ownership bias. A ladder serves three real behaviours at once: <strong>multi-generational purchase</strong> (parents in a 2BHK, children in a villa, one address); <strong>the upgrade path</strong> (buy a 3BHK now, move to a villa in the same community in eight years without leaving your neighbours or schools); and <strong>retention of the resale buyer inside the community</strong>.</p>
+    <p>Commercially it also answers the Phase 2 sales task: at <strong>7–11 confirmed bookings a month</strong> against an allowable <strong>₹3.6–6.2 lakh per unit sold</strong>, one site visit that qualifies against four budget bands is a materially cheaper funnel than four separate acquisition efforts.</p>
+    <div class="finding">
+      <span class="lbl">Why it is defensible</span>
+      <p>It requires <strong>25+ contiguous acres and a mixed masterplan committed from day one.</strong> It cannot be retrofitted onto a 5–9 acre tower cluster, and Raintree Park's ladder is physically dispersed across 120 acres and two decades. Land assembly at this scale in Mangalagiri takes years.</p>
+    </div>
+
+    <h3>2 · Delivery proof and post-sale trust <span class="conf conf-h">Cheapest to occupy</span></h3>
+    <p><strong>The gap.</strong> The review evidence across the competitive set is remarkably consistent — and <strong>not one competitor markets against it</strong>:</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Competitor</th><th>Documented complaint</th></tr></thead>
+        <tbody>
+          <tr class="gapband"><td>Manjeera Monarch</td><td><em>"The area advertised is not what residents actually get"</em> — super-built-up including corridors and common areas. Developer-level satisfaction described as <em>"very low"</em>, with issues persisting a year after occupancy</td></tr>
+          <tr><td>Aparna</td><td>Poor maintenance; wall cracks; water seepage; lift outages; a December 2021 handover incomplete in December 2022; an allegation the company removed itself from Google reviews</td></tr>
+          <tr><td>Jayabheri</td><td>Maintenance fees and <strong>unfulfilled amenity promises</strong> — damaging for an amenity-led brand</td></tr>
+          <tr><td>Sri Hari Kousthubham</td><td>Publishes its rate as <em>"₹4,500/sq ft (negotiable)"</em> — price discipline visibly absent</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>No competitor publishes construction progress, occupancy data, carpet-area disclosure, maintenance service levels, or handover-date performance.</strong></p>
+    <div class="finding">
+      <span class="lbl">Why it is defensible</span>
+      <p>It requires operational commitment, not copy: publishing carpet area alongside super-built-up, contractual handover dates with defined remedies, published maintenance SLAs, open construction reporting. <strong>A competitor already carrying these complaints cannot credibly follow.</strong></p>
+    </div>
+
+    <h3>3 · Occupancy as a promise</h3>
+    <p><strong>The gap.</strong> Aparna Amaravati One is a <strong>ready 612-unit gated community at roughly 30% occupancy.</strong> Resident commentary describes exactly the consequences — friction over interior works, thin community life, maintenance under-funded by low occupancy.</p>
+    <p class="big" style="font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500;max-width:var(--measure)">A gated community two-thirds empty is not a community. No neighbours, no clubhouse life, no school run, no security-by-density.</p>
+    <p>Nobody in this corridor addresses it, and every buyer touring a half-empty project can see it. <strong>Why it is defensible:</strong> it is a phasing and sales-policy decision — compact first phases sized to fill, amenity activation tied to occupancy thresholds, published occupancy rather than published sales. A competitor sitting on unsold ready inventory <em>cannot</em> make this promise; making it would highlight their own position.</p>
+
+    <h3>4 · Honest density, precisely stated</h3>
+    <p>Grand Project Capitol already leads with <em>"68% open spaces, only 32% construction"</em> — proof the message works here. But it does so at <strong>95.4 units per acre</strong>. The ground may be open; the community is not low-density.</p>
+    <p>At <strong>16–22 units per acre</strong>, the hypothetical project is <strong>three to seven times less dense than every apartment competitor</strong> — Manjeera 113, Grand Project Capitol 95, Srivalli Pravas 78, Aparna 66, Jayabheri 54.</p>
+    <div class="note">
+      <p>The claim must be stated precisely or it will be attacked, because Villas 64 (1.9/acre) and Prime Grandeur (11.9/acre) are lower. The defensible formulation is: <strong>the corridor's lowest density for a community that includes apartments</strong> — narrower than Phase 1 assumed, and true. <strong>Why it is defensible:</strong> it is built into the land. No competitor can add acres to a finished 5-acre site.</p>
+    </div>
+
+    <h3>5 · Certified sustainability <span class="conf conf-l">Contingent</span></h3>
+    <p>TAG AIRA has rainwater harvesting, waste treatment and EV charging. <strong>Nobody in the corridor has certification.</strong> Under the hypothetical's developer assumption, an IGBC Net Zero Energy precedent exists at KMV Vivaan — India's first net-zero-energy residential villa community — and it supported an <strong>₹8,200/sq ft</strong> realisation.</p>
+    <p><strong>Contingent, and the condition is absolute:</strong> certification must be earned for <em>this</em> project, not borrowed from another. A certified claim is powerful precisely because it is auditable; an implied one is a liability.</p>
+
+    <h3>The synthesis</h3>
+    <div class="finding">
+      <span class="lbl">The position no incumbent can assemble quickly</span>
+      <p class="big">A community you can move within · at a density you can see · delivered with proof · and full when you arrive.</p>
+      <p>None of the four is strong enough alone. Together they require four different things — land, masterplan, phasing policy, and operational transparency — and no incumbent has all four.</p>
+    </div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Competitor</th><th>What they have</th><th>What blocks them</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Raintree Park</strong></td><td>Scale and the ladder</td><td>Not the single-community experience, the density, or the proof layer</td></tr>
+          <tr><td><strong>IJM Villas 64</strong></td><td>Density and prestige</td><td>One product, at ₹3.75 crore</td></tr>
+          <tr><td><strong>Prime Grandeur</strong></td><td>Villa scale in the right micro-market</td><td>No brand at all</td></tr>
+          <tr><td><strong>Aparna, Jayabheri</strong></td><td>The brands</td><td>Their own maintenance and delivery complaints make the proof leg unavailable</td></tr>
+          <tr class="col-win"><td><strong>Srivalli Pravas</strong></td><td><strong>The closest thing to a ladder</strong></td><td><strong>Has not noticed</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">§6</div>
+    <div>
+      <h2>Digital and marketing landscape</h2>
+      <p class="dek">What the category actually does — and the eight gaps it leaves.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Channel</th><th>Category behaviour</th><th>Assessment</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Property portals</strong></td><td>Every project on 6–10 (99acres, SquareYards, CommonFloor, Quikr, Sulekha, Regrob, ghar.tv, homes247, realestateindia)</td><td><strong>The dominant lead source — and it is rented.</strong> Portals own the demand and resell it</td></tr>
+          <tr><td>Project microsites</td><td>Standard for the better-funded: villas64.in <em>and</em> villas64.com, srivallipravas.com, jayabherigroup.com/thecapital, kmvspaces.com</td><td>The clearest marker separating serious operators from portal-dependent ones</td></tr>
+          <tr class="gapband"><td><strong>Third-party SEO</strong></td><td>Broker sites (toplinerealty, propkey, walkestate, swapnagruha) run dedicated pages for Jayabheri, Vertex, Golden Villas, Villas 64, Manjeera Monarch</td><td><strong>Category-wide vulnerability: brokers rank on developers' own project names and intercept branded demand</strong></td></tr>
+          <tr><td>Paid social</td><td>Meta is the default; dense local agency supply sells it as commodity execution</td><td>Everyone has the same access — <strong>capability is not a differentiator; creative and offer are</strong></td></tr>
+          <tr><td>Owned content</td><td>Only <strong>Jayabheri</strong> runs a consistent article programme. Aparna publishes market commentary and buys newspaper advertising</td><td>Close to unoccupied</td></tr>
+          <tr><td>Video</td><td>Agencies sell it; developers rarely publish at scale. Undavalli posts project video</td><td>Under-used for a product that must be seen</td></tr>
+          <tr><td>Founder brand</td><td>Undavalli (Ramu Undavalli, LinkedIn) is the most visible</td><td>Largely unoccupied</td></tr>
+          <tr class="gapband"><td><strong>NRI programmes</strong></td><td>No competitor runs a visible dedicated NRI journey — despite AP + Telangana being ~14% of Indian Americans</td><td><strong>Unoccupied</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Advertising themes observed</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Developer</th><th>Line / theme</th></tr></thead>
+        <tbody>
+          <tr><td>Aparna</td><td><em>"Building Dreams. Creating Memories. Bringing People Together."</em> · "a sustainable balance between affordability and luxury"</td></tr>
+          <tr><td>Jayabheri</td><td><em>"We are future ready"</em> · "well-designed spaces have the power to transform lives"</td></tr>
+          <tr class="col-win"><td>IJM Villas 64</td><td><em>"A private enclave of just 64 homes"</em> · "international construction standards" · "elite living"</td></tr>
+          <tr><td>Raintree Park</td><td><em>"International class integrated township"</em></td></tr>
+          <tr><td>TAG AIRA</td><td><em>"The future of residential living"</em> — AI-enabled, sustainable, luxury</td></tr>
+          <tr class="col-win"><td>KMV Vivaan</td><td><em>"India's first Net Zero Energy residential villa community"</em> · tallest tower · helipad</td></tr>
+          <tr class="col-win"><td>Grand Project Capitol</td><td><em>"68% open spaces with greenery, only 32% construction"</em></td></tr>
+          <tr><td>Undavalli</td><td><em>"Luxury Residential Spaces in Amaravati"</em> · 38,000 sq ft clubhouse</td></tr>
+          <tr><td>Prime Grandeur</td><td><em>no distinctive line found</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <p>Only <strong>three</strong> of these say something specific: Villas 64's "just 64 homes", Grand Project Capitol's open-space arithmetic, and KMV Vivaan's certification. The rest are interchangeable.</p>
+      <p class="big">The specific ones are the ones a buyer can verify — which is the whole argument for competing on proof.</p>
+    </div>
+
+    <h3>The eight marketing gaps</h3>
+    <ol>
+      <li><strong>Nobody publishes proof.</strong> No construction progress, no handover performance, no occupancy figures, no maintenance SLAs.</li>
+      <li><strong>Nobody addresses carpet vs super-built-up</strong> — the most specific complaint in the corridor's resident reviews.</li>
+      <li><strong>Brokers own branded search.</strong> Developers lose their own name traffic to third-party microsites.</li>
+      <li><strong>No resale or exit narrative</strong>, despite a demonstrably active resale market.</li>
+      <li><strong>No multi-generational or upgrade-path targeting</strong>, despite extended-family living being a documented local pattern.</li>
+      <li><strong>No serious NRI journey</strong> — no time-zone-aware sales, no virtual site visits, no remote-purchase support.</li>
+      <li><strong>Rental yield is never mentioned</strong> — correctly, at 2.2–3.2% — but nobody has replaced it with a better investor argument, leaving that conversation to plot brokers.</li>
+      <li><strong>Video is under-used</strong> for a product that cannot be understood from a floor plan.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">§7</div>
+    <div>
+      <h2>What carries into Phase 4</h2>
+      <p class="dek">Six facts to design around, four constraints, one sequencing call.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Competitive facts</h3>
+    <ol>
+      <li><strong>Raintree Park (120 acres, IJM + LEPL) exists.</strong> Never claim to be the corridor's largest or only integrated community.</li>
+      <li><strong>The villa ceiling is ₹10,143/sq ft</strong> (IJM Villas 64, from ₹3.75 Cr). Community D at ₹7,150 is <strong>29% below a proven ceiling</strong> — comfortable, not aggressive.</li>
+      <li><strong>Prime Grandeur (119 villas, ₹5,400/sq ft, Mangalagiri) is the most direct competitor</strong> — and has almost no brand. Beatable on experience, not on price.</li>
+      <li><strong>The corridor holds ~8 mid-market apartments per villa</strong> — ~3,269 units against ~420.</li>
+      <li><strong>Aparna Amaravati One sits at ~30% occupancy while ready.</strong> The corridor's most useful cautionary evidence.</li>
+      <li><strong>Undavalli is the competitor to watch</strong>, not the national brands.</li>
+    </ol>
+
+    <h3>Positioning constraints</h3>
+    <div class="cards">
+      <div class="card"><h6>Do not contest</h6><ul><li><strong>Scale</strong> — Raintree Park</li><li><strong>Ultra-luxury</strong> — Villas 64</li><li><strong>Smart home</strong> — TAG AIRA</li></ul></div>
+      <div class="card"><h6>Dead words here</h6><ul><li>"Luxury"</li><li>"Premium amenities"</li><li>"Capital adjacency"</li><li>"Highway connectivity"</li></ul></div>
+      <div class="card"><h6>State precisely</h6><ul><li>Density as <strong>"lowest for a community that includes apartments"</strong> — or not at all</li></ul></div>
+      <div class="card"><h6>Never borrow</h6><ul><li>Sustainability claims must be <strong>certified for this project</strong>, not carried over from another</li></ul></div>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The sequencing call</span>
+      <p class="big">Lead with villas.</p>
+      <p>Community D enters a ~420-unit segment; Communities A and B enter a ~3,269-unit one. This inverts the conventional Indian launch sequence, and §4 is the reason.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-head">
+    <div class="sec-num">§8</div>
+    <div>
+      <h2>Evidence gaps</h2>
+      <p class="dek">Competitor intelligence is the weakest evidence class in this assignment. Ten gaps, ranked by what they would change.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Gap</th><th>Why it matters</th><th>Source that closes it</th></tr></thead>
+        <tbody>
+          <tr class="col-win"><td class="n">1</td><td><strong>No competitor sales velocity or unsold inventory</strong></td><td>The entire crowding analysis counts <em>units built</em>, not <em>units unsold</em>. A crowded segment that is clearing is not crowded</td><td>AP RERA quarterly project sales disclosures; mystery shopping</td></tr>
+          <tr class="col-win"><td class="n">2</td><td><strong>Aparna's 30% occupancy is single-sourced</strong></td><td>It carries significant weight in the occupancy argument. It could reflect investor holding rather than unsold stock — a materially different meaning</td><td>Site visit; electricity connection counts; society records</td></tr>
+          <tr><td class="n">3</td><td>No ad-library or spend data</td><td>Competitor digital <em>performance</em> is inferred from observable infrastructure only</td><td>Meta Ad Library; SEMrush / Similarweb; agency channel checks</td></tr>
+          <tr><td class="n">4</td><td>Review samples are tiny and self-selected</td><td>49–71 reviews on a 612-unit project cannot characterise resident sentiment</td><td>Structured resident interviews; RWA engagement</td></tr>
+          <tr><td class="n">5</td><td>Raintree Park's current phase pricing and availability</td><td>The most important competitor, and its live inventory is unknown</td><td>Direct sales enquiry; RERA filings</td></tr>
+          <tr><td class="n">6</td><td>Prime Grandeur velocity</td><td>The most direct competitor — 119 villas, but how many sold and how fast is unknown</td><td>Mystery shopping; RERA disclosures</td></tr>
+          <tr><td class="n">7</td><td><strong>Whether Undavalli plans villas</strong></td><td>Determines whether the strongest white space stays open</td><td>Land records; RERA registrations; channel-partner intelligence</td></tr>
+          <tr><td class="n">8</td><td>Achieved prices vs asking</td><td>All competitor rates are asking prices</td><td>IGRS registration data by project</td></tr>
+          <tr><td class="n">9</td><td>Channel-partner economics</td><td>Brokerage rates and channel share are unknown, yet they drive the ₹3.6–6.2 lakh allowable cost per sale</td><td>Channel-partner interviews</td></tr>
+          <tr><td class="n">10</td><td>Corridor NRI buyer share by project</td><td>The NRI white space is asserted from national data, not corridor data</td><td>Developer sales-mix data; APNRTS engagement</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="close">
+  <p>Phase 3 of a multi-part assignment. Phase 1 established the corridor evidence base and micro-location; Phase 2 established segment pricing; this phase establishes the competitive field and the defensible white space. Positioning, audience, product mix and go-to-market follow — constrained by all three.</p>
+</div>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var tip = document.createElement('div');
+  tip.className = 'tip';
+  tip.setAttribute('role','status');
+  document.body.appendChild(tip);
+
+  function show(row, e){
+    var nameEl = row.querySelector('b');
+    var valEl  = row.querySelector('.cval') || row.querySelector('.pl');
+    var name = nameEl ? nameEl.textContent : '';
+    var extra = '';
+    if (row.classList.contains('pt') && row.querySelector('.pl')) {
+      extra = row.querySelector('.pl').textContent.replace(name,'').trim();
+    } else if (valEl && valEl.classList.contains('cval')) {
+      extra = valEl.textContent.trim() + ' units';
+    }
+    tip.innerHTML = '<strong>' + name + (extra ? ' · ' + extra : '') + '</strong><span class="t2">' + row.dataset.tip + '</span>';
+    tip.classList.add('on');
+    var r = row.getBoundingClientRect();
+    var x = (e && e.clientX ? e.clientX : r.left + r.width/2);
+    var tr = tip.getBoundingClientRect();
+    var left = Math.min(Math.max(8, x - tr.width/2), window.innerWidth - tr.width - 8);
+    var top  = r.top + window.scrollY - tr.height - 10;
+    if (top < window.scrollY + 4) top = r.bottom + window.scrollY + 10;
+    tip.style.left = (left + window.scrollX) + 'px';
+    tip.style.top  = top + 'px';
+  }
+  function hide(){ tip.classList.remove('on'); }
+
+  document.querySelectorAll('.pt[data-tip], .crow[data-tip]').forEach(function(row){
+    if(!row.hasAttribute('tabindex')) row.tabIndex = 0;
+    row.addEventListener('mousemove', function(e){ show(row, e); });
+    row.addEventListener('mouseleave', hide);
+    row.addEventListener('focus', function(){ show(row, null); });
+    row.addEventListener('blur', hide);
+  });
+  window.addEventListener('scroll', hide, {passive:true});
+})();
+</script>
