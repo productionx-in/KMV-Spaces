@@ -34,11 +34,17 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 | --- | --- | --- |
 | 2 | [`02-residential-market.md`](02-residential-market.md) — segment-level pricing & product evidence (also [`.html`](02-residential-market.html)) | **Complete** |
 | 3 | [`03-competitor-landscape.md`](03-competitor-landscape.md) — competitor field, matrix & white space (also [`.html`](03-competitor-landscape.html)) | **Complete** |
-| 4 | Positioning, audience and product mix | Not started |
-| 5 | Pricing and commercial model | Not started |
-| 6 | Channel, performance and creative strategy | Not started |
+| 4 | [`04-kmv-brand-research.md`](04-kmv-brand-research.md) — independent developer brand research | **Complete** |
+| 5 | Positioning, audience and product mix | Not started |
+| 6 | Pricing and commercial model | Not started |
+| 7 | Channel, performance and creative strategy | Not started |
 
 ## Method notes
+
+**Evidence labelling.** Phase 4 separates every statement into FACT / OBSERVATION / INFERENCE /
+RECOMMENDATION, and records unverifiable items as "Insufficient public evidence" rather than
+inferring weakness from absence. A private LLP is not obliged to publish financials, headcount or
+spend, and their absence is not a finding.
 
 **Bottom-up pricing.** Phase 2 derives every ₹/sq ft figure as *published ticket price ÷ published unit size*
 for named, RERA-registered projects, rather than quoting locality averages — because published
