@@ -25,6 +25,13 @@ residential development on the Amaravati–Mangalagiri corridor, Andhra Pradesh.
 | # | Document | Status |
 | --- | --- | --- |
 | 1 | [`01-market-research.md`](01-market-research.md) — Amaravati / Mangalagiri evidence base | **Complete** |
+
+The same document is also published as a designed, self-contained page:
+[`01-market-research.html`](01-market-research.html) — evidence grades rendered as chips,
+the premium-gap comparison as a chart, and the micro-location scoring as a weighted matrix.
+
+| # | Document | Status |
+| --- | --- | --- |
 | 2 | Positioning, audience and product mix | Not started |
 | 3 | Pricing and commercial model | Not started |
 | 4 | Channel, performance and creative strategy | Not started |

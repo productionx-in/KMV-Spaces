@@ -1,0 +1,1317 @@
+<title>Amaravati Evidence Base</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style>
+
+<style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+.ledger td:first-child{color:var(--ink-3)}
+.ledger tr.true td:first-child{color:var(--ink)}
+.ledger tr.true{background:var(--brand-soft)}
+.ledger tr.true:hover{background:var(--brand-soft);filter:brightness(.97)}
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">
+    Phase 1 of 4
+    <strong>Evidence Base</strong>
+  </div>
+
+  <div class="toc">
+    <a href="#s0"><span class="n">§0</span><span>How to read this</span></a>
+    <a href="#s1"><span class="n">§1</span><span>What changed, and when</span></a>
+    <a href="#s2"><span class="n">§2</span><span>Geography of the corridor</span></a>
+    <a href="#s3"><span class="n">§3</span><span>Infrastructure ledger</span></a>
+    <a href="#s4"><span class="n">§4</span><span>Employment drivers</span></a>
+    <a href="#s5"><span class="n">§5</span><span>Population &amp; migration</span></a>
+    <a href="#s6"><span class="n">§6</span><span>Pricing evidence</span></a>
+    <a href="#s7"><span class="n">§7</span><span>Who is actually buying</span></a>
+    <a href="#s8"><span class="n">§8</span><span>Competing supply</span></a>
+    <a href="#s9"><span class="n">§9</span><span>Risk register</span></a>
+    <a href="#s10"><span class="n">§10</span><span>Fact vs narrative</span></a>
+    <a href="#s11"><span class="n">§11</span><span>Micro-location call</span></a>
+    <a href="#s12"><span class="n">§12</span><span>Evidence gaps</span></a>
+    <a href="#s13"><span class="n">§13</span><span>What carries forward</span></a>
+  </div>
+
+  <div>
+    <h4>Evidence grades</h4>
+    <div class="legend-stack">
+      <span class="g g-1">Confirmed</span>
+      <span class="g g-2">Under construction</span>
+      <span class="g g-3">Approved</span>
+      <span class="g g-4">Proposed</span>
+      <span class="g g-5">Reported</span>
+      <span class="g g-6">Speculative</span>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+
+<header class="masthead">
+  <p class="eyebrow">Amaravati–Mangalagiri corridor · Andhra Pradesh</p>
+  <h1>What is actually built, and what is only announced</h1>
+  <p class="sub">A research foundation for a hypothetical 25-acre, ₹500 crore, four-community residential development.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 1 of 4 — evidence only</span>
+    <span><strong>Sections</strong> 14</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> Nothing here describes an actual KMV Spaces project, land holding, commitment or launch. The developer context is an assumption of the exercise, not a verified fact. No specific plot or address is proposed.
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head">
+    <div class="sec-num">§0</div>
+    <div>
+      <h2>How to read this</h2>
+      <p class="dek">Why the evidence comes before the strategy, and what the grades mean.</p>
+    </div>
+  </div>
+  <div class="body">
+    <p>The Amaravati corridor is the most narrative-heavy real-estate market in India right now. Almost every number in circulation originates from a party with a position — a broker, a developer, a political actor, or a government promoting an investment case. A marketing strategy built on that ambient narrative would inherit its errors.</p>
+    <p>So this document does one job: separate what is <strong>true and load-bearing</strong> from what is <strong>announced, projected, or sold</strong>. Where the evidence does not support a claim, that is recorded as a finding, not smoothed over.</p>
+
+    <h3>Evidence grading</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Grade</th><th>Definition</th><th>What it means for marketing</th></tr></thead>
+        <tbody>
+          <tr><td><span class="g g-1">Confirmed</span></td><td>Legally in force, or physically complete and operating today</td><td>Can be stated as fact in customer-facing material</td></tr>
+          <tr><td><span class="g g-2">Under construction</span></td><td>Physical work verifiably underway; contract awarded</td><td>Usable with the qualifier "under construction"</td></tr>
+          <tr><td><span class="g g-3">Approved</span></td><td>Sanctioned by the competent authority with funding identified; not started</td><td>Referenced as "approved", never as existing</td></tr>
+          <tr><td><span class="g g-4">Proposed</span></td><td>Officially announced or planned; no sanction or funding confirmed</td><td>Not for customer-facing material without heavy qualification</td></tr>
+          <tr><td><span class="g g-5">Reported</span></td><td>Credible media, not verified against a primary official source</td><td>Internal planning only</td></tr>
+          <tr><td><span class="g g-6">Speculative</span></td><td>Projection, target, promotional claim, or interested-party assertion</td><td>Never use. Track only to know what competitors say</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Three source-quality caveats that apply throughout</h3>
+    <p><strong>Listing portals report asking prices, not transactions.</strong> In a market where sellers are anchored to a capital-city narrative, asking prices run ahead of clearing prices. Treat every ₹/sq ft figure in §6 as an <strong>upper bound on realisable price</strong>.</p>
+    <p><strong>Much of the available "market data" is published by brokers who profit from the numbers being high.</strong> The most prolific publishers of Amaravati price data are interested parties. Their figures are used only where a directionally consistent second source exists, and are flagged where relied on.</p>
+    <p><strong>This research was conducted through search-surfaced reporting.</strong> Direct retrieval of primary documents — APCRDA orders, IGRS registration data, RERA filings, agency city reports — was not possible. §12 lists exactly which primary sources a real project would need. Nothing here substitutes for that diligence.</p>
+
+    <div class="finding">
+      <span class="lbl">The four strongest price signals</span>
+      <p>Portal averages are not the best evidence available. These are, because they are transactions or official rates:</p>
+      <ol style="margin-bottom:0">
+        <li><strong>APCRDA's own allotment rates</strong> — ₹8.20 crore/acre for star-hotel and private-school land; ₹4.10 crore/acre for 33-year school leases. Prices the state itself transacts at.</li>
+        <li><strong>The government's auction reserve</strong> — ₹10 crore/acre offset for 248 acres.</li>
+        <li><strong>The February 2026 guideline-value revision</strong> — the state raising official rates explicitly to close the gap with real transaction prices.</li>
+        <li><strong>Institutional land commitments</strong> — KIMS taking a 60-year lease on 25 acres at Nidamarru is a balance-sheet decision, not an announcement.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">§1</div>
+    <div>
+      <h2>What actually changed, and when</h2>
+      <p class="dek">Four events since mid-2024 changed the corridor's risk profile. They are of very different weight, and conflating them is the most common analytical error in this market.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>The political reversal — June 2024 <span class="g g-1">Confirmed</span></h3>
+    <p>The TDP-led NDA returned to power having campaigned on restoring Amaravati as sole capital. Between 2019 and 2024 the previous government pursued a three-capital model and construction was substantially halted; the three-capital legislation was withdrawn in 2022 with no replacement enacted before the election.</p>
+    <p>This matters because it establishes the precedent: <strong>this project has already been stopped once by an election.</strong> That is the central political risk (§9.1).</p>
+
+    <h3>The relaunch — 2 May 2025 <span class="g g-1">Confirmed</span></h3>
+    <p>Capital construction was formally relaunched with the Prime Minister laying foundations for works valued at over ₹58,000 crore.</p>
+
+    <h3>The statutory settlement — 6 April 2026 <span class="g g-1">Confirmed</span></h3>
+    <p>The Union Government notified the <strong>Andhra Pradesh Reorganisation (Amendment) Act, 2026</strong> in the Gazette of India on <strong>6 April 2026</strong>, designating Amaravati the <strong>sole and permanent capital</strong>, with retrospective effect from <strong>2 June 2024</strong>. The Lok Sabha passed the Bill on 1 April, the Rajya Sabha on 2 April, and the President assented before gazetting.</p>
+
+    <div class="finding">
+      <span class="lbl">The single most important fact in this document</span>
+      <p class="big">Until April 2026, Amaravati's status was state policy — reversible by a state government with a majority, as had already happened once. It is now central statute. Reversal would require an Act of Parliament.</p>
+      <p>The practical effect on a buyer's risk calculus is specific: the question changes from <em>"will this be the capital?"</em> to <em>"how fast will it get built?"</em> Those are different questions with different answers, and the second is far easier to sell against.</p>
+    </div>
+
+    <h3>The money — 2024 to 2026</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Source</th><th class="n">Amount</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>World Bank</td><td class="n">USD 800 m</td><td><span class="g g-1">Confirmed</span> — USD 340 m released as of April 2026; a further USD 130–150 m reported imminent</td></tr>
+          <tr><td>Asian Development Bank</td><td class="n">USD 788.8 m</td><td><span class="g g-1">Confirmed</span> — results-based loan approved; 29-year repayment, 6-year grace</td></tr>
+          <tr><td>Government of India</td><td class="n">₹15,000 cr</td><td><span class="g g-3">Approved</span> — ₹1,400 cr released</td></tr>
+          <tr><td>NABARD</td><td class="n">₹7,380 cr</td><td><span class="g g-3">Approved</span> — cleared by APCRDA for priority infrastructure</td></tr>
+        </tbody>
+        <caption>Combined multilateral commitment ≈ USD 1.6 billion (~₹13,500 crore).</caption>
+      </table>
+    </div>
+    <p><strong>The structural feature that matters:</strong> both multilateral loans are results-based instruments. <strong>Disbursement is tied to achieved milestones, not elapsed time.</strong> That is a genuine discipline — money is harder to divert and progress harder to fake — but it also means a slowdown in execution directly throttles the funding. The two are coupled, in both directions.</p>
+
+    <h3>What has <em>not</em> changed</h3>
+    <p>Amaravati is still, physically, mostly a construction site. Reporting through the revival describes half-built and deserted high-rise complexes, incomplete utilities, and minimal residential occupancy — secretariat staff commuting in and leaving. Work on 73 bungalows, 288 MLA/MLC quarters and 144 bureaucrats' units was abandoned at 70–80% completion during the hiatus and is being resumed. Population of the capital city area is around <strong>100,000</strong>, against a master plan targeting <strong>3.5 million by 2050</strong>.</p>
+    <div class="note">
+      <span class="lbl">The honest reading</span>
+      <p>The <em>decision</em> has been de-risked. The <em>place</em> has not been built. A residential product launching now is selling into the gap between those two facts — and the entire marketing problem is how to price and narrate that gap without either overclaiming or apologising for it.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">§2</div>
+    <div>
+      <h2>Geography of the corridor</h2>
+      <p class="dek">Understanding this market requires abandoning the idea that "Amaravati" is a city. It is a 217 sq km greenfield administrative capital being built between two existing cities that already function as a single economic unit.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Place</th><th>What it actually is today</th><th>Role in the demand system</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Amaravati</strong><br><span style="color:var(--ink-3);font-size:.9em">capital city area</span></td><td>Greenfield capital under construction. ~122 sq km core within a 217 sq km master-planned area across 17 villages — 14 in Thullur mandal; Kuragallu, Neerukonda and Nidamarru in Mangalagiri mandal. Population ~100,000</td><td>Future employment and prestige. <strong>Not yet a residential market</strong></td></tr>
+          <tr><td><strong>Mangalagiri–Tadepalli</strong></td><td>An existing municipal corporation of two merged towns on the Vijayawada–Guntur axis. Hilly terrain, elevation ~43 m (avg ~29 m), ~15 km south-west of Vijayawada</td><td><strong>The functioning residential market.</strong> Where services, schools, hospitals and buyers already are</td></tr>
+          <tr><td><strong>Vijayawada</strong></td><td>Commercial capital of coastal Andhra, ~15 km north-east. Ranked 10th fastest-growing city globally by Oxford Economics (8.16%); GDP USD 5.8 bn (2018) → USD 21 bn projected (2035)</td><td>The money, the buyers, the business owners. <strong>Primary demand pool</strong></td></tr>
+          <tr><td><strong>Guntur</strong></td><td>Major district city ~20 km south. Reported ~₹5,150/sq ft (Oct 2024) with strong appreciation</td><td>Secondary demand pool; agricultural and trading wealth</td></tr>
+          <tr><td><strong>Capital Region</strong><br><span style="color:var(--ink-3);font-size:.9em">APCRDA</span></td><td>The 8,352 sq km planning jurisdiction encompassing all of the above</td><td>The regulatory envelope — determines what can be built where</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The structural insight</span>
+      <p>The Vijayawada–Tadepalli–Mangalagiri–Guntur agglomeration had a population of approximately <strong>3.3 million as of 2017</strong>. That agglomeration exists, earns, and buys homes today — entirely independent of whether Amaravati is completed on schedule.</p>
+      <p class="big">A project here can be underwritten on the existing agglomeration and treat Amaravati as upside — or underwritten on Amaravati and treat the agglomeration as incidental. The first is a business. The second is a bet.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">§3</div>
+    <div>
+      <h2>Infrastructure ledger</h2>
+      <p class="dek">The section most likely to be misused, so it is graded item by item. The rule applied throughout: <strong>an announcement is not a road.</strong></p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Capital city construction — the core programme</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Item</th><th>Detail</th><th>Grade</th></tr></thead>
+        <tbody>
+          <tr><td>Works in progress</td><td>₹57,821 crore, per a high-level review reported April 2026</td><td><span class="g g-2">Under construction</span></td></tr>
+          <tr><td>Phase I programme</td><td>2025–2029, estimated USD 3.64 billion</td><td><span class="g g-3">Approved</span></td></tr>
+          <tr><td>AP Assembly building</td><td>Foster + Partners design; groundwork from 2 May 2025; completion estimated <strong>2028</strong></td><td><span class="g g-2">Under construction</span></td></tr>
+          <tr><td>High Court (B+G+7)</td><td>Deadline <strong>December 2028</strong></td><td><span class="g g-2">Under construction</span></td></tr>
+          <tr><td>Integrated Government Complex</td><td>Five towers on ~32 acres — GAD, State Secretariat, HoD offices</td><td><span class="g g-2">Under construction</span></td></tr>
+          <tr><td>MLA / MLC / AIS towers</td><td>Target completion <strong>October 2026</strong></td><td><span class="g g-2">Under construction</span> <em>— behind schedule</em></td></tr>
+          <tr><td>Overall Phase I target</td><td>First phase targeted for <strong>August 2028</strong></td><td><span class="g g-3">Approved</span></td></tr>
+          <tr><td>Cabinet infrastructure package</td><td>~₹9,000 cr expansion; ₹1,863 cr lump-sum tenders authorised</td><td><span class="g g-3">Approved</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Material finding — the schedule slippage</span>
+      <p>Balance works on the MLA/MLC/AIS residential towers were reported at <strong>58.14% physical progress against a target of 78.56%</strong>, with financial progress at 57.48% — roughly <strong>20 percentage points behind plan on the government's own flagship residential build.</strong></p>
+      <p>This is the most useful single data point in the section, and it cuts against the prevailing narrative. The programme is real, funded and moving — <em>and</em> it is running late on the very buildings meant to bring the first permanent residents into the capital. Any marketing implying "Amaravati is arriving on schedule" is contradicted by the government's own progress reporting.</p>
+    </div>
+
+    <div class="note">
+      <span class="lbl">A conflicting claim, graded out</span>
+      <p>A claim surfaced in research that High Court and Secretariat tower construction was "already completed as of October 2024" <strong>directly contradicts</strong> the December 2028 High Court deadline and the observed state of the site. Graded <span class="g g-6">Speculative</span> / unreliable. Not used.</p>
+    </div>
+
+    <h3>Trunk infrastructure inside the capital</h3>
+    <p>A ~298 km trunk road network plus utility corridors — water, sewerage, drainage, ICT, power ducts, reuse water lines, cycle and pedestrian tracks — is <span class="g g-2">Under construction</span> in part, with completion targeted <strong>April 2027</strong> <span class="g g-3">Approved</span>. Smart trunk tenders for roads E2, E5, E7, E11, E13, E15, E4, N8 and N13 total ₹2,903 crore.</p>
+    <p><strong>Trunk infrastructure is the real gating item for liveability</strong> — more than any headline building. A capital with a finished Assembly and unfinished sewerage is not habitable. April 2027 is the date that actually matters for a residential launch, and it is a <em>target</em>, not a commitment, given the slippage above.</p>
+
+    <h3>Roads and highways</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Item</th><th>Detail</th><th>Grade</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vijayawada Western Bypass</strong></td><td>47.8 km six-lane, Chinna Avutapalli to <strong>Chinakakani / Kaza near Mangalagiri</strong>. ~85% complete; <strong>two-way traffic operational since March 2026</strong>; tolling from 1 April</td><td><span class="g g-2">Under construction</span> <em>— operational</em></td></tr>
+          <tr><td>Amaravati–NH-16 arterial</td><td>22 km, nine lanes, ₹1,520 cr, three phases, through Dondapadu, Rayapudi, Venkatapalem, Penumaka, Undavalli, Tadepalli. Includes a <strong>BRTS corridor</strong></td><td><span class="g g-2">Under construction</span></td></tr>
+          <tr><td>Seed Capital Road (E3)</td><td>21 km arterial / flyover, ~₹230 cr, connecting Vijayawada with Amaravati</td><td><span class="g g-2">Under construction</span></td></tr>
+          <tr><td>NH-16 expansion</td><td>₹3,800 cr, advanced by the Centre</td><td><span class="g g-3">Approved</span></td></tr>
+          <tr><td>Inner Ring Road (IRR)</td><td>96.2 km, 75 m wide, 8+4 lanes, PPP, two phases. Phase-1 DPR ready; land pooling underway</td><td><span class="g g-3">Approved</span></td></tr>
+          <tr><td><strong>Outer Ring Road (ORR)</strong></td><td><strong>189.9 km</strong>, six-lane access-controlled, <strong>₹24,791 cr</strong>, across five districts. MoRTH cleared January 2025; NHAI alignment and DPR finalised; <strong>land acquisition commenced 2026</strong>; 12 packages</td><td><span class="g g-3">Approved</span> <em>— acquisition begun, construction not started</em></td></tr>
+          <tr><td>Bengaluru–Vijayawada Expressway</td><td>518 km, passes Guntur and Mangalagiri</td><td><span class="g g-2">Under construction</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <span class="lbl">The ORR deserves specific caution</span>
+      <p>It is the most frequently cited item in Amaravati property marketing and the least advanced. A 189.9 km, ₹24,791 crore expressway just entering land acquisition across five districts is realistically <strong>a decade from full operation</strong> — Hyderabad's shorter 158 km ORR took roughly that long. Any material implying ORR proximity as a present-day amenity is selling a road that does not exist. Its legitimate use is as a labelled long-horizon land argument.</p>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The under-discussed asset</span>
+      <p>The <strong>Western Bypass</strong> is nearly finished, carrying traffic, and its southern terminus lands at <strong>Chinakakani/Kaza — inside the Mangalagiri belt.</strong> It is real infrastructure delivering real time savings today, and it is barely used in local marketing. A genuine, defensible connectivity claim available now — and a significant input to §11.</p>
+    </div>
+
+    <h3>Rail</h3>
+    <p>The <strong>Errupalem–Amaravati–Nambur line</strong> — 56.53 km broad gauge, ₹2,047–2,600 crore, nine new stations, a 3 km bridge over the Krishna between Kothapeta and Vaddamanu — is <span class="g g-3">Approved</span> with land acquisition in progress: notification issued 18 June 2024, Section 20A issued and 20E underway, a further 300 acres notified across eight villages in Veerullapadu and Kanchikacherla mandals. A new Amaravati railway station is <span class="g g-4">Proposed</span> under second-phase pooling.</p>
+    <p>Sequential land acquisition notifications are a reliable indicator of real intent — far more so than press announcements. But the line is years from operation. Meanwhile the <strong>existing Vijayawada–Guntur line, with a functioning station at Mangalagiri</strong> <span class="g g-1">Confirmed</span>, is a present-day asset the corridor's marketing consistently ignores in favour of the unbuilt one.</p>
+
+    <h3>Air</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Item</th><th>Detail</th><th>Grade</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vijayawada International (Gannavaram)</strong></td><td>Operating. <strong>1,611,200 passengers in FY2025–26, up 28.9%</strong>, after 30.2% the prior year</td><td><span class="g g-1">Confirmed</span></td></tr>
+          <tr><td>New integrated terminal</td><td>Over 80% complete; deadline extended to 31 March 2026 and reported unlikely to be met — contractor appointment problems</td><td><span class="g g-2">Under construction</span> <em>— delayed</em></td></tr>
+          <tr><td>Direct Singapore service</td><td>Planned</td><td><span class="g g-4">Proposed</span></td></tr>
+          <tr><td>Amaravati greenfield airport</td><td>Reported at 4,000–4,618 acres near Ravela, Tadikonda mandal; five-phase, 60-year plan. Figures largely from social media, not a published DPR</td><td><span class="g g-4">Proposed</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Two consecutive years of ~29–30% passenger growth is <strong>one of the strongest genuine demand signals in this entire document.</strong> Air traffic growth is difficult to fake and reflects real economic and diaspora movement — a materially better indicator of trajectory than any land-price chart.</p>
+
+    <h3>Metro and public transport</h3>
+    <div class="finding">
+      <span class="lbl">The corridor's most common factual error</span>
+      <p class="big">"Metro connectivity" is routinely cited in Amaravati property marketing. The approved Phase I metro does not go to Amaravati.</p>
+      <p>Vijayawada Metro Phase I — ₹11,009 crore total, 38.40 km, 34 stations — runs <strong>Gannavaram to PNBS and PNBS to Penamaluru</strong>, entirely within Vijayawada and toward the airport. Bids for a ₹4,150 crore initial civil contract were invited 28 July 2025 <span class="g g-3">Approved</span>. The Amaravati corridor is a <strong>later, unfunded phase</strong> <span class="g g-4">Proposed</span>.</p>
+      <p>Marketing an approved Vijayawada metro as an Amaravati amenity is not aggressive positioning — it is a misstatement of fact, and the kind of claim that becomes a RERA and consumer-protection liability once a buyer checks. It is also unnecessary: <strong>750 e-buses sanctioned for AP under PM e-Bus Sewa Tender-II include Amaravati, Vijayawada and Guntur</strong> <span class="g g-3">Approved</span>, and the BRTS corridor inside the NH-16 arterial is <span class="g g-2">Under construction</span>. Both are real.</p>
+    </div>
+
+    <h3>Utilities</h3>
+    <p>Trunk services — storm-water drains, water supply, sewerage, utility ducts, reuse water lines, STPs — are being tendered and built alongside the road network, water sourced from the Krishna. <span class="g g-2">Under construction</span>, partial.</p>
+    <p>For a private developer this is a live commercial question, not a background detail: <strong>a 25-acre scheme delivering before trunk services reach the site carries its own STP, water and power-backup capex</strong>, and that cost must sit in the project model from day one rather than emerging as a variation later.</p>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">§4</div>
+    <div>
+      <h2>Employment drivers</h2>
+      <p class="dek">A residential market needs people with incomes and a reason to live nearby. This section separates payroll that exists from payroll that has been announced.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Government — the anchor, and its real size</h3>
+    <p>The 2016 relocation from Hyderabad involved approximately <strong>25,000 employees</strong> across 115 directorates and 32 departments; the Secretariat itself ~2,500 across ~500 sections <span class="g g-1">Confirmed</span> for 2016. <strong>No reliable 2026 headcount surfaced.</strong> A financial city cluster has foundation stones laid for 15 public sector banks and insurance companies, stated employment potential 6,570 <span class="g g-3">Approved</span>. <strong>72 institutions have been allotted 948 acres</strong>, with the Chief Minister directing completion in 2.5–3 years and no extensions.</p>
+    <div class="note">
+      <p>Government employment is the most <em>durable</em> driver — it does not leave in a downturn — but it is <strong>the wrong income profile for the top of a premium product</strong>. A ₹3 crore villa is not bought on a state government salary. Government is the reason the corridor has a floor; it is not the reason it has a ceiling. The commercially relevant read: government drives 2BHK/3BHK demand, and it drives the <strong>services economy</strong> — the lawyers, contractors, consultants and traders who service a capital. That secondary economy is where the premium buyers come from, and it is systematically under-analysed here.</p>
+    </div>
+
+    <h3>Education — the strongest existing anchor, and it sits in Mangalagiri mandal</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Institution</th><th>Location</th><th>Detail</th><th>Grade</th></tr></thead>
+        <tbody>
+          <tr><td><strong>SRM University AP</strong></td><td><strong>Neerukonda</strong>, Mangalagiri mandal</td><td>Est. 2017; <strong>100-acre campus</strong>. Recruiters include IBM, Amazon, TCS, Barclays, Swiss Re</td><td><span class="g g-1">Confirmed</span></td></tr>
+          <tr><td>VIT-AP University</td><td>Beside the AP Secretariat, Amaravati</td><td>Recruiters include Intel, eBay, Amazon, Dell, Accenture, Infosys</td><td><span class="g g-1">Confirmed</span></td></tr>
+          <tr><td><strong>AIIMS Mangalagiri</strong></td><td>Mangalagiri</td><td>Est. 2018. Recruiting <strong>79 faculty posts across 33 departments</strong> for 2026</td><td><span class="g g-1">Confirmed</span></td></tr>
+          <tr><td>NRI Academy of Medical Sciences</td><td><strong>Chinakakani</strong>, Mangalagiri mandal</td><td>Est. 2003 — first NRI-founded medical academy in AP</td><td><span class="g g-1">Confirmed</span></td></tr>
+          <tr><td>National Institute of Design AP</td><td>Sakhamuru, Thullur mandal</td><td>Operating; MoU with AIIMS Mangalagiri (2023)</td><td><span class="g g-1">Confirmed</span></td></tr>
+          <tr><td>Quantum &amp; AI University (NIELIT)</td><td>Amaravati</td><td>MoU 20 Feb 2026; 10 acres approved (19 requested); temporary campus from September 2026</td><td><span class="g g-3">Approved</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Three of these six — SRM, AIIMS and NRI Medical College — are in Mangalagiri mandal</strong>, operating for between 8 and 23 years. They employ faculty and staff on salaries that support mid-to-premium housing, generate a continuous stream of relocating families, and <strong>exist independently of whether Amaravati completes.</strong> Demand that is real today, not projected.</p>
+
+    <h3>Healthcare</h3>
+    <div class="finding">
+      <span class="lbl">The highest-quality forward signal available</span>
+      <p><strong>KIMS Hospitals has taken a 60-year lease with APCRDA over 25 acres near Nidamarru, Mangalagiri mandal</strong> — 23 acres for the KIMS Skill University (medical college, <strong>1,000-bed teaching hospital</strong>, nursing, pharmacy, dentistry) plus 2 acres for a <strong>500-bed super-specialty hospital</strong>. Groundbreaking performed by the Chief Minister; completion expected in 2–3 years. <span class="g g-3">Approved</span></p>
+      <p class="big">Press releases are free. Sixty-year leases are not.</p>
+      <p>Its location is not incidental. Read alongside SRM at Neerukonda, AIIMS at Mangalagiri and NRI at Chinakakani, it shows sophisticated institutional capital <strong>repeatedly choosing the Mangalagiri mandal belt</strong> rather than the capital seed area — a revealed preference by parties with better information and longer horizons than any residential developer.</p>
+    </div>
+
+    <h3>Technology — the largest gap between narrative and payroll</h3>
+    <p>The <strong>Amaravati Quantum Valley Tech Park</strong> is a 50-acre development anchored on an intended IBM Quantum System Two with a 156-qubit Heron processor, with TCS, L&amp;T, LTIMindtree and Microsoft attached — ₹40 crore government plus ₹200 crore private investment <span class="g g-2">Under construction</span>. It was targeted operational <strong>1 January 2026</strong>; the <strong>foundation stone was laid 7 February 2026</strong> — the build began after the date it was meant to open.</p>
+    <div class="note">
+      <span class="lbl">Two corrections that recur constantly in this market</span>
+      <p><strong>"90,000 professionals" / "100,000 jobs by 2026"</strong> <span class="g g-6">Speculative</span> — against a 50-acre park with ₹240 crore committed. The arithmetic does not support it, and the claim collapses under the first informed question.</p>
+      <p><strong>Google's USD 15 billion, ~600-acre, 1 GW AI data centre is in Visakhapatnam</strong> — roughly 350 km away — <strong>not Amaravati.</strong> Using it would be a straightforward misrepresentation.</p>
+      <p>The genuinely defensible technology claim is smaller and much more solid: <strong>India's first quantum computing park is being built in this capital, with IBM, TCS, L&amp;T and Microsoft attached.</strong> That is impressive on its own and survives scrutiny.</p>
+    </div>
+
+    <h3>State investment pipeline — how much to discount</h3>
+    <p>Since June 2024 the State Investment Promotion Board has approved <strong>329 projects worth ₹11.77 lakh crore</strong> with a stated potential of 10.32 lakh jobs <span class="g g-3">Approved</span>. The CII Partnership Summit 2025 produced MoUs with 400 companies, over ₹11 lakh crore <span class="g g-5">Reported</span>. A claim that AP accounts for 25.3% of all investment proposed in India in the first nine months of 2026 is state-sourced <span class="g g-6">Speculative</span>.</p>
+    <p><strong>MoU-to-commissioned-project conversion in Indian state investment summits is historically low</strong> — the state has itself acknowledged the gap by constituting a monitoring committee. These figures indicate genuine momentum and genuine investor attention. They should not be converted into projected homebuyers. Discount heavily.</p>
+
+    <h3>Commercial and retail</h3>
+    <p>Mangalagiri holds <strong>Mayuri Tech Park</strong> — the first IT park in the Vijayawada–Guntur area, ~4 lakh sq ft, with reported Q4 2025 price movement from ₹5,000 to ₹7,500/sq ft. Retail remains concentrated in Vijayawada: PVP Square, LEPL Centro, Trendset, LEPL Icon. The capital's own hospitality layer is at tender stage — 9.19 acres for three 3-star and two 4-star hotels, 15.80 acres for five private schools on 33-year leases <span class="g g-3">Approved</span>.</p>
+    <p><strong>For a residential product launching now, Vijayawada is the lifestyle infrastructure</strong> — and access to it is a live selling point in a way that in-capital amenity is not yet.</p>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">§5</div>
+    <div>
+      <h2>Population, migration and urbanisation</h2>
+      <p class="dek">Where the projections come from, and how much of them to believe.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Metric</th><th class="n">Figure</th><th>Grade</th></tr></thead>
+        <tbody>
+          <tr><td>Vijayawada–Tadepalli–Mangalagiri–Guntur agglomeration</td><td class="n">~3.3 million (2017)</td><td><span class="g g-1">Confirmed</span></td></tr>
+          <tr><td>Amaravati capital city area today</td><td class="n">~100,000</td><td><span class="g g-5">Reported</span></td></tr>
+          <tr><td>Master plan target</td><td class="n">3.5 m by 2050</td><td><span class="g g-4">Proposed</span></td></tr>
+          <tr><td>Vijayawada GDP</td><td class="n">USD 5.8 bn → 21 bn</td><td><span class="g g-5">Reported</span> — Oxford Economics, 2018→2035</td></tr>
+          <tr><td>Vijayawada growth ranking</td><td class="n">10th globally</td><td><span class="g g-5">Reported</span> — 8.16%, 780 cities surveyed</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <span class="lbl">The 3.5 million figure, checked</span>
+      <p>It is a <strong>planning input, not a forecast</strong> — the capacity the master plan was designed to hold. Reaching it requires roughly <strong>3.4 million net in-migrants over 24 years, or ~142,000 a year.</strong> For scale: Amaravati adding more than its entire current population, every year, for a quarter century. Not impossible; not a base case; and never something to present to a buyer as an expectation.</p>
+      <p>The <strong>defensible</strong> demographic claim is different and stronger: there is <em>already</em> a 3.3 million-person agglomeration here, it is urbanising, it has a fast-growing airport, and it is now the permanent seat of state government by Act of Parliament. That claim does not need a 2050 projection to work.</p>
+    </div>
+    <p><strong>Migration evidence is thin.</strong> No reliable current in-migration data surfaced. With residential population still ~100,000 and secretariat staff reported to commute rather than live locally, the honest position is that <strong>large-scale in-migration has not yet begun.</strong> A genuine evidence gap (§12).</p>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">§6</div>
+    <div>
+      <h2>The residential market — pricing evidence</h2>
+      <p class="dek">Read §0 before using any figure here. Portal rates are asking prices, not clearing prices, and are treated as an upper bound throughout.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Micro-market comparison</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Micro-market</th><th class="n">Avg asking</th><th>Segment detail</th><th>Movement</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tadepalli</strong></td><td class="n">₹5,653</td><td>Villas <strong>₹5,901</strong>; flats ₹4,300–5,600</td><td>Villas <strong>+8.39%</strong>; apartments <strong>+2.99%</strong>; 3-year <strong>+34.2%</strong></td></tr>
+          <tr><td><strong>Mangalagiri</strong></td><td class="n">₹4,062</td><td>Mostly apartments. Plots ₹27,000–70,000/sq yd; land <strong>₹4–8 cr/acre</strong></td><td>₹4,098 (Jun 2025) → ₹4,062 (Sep 2025) — <strong>slightly down</strong></td></tr>
+          <tr><td>Vijayawada (city)</td><td class="n">~₹4,700</td><td>Gannavaram ₹3,100–5,200. Affordable belt ₹1,100–1,650</td><td>—</td></tr>
+          <tr><td>Guntur</td><td class="n">~₹5,150</td><td>Oct 2024 figure</td><td>Reported +51% YoY — <em>broker/media, treat with caution</em></td></tr>
+          <tr><td>Amaravati capital (plots)</td><td class="n">₹23–70k<span style="font-size:.85em;color:var(--ink-3)">/sq yd</span></td><td>Thullur ₹33–44k; Kuragallu from ₹24k; Krishnayapalem ~₹38k</td><td>Reported doubling within six months of relaunch — <em>broker-published</em></td></tr>
+        </tbody>
+        <caption>Rates in ₹ per sq ft unless marked. Source: listing portals (asking prices) except where noted.</caption>
+      </table>
+    </div>
+
+    <h3>The distinction that governs everything downstream</h3>
+    <div class="finding">
+      <span class="lbl">Land re-rated. Housing did not.</span>
+      <p>The dramatic price movement — the reported post-relaunch doubling, the ₹23,000–70,000/sq yd plot range, the ₹8.20 crore/acre allotments — is in <strong>land, quoted per square yard or acre.</strong> That is the unit of land speculation.</p>
+      <p>Built residential product tells a much calmer story. Mangalagiri apartments <strong>drifted down</strong> from ₹4,098 to ₹4,062/sq ft between June and September 2025 — during the same window capital land was reportedly re-rating. Tadepalli apartments appreciated <strong>2.99%</strong>, roughly at or below inflation. Only <strong>Tadepalli villas at +8.39%</strong> show real momentum in built product.</p>
+    </div>
+    <ol>
+      <li><strong>The apartment market here is not hot.</strong> It is stable and competitive. Sub-₹5,000/sq ft apartments in Mangalagiri are a volume business, not a margin business.</li>
+      <li><strong>The villa market is where genuine demand pressure exists</strong> — appreciating nearly <strong>3× faster</strong> than apartments in the corridor's most established premium micro-market. This directly validates a villa component.</li>
+      <li><strong>Land speculation and home buying are different markets with different customers.</strong> Someone buying a ₹30 lakh plot for appreciation is not a candidate for a ₹2.5 crore villa. Any strategy treating land momentum as evidence of housing demand is reasoning from the wrong dataset.</li>
+    </ol>
+
+    <h3>The commercial arithmetic of ₹500 crore on 25 acres</h3>
+    <p>This calculation should be done before any positioning work, because it determines what the marketing job actually <em>is</em>. 25 acres = 1,089,000 sq ft; after roads, open space and amenities, net developable is roughly 700,000–760,000 sq ft.</p>
+
+    <div class="figure">
+      <div class="figure-head">
+        <span class="kicker">Figure 1 · The premium gap</span>
+        <h5>What ₹500 crore on 25 acres requires, against what the corridor actually achieves</h5>
+        <p class="sub">Blended realisation needed vs. current market asking rates, ₹ per sq ft</p>
+      </div>
+      <div class="chart-legend">
+        <span class="k"><span class="swatch obs"></span> Observed market rate</span>
+        <span class="k"><span class="swatch req"></span> Required by the ₹500 cr target</span>
+      </div>
+      <div class="bars" id="gapchart">
+        <div class="bar-row" data-tip="Listing average, Sep 2025 · down from ₹4,098 in Jun 2025">
+          <div class="bar-label"><b>Mangalagiri</b>market average</div>
+          <div class="bar-track"><div class="bar-fill" style="width:62.5%"></div><span class="bar-val">₹4,062</span></div>
+        </div>
+        <div class="bar-row" data-tip="Vijayawada city-wide listing average">
+          <div class="bar-label"><b>Vijayawada</b>city average</div>
+          <div class="bar-track"><div class="bar-fill" style="width:72.3%"></div><span class="bar-val">₹4,700</span></div>
+        </div>
+        <div class="bar-row" data-tip="The corridor's established premium address · +2.99% on apartments">
+          <div class="bar-label"><b>Tadepalli</b>market average</div>
+          <div class="bar-track"><div class="bar-fill" style="width:87.0%"></div><span class="bar-val">₹5,653</span></div>
+        </div>
+        <div class="bar-row" data-tip="Fastest-appreciating built product in the corridor · +8.39%">
+          <div class="bar-label"><b>Tadepalli villas</b>best in corridor</div>
+          <div class="bar-track"><div class="bar-fill" style="width:90.8%"></div><span class="bar-val">₹5,901</span></div>
+        </div>
+        <div class="bar-row" data-tip="Not a market rate — the blended realisation the ₹500 cr GDV target demands">
+          <div class="bar-label"><b>Required blended</b>₹500 cr ÷ 25 acres</div>
+          <div class="bar-track"><div class="bar-fill req" style="width:91.5%"></div><span class="bar-val">₹5,900–6,000 <span class="d">required</span></span></div>
+        </div>
+      </div>
+      <div class="axis"><span></span><span class="scale"><span>₹0</span><span>₹6,500 / sq ft</span></span></div>
+      <div class="figure-foot">The required figure is a <em>requirement</em>, not an observation — hence the dashed mark. It sits <strong>~45% above the Mangalagiri market</strong> and at or above what Tadepalli achieves on villas alone.</div>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">Blended realisation</th><th class="n">Saleable area required</th><th class="n">Saleable sq ft / gross acre</th><th class="n">Implied gross FAR</th></tr></thead>
+        <tbody>
+          <tr><td class="n">₹5,000</td><td class="n">10.00 lakh sq ft</td><td class="n">40,000</td><td class="n">~0.92</td></tr>
+          <tr><td class="n">₹5,500</td><td class="n">9.09 lakh</td><td class="n">36,360</td><td class="n">~0.83</td></tr>
+          <tr class="col-win"><td class="n"><strong>₹6,000</strong></td><td class="n"><strong>8.33 lakh</strong></td><td class="n"><strong>33,320</strong></td><td class="n"><strong>~0.77</strong></td></tr>
+          <tr><td class="n">₹6,500</td><td class="n">7.69 lakh</td><td class="n">30,760</td><td class="n">~0.71</td></tr>
+          <tr><td class="n">₹7,000</td><td class="n">7.14 lakh</td><td class="n">28,560</td><td class="n">~0.66</td></tr>
+        </tbody>
+        <caption>Reference densities: villa-led 15,000–22,000 sq ft/acre · mid-rise apartments 45,000–70,000 · high-rise 80,000+.</caption>
+      </table>
+    </div>
+    <p>A blended ~33,000 sq ft per acre is consistent with roughly a <strong>50:50 to 60:40 land split between apartments and villas</strong> — exactly what a "2BHK through premium residences and villas" spectrum across four communities implies. <strong>The brief is internally coherent.</strong> Now the uncomfortable part.</p>
+
+    <div class="finding">
+      <span class="lbl">The commercial problem, stated in one line</span>
+      <p class="big">The job is not to sell 25 acres of homes. It is to manufacture and defend a price premium of roughly 45% over the surrounding market, sustained across four communities and a full product spectrum, for the duration of the sell-out.</p>
+      <p>Volume marketing does not do that. Positioning, product differentiation, brand credibility and pricing discipline do.</p>
+    </div>
+
+    <h4>Three routes exist, and they are not equally good</h4>
+    <ol>
+      <li><strong>Justify the premium</strong> — through location, product, design, amenity, certification and brand. Highest margin, highest marketing dependency, and the only route that also builds a durable brand asset. <em>This is the route the evidence supports.</em></li>
+      <li><strong>Build more density</strong> — push toward 40,000+ sq ft/acre so ₹500 crore is achievable nearer ₹5,000/sq ft. Lowers the marketing burden but compresses the villa component, which is the segment with real demand pressure. Trades margin and differentiation for volume risk.</li>
+      <li><strong>Phase the ₹500 crore over 5–7 years</strong> — treat it as programme GDV, not launch pricing, and let appreciation close part of the gap. Tadepalli's 3-year +34.2% makes this plausible. <strong>Most likely the realistic answer — and it should be stated explicitly rather than assumed.</strong></li>
+    </ol>
+
+    <div class="cards">
+      <div class="card">
+        <h6>Indicative unit count</h6>
+        <ul>
+          <li>~8.33 lakh sq ft saleable</li>
+          <li>~400 apartments at avg 1,450 sq ft</li>
+          <li>~90 villas at avg 2,800 sq ft</li>
+          <li><strong>≈490 units</strong>, rising to <strong>550–700</strong> with a 2BHK-weighted mix</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>The resulting sales task</h6>
+        <ul>
+          <li>~600 units over 4–5 years</li>
+          <li><strong>120–150 units a year</strong></li>
+          <li><strong>10–12 confirmed bookings per month, sustained</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Marketing envelope</h6>
+        <ul>
+          <li>4–5% of GDV = <strong>₹20–25 crore</strong> over project life</li>
+          <li>Allowable cost per unit sold: <strong>₹3.3–4.2 lakh</strong></li>
+          <li>Every downstream channel plan must reconcile to these</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <span class="lbl">Transaction costs and finance</span>
+      <p>Stamp duty 5% + registration 1% + transfer duty 1.5% = <strong>7.5%</strong> of the higher of consideration or guideline value. The <strong>1 February 2026 guideline revision</strong> therefore raised actual buyer cost as well as recorded values — a real, if modest, affordability drag that took effect this year. Home loan rates in the region start around <strong>7.15–7.35% p.a.</strong>, LTV to 90%, tenures to 30 years — a supportive rate environment.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">§7</div>
+    <div>
+      <h2>Who is actually buying</h2>
+      <p class="dek">Demand structure — and why the argument that is moving plots cannot be the argument that sells this product.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Investor versus end-user</h3>
+    <p>The evidence points to a market currently <strong>dominated by investors, not end-users</strong>: price movement concentrated in land not homes; buyer interest characterised as "NRIs and institutional investors" treating Amaravati as "Hyderabad in its early phase"; preference shifts toward plotted developments and CRDA-approved layouts — the classic signature of appreciation-seeking capital; and a residential population still ~100,000 with staff commuting rather than relocating.</p>
+    <div class="finding">
+      <span class="lbl">The demand thesis</span>
+      <p>A ₹500 crore development spanning 2BHKs to villas is fundamentally an <strong>end-user product.</strong> It cannot be sold on the argument moving plots, and should not try — <strong>a finished home is a <em>worse</em> pure appreciation vehicle than raw land</strong> (construction depreciates; land does not), so competing on appreciation means competing on the one dimension where the product is structurally weaker.</p>
+      <p class="big">Amaravati does not have to motivate the purchase. It has to de-risk it.</p>
+      <p>The statutory settlement removed the reason people were <em>not</em> buying homes here. The motivation comes from where it always does in a Tier-2 Indian market — space, schools, safety, status, and an upgrade from a cramped city apartment.</p>
+    </div>
+
+    <h3>NRI demand</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Signal</th><th class="n">Figure</th><th>Grade</th></tr></thead>
+        <tbody>
+          <tr><td>NRI share of Indian real-estate investment</td><td class="n">10–12% (2019) → 17–19% (2024)</td><td><span class="g g-5">Reported</span></td></tr>
+          <tr><td>Telugu share of Indian-American population</td><td class="n">AP + Telangana ≈ 14%</td><td><span class="g g-5">Reported</span></td></tr>
+          <tr><td>Gulf NRI remittance purpose</td><td class="n">27% investment · 26% family · 22% retirement</td><td><span class="g g-5">Reported</span></td></tr>
+          <tr><td>AP diaspora institutions</td><td class="n">APNRTS · ₹50 cr corpus</td><td><span class="g g-1">Confirmed</span></td></tr>
+          <tr><td>Corridor-specific NRI capital</td><td class="n">NRI Academy, Chinakakani, est. 2003</td><td><span class="g g-1">Confirmed</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>"NRI" is not one segment, and treating it as one is a common and expensive error.</strong> US-based Telugu NRIs skew toward high-income technology professionals — genuine candidates for premium residences and villas. Gulf-based NRIs skew toward remittance-led, mid-income profiles — candidates for 2BHK and 3BHK product, often bought for family occupation rather than personal use. Two different customers, two different propositions. The four-community structure is well suited to serving both, but only if that distinction is made deliberately.</p>
+    <p>One genuinely useful precedent is local: <strong>NRI Academy of Medical Sciences at Chinakakani has existed since 2003</strong> — proof that NRI capital has been committing to <em>this specific belt</em> for over two decades, long before the capital was announced.</p>
+
+    <h3>Local buyer behaviour</h3>
+    <p><em>Direct behavioural research was not available and is flagged in §12.</em> What the available evidence supports: a <strong>land-ownership bias</strong> (the strong plot market) — a headwind for apartments and a tailwind for villas, which offer land ownership with a finished product; villas outperforming apartments ~3:1 on appreciation, consistent with that preference; trading and agricultural wealth centres, which typically implies significant undocumented income, a preference for tangible assets and lower reliance on institutional finance; and extended-family living patterns favouring larger units and 3BHK+ configurations.</p>
+
+    <h3>Premium supply — and the white space it leaves</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Scheme</th><th>Format</th><th class="n">Scale</th></tr></thead>
+        <tbody>
+          <tr><td>Jayabheri The Capital</td><td>3 &amp; 4BHK, Vijayawada–Guntur Highway</td><td class="n">7 acres · 5 blocks × 15 storeys</td></tr>
+          <tr><td>Kalidindi Grand Project Capitol</td><td>High-rise gated, near NRI Hospital</td><td class="n">4 towers × 14 floors</td></tr>
+          <tr><td>Manjeera Monarch</td><td>2/3/4BHK</td><td class="n">5 acres · 567 units · 15 floors</td></tr>
+          <tr><td>IJM RTPDK Villas 26</td><td>4BHK triplex villas, 3,467–3,575 sq ft</td><td class="n">26 villas</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <span class="lbl">The clearest white space in the market</span>
+      <p>The largest premium schemes in the corridor sit on <strong>5–7 acres</strong>. A 25-acre integrated development would be roughly <strong>4× the scale of anything currently competing</strong> — and masterplanning, amenity scale, open space and phasing are all available at 25 acres and simply are not at 5.</p>
+      <p>The villa competitive set is <strong>remarkably thin</strong>: 26 units is the clearest comparator. The corridor's fastest-appreciating segment is served by a handful of small schemes. <strong>There is no dominant, large-format, integrated villa-and-apartment community in this corridor</strong> — which is precisely the product the brief describes.</p>
+    </div>
+
+    <h3>A national warning that applies directly to this product</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Segment</th><th class="n">Unsold inventory, YoY</th><th class="n">H1 2026 units</th></tr></thead>
+        <tbody>
+          <tr><td>Sub-₹50 lakh</td><td class="n mk mk-y">−7%</td><td class="n">171,363</td></tr>
+          <tr><td><strong>₹2–5 crore</strong></td><td class="n mk mk-n">+43%</td><td class="n">65,671</td></tr>
+          <tr class="tot"><td>All segments, eight major markets</td><td class="n">+4%</td><td class="n">525,695</td></tr>
+        </tbody>
+        <caption>Knight Frank, H1 2026. Q1 2026 was the first quarter since 2021 in which launches outpaced sales nationally (126,265 vs 101,675).</caption>
+      </table>
+    </div>
+    <p><strong>Affordable housing is clearing. Premium housing is accumulating — sharply.</strong> This is a national signal and this corridor is not among the eight markets measured, so it should not be applied mechanically. But it is a direct warning to the exact segment this project's margin depends on.</p>
+    <div class="finding">
+      <span class="lbl">Read together with §6</span>
+      <p class="big">The 2BHK component will likely sell. The premium and villa components carry the project's margin, its risk, and its marketing burden — and they are entering a national environment in which premium inventory is building up 43% year on year.</p>
+      <p>Phasing, absorption discipline and a defensible premium proposition are not refinements here. They are the core commercial requirement.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-head">
+    <div class="sec-num">§8</div>
+    <div>
+      <h2>Competing supply</h2>
+      <p class="dek">What a 25-acre scheme would actually be competing against — for buyers, and for buyer capital.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Layer</th><th>What exists</th><th>Assessment</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Plotted / land ventures</strong></td><td>Very large volume of CRDA-approved plot marketing across Thullur, Mangalagiri, Tadepalli, Kuragallu, Krishnayapalem</td><td><strong>The primary competitor for buyer capital</strong>, not for buyer need. Competes on appreciation, not on living</td></tr>
+          <tr><td>Mid-market apartments</td><td>13–24 active or upcoming projects listed in Mangalagiri; Manjeera Monarch (567 units) among the largest</td><td>Fragmented; competes at ₹4,000–5,000/sq ft</td></tr>
+          <tr><td>Premium apartments</td><td>Jayabheri The Capital; Kalidindi Grand Project Capitol</td><td>Small footprints (5–7 acres); tower-led, not community-led</td></tr>
+          <tr><td>Villas</td><td>IJM RTPDK Villas 26; scattered small schemes</td><td><strong>Thinnest competitive layer in the fastest-appreciating segment</strong></td></tr>
+          <tr class="col-win"><td><strong>Large integrated townships</strong></td><td><strong>None identified at 25+ acres in the corridor</strong></td><td><strong>Clear white space</strong></td></tr>
+          <tr><td>Institutional campuses</td><td>SRM (100 acres), AIIMS, NRI Medical College, KIMS (25 acres)</td><td>Not competitors — <strong>demand generators and credibility anchors</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <span class="lbl">Supply-side risk to watch</span>
+      <p>Developers are reported to be shifting toward high-rise formats given limited availability of pre-pooled land, particularly near Velagapudi and Mangalagiri. If that continues, corridor supply will skew vertical — <em>further</em> thinning the villa set and <em>increasing</em> apartment competition. Both movements favour a villa-weighted mix.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="sec-head">
+    <div class="sec-num">§9</div>
+    <div>
+      <h2>Risk register</h2>
+      <p class="dek">Ranked by expected impact on a ₹500 crore development. Each names <strong>what would falsify it</strong> — because a risk you cannot test is a worry, not an analysis.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>#</th><th>Risk</th><th>Impact</th><th>Probability</th></tr></thead>
+        <tbody>
+          <tr><td class="n">9.1</td><td>Political reversal</td><td>High</td><td><strong>Materially reduced</strong></td></tr>
+          <tr class="col-win"><td class="n">9.2</td><td><strong>The premium-pricing gap</strong></td><td><strong>High</strong></td><td><strong>High</strong></td></tr>
+          <tr><td class="n">9.3</td><td>Delivery slippage in the capital</td><td>Medium-high</td><td>High</td></tr>
+          <tr><td class="n">9.4</td><td>Speculative land pricing correcting</td><td>Medium-high</td><td>Medium</td></tr>
+          <tr><td class="n">9.5</td><td>Flood exposure</td><td>Medium-high</td><td>Low-medium · <em>location-dependent</em></td></tr>
+          <tr><td class="n">9.6</td><td>Land title and zoning complexity</td><td>Medium</td><td>Medium</td></tr>
+          <tr><td class="n">9.7</td><td>Absorption risk at scale</td><td>Medium</td><td>Medium-high</td></tr>
+          <tr><td class="n">9.8</td><td>Execution and construction-cost risk</td><td>Medium</td><td>Medium</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>9.1 Political reversal</h3>
+    <p>Amaravati has been stopped once already. The YSRCP has since abandoned the three-capital plan and backs Amaravati, but has raised a <strong>MAVIGUN coastal corridor agenda</strong> for coming elections and alleges corruption in the project. The <strong>6 April 2026 gazette notification</strong> materially reduces this: undoing it requires Parliament, not a state cabinet.</p>
+    <p><strong>Residual risk:</strong> a hostile state government cannot un-capital Amaravati, but it can <strong>slow it</strong> — deprioritising funding, letting tenders lapse, changing APCRDA leadership. Given the results-based structure of the multilateral loans, a state slowdown throttles disbursement too. The next state election falls in <strong>2029 — inside this project's likely sell-out window.</strong></p>
+    <p><em>Falsified by:</em> a reduced Amaravati allocation in a state budget; APCRDA tenders lapsing without re-issue; multilateral disbursement pausing against unmet milestones.</p>
+
+    <h3>9.2 The premium-pricing gap</h3>
+    <div class="finding">
+      <p class="big">This is the most probable failure mode of the project — not the capital going unbuilt, but the premium going unachieved.</p>
+      <p>§6 establishes a required blended ~₹5,900–6,000/sq ft against a Mangalagiri average of ₹4,062. §7 shows national ₹2–5 crore inventory up 43% YoY.</p>
+      <p><em>Falsified by:</em> sustained corridor appreciation in <em>built product</em> of 12%+ annually; comparable schemes demonstrably clearing above ₹5,500/sq ft; premium absorption improving nationally.</p>
+    </div>
+
+    <h3>9.3 Delivery slippage in the capital</h3>
+    <p>Documented, not hypothetical: MLA/MLC/AIS towers at <strong>58.14% against a 78.56% target</strong>; Quantum Valley's foundation stone laid <strong>after</strong> its operational date; the Gannavaram terminal past 31 March 2026; trunk roads targeted April 2027. If a residential project completes before trunk infrastructure and the capital's social layers arrive, <strong>early buyers occupy a well-built community in an unfinished city — and the reputational cost lands on the developer, not the government.</strong></p>
+    <p><strong>Mitigation is structural, not communicational:</strong> phase delivery to track the capital's actual progress, and specify the project to be self-sufficient on utilities rather than dependent on trunk services arriving on time.</p>
+
+    <h3>9.4 Speculative land pricing correcting</h3>
+    <p>Capital land reportedly doubled within six months of relaunch, with commentary explicitly identifying speculation and Hyderabad-analogy reasoning as drivers. <strong>The nuance that matters:</strong> a correction affects land acquisition cost (arguably favourably, for a project not yet bought) and corridor sentiment (unfavourably) — but not built-product pricing, which never re-rated in the first place. <strong>Paradoxically, a project underwritten on end-user demand is <em>less</em> exposed here than a plot venture.</strong></p>
+
+    <h3>9.5 Flood exposure</h3>
+    <p>From 31 August 2024, Vijayawada recorded over <strong>29 cm of rain in a single day</strong>; at least <strong>35 deaths</strong> in NTR district and ~<strong>270,000 people affected</strong>. The <strong>Budameru rivulet discharged roughly 70,000 cusecs against a design maximum of 11,000.</strong> Worst-hit: Krishnalanka, Ibrahimpatnam, Ferry, Jupudi, Moolapadu, low-lying Payakapuram.</p>
+    <div class="finding">
+      <span class="lbl">The cause is itself a site-selection lesson</span>
+      <p>Reporting attributes the severity substantially to <strong>encroachment narrowing the Budameru</strong> — illegal construction driven by capital-region housing demand. <strong>The capital boom itself contributed to the flood damage.</strong></p>
+      <p>Mangalagiri sits on hilly terrain at ~43 m (avg ~29 m), materially above the Krishna floodplain and away from the Budameru catchment; flood-wall and lift-scheme works have been launched there. The riverfront belt — Undavalli, Penumaka, low-lying Tadepalli — does not share that advantage.</p>
+      <p><strong>This makes elevation and drainage a first-order site-selection criterion in this corridor, not a technical footnote.</strong> Handled honestly it is also a genuine differentiator: after 2024, flood safety is a live concern for every buyer here, and very few developers are addressing it explicitly.</p>
+    </div>
+
+    <h3>9.6 Land title and zoning complexity</h3>
+    <div class="cards">
+      <div class="card">
+        <h6>Land pooling returnable plots</h6>
+        <ul><li>~30,000+ acres from 25,000+ farmers entered pooling in exchange for developed returnable plots</li><li>Title, settlement status and transferability need individual verification</li></ul>
+      </div>
+      <div class="card">
+        <h6>Assigned lands — live litigation</h6>
+        <ul><li>The Supreme Court, declining in August 2026 to interfere with the quashing of the pooling-irregularities case, <strong>expressly held that justice must be ensured for farmers who lost assigned lands</strong></li><li>Other cases must be examined independently. <strong>Assigned-land parcels carry unresolved risk</strong></li></ul>
+      </div>
+      <div class="card">
+        <h6>The R5 zone</h6>
+        <ul><li>An affordable/EWS zone over 900+ acres, proposed across <strong>Krishnayapalem, Nidamarru and Kuragallu</strong> plus Mandadam and Ainavolu</li><li>Neerukonda and Kuragallu panchayats passed resolutions against it</li><li>For a premium development, an adjacent notified EWS zone is a real positioning consideration — diligence parcel by parcel</li></ul>
+      </div>
+      <div class="card">
+        <h6>Zoning and FAR</h6>
+        <ul><li>Zones R1 (village planning), R2 (low density), R3 (low-medium), R4 (high density), R5 (affordable/EWS)</li><li><strong>FSI in the capital city ranges 0.4 to 5.0 by zone</strong> — the density in §6 is entirely zone-dependent and must be confirmed before land is committed</li></ul>
+      </div>
+    </div>
+    <p>Second-phase pooling covers <strong>20,494 acres across seven villages</strong> — Vaikuntapuram, Pedamadduru, Endrai, Karlapudi, Vaddamanu, Harischandrapuram, Pedaparimi — commenced January 2026, for the Sports City, greenfield airport, new railway station and IRR. A ministerial claim that farmers are ready to offer 36,000 acres is <span class="g g-6">Speculative</span>.</p>
+
+    <h3>9.7 Absorption risk at scale &nbsp;·&nbsp; 9.8 Execution risk</h3>
+    <p>Roughly <strong>600 units requiring 10–12 sales a month for 4–5 years</strong>, in a corridor where the largest premium competitors sit on 5–7 acres, is a demanding absorption profile. Achievable — but only with disciplined phasing, and only if the premium in 9.2 holds. <strong>If pricing is cut to drive volume, the ₹500 crore target fails arithmetically.</strong></p>
+    <p>Separately, ₹57,821 crore of concurrent regional works creates competition for contractors, labour and materials. The Gannavaram terminal delay was attributed specifically to <strong>contractor appointment difficulties</strong> — direct evidence of capacity constraints in this market.</p>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="sec-head">
+    <div class="sec-num">§10</div>
+    <div>
+      <h2>Confirmed reality versus circulating narrative</h2>
+      <p class="dek">A consolidated reference. The right column is usable; the left is not.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table class="ledger">
+        <thead><tr><th style="width:2.2rem"></th><th>The narrative in circulation</th><th>What the evidence actually supports</th></tr></thead>
+        <tbody>
+          <tr><td class="mk mk-n">✕</td><td>"Metro connectivity to Amaravati"</td><td>Phase I runs <strong>Gannavaram–PNBS–Penamaluru</strong>. The Amaravati corridor is a later, unfunded phase. <strong>Do not use</strong></td></tr>
+          <tr><td class="mk mk-n">✕</td><td>"Google's $15 billion AI data centre"</td><td>In <strong>Visakhapatnam</strong>, ~350 km away. <strong>Do not use</strong></td></tr>
+          <tr><td class="mk mk-n">✕</td><td>"Quantum Valley: 100,000 jobs by 2026"</td><td>A 50-acre park with ₹240 cr committed, foundation stone laid 7 Feb 2026. <strong>Aspirational</strong></td></tr>
+          <tr><td class="mk mk-n">✕</td><td>"ORR will transform connectivity"</td><td>189.9 km, ₹24,791 cr, <strong>land acquisition just begun</strong>. Realistically a decade out</td></tr>
+          <tr><td class="mk mk-n">✕</td><td>"Amaravati will house 3.5 million"</td><td>A <strong>master plan capacity input</strong>, not a forecast. Needs ~142,000 net in-migrants annually for 24 years</td></tr>
+          <tr><td class="mk mk-n">✕</td><td>"Prices doubled in six months"</td><td>Refers to <strong>land, per sq yd</strong>, largely broker-published. Built product did <em>not</em> re-rate — Mangalagiri apartments drifted <em>down</em></td></tr>
+          <tr><td class="mk mk-n">✕</td><td>"AP attracted ₹11 lakh crore"</td><td><strong>MoUs and approvals</strong>, not commissioned projects. The state itself created a committee to convert pledges to action</td></tr>
+          <tr><td class="mk mk-n">✕</td><td>"Amaravati is the next Hyderabad"</td><td>An analogy explicitly flagged in commentary as a <strong>speculation driver</strong>. No evidential content</td></tr>
+          <tr><td class="mk mk-n">✕</td><td>"Capital construction is on track"</td><td>The government's own reporting shows flagship towers at <strong>58.14% against a 78.56% target</strong></td></tr>
+          <tr class="true"><td class="mk mk-y">✓</td><td><strong>Amaravati is AP's sole and permanent capital</strong></td><td><strong>True.</strong> Gazette 6 April 2026, AP Reorganisation (Amendment) Act 2026, retrospective to 2 June 2024. <strong>The strongest usable fact available</strong></td></tr>
+          <tr class="true"><td class="mk mk-y">✓</td><td><strong>~USD 1.6 bn multilateral commitment</strong></td><td><strong>True.</strong> World Bank USD 800 m (340 m released), ADB USD 788.8 m approved. Milestone-linked</td></tr>
+          <tr class="true"><td class="mk mk-y">✓</td><td><strong>₹57,821 cr of works in progress</strong></td><td><strong>True</strong>, per April 2026 review</td></tr>
+          <tr class="true"><td class="mk mk-y">✓</td><td><strong>KIMS is building 25 acres at Nidamarru</strong></td><td><strong>True.</strong> 60-year APCRDA lease; 1,000-bed teaching hospital plus 500-bed super-specialty; groundbreaking done</td></tr>
+          <tr class="true"><td class="mk mk-y">✓</td><td><strong>The airport is growing ~29% a year</strong></td><td><strong>True.</strong> 1,611,200 passengers FY2025–26, +28.9%, after +30.2%</td></tr>
+          <tr class="true"><td class="mk mk-y">✓</td><td><strong>A six-lane bypass reaches Mangalagiri</strong></td><td><strong>True.</strong> 47.8 km Western Bypass, ~85% complete, two-way traffic since March 2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <span class="lbl">The pattern worth noticing</span>
+      <p>The <em>false</em> claims are consistently bigger and more exciting than the true ones. But the true ones — a capital settled by Act of Parliament, USD 1.6 billion of multilateral money, a listed hospital group on a 60-year lease, 29% airport growth, a working six-lane bypass — are more than sufficient to build a serious proposition on.</p>
+      <p class="big">The corridor does not need the exaggerations. It is being sold with them out of habit — and that is itself a competitive opening: in a market this noisy, verifiable precision is a differentiator.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s11">
+  <div class="sec-head">
+    <div class="sec-num">§11</div>
+    <div>
+      <h2>Micro-location analysis and recommendation</h2>
+      <p class="dek">Five candidate zones, ten weighted criteria. Weights reflect what actually binds on a 25-acre, ₹500 crore scheme — §6 established that pricing and commercial viability determine whether the project is possible at all, so they carry 3× weight.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cards">
+      <div class="card"><h6>A · Seed area</h6><ul><li>Thullur, Rayapudi, Venkatapalem, Mandadam (Thullur mandal)</li></ul></div>
+      <div class="card"><h6>B · Capital city, Mangalagiri mandal</h6><ul><li>Neerukonda, Kuragallu, Nidamarru</li></ul></div>
+      <div class="card"><h6>C · NH-16 belt</h6><ul><li>Mangalagiri town, Chinakakani, Kaza — APCRDA, outside the capital city area</li></ul></div>
+      <div class="card"><h6>D · Riverfront</h6><ul><li>Tadepalli, Undavalli, Penumaka</li></ul></div>
+      <div class="card"><h6>E · Airport corridor</h6><ul><li>Gannavaram and surrounds</li></ul></div>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Criterion</th><th class="n">Wt</th><th class="n">A</th><th class="n">B</th><th class="n">C</th><th class="n">D</th><th class="n">E</th></tr></thead>
+        <tbody>
+          <tr><td>Connectivity</td><td class="n">2.0</td><td class="n">3</td><td class="n col-win">5</td><td class="n col-win">5</td><td class="n">4</td><td class="n">4</td></tr>
+          <tr><td>Current development</td><td class="n">1.5</td><td class="n">2</td><td class="n col-win">4</td><td class="n col-win">4</td><td class="n">4</td><td class="n">3</td></tr>
+          <tr><td>Future infrastructure</td><td class="n">1.5</td><td class="n">5</td><td class="n col-win">5</td><td class="n col-win">3</td><td class="n">4</td><td class="n">3</td></tr>
+          <tr><td>Residential demand</td><td class="n">2.0</td><td class="n">2</td><td class="n col-win">4</td><td class="n col-win">5</td><td class="n">4</td><td class="n">3</td></tr>
+          <tr><td>Accessibility</td><td class="n">1.5</td><td class="n">3</td><td class="n col-win">4</td><td class="n col-win">5</td><td class="n">5</td><td class="n">3</td></tr>
+          <tr><td>Competing supply <span style="color:var(--ink-3)">(5 = most white space)</span></td><td class="n">1.0</td><td class="n">3</td><td class="n col-win">4</td><td class="n col-win">3</td><td class="n">2</td><td class="n">4</td></tr>
+          <tr><td><strong>Pricing headroom</strong></td><td class="n">3.0</td><td class="n">1</td><td class="n col-win">3</td><td class="n col-win">4</td><td class="n">2</td><td class="n">4</td></tr>
+          <tr><td>Customer profile fit</td><td class="n">2.0</td><td class="n">2</td><td class="n col-win">5</td><td class="n col-win">4</td><td class="n">4</td><td class="n">3</td></tr>
+          <tr><td>Site-visit potential</td><td class="n">2.0</td><td class="n">2</td><td class="n col-win">4</td><td class="n col-win">5</td><td class="n">5</td><td class="n">3</td></tr>
+          <tr><td><strong>Commercial viability</strong></td><td class="n">3.0</td><td class="n">1</td><td class="n col-win">4</td><td class="n col-win">4</td><td class="n">2</td><td class="n">2</td></tr>
+          <tr class="tot"><td>Weighted total <span style="color:var(--ink-3);font-weight:400">/ 97.5</span></td><td class="n"></td><td class="n">42.0</td><td class="n col-win">80.5</td><td class="n col-win">83.0</td><td class="n">67.5</td><td class="n">61.5</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Zone</th><th class="n">Score</th><th style="width:40%">Weighted</th></tr></thead>
+        <tbody>
+          <tr class="col-win"><td><strong>C · NH-16 belt</strong></td><td class="n"><strong>83.0</strong></td><td><span class="scorebar"><span class="track"><span class="fill top" style="width:85.1%"></span></span></span></td></tr>
+          <tr class="col-win"><td><strong>B · Neerukonda–Nidamarru</strong></td><td class="n"><strong>80.5</strong></td><td><span class="scorebar"><span class="track"><span class="fill top" style="width:82.6%"></span></span></span></td></tr>
+          <tr><td>D · Tadepalli / riverfront</td><td class="n">67.5</td><td><span class="scorebar"><span class="track"><span class="fill" style="width:69.2%"></span></span></span></td></tr>
+          <tr><td>E · Gannavaram</td><td class="n">61.5</td><td><span class="scorebar"><span class="track"><span class="fill" style="width:63.1%"></span></span></span></td></tr>
+          <tr><td>A · Seed area</td><td class="n">42.0</td><td><span class="scorebar"><span class="track"><span class="fill" style="width:43.1%"></span></span></span></td></tr>
+        </tbody>
+        <caption>Bar length is the weighted score as a share of the 97.5 maximum.</caption>
+      </table>
+    </div>
+
+    <h3>Reading the result</h3>
+    <p><strong>C (83.0) and B (80.5) are separated by 2.5 points on a 97.5-point scale.</strong> Given the precision of the underlying data, that is not a meaningful gap — they are tied. <strong>That tie is the finding, not a failure to resolve one.</strong></p>
+    <p>B wins on <strong>future infrastructure and customer profile</strong> — it is <em>inside</em> the capital city area, holds the KIMS campus and the Health City designation, and commands the full 2BHK-to-villa spectrum. C wins on <strong>residential demand, accessibility, pricing and site-visit potential</strong> — the functioning market with real end-users today, direct NH-16 access, and land at ₹4–8 crore/acre rather than ₹24,000+/sq yd. <strong>They are not competing answers. They are two halves of one answer.</strong></p>
+
+    <div class="finding">
+      <span class="lbl">Recommendation</span>
+      <p class="big">The southern gateway of Mangalagiri mandal — the belt running from Neerukonda, Kuragallu and Nidamarru south-eastward toward Chinakakani and Kaza, in the seam between the capital city boundary and NH-16.</p>
+      <p>No specific plot or address is proposed. Acquisition search parameters are set out below instead.</p>
+    </div>
+
+    <h3>Why this belt, specifically</h3>
+    <p><strong>1 · It is the only location that carries a capital address without capital land economics.</strong> Kuragallu, Neerukonda and Nidamarru are among the seventeen villages <em>inside</em> the Amaravati capital city area. A project here is legitimately <em>in</em> the capital — but land trades against Mangalagiri comparables (₹4–8 cr/acre) rather than seed-area plot rates. Zone A is arithmetically impossible: at ₹33,000–44,000/sq yd, 25 acres costs <strong>₹160–215 crore — 32–43% of a ₹500 crore GDV</strong>, before a single foundation.</p>
+
+    <p><strong>2 · Sophisticated institutional capital has already chosen this belt, repeatedly.</strong> This is revealed preference, not opinion:</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Institution</th><th>Location</th><th>Commitment</th></tr></thead>
+        <tbody>
+          <tr><td>SRM University AP</td><td><strong>Neerukonda</strong></td><td>100 acres, operating since 2017</td></tr>
+          <tr class="col-win"><td><strong>KIMS Hospitals</strong></td><td><strong>Nidamarru</strong></td><td><strong>25 acres on a 60-year APCRDA lease</strong>; 1,000-bed teaching hospital + 500-bed super-specialty; broken ground</td></tr>
+          <tr><td>AIIMS Mangalagiri</td><td>Mangalagiri</td><td>Operating since 2018; recruiting 79 faculty across 33 departments</td></tr>
+          <tr><td>NRI Academy of Medical Sciences</td><td><strong>Chinakakani</strong></td><td>Operating since 2003 — NRI capital in this belt for 23 years</td></tr>
+          <tr><td>Nowluru Township</td><td>Around Nidamarru and Kuragallu</td><td>Designated part of the <strong>Health City</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Four institutions with 60-year horizons, better information and no incentive to inflate have independently selected the same few square kilometres. <strong>A residential developer following that pattern is underwriting against other people's diligence.</strong></p>
+
+    <p><strong>3 · Dual catchment — the project does not have to bet on Amaravati.</strong> This belt sits between the capital and the existing <strong>3.3 million-person agglomeration</strong>, and draws from both. Zone A draws only from the capital, and the capital has ~100,000 residents. <strong>In the seam, Amaravati completing on time is upside. In the seed area, it is the thesis.</strong></p>
+
+    <p><strong>4 · Connectivity that exists now, not in 2035.</strong></p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Link</th><th class="n">Distance</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>AP Secretariat</td><td class="n">~4.6 km</td><td>from Nidamarru</td></tr>
+          <tr><td>NH-16 at Chinakakani</td><td class="n">~4.3 km</td><td><span class="g g-1">Confirmed</span></td></tr>
+          <tr class="col-win"><td><strong>Western Bypass terminus</strong> (Kaza/Chinakakani)</td><td class="n">~6 km</td><td>Six-lane, ~85% complete, <strong>carrying two-way traffic since March 2026</strong></td></tr>
+          <tr><td>Mangalagiri railway station</td><td class="n">~5 km</td><td><span class="g g-1">Confirmed</span> — operating, Vijayawada–Guntur line</td></tr>
+          <tr><td>Vijayawada city</td><td class="n">~15 km</td><td><span class="g g-1">Confirmed</span></td></tr>
+          <tr><td>Guntur city</td><td class="n">~20 km</td><td>from Nidamarru</td></tr>
+          <tr><td>Gannavaram airport</td><td class="n">~25–30 km</td><td>1.61 m passengers, +28.9% YoY</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Every item is confirmed or operational. <strong>None requires the ORR, the metro, or the greenfield airport.</strong> The capital's trunk roads (April 2027) and the IRR then arrive as genuine upside rather than as load-bearing assumptions.</p>
+
+    <p><strong>5 · Elevation.</strong> Mangalagiri sits on hilly terrain at ~43 m (avg ~29 m), above the Krishna floodplain and outside the Budameru catchment that failed in September 2024. Zone D does not share this. After 2024, in this market, that is a differentiator very few competitors can claim.</p>
+
+    <p><strong>6 · Pricing sits in the gap, not at the top.</strong> Mangalagiri averages ₹4,062/sq ft; Tadepalli ₹5,653 with villas at ₹5,901. The belt sits physically and commercially between them. Positioning as <em>"capital-area address, Health City adjacency, at a discount to Tadepalli"</em> is a coherent premium argument. <strong>In Zone A the same price would be a discount to the market — no premium argument needed, and no margin either, because the land already consumed it.</strong></p>
+
+    <p><strong>7 · Genuine white space at this scale.</strong> The largest premium competitors sit on 5–7 acres; the clearest villa comparator is 26 units. A 25-acre integrated community with four distinct products would be ~4× the scale of anything competing, in the corridor's fastest-appreciating segment.</p>
+
+    <p><strong>8 · Site-visit economics.</strong> The sales task is <strong>10–12 confirmed bookings a month, sustained</strong>. That requires prospects physically on site: ~25–30 minutes from Vijayawada on improving roads, ~20 km from Guntur, with <strong>AIIMS, SRM and NRI Medical College as navigational landmarks</strong> and surroundings that read as a functioning place. <strong>Zone A fails precisely here</strong> — a long drive ending in an unfinished landscape damages conversion regardless of how good the product is.</p>
+
+    <h3>Why the alternatives were rejected</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Zone</th><th class="n">Score</th><th>Why not</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A</strong> · Seed area</td><td class="n">42.0</td><td><strong>Fails on arithmetic before anything else.</strong> Land at ₹33–44k/sq yd puts 25 acres at ₹160–215 cr — 32–43% of GDV. Compounded by no existing social infrastructure, investor-dominated demand unsuited to a 2BHK-to-villa spectrum, and site-visit surroundings that actively harm conversion</td></tr>
+          <tr><td><strong>D</strong> · Tadepalli</td><td class="n">67.5</td><td>Best accessibility and highest achievable pricing, but <strong>contiguous 25-acre parcels are scarce and expensive</strong>, it faces the most direct premium competition, and it carries the flood exposure Mangalagiri's elevation avoids</td></tr>
+          <tr><td><strong>E</strong> · Gannavaram</td><td class="n">61.5</td><td>Genuine strengths — airport growth, and <strong>Metro Phase I actually serves it</strong>. But wrong side of Vijayawada for the capital narrative, narrower catchment, and at ₹3,100–5,200/sq ft it <strong>cannot support a ~₹5,900 blended realisation</strong>. The ₹500 crore target fails</td></tr>
+          <tr class="col-win"><td><strong>B</strong> alone</td><td class="n">80.5</td><td><strong>Not rejected — incorporated.</strong> Alone it inherits capital-area land pricing and title complexity, including the R5 (EWS) zone proposed across Krishnayapalem, Nidamarru and Kuragallu</td></tr>
+          <tr class="col-win"><td><strong>C</strong> alone</td><td class="n">83.0</td><td><strong>Not rejected — incorporated.</strong> Alone it loses the capital address and Health City adjacency, and faces the densest mid-market apartment competition (13–24 active projects)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Acquisition search parameters</h3>
+    <p>In place of a plot, these are the parameters a site search should run against — converting the analysis into testable criteria.</p>
+    <div class="cards">
+      <div class="card">
+        <h6>Location</h6>
+        <ul>
+          <li>Contiguous <strong>22–28 acres</strong>, single title or assemblable from <strong>no more than three</strong></li>
+          <li>Within <strong>5 km</strong> of NH-16 access at Chinakakani or Kaza</li>
+          <li>Within <strong>8 km</strong> of the Secretariat approach</li>
+          <li>Frontage on a road of <strong>≥18 m</strong> existing or notified width</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Title — non-negotiable</h6>
+        <ul>
+          <li>Freehold patta land</li>
+          <li><strong>Exclude assigned land entirely</strong> — live Supreme Court exposure</li>
+          <li><strong>Exclude unsettled pooling returnable plots</strong> unless settlement is fully documented</li>
+          <li><strong>Not adjacent to notified R5 (EWS) parcels</strong> — verify against the current zoning amendment</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Physical</h6>
+        <ul>
+          <li>Ground level <strong>at or above ~25 m</strong>, outside the Budameru catchment and the September 2024 inundation extent — <strong>verify against surveyed contours, not assumption</strong></li>
+          <li>Within ~3 km of an existing 11kV/33kV feeder</li>
+          <li>Independently viable water source — <strong>do not assume trunk services by April 2027</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Planning &amp; commercial</h6>
+        <ul>
+          <li>Zone permitting <strong>FSI ≥1.5 across the whole parcel</strong> (capital-city FSI ranges 0.4–5.0)</li>
+          <li>Land cost ceiling <strong>₹5 cr/acre → ₹125 cr → ≤25% of GDV</strong></li>
+          <li>Above <strong>₹6 cr/acre the ₹500 cr structure requires re-basing</strong> — higher density or longer phasing</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>What would change this recommendation</h3>
+    <p>Stated in advance, so the analysis is falsifiable rather than merely persuasive.</p>
+    <ul>
+      <li><strong>Land in the seam clears above ₹6 cr/acre</strong> → economics move toward Zone C proper, trading the capital address for viability</li>
+      <li><strong>R5 notification confirmed on or adjacent to candidate parcels</strong> → premium positioning compromised; move south-east toward Chinakakani</li>
+      <li><strong>Trunk roads slip materially past April 2027</strong> → self-sufficiency capex rises and phasing must stretch; re-base the ₹500 crore timeline</li>
+      <li><strong>Vijayawada Metro Phase I extended to Amaravati with funding committed</strong> → materially strengthens A and B; worth revisiting</li>
+      <li><strong>Built-product prices in Mangalagiri stay flat or fall through 2027</strong> → the ~45% premium becomes unachievable at launch, and the project must be re-based to a phased GDV, not marketed harder</li>
+    </ul>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-head">
+    <div class="sec-num">§12</div>
+    <div>
+      <h2>Evidence gaps</h2>
+      <p class="dek">Stated plainly, because a research document that hides its own limits is not research. Each gap names the primary source that would close it.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Gap</th><th>Why it matters</th><th>Primary source required</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>Transaction prices, not asking prices</strong></td><td>Every ₹/sq ft figure here is listing-derived and therefore an upper bound. The entire premium-gap analysis rests on it</td><td>IGRS AP registration data, Mangalagiri and Thullur mandals, 24-month series</td></tr>
+          <tr><td class="n">2</td><td>Absorption and unsold inventory in the corridor</td><td>§7 applies a national premium-inventory warning to a market that was not measured</td><td>AP RERA quarterly filings; agency city reports if the corridor is covered</td></tr>
+          <tr><td class="n">3</td><td>Buyer behaviour</td><td>§7.3 is inference from market structure, not from buyers. No primary research on decision drivers, budgets or objections</td><td>Channel-partner interviews; competitor walk-in analysis; structured buyer survey</td></tr>
+          <tr><td class="n">4</td><td>In-migration data</td><td>The demand thesis assumes people will move here. Current evidence suggests commuting</td><td>Census projections; APCRDA population monitoring; utility connection growth by mandal</td></tr>
+          <tr><td class="n">5</td><td>Parcel-level title and zoning</td><td>§9.6 and §11 flag assigned land, unsettled pooling plots and R5 as disqualifying. None checkable at desk level</td><td>Current notified APCRDA zoning amendment; village revenue records; pooling settlement register</td></tr>
+          <tr><td class="n">6</td><td>Surveyed flood contours</td><td>Elevation is load-bearing in §11 and rests on town-level averages, not site survey</td><td>Topographic survey; 2024 inundation mapping; Budameru catchment delineation</td></tr>
+          <tr><td class="n">7</td><td>Current government headcount in the capital</td><td>The best available figure is from the 2016 relocation</td><td>GAD staffing records; APCRDA occupancy data</td></tr>
+          <tr><td class="n">8</td><td>Construction cost benchmarks</td><td>§6 addresses revenue, not cost — and regional contractor capacity is visibly constrained</td><td>Contractor quotations; recent comparable tender awards</td></tr>
+          <tr><td class="n">9</td><td>Competitor pricing and velocity</td><td>Competitors identified by name and scale, but not by achieved price or sales rate</td><td>Mystery shopping; RERA quarterly sales disclosures</td></tr>
+          <tr><td class="n">10</td><td>Amaravati greenfield airport</td><td>Graded Proposed on social-media-sourced figures. No DPR seen</td><td>APCRDA / MoCA published DPR or site notification</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <span class="lbl">A note on method</span>
+      <p>Direct retrieval of primary documents was not possible in this environment — outbound access was restricted to search. Findings rest on search-surfaced reporting, cross-checked across sources and graded accordingly. <strong>Where a figure appears with a single interested-party source, it is labelled as such and should not be relied on for a capital decision.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s13">
+  <div class="sec-head">
+    <div class="sec-num">§13</div>
+    <div>
+      <h2>What carries into the next phase</h2>
+      <p class="dek">Phase 1 is deliberately not a strategy. These are the findings that constrain what any strategy can credibly say — carried forward as inputs, not conclusions.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>The five facts that survive scrutiny and can be used publicly</h3>
+    <ol>
+      <li>Amaravati is the <strong>sole and permanent capital of Andhra Pradesh by Act of Parliament</strong>, gazetted 6 April 2026, retrospective to 2 June 2024.</li>
+      <li><strong>~USD 1.6 billion</strong> of World Bank and ADB funding is committed, milestone-linked, with USD 340 million released; <strong>₹57,821 crore of works are physically in progress.</strong></li>
+      <li><strong>KIMS has taken a 60-year lease on 25 acres at Nidamarru</strong> for a 1,000-bed teaching hospital and 500-bed super-specialty hospital — alongside SRM's 100-acre campus at Neerukonda and AIIMS at Mangalagiri.</li>
+      <li><strong>Vijayawada airport carried 1.61 million passengers in FY2025–26, up 28.9%</strong>, after 30.2% the year before.</li>
+      <li>A <strong>six-lane, 47.8 km bypass</strong> now carries traffic from north Vijayawada to the Mangalagiri belt.</li>
+    </ol>
+
+    <h3>The five constraints that shape everything downstream</h3>
+    <ol>
+      <li><strong>The premium gap.</strong> ₹500 crore on 25 acres requires a blended ~₹5,900–6,000/sq ft against a Mangalagiri market of ₹4,062. Manufacturing and defending a <strong>~45% premium</strong> is the commercial problem — and it is a positioning problem before it is a media problem.</li>
+      <li><strong>The corridor's momentum is in land, not homes.</strong> Apartments drifted <em>down</em> over the same period land reportedly doubled. <strong>Appreciation is the wrong argument for this product.</strong></li>
+      <li><strong>Villas are the demand engine; premium inventory is the national risk.</strong> Corridor villas appreciate ~3× faster than apartments — while nationally, unsold ₹2–5 crore inventory rose <strong>43%</strong>. Both are true. Phasing and absorption discipline are load-bearing.</li>
+      <li><strong>Amaravati de-risks the decision; it does not motivate the purchase.</strong> The reason people buy remains space, schools, safety and status — and it comes from the existing 3.3 million-person agglomeration, not the capital's ~100,000 residents.</li>
+      <li><strong>The sales task is ~600 units at 10–12 bookings a month for 4–5 years</strong>, against an allowable marketing cost of <strong>₹3.3–4.2 lakh per unit sold</strong> at 4–5% of GDV.</li>
+    </ol>
+
+    <div class="finding">
+      <span class="lbl">The competitive opening</span>
+      <p>The corridor is being sold on claims that do not survive a checkable question: a metro that does not go there, a Google data centre 350 km away, 100,000 quantum jobs, an ORR a decade out.</p>
+      <p class="big">The true facts are strong enough without any of it. In a market this noisy, verifiable precision is not a compliance constraint — it is the differentiator, and it is currently unoccupied.</p>
+    </div>
+
+    <h3>Source register</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Source class</th><th>Reliability</th><th>How treated</th></tr></thead>
+        <tbody>
+          <tr><td>Statute and official gazette</td><td><strong>Highest</strong></td><td>Stated as fact</td></tr>
+          <tr><td>Multilateral institutions (World Bank, ADB)</td><td>High</td><td>Stated as fact</td></tr>
+          <tr><td>Government / authority reporting</td><td>High — subject to political framing on progress</td><td>Used, with slippage noted where the data itself shows it</td></tr>
+          <tr><td>Institutional commitments (leases, campuses)</td><td>High — balance-sheet decisions</td><td>Weighted heavily as revealed preference</td></tr>
+          <tr><td>National news media</td><td>Medium-high</td><td>Cross-checked; graded Reported where unconfirmed</td></tr>
+          <tr><td>Listing portals</td><td>Medium — asking prices, not transactions</td><td>Treated as an upper bound throughout</td></tr>
+          <tr><td>Broker and developer publications</td><td><strong>Low — interested parties</strong></td><td>Used only with corroboration; flagged at point of use</td></tr>
+          <tr><td>Social media aggregators</td><td>Low — unverifiable</td><td>Leads for verification only; graded Proposed or Speculative</td></tr>
+          <tr><td>Political statements and targets</td><td><strong>Lowest</strong></td><td>Graded Speculative; heavily discounted</td></tr>
+        </tbody>
+        <caption>Where two sources conflicted, the more authoritative was used and the conflict noted. Where only an interested party published a figure, it is labelled. Where nothing reliable existed, it is recorded as a gap in §12 rather than filled by inference.</caption>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="close">
+  <p>Phase 1 of a multi-part assignment. This document establishes the evidence base. Positioning, product, pricing, audience definition, channel and creative strategy follow in subsequent phases — and are constrained by the findings above.</p>
+</div>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var chart = document.getElementById('gapchart');
+  if(!chart) return;
+  var tip = document.createElement('div');
+  tip.className = 'tip';
+  tip.setAttribute('role','status');
+  document.body.appendChild(tip);
+
+  function show(row, e){
+    var label = row.querySelector('.bar-label b').textContent;
+    var val = row.querySelector('.bar-val').textContent.trim();
+    tip.innerHTML = '<strong>' + label + ' &middot; ' + val + '</strong><span class="t2">' + row.dataset.tip + '</span>';
+    tip.classList.add('on');
+    var r = row.getBoundingClientRect();
+    var x = (e && e.clientX ? e.clientX : r.left + r.width/2);
+    var t = tip.getBoundingClientRect();
+    var left = Math.min(Math.max(8, x - t.width/2), window.innerWidth - t.width - 8);
+    tip.style.left = (left + window.scrollX) + 'px';
+    tip.style.top  = (r.top + window.scrollY - t.height - 8) + 'px';
+  }
+  function hide(){ tip.classList.remove('on'); }
+
+  chart.querySelectorAll('.bar-row').forEach(function(row){
+    row.tabIndex = 0;
+    row.addEventListener('mousemove', function(e){ show(row, e); });
+    row.addEventListener('mouseleave', hide);
+    row.addEventListener('focus', function(){ show(row, null); });
+    row.addEventListener('blur', hide);
+  });
+  window.addEventListener('scroll', hide, {passive:true});
+})();
+</script>
