@@ -1,0 +1,1099 @@
+<title>KMV Spaces Brand Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style>
+<style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style>
+<style>
+/* ---------- Phase 4: evidence labels ---------- */
+.lb{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .42rem;border-radius:3px;white-space:nowrap;display:inline-block;border:1px solid transparent;
+  line-height:1.55;vertical-align:.06em}
+.lb-f{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-o{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-i{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+.lb-r{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.lb-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+.stmt{margin:0 0 1rem;max-width:var(--measure)}
+.stmt .lb{margin-right:.5rem}
+.none{color:var(--ink-3);font-style:italic}
+
+.sev-h{color:var(--accent);font-weight:600;font-family:var(--f-mono);font-size:.72rem}
+.sev-m{color:var(--ink-2);font-family:var(--f-mono);font-size:.72rem}
+.sev-l{color:var(--ink-3);font-family:var(--f-mono);font-size:.72rem}
+
+/* ---------- diagram ---------- */
+figure.dia{margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);border-radius:5px;
+  padding:1.4rem 1.5rem 1.1rem;box-shadow:var(--shadow)}
+figure.dia svg{display:block;width:100%;max-width:100%;height:auto;color:var(--ink-2)}
+figure.dia figcaption{margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--rule);
+  font-size:.79rem;color:var(--ink-3);line-height:1.5}
+.dia-head{margin-bottom:1rem}
+.dia-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.dia-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.dia-scroll{overflow-x:auto}
+.dia-scroll > svg{min-width:34rem}
+
+/* ---------- rate bars ---------- */
+.rrow{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.rrow:hover{background:var(--surface-2)}
+.rname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.rname b{display:block;color:var(--ink);font-weight:600}
+.rtrack{height:1.4rem;display:flex;align-items:center;gap:.55rem}
+.rfill{height:.95rem;border-radius:0 4px 4px 0;background:var(--series);flex:none}
+.rfill.other{background:transparent;border:1.5px solid var(--series);border-left:0;box-sizing:border-box}
+.rfill.target{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.rval{font-family:var(--f-mono);font-size:.77rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">
+    Phase 4 of 4
+    <strong>Brand Audit</strong>
+  </div>
+  <div class="toc">
+    <a href="#s0"><span class="n">§0</span><span>How to read this</span></a>
+    <a href="#s1"><span class="n">§1</span><span>Company &amp; group</span></a>
+    <a href="#s2"><span class="n">§2</span><span>Leadership</span></a>
+    <a href="#s3"><span class="n">§3</span><span>Portfolio</span></a>
+    <a href="#s4"><span class="n">§4</span><span>Product &amp; pricing</span></a>
+    <a href="#s5"><span class="n">§5</span><span>Positioning &amp; architecture</span></a>
+    <a href="#s6"><span class="n">§6</span><span>Digital estate</span></a>
+    <a href="#s7"><span class="n">§7</span><span>Advertising &amp; reviews</span></a>
+    <a href="#s8"><span class="n">§8</span><span>Strengths</span></a>
+    <a href="#s9"><span class="n">§9</span><span>Weaknesses</span></a>
+    <a href="#s10"><span class="n">§10</span><span>Gaps</span></a>
+    <a href="#s11"><span class="n">§11</span><span>Opportunities</span></a>
+    <a href="#s12"><span class="n">§12</span><span>Insufficient evidence</span></a>
+    <a href="#s13"><span class="n">§13</span><span>Carry-forward</span></a>
+  </div>
+  <div>
+    <h4>Evidence labels</h4>
+    <div class="legend-stack">
+      <span class="lb lb-f">Fact</span>
+      <span class="lb lb-o">Observation</span>
+      <span class="lb lb-i">Inference</span>
+      <span class="lb lb-r">Recommendation</span>
+      <span class="lb lb-n">Insufficient evidence</span>
+    </div>
+  </div>
+  <div>
+    <h4>Independence</h4>
+    <p style="font-size:.76rem;line-height:1.5;color:var(--ink-3);margin:0;max-width:none">
+      Researched from scratch. Earlier material in this project was treated as a
+      <strong style="color:var(--ink-2)">claim to verify</strong>, not as evidence.
+    </p>
+  </div>
+</nav>
+
+<main class="main">
+<header class="masthead">
+  <p class="eyebrow">Developer brand research · public evidence only</p>
+  <h1>What the record actually shows about KMV Spaces</h1>
+  <p class="sub">Twenty things could not be verified. They are listed as gaps, not inferred as weaknesses.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 4 of 4</span>
+    <span><strong>Labels</strong> Fact · Observation · Inference · Recommendation</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> Brand baseline for a hypothetical 25-acre, ₹500 crore corridor development. Nothing here describes an actual KMV Spaces project, land holding or launch. All company information is drawn from public sources.
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head">
+    <div class="sec-num">§0</div>
+    <div>
+      <h2>How to read this</h2>
+      <p class="dek">Four labels, used strictly — and an explicit rule about what absence of evidence means.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:9rem">Label</th><th>Definition</th></tr></thead>
+        <tbody>
+          <tr><td><span class="lb lb-f">Fact</span></td><td>Verifiable from a primary or authoritative source — corporate registry, RERA, a government filing, a certification body, or the company's own published material</td></tr>
+          <tr><td><span class="lb lb-o">Observation</span></td><td>Directly observed in public material at time of research — a follower count, a page title, a URL, a review score. True as seen, at a point in time</td></tr>
+          <tr><td><span class="lb lb-i">Inference</span></td><td>My reasoning from facts and observations. Could be wrong, and flagged as reasoning rather than finding</td></tr>
+          <tr><td><span class="lb lb-r">Recommendation</span></td><td>A proposed action. Never presented as a finding</td></tr>
+          <tr><td><span class="lb lb-n">Insufficient evidence</span></td><td>Could not be verified. Recorded, not inferred from</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <span class="lbl">On absence of evidence</span>
+      <p class="big">A private LLP is under no obligation to publish financials, headcount, sales velocity or marketing spend. The absence of those is normal, not a finding.</p>
+      <p>Where something could not be verified, this document says so and stops. §12 lists all twenty such items in one place — so the boundary of the research is visible rather than filled in with inference.</p>
+    </div>
+    <p><strong>What was searchable, and what was not.</strong> Research was conducted through search-surfaced public sources. Direct site crawling, ad-library queries, traffic tools and analytics were <strong>not available</strong>. Statements about search visibility are based on what surfaced in results — a real signal, but not a rank measurement.</p>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">§1</div>
+    <div>
+      <h2>Company and group</h2>
+      <p class="dek">Registry facts first, then the two findings in this phase that change the strategy.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>The registered entity</h3>
+    <div class="tw">
+      <table>
+        <tbody>
+          <tr><th style="width:11rem">Incorporation</th><td><span class="lb lb-f">Fact</span> <strong>KMV Spaces LLP</strong>, incorporated <strong>11 August 2016</strong>, RoC-Hyderabad, LLPIN <strong>AAH-1363</strong>. Status <strong>Active</strong></td></tr>
+          <tr><th>Registered office</th><td><span class="lb lb-f">Fact</span> #8-3-948/949, Level 5, Solitaire Plaza, near Image Hospital, <strong>Ameerpet, Hyderabad</strong>, Telangana 500073</td></tr>
+          <tr><th>Contribution</th><td><span class="lb lb-f">Fact</span> <strong>₹21,00,00,000</strong> (₹21 crore)</td></tr>
+          <tr><th>Related entity</th><td><span class="lb lb-f">Fact</span> <strong>KMV Spaces and Svas Builders LLP</strong>, LLPIN AAY-8454, incorporated <strong>2021</strong>, similar address</td></tr>
+          <tr><th>Filings</th><td><span class="lb lb-o">Observation</span> Registry aggregators report latest Statement of Accounts and Annual Returns <strong>unavailable</strong></td></tr>
+          <tr><th>Financials</th><td><span class="lb lb-n">Insufficient evidence</span> <span class="none">Revenue, profitability and performance are not published, and an LLP of this type is not required to publish them</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt"><span class="lb lb-i">Inference</span> The 2021 second entity is most likely a project-specific SPV or a joint venture with a partner named Svas — a common Indian structure for ring-fencing a development. <strong>Not verified</strong>; its purpose was not disclosed in any source found.</p>
+
+    <h3>The group</h3>
+    <p class="stmt"><span class="lb lb-f">Fact</span> KMV Spaces sits within <strong>KMV Group</strong>, headquartered in Hyderabad. Group composition is reported two ways: three operating companies — <strong>KMV Projects</strong> (construction), <strong>KMV Spaces</strong> (real estate), <strong>Piersoft</strong> (software) — or four entities including <strong>KMV Foundation</strong> (CSR).</p>
+    <p class="stmt"><span class="lb lb-i">Inference</span> Both are probably right: three are operating businesses; KMV Foundation appears to be the CSR vehicle rather than a commercial arm.</p>
+    <p class="stmt"><span class="lb lb-f">Fact</span> The group traces back <strong>more than 100 years</strong> — <strong>Kanakamedala Kotaiah</strong> began with irrigation projects in the colonial era; his grandson <strong>K.M.V. Prasada Rao</strong> continued it. Prudhvi Ram K is the <strong>fourth generation</strong>.</p>
+    <p class="stmt"><span class="lb lb-o">Observation</span> Geographic reach is reported inconsistently — <strong>11 states</strong> in one source, <strong>18 states</strong> in another. Group employee base reported as <strong>500–1,000</strong>. <span class="lb lb-n">Insufficient evidence</span> for KMV Spaces' own headcount.</p>
+
+    <h3>KMV Projects' record — and why it matters more than it appears</h3>
+    <p class="stmt"><span class="lb lb-f">Fact</span> KMV Projects Ltd has delivered, among others: <strong>Pondicherry Airport · IIM Indore · IIIT · ICFAI (Bangalore, Jaipur) · AIIMS Nagpur, AIIMS West Bengal and AIIMS Mangalagiri · NTPC Solapur · Bangalore Medical College · Jaipur Metro stations · Delhi Airport's Elevated Taxiway.</strong> Also rehabilitation housing after the Gujarat earthquake and Tamil Nadu tsunami.</p>
+    <p class="stmt"><span class="lb lb-f">Fact</span> KMV Group is currently executing <strong>a landmark airport infrastructure project in Vijayawada</strong>, and is recruiting engineers for it.</p>
+
+    <div class="finding">
+      <span class="lbl">The two findings in this phase that change the strategy</span>
+      <p class="big">1 · KMV Projects built AIIMS Mangalagiri — the institutional anchor of the micro-location Phase 1 recommended.</p>
+      <p>Phase 3 established that <em>no competitor in the corridor has a proof layer</em>. The group physically built the anchor institution in the exact belt the project would enter — a verifiable, non-transferable credibility asset no competitor can match or copy.</p>
+      <p class="big">2 · KMV Group is building the Vijayawada airport infrastructure.</p>
+      <p>Phase 1 identified Gannavaram's <strong>28.9% passenger growth</strong> as one of the corridor's strongest genuine demand signals, and the delayed terminal as a live item. The group is working on it.</p>
+      <p><span class="lb lb-i">Inference</span> — the facts are documented; the strategic significance is my reading.</p>
+    </div>
+
+    <p class="stmt"><span class="lb lb-r">Recommendation</span> Any positioning built on the Phase 3 "delivery proof" white space should lead with the <strong>group's institutional record</strong> rather than the residential brand. <em>"The people who built AIIMS Mangalagiri"</em> survives scrutiny, cannot be imitated, and answers the exact objection corridor residents raise about other developers.</p>
+
+    <div class="note">
+      <span class="lbl">And an explicit caution on the same point</span>
+      <p>KMV Projects' contracts are <strong>EPC work for government and institutional clients</strong>, not KMV Spaces developments. Conflating the two in customer-facing material would be a <strong>RERA and consumer-protection risk</strong>. The honest construction is <em>"our group built X"</em> — never <em>"we developed X"</em>. The distinction is small in words and large in law.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">§2</div>
+    <div>
+      <h2>Leadership</h2>
+      <p class="dek">One publicly profiled principal, with unusually strong credentials for this market.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <tbody>
+          <tr><th style="width:11rem">Role</th><td><span class="lb lb-f">Fact</span> <strong>Prudhvi Ram Kanakamedala</strong> — Founder &amp; Managing Partner, KMV Spaces; described in certification coverage as Managing Director of KMV Spaces LLP</td></tr>
+          <tr><th>Education</th><td><span class="lb lb-f">Fact</span> <strong>MS Construction Management, New York University</strong>; B.Tech, JNTU</td></tr>
+          <tr><th>Prior roles</th><td><span class="lb lb-f">Fact</span> <strong>Cost Engineer at Skanska</strong>; Assistant Project Manager → Project Manager → Director at KMV Projects</td></tr>
+          <tr><th>Recognition</th><td><span class="lb lb-f">Fact</span> Received the <strong>IGBC Net Zero Energy (design) certification</strong> for KMV Vivaan – The Address from the AP Minister for Municipal Administration and Urban Development</td></tr>
+          <tr><th>Presence</th><td><span class="lb lb-o">Observation</span> LinkedIn profile active; a <em>"KMV Group Founders"</em> YouTube playlist exists. <span class="lb lb-n">Insufficient evidence</span> on posting frequency, reach or engagement</td></tr>
+          <tr><th>Other leadership</th><td><span class="lb lb-n">Insufficient evidence</span> <span class="none">Board composition and LLP partner details are not public. Only the founder is profiled</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt"><span class="lb lb-i">Inference</span> The founder profile is unusually strong for this market — fourth-generation construction lineage, an American postgraduate qualification in construction management, and global-contractor experience. <strong>Phase 3 found founder-led brand presence almost entirely unoccupied in this corridor</strong>; Undavalli's founder was the only visible one.</p>
+    <p class="stmt"><span class="lb lb-r">Recommendation</span> Founder-led content is low-cost and high-differentiation here. The angle that fits the Phase 3 white space is <strong>construction and delivery credibility</strong> — how buildings are actually built, what a handover should look like, why area measurement works the way it does — <em>not</em> lifestyle content. That territory is empty, defensible, and consistent with the record.</p>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">§3</div>
+    <div>
+      <h2>Portfolio</h2>
+      <p class="dek">One master community in east Vijayawada, developed in phases over ten years.</p>
+    </div>
+  </div>
+  <div class="body">
+    <p class="stmt"><span class="lb lb-f">Fact</span> The first and principal development is <strong>KMV Vivaan</strong>, launched <strong>October 2016</strong>. A government <strong>environmental clearance filing</strong> exists for "KMV Vivaan by M/s KMV Spaces, Survey No. 20/P, Poranki". Address: <strong>New 100 Feet Road, Survey No. 20, beside Kamineni Hospital, Poranki, Vijayawada 521137</strong>. Architecture by <strong>WOW! Architects, Singapore</strong>.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Component</th><th>Status</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Villa Phase I</strong></td><td><span class="conf conf-h">Completed</span></td><td>66 villas · 3 &amp; 4 BHK · BUA 3,652–4,594 sq ft · 250 and 300 sq yd plots</td></tr>
+          <tr><td><strong>Vivaan Apartments</strong></td><td>Under construction / partly delivered</td><td><strong>G+20 tower</strong>, described as <em>Vijayawada's tallest building</em>. 3BHK <strong>1,545–3,482 sq ft</strong>. <strong>Five floors of commercial space beneath the residential floors</strong></td></tr>
+          <tr class="col-win"><td><strong>Villa Phase II / "The Address"</strong></td><td>New launch, delivery indicated Oct 2025</td><td>RERA <strong>P06180030814</strong> · plots <strong>300–477 sq yd</strong> · BUA <strong>4,736–6,816 sq ft</strong></td></tr>
+          <tr><td><strong>Vivaan District</strong></td><td>Master community brand</td><td>Residential + commercial; infinity pool, cafés, convenience stores, sky parks</td></tr>
+          <tr><td><strong>"Vijayawada's largest villa community"</strong></td><td><span class="conf conf-l">Announced — "coming soon"</span></td><td><span class="none">No location, size, unit count or timeline published</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <span class="lbl">Two internal inconsistencies in published material</span>
+      <p><span class="lb lb-o">Observation</span> The tower is described as <strong>G+20</strong> on KMV's own project page and as <strong>16 floors</strong> on another page describing the same community.</p>
+      <p><span class="lb lb-o">Observation</span> <strong>"~92 units across 2 phases"</strong> appears in portal data, while Phase I alone is described as 66 villas. If both are right, Phase II is ~26 villas; if the 92 covers Phases II and III, Phase I is additional. <span class="lb lb-n">Insufficient evidence</span> on which is correct.</p>
+    </div>
+
+    <p class="stmt"><span class="lb lb-o">Observation</span> The development is described across sources under <strong>four adjacent locality names</strong> — Poranki, Enikepadu, Penamaluru and Nidamanuru. <span class="lb lb-i">Inference</span> Most likely deliberate SEO — capturing demand for each adjacent locality — rather than confusion. It has a cost: <strong>a buyer comparing listings may not realise these are the same project.</strong></p>
+
+    <p class="stmt"><span class="lb lb-n">Insufficient evidence</span> <strong>Hyderabad projects.</strong> The site title reads <em>"Luxury Villas &amp; Apartments in Vijayawada, Hyderabad"</em> and sources state the company "operates from both" — but <span class="none">no named Hyderabad residential project was found in any source</span>. Hyderabad is the registered office and group headquarters.</p>
+
+    <p class="stmt"><span class="lb lb-i">Inference</span> On the evidence available, <strong>KMV Spaces is a single-community developer</strong> — one master project in east Vijayawada, developed in phases across villas, a tower and commercial space, over ten years. That is a description of scale, not a criticism, and it is directly relevant to how the brand can credibly present itself.</p>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">§4</div>
+    <div>
+      <h2>Product and pricing</h2>
+      <p class="dek">One published number here is the most commercially significant finding in this phase.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Product</th><th class="n">Size</th><th class="n">Price</th><th class="n">Derived ₹/sq ft</th></tr></thead>
+        <tbody>
+          <tr><td>Villa Phase I — 250 sq yd</td><td class="n">3,652 sq ft</td><td class="n">₹3.00 Cr</td><td class="n">₹8,215</td></tr>
+          <tr><td>Villa Phase I — 300 sq yd</td><td class="n">4,594 sq ft</td><td class="n">₹3.80 Cr</td><td class="n">₹8,272</td></tr>
+          <tr class="col-win"><td><strong>Villa Phase II / The Address</strong></td><td class="n">4,736–6,816 sq ft</td><td class="n"><strong>from ₹5.21 Cr</strong><br>also quoted from ₹5.6 Cr</td><td class="n"><strong>₹11,000</strong> stated launch rate</td></tr>
+          <tr><td>Villa — a third figure</td><td class="n">—</td><td class="n">"from ₹3.59 Cr"</td><td class="n"><span class="none">conflicts</span></td></tr>
+          <tr><td>Apartments — 3BHK</td><td class="n">1,545–3,482 sq ft</td><td class="n">from ₹1.3 Cr; a 2,251 sq ft resale unit at ₹1.2 Cr</td><td class="n">~₹5,300–5,775</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="stmt"><span class="lb lb-o">Observation</span> <strong>The ₹11,000 rate reconciles the price quotes arithmetically.</strong> ₹11,000 × 4,736 sq ft (the smallest Phase II villa) = <strong>₹5.21 crore</strong>, matching the lower quoted entry exactly. ₹11,000 × ~5,090 sq ft ≈ ₹5.6 crore, matching the other. Two independently published figures resolve to the same rate — the strongest available corroboration.</p>
+
+    <div class="figure">
+      <div class="figure-head">
+        <span class="kicker">Figure 1 · Villa rates</span>
+        <h5>Where KMV's own published rate sits against the regional field</h5>
+        <p class="sub">Derived ₹ per sq ft. KMV projects solid; competitors outlined; the hypothetical project's target dashed.</p>
+      </div>
+      <div class="chart-legend">
+        <span class="k"><span class="swatch obs"></span> KMV Spaces</span>
+        <span class="k"><span class="swatch" style="background:transparent;border:1.5px solid var(--series)"></span> Competitor</span>
+        <span class="k"><span class="swatch req"></span> Hypothetical Community D target</span>
+      </div>
+      <div class="tw" style="border:0;background:transparent;margin:0">
+      <div id="rates" style="min-width:28rem">
+        <div class="rrow" data-tip="Published launch rate. Penamaluru / Poranki, east Vijayawada. Asking, not transacted"><div class="rname"><b>KMV Vivaan Phase II</b>published launch rate</div><div class="rtrack"><span class="rfill" style="width:91.7%"></span><span class="rval">₹11,000</span></div></div>
+        <div class="rrow" data-tip="33.69 acres, 64 villas, from ₹3.75 Cr — the Phase 3 regional ceiling"><div class="rname"><b>IJM Villas 64</b>Raintree Park township</div><div class="rtrack"><span class="rfill other" style="width:84.5%"></span><span class="rval">₹10,143</span></div></div>
+        <div class="rrow" data-tip="66 villas delivered, 10 acres, ₹3.0–3.8 Cr"><div class="rname"><b>KMV Vivaan Phase I</b>delivered</div><div class="rtrack"><span class="rfill" style="width:68.9%"></span><span class="rval">₹8,272</span></div></div>
+        <div class="rrow" data-tip="55 G+2 triplex villas, Pedda Kakani, ₹2.79 Cr, AI-enabled"><div class="rname"><b>TAG AIRA</b>smart villas</div><div class="rtrack"><span class="rfill other" style="width:60.9%"></span><span class="rval">₹7,309</span></div></div>
+        <div class="rrow" data-tip="Phase 2 price architecture — the villa community's target rate"><div class="rname"><b>Hypothetical Community D</b>target</div><div class="rtrack"><span class="rfill target" style="width:59.6%"></span><span class="rval">₹7,150</span></div></div>
+        <div class="rrow" data-tip="119 villas, 10 acres, Mangalagiri, ₹1.34–1.82 Cr — the most direct competitor"><div class="rname"><b>Prime Grandeur</b>Mangalagiri</div><div class="rtrack"><span class="rfill other" style="width:45.0%"></span><span class="rval">₹5,400</span></div></div>
+      </div>
+      </div>
+      <div class="figure-foot">Scale 0 – ₹12,000/sq ft. All figures are asking or launch rates, not transacted prices.</div>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Inference — and three caveats that matter</span>
+      <p class="big">If ₹11,000/sq ft is accurate, KMV Spaces holds the highest published villa rate found anywhere in this research — above the ₹10,143 regional ceiling established in Phase 3.</p>
+      <ol>
+        <li>It is a <strong>launch/asking rate</strong>, not a transacted price.</li>
+        <li>It is achieved in <strong>Penamaluru/Poranki, east Vijayawada</strong> — the corridor's strongest-appreciating belt (+52.8% over three years) — <strong>not</strong> in the Mangalagiri corridor. A rate proven in one micro-market does not transfer automatically.</li>
+        <li><span class="lb lb-n">Insufficient evidence</span> on <strong>sales velocity at that rate</strong>. A published rate is not a cleared rate.</li>
+      </ol>
+      <p><span class="lb lb-i">Inference</span> Phase 2 put Community D at <strong>₹7,150/sq ft</strong>. If ₹11,000 is real, the developer has already demonstrated a rate <strong>54% above</strong> what the hypothetical project needs. That does not make ₹7,150 easy in a different micro-market — but it removes <em>"we have never sold at this level"</em> as an objection.</p>
+    </div>
+
+    <h3>Certifications — the strongest brand asset found</h3>
+    <p class="stmt"><span class="lb lb-f">Fact</span> KMV Vivaan is <strong>the first residential project in Vijayawada, and the first in Andhra Pradesh</strong>, to receive <strong>IGBC Green Building Platinum pre-certification</strong>.</p>
+    <p class="stmt"><span class="lb lb-f">Fact</span> <strong>KMV Vivaan – The Address is India's first Net Zero Energy residential villa community</strong>, certified to the IGBC Net Zero Energy rating system at design stage. Each villa carries <strong>rooftop solar sized to cover 100% of annual consumption</strong>, plus net-zero water systems and rainwater harvesting.</p>
+    <p class="stmt"><span class="lb lb-i">Inference</span> Phase 3 established that <strong>no competitor in the Amaravati corridor holds any environmental certification.</strong> TAG AIRA has features but no certification. <strong>This is the single most defensible differentiator in KMV's possession</strong> — because it is third-party audited rather than self-declared, and Phase 3 found that verifiable claims are exactly what the corridor's marketing lacks.</p>
+    <p class="stmt"><span class="lb lb-r">Recommendation</span> <strong>with a hard condition.</strong> Certification must be <strong>earned for each project</strong>, never carried over. "India's first net-zero-energy villa community" is a fact about Vivaan, not about a future development, and implying otherwise converts an audited asset into a liability. The transferable claim is about capability: <em>"the team that delivered India's first net-zero-energy villa community"</em> — with the new project's own certification pursued from the brief stage, as Vivaan's was.</p>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">§5</div>
+    <div>
+      <h2>Positioning and brand architecture</h2>
+      <p class="dek">Four self-descriptions, two territories — and equity sitting on the wrong node.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>What the brand says about itself</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:12rem">Source</th><th>Statement</th></tr></thead>
+        <tbody>
+          <tr><td>Company mission</td><td><em>"Revolutionise the way spaces are built in India"</em></td></tr>
+          <tr><td>Positioning (site)</td><td><em>"To craft appreciating assets, thriving communities, and lifestyles of the future in India's most desirable locations"</em></td></tr>
+          <tr><td>Founder positioning</td><td><em>"Dedicated to creating economically viable net-zero spaces across India"</em></td></tr>
+          <tr><td>Facebook description</td><td><em>"Creating spaces that define your lifestyle"</em></td></tr>
+          <tr><td>Site title tag</td><td><em>"Luxury Villas &amp; Apartments in Vijayawada, Hyderabad"</em></td></tr>
+          <tr><td>Project claims</td><td><em>"India's first Net Zero Energy residential villa community"</em> · <em>"Vijayawada's tallest building"</em> · <em>"Vijayawada's largest villa community"</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt"><span class="lb lb-o">Observation</span> The brand carries <strong>at least four different self-descriptions</strong> across owned channels. Not contradictory — but not one line either.</p>
+    <div class="finding">
+      <span class="lbl">Inference — two territories, unequal value</span>
+      <p><strong>Engineering / sustainability</strong> — net-zero, IGBC, ECBC, "economically viable net-zero spaces", a construction lineage. Rational, auditable, <strong>differentiated</strong>.</p>
+      <p><strong>Luxury / status</strong> — "tallest building", "gold class theatre", helipad, infinity pool. Emotional, aspirational, and per Phase 3 <strong>the single most crowded message in the corridor</strong>.</p>
+      <p class="big">The sustainability territory is owned and defensible. The luxury territory is contested by every competitor. Where the two appear together, the luxury language does the visible work and the certification is supporting detail — which inverts their competitive value.</p>
+    </div>
+
+    <h3>Brand architecture</h3>
+
+    <figure class="dia">
+      <div class="dia-head">
+        <span class="kicker">Figure 2 · The architecture problem</span>
+        <h5>Where the trust accrues, and where a new project would need it</h5>
+      </div>
+      <div class="dia-scroll">
+      <svg viewBox="0 0 740 430" role="img" aria-label="Diagram showing KMV Group above three companies. Under KMV Spaces sits KMV Vivaan, which holds the website, social page, reviews and certification. A new corridor project also sits under KMV Spaces, but trust from KMV Vivaan does not transfer across to it. Separately, KMV Projects' institutional record does transfer to the new project.">
+        <defs>
+          <marker id="a-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <polygon points="0,0 10,5 0,10" fill="var(--series)"></polygon>
+          </marker>
+        </defs>
+
+        <g stroke="currentColor" stroke-width="1.2" fill="none" opacity=".55">
+          <path d="M370 50 V72 M105 72 H635 M105 72 V90 M370 72 V90 M635 72 V90"></path>
+          <path d="M370 126 V152 M275 152 H535 M275 152 V170 M535 152 V170"></path>
+        </g>
+
+        <g font-family="IBM Plex Sans, sans-serif" font-size="12.5" text-anchor="middle">
+          <rect x="305" y="14" width="130" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"></rect>
+          <text x="370" y="37" fill="currentColor" font-weight="600">KMV Group</text>
+
+          <rect x="40" y="90" width="130" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"></rect>
+          <text x="105" y="113" fill="currentColor">KMV Projects</text>
+          <text x="105" y="146" fill="var(--series)" font-size="11" font-weight="600">built AIIMS Mangalagiri</text>
+
+          <rect x="305" y="90" width="130" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="1.4"></rect>
+          <text x="370" y="113" fill="currentColor">KMV Spaces</text>
+
+          <rect x="570" y="90" width="130" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".55"></rect>
+          <text x="635" y="113" fill="currentColor" opacity=".55">Piersoft</text>
+
+          <rect x="210" y="170" width="130" height="36" rx="4" fill="var(--brand-soft)" stroke="var(--series)" stroke-width="1.6"></rect>
+          <text x="275" y="193" fill="var(--ink)" font-weight="600">KMV Vivaan</text>
+
+          <rect x="470" y="170" width="130" height="36" rx="4" fill="none" stroke="var(--emphasis)" stroke-width="1.6" stroke-dasharray="5 4"></rect>
+          <text x="535" y="188" fill="var(--emphasis)" font-size="11.5" font-weight="600">New corridor</text>
+          <text x="535" y="201" fill="var(--emphasis)" font-size="11.5" font-weight="600">project</text>
+        </g>
+
+        <rect x="140" y="268" width="270" height="96" rx="4" fill="none" stroke="var(--series)" stroke-width="1.2" stroke-dasharray="3 3"></rect>
+        <g font-family="IBM Plex Sans, sans-serif" font-size="12" text-anchor="start">
+          <text x="158" y="292" fill="var(--series)" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.2">WHERE THE PROOF LIVES</text>
+          <text x="158" y="314" fill="currentColor">kmvvivaan.com · facebook.com/kmvvivaan</text>
+          <text x="158" y="333" fill="currentColor">4.2 from ~450 reviews</text>
+          <text x="158" y="352" fill="currentColor">IGBC Net Zero certification</text>
+        </g>
+        <line x1="275" y1="266" x2="275" y2="212" stroke="var(--series)" stroke-width="1.8" marker-end="url(#a-teal)"></line>
+        <text x="288" y="243" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--series)">equity accrues here</text>
+
+        <g stroke="var(--emphasis)" stroke-width="1.8" fill="none">
+          <line x1="346" y1="188" x2="392" y2="188" stroke-dasharray="5 4"></line>
+          <line x1="418" y1="188" x2="464" y2="188" stroke-dasharray="5 4"></line>
+          <line x1="398" y1="181" x2="412" y2="195"></line>
+          <line x1="412" y1="181" x2="398" y2="195"></line>
+        </g>
+        <text x="405" y="171" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--emphasis)" text-anchor="middle">does not transfer</text>
+
+        <path d="M105 158 V396 H535 V214" fill="none" stroke="var(--series)" stroke-width="1.8" marker-end="url(#a-teal)"></path>
+        <text x="320" y="388" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--series)" text-anchor="middle">institutional record — transfers</text>
+      </svg>
+      </div>
+      <figcaption><strong>The mechanism:</strong> ten years of trust — the website, the social page, ~450 reviews and the certification — has accumulated on <em>KMV Vivaan</em>, a project brand. A new corridor development would launch under <em>KMV Spaces</em>, which carries none of it. The proof that <em>does</em> travel comes from a different part of the group entirely: KMV Projects' institutional record, including AIIMS Mangalagiri in the target belt.</figcaption>
+    </figure>
+
+    <p class="stmt"><span class="lb lb-o">Observation</span> Two websites (kmvspaces.com and kmvvivaan.com), separate Facebook pages for company and project, and an <strong>X account handled <code>@kmvspaces</code> but display-named "KMV Vivaan"</strong>.</p>
+    <p class="stmt"><span class="lb lb-i">Inference</span> This is a <strong>house-of-one-brand structure behaving like a branded house.</strong> The X account's split identity is the clearest symptom.</p>
+    <p class="stmt"><span class="lb lb-r">Recommendation</span> Resolve the architecture <strong>before</strong> launch, not during it. The structure the evidence supports is a <strong>branded house</strong>: KMV Spaces as guarantor of standards — certification, delivery, construction lineage — with project names as products beneath it. The corporate brand carries the proof; the project brand carries the place.</p>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">§6</div>
+    <div>
+      <h2>Digital estate</h2>
+      <p class="dek">Above category norm on infrastructure — fragmented across two brand names.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Web</h3>
+    <p class="stmt"><span class="lb lb-o">Observation</span> The URL slugs on kmvspaces.com are <strong>keyword-built, not name-built</strong>:</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Page</th><th>Slug</th></tr></thead>
+        <tbody>
+          <tr><td>Villa Phase I</td><td class="derive">/projects/villas-in-vijayawada</td></tr>
+          <tr><td>Villa Phase II</td><td class="derive">/projects/luxury-villas-for-sale-in-vijayawada</td></tr>
+          <tr><td>Apartments</td><td class="derive">/projects/apartments-for-sale-in-vijayawada</td></tr>
+          <tr><td>Vivaan District</td><td class="derive">/projects/best-gated-community-in-vijayawada</td></tr>
+          <tr><td>The Address</td><td class="derive">/villasinvijayawada</td></tr>
+          <tr class="gapband"><td>New villa project</td><td class="derive">/projects/&nbsp;vijayawada's-largest-villa-community-coming-soon!</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt"><span class="lb lb-o">Observation</span> The last slug contains <strong>a leading space, an apostrophe and an exclamation mark</strong> — characters that produce encoded, fragile URLs. <span class="lb lb-i">Inference</span> A small technical defect, not a strategic one — but it is on the page for the <em>unlaunched flagship</em>, the page most likely to be shared.</p>
+    <p class="stmt"><span class="lb lb-o">Observation</span> A <strong>/land-owners</strong> page exists — a joint-development and land-aggregation pitch. Few Phase 3 competitors had an equivalent.</p>
+    <p class="stmt"><span class="lb lb-i">Inference</span> There is a deliberate, competent SEO practice here. Slugs target commercial-intent keywords, and both domains surfaced on generic category queries. <strong>Relative to Phase 3's finding that most corridor developers are portal-dependent and lose branded search to brokers, KMV's owned-search position is above category norm.</strong></p>
+    <p class="stmt"><span class="lb lb-n">Insufficient evidence</span> <span class="none">Website traffic, rankings, conversion rate and lead-capture design. No analytics or rank data was obtainable.</span></p>
+
+    <h3>Social</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Channel</th><th>Observed</th></tr></thead>
+        <tbody>
+          <tr><td>Facebook — KMV Spaces</td><td><strong>~20,820 likes</strong> · listed in Hyderabad · <em>"Creating spaces that define your lifestyle"</em></td></tr>
+          <tr><td>Facebook — KMV Vivaan</td><td>A separate page for the project</td></tr>
+          <tr><td>Instagram</td><td>@kmvspaces, listed under Hyderabad. <span class="lb lb-n">Follower count unavailable</span></td></tr>
+          <tr><td>LinkedIn — KMV Spaces</td><td><strong>~5,515 followers</strong></td></tr>
+          <tr><td>LinkedIn — Group &amp; Projects</td><td>Separate company pages for each</td></tr>
+          <tr class="gapband"><td>X / Twitter</td><td>Handled <code>@kmvspaces</code>, <strong>display-named "KMV Vivaan"</strong></td></tr>
+          <tr><td>YouTube</td><td>youtube.com/c/KMVSpaces — playlists incl. <em>KMV Vivaan Apartments</em>, <em>KMV Group Founders</em>; films incl. <em>Life at VIVAAN</em>, <em>Introducing The Tallest Building in Vijayawada</em>. <span class="lb lb-n">Subscribers unavailable</span></td></tr>
+          <tr><td>Instagram — KMV Projects</td><td><strong>1,021 followers · 135 posts</strong></td></tr>
+          <tr><td>Medium</td><td>@kmvvivan — at least one article</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt"><span class="lb lb-i">Inference</span> A ~20,800-like Facebook page and an active YouTube channel with structured playlists put KMV <strong>ahead of most of the Phase 3 competitive set on owned social infrastructure</strong>. Only Aparna and Undavalli are comparable, and neither has KMV's video library. But the audience is split across <strong>six or more handles across two brand names</strong>, which fragments reach and makes any single channel look smaller than the aggregate.</p>
+    <p class="stmt"><span class="lb lb-n">Insufficient evidence</span> <span class="none">Engagement rates, posting cadence, audience composition, content performance. Follower counts are not performance.</span></p>
+
+    <h3>Content and search</h3>
+    <p class="stmt"><span class="lb lb-o">Observation</span> Content assets found: YouTube walkthroughs and lifestyle films; a <em>KMV Group Founders</em> playlist; at least one Medium article; project brochures circulating publicly. <strong>No blog, insights section, market commentary or editorial programme was found on kmvspaces.com.</strong></p>
+    <p class="stmt"><span class="lb lb-i">Inference</span> Content is <strong>product-led, not narrative-led</strong> — it shows the buildings, not the thinking. Given the certification record and the founder's construction-management background, <strong>the most differentiated content territory available — how these buildings are engineered and delivered — is unused.</strong> Phase 3 found only Jayabheri running a consistent article programme, so the category bar is low and KMV already has video capability most competitors lack.</p>
+    <p class="stmt"><span class="lb lb-i">Inference</span> KMV <strong>retains its own branded search better than the Phase 3 comparison set</strong>, where broker microsites routinely outrank developers on their own project names. KMV's domains appear alongside third parties rather than beneath them. <span class="lb lb-n">Insufficient evidence</span> on keyword rankings, share of voice and paid search.</p>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">§7</div>
+    <div>
+      <h2>Advertising and reputation</h2>
+      <p class="dek">Superlative-led claims, and a review base deeper than any competitor profiled.</p>
+    </div>
+  </div>
+  <div class="body">
+    <p class="stmt"><span class="lb lb-o">Observation</span> Claims observable across owned channels: <em>"India's first Net Zero Energy residential villa community"</em> · <em>"Vijayawada's tallest building"</em> · <em>"Vijayawada's largest villa community"</em> · <em>"AP's first IGBC Platinum pre-certified residential community"</em> · <em>"Designed by WOW! Architects, Singapore"</em> · amenity-led (infinity pool, gold class theatre, 21st-floor walking track, helipad) · <em>"five floors of commercial space — shops, stores and offices just an elevator ride away"</em>.</p>
+    <div class="finding">
+      <span class="lbl">Inference — superlatives have an asymmetric risk profile</span>
+      <p>Three of the six headline claims are <strong>records rather than benefits</strong>. <em>"India's first net-zero-energy villa community"</em> is <strong>audited and holds</strong>. <em>"Tallest"</em> and <em>"largest"</em> are relative claims a competitor can take and a buyer can check.</p>
+      <p class="big">Phase 3 found that in this corridor only verifiable specifics differentiate. KMV's certification claim is exactly that. The height and size claims are the kind everyone makes.</p>
+    </div>
+    <p class="stmt"><span class="lb lb-n">Insufficient evidence</span> <span class="none">Paid advertising activity, channels, spend, creative and campaign performance. No ad-library or spend data was obtainable — no evidence was found in either direction. Also unavailable: lead-generation mechanics, CRM, response times, site-visit conversion, channel-partner structure.</span></p>
+
+    <h3>Reviews</h3>
+    <p class="stmt"><span class="lb lb-o">Observation</span> Justdial, listing "K.M.V. Spaces. Vivaan", Nidamanuru: <strong>4.2 out of 5</strong>, with review counts reported as <strong>436, 454 and 461</strong> across page variants. Locality safety rated <strong>4/5</strong> by former and existing residents.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Recurring positives</th><th>Recurring negatives</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Well-designed villas · construction quality · amenities · architecture · the infinity pool and 21st-floor walking track</td>
+            <td>
+              <strong>1. Locality environment</strong> — "fully polluted, noisy, lacks proper drainage"<br>
+              <strong>2. Price</strong> — "cost too high compared to other developed areas in the vicinity"<br>
+              <strong>3. Sales experience</strong> — "poor customer service"; <strong>restrictions on photographing the sample structure</strong><br>
+              <strong>4. Water quality</strong> — no RO systems mentioned
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt"><span class="lb lb-i">Inference — reading these fairly.</span> Complaint 1 is about <strong>the locality, not the developer</strong> — east Vijayawada near Auto Nagar is industrial-adjacent, and that is a site characteristic. Complaint 2 is arguably <strong>evidence the premium is real and being noticed</strong>, which for a premium brand is closer to confirmation than criticism. Complaints 3 and 4 are the actionable ones: sales experience and specification, both within the company's control.</p>
+    <p class="stmt"><span class="lb lb-i">Inference</span> <strong>A 4.2 average over ~450 reviews is a genuinely strong reputation position</strong>, and far better-evidenced than most of the Phase 3 set, whose review volumes run 1–71. For comparison: Aparna at 4.3 from 71 reviews with ~30% occupancy and maintenance complaints; Manjeera with a carpet-area dispute and "very low" reported satisfaction.</p>
+    <div class="finding">
+      <span class="lbl">One small detail worth acting on</span>
+      <p><span class="lb lb-o">Observation</span> A review complains of <strong>restrictions on photographing the sample structure</strong>.</p>
+      <p><span class="lb lb-i">Inference</span> A small operational decision with an outsized signal. Phase 3 identified <strong>delivery proof and transparency</strong> as the corridor's largest unoccupied territory. A no-photography policy at the sample home is the <em>opposite</em> of that posture — and it is the kind of detail a prospective buyer repeats.</p>
+      <p><span class="lb lb-r">Recommendation</span> Reverse it, and make the reversal a proposition: <strong>encourage photography, publish the specification openly, and let visitors compare.</strong> It costs nothing, contradicts a live complaint, and is the cheapest possible demonstration of the transparency position.</p>
+    </div>
+    <p class="stmt"><span class="lb lb-n">Insufficient evidence</span> <span class="none">Google Business Profile rating and review count; RERA complaints; consumer-forum cases; construction-delay records. Their absence should not be read as their non-existence — nor as evidence of problems.</span></p>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-head">
+    <div class="sec-num">§8</div>
+    <div>
+      <h2>Marketing strengths</h2>
+      <p class="dek">Ten, each with its evidence class stated.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Strength</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr class="col-win"><td class="n">1</td><td><strong>Certification no competitor holds</strong> — India's first net-zero-energy villa community; AP's first IGBC Platinum pre-certified residential project. Third-party audited, not self-declared</td><td><span class="lb lb-f">Fact</span></td></tr>
+          <tr class="col-win"><td class="n">2</td><td><strong>Institutional construction lineage</strong> — 100+ years; AIIMS Mangalagiri, Delhi Airport taxiway, IIM Indore, Jaipur Metro; currently on the Vijayawada airport project</td><td><span class="lb lb-f">Fact</span></td></tr>
+          <tr><td class="n">3</td><td><strong>The highest published villa rate found in the region</strong> — ₹11,000/sq ft, above IJM Villas 64's ₹10,143</td><td><span class="lb lb-f">Fact</span> (published) · reconciles across two quotes</td></tr>
+          <tr><td class="n">4</td><td><strong>Strong, high-volume review base</strong> — 4.2 from ~450 reviews, well above the corridor's typical 1–71</td><td><span class="lb lb-o">Observation</span></td></tr>
+          <tr><td class="n">5</td><td><strong>Owned search above category norm</strong> — own domains rank for generic terms; branded search not surrendered to brokers</td><td><span class="lb lb-o">Observation</span> + <span class="lb lb-i">Inference</span></td></tr>
+          <tr><td class="n">6</td><td><strong>Real video capability</strong> — a YouTube channel with structured playlists, in a category where video is badly under-used</td><td><span class="lb lb-o">Observation</span></td></tr>
+          <tr><td class="n">7</td><td><strong>A founder with differentiating credentials</strong> — 4th-generation builder, NYU construction management, Skanska</td><td><span class="lb lb-f">Fact</span></td></tr>
+          <tr><td class="n">8</td><td><strong>Ten years of ladder experience</strong> — villas, tower apartments and commercial in one community</td><td><span class="lb lb-f">Fact</span></td></tr>
+          <tr><td class="n">9</td><td><strong>Facebook audience of ~20,800</strong>, ahead of most corridor competitors</td><td><span class="lb lb-o">Observation</span></td></tr>
+          <tr><td class="n">10</td><td><strong>A land-owner acquisition page</strong> — a JD/land-aggregation funnel most competitors lack</td><td><span class="lb lb-o">Observation</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="sec-head">
+    <div class="sec-num">§9</div>
+    <div>
+      <h2>Marketing weaknesses</h2>
+      <p class="dek">Evidenced only. Everything unverifiable is in §12, not here.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Weakness</th><th>Evidence</th><th class="n">Severity</th></tr></thead>
+        <tbody>
+          <tr class="gapband"><td class="n">1</td><td><strong>Brand equity sits on the project, not the company</strong> — two websites, separate Facebook pages, an X account handled @kmvspaces but named "KMV Vivaan"</td><td><span class="lb lb-o">Observation</span></td><td class="n sev-h">HIGH</td></tr>
+          <tr class="gapband"><td class="n">2</td><td><strong>At least four self-descriptions</strong> across owned channels; no single positioning line</td><td><span class="lb lb-o">Observation</span></td><td class="n sev-h">HIGH</td></tr>
+          <tr class="gapband"><td class="n">3</td><td><strong>The strongest asset is under-weighted against the weakest</strong> — certification is auditable and unmatched; "tallest / largest / luxury" is the corridor's most crowded message</td><td><span class="lb lb-i">Inference</span> from observed copy</td><td class="n sev-h">HIGH</td></tr>
+          <tr><td class="n">4</td><td><strong>No editorial or insight content</strong> — despite the certification record and the founder's credentials</td><td><span class="lb lb-o">Observation</span></td><td class="n sev-m">MED-HIGH</td></tr>
+          <tr><td class="n">5</td><td><strong>A live sales-experience complaint</strong> — restrictions on photographing the sample structure</td><td><span class="lb lb-o">Observation</span> (single review)</td><td class="n sev-m">MEDIUM</td></tr>
+          <tr><td class="n">6</td><td><strong>Audience fragmented</strong> across 6+ handles and two brand names</td><td><span class="lb lb-o">Observation</span></td><td class="n sev-m">MEDIUM</td></tr>
+          <tr><td class="n">7</td><td><strong>Internal inconsistencies in published material</strong> — G+20 vs 16 floors; conflicting unit counts; three villa entry prices. In a category whose top complaint is <em>"what was advertised is not what you get"</em>, published inconsistency is a trust cost</td><td><span class="lb lb-o">Observation</span></td><td class="n sev-m">MEDIUM</td></tr>
+          <tr><td class="n">8</td><td><strong>Four locality names for one project</strong> — good for SEO, confusing for comparison</td><td><span class="lb lb-o">Observation</span></td><td class="n sev-l">LOW-MED</td></tr>
+          <tr><td class="n">9</td><td><strong>A malformed URL on the unlaunched flagship</strong></td><td><span class="lb lb-o">Observation</span></td><td class="n sev-l">LOW</td></tr>
+          <tr><td class="n">10</td><td><strong>The flagship announcement carries no substance</strong> — "largest villa community, coming soon" with no location, scale, unit count or timeline</td><td><span class="lb lb-o">Observation</span></td><td class="n sev-m">MEDIUM</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <span class="lbl">Deliberately not listed</span>
+      <p>Absence of published financials, headcount, ad spend, CRM detail, sales velocity or Google Business data. <strong>A private LLP is not obliged to publish any of it, and its absence is not evidence of a problem.</strong> All are recorded in §12.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="sec-head">
+    <div class="sec-num">§10</div>
+    <div>
+      <h2>Gaps</h2>
+      <p class="dek">Brand, digital and content — with the corridor context that makes each one an opportunity.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cards">
+      <div class="card">
+        <h6>Brand gaps</h6>
+        <ul>
+          <li><strong>No single positioning line.</strong> Four descriptions, two territories, no hierarchy</li>
+          <li><strong>The corporate brand is weaker than the project brand</strong> — and it is what a new development must launch under</li>
+          <li><strong>The construction lineage is almost invisible</strong> in consumer material, where Phase 3 says proof is scarcest</li>
+          <li><strong>No stated promise about delivery.</strong> Certifications describe <em>what is built</em>; nothing describes <em>how the buyer will be treated</em></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Digital gaps</h6>
+        <ul>
+          <li><strong>Two websites, split equity</strong> — competing for the same searches</li>
+          <li><strong>Six-plus social handles</strong> across two brand names</li>
+          <li><strong>No visible NRI journey</strong> — unoccupied across the whole corridor, against AP + Telangana at ~14% of Indian Americans</li>
+          <li><strong>No published proof layer</strong> — identical to every competitor, which is precisely why it is available</li>
+          <li>Technical hygiene — the malformed flagship slug</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Content gaps</h6>
+        <ul>
+          <li><strong>No editorial programme.</strong> The category bar is one competitor</li>
+          <li><strong>The certification story is stated, not explained</strong> — no energy data, no resident bills, no design explanation. <em>An audited claim never evidenced performs like an unaudited one</em></li>
+          <li><strong>The founder is not a content asset</strong></li>
+          <li><strong>No buyer-education content</strong> — carpet vs super-built-up, RERA reading, handover expectations, maintenance economics. The corridor's actual complaint categories</li>
+          <li><strong>No resale or ownership-experience content</strong>, despite an active resale market in KMV's own project</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s11">
+  <div class="sec-head">
+    <div class="sec-num">§11</div>
+    <div>
+      <h2>Opportunities</h2>
+      <p class="dek">Everything in this section is <span class="lb lb-r">Recommendation</span>. None of it is a finding.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Performance marketing</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Opportunity</th><th>Why it follows from the evidence</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>Consolidate to one domain and one social identity before launch</strong></td><td>Two sites and 6+ handles split authority and audience. Consolidation costs nothing and compounds</td></tr>
+          <tr><td class="n">2</td><td><strong>Own branded search properly — including competitors' project names</strong></td><td>KMV already holds its own branded terms better than the category. Phase 3 found brokers ranking on <em>competitors'</em> project names; the same tactic is available in reverse, legally and cheaply</td></tr>
+          <tr class="col-win"><td class="n">3</td><td><strong>Build the funnel around a site visit, not a lead form</strong></td><td>Phase 2: 7–11 bookings/month at <strong>₹3.6–6.2 lakh allowable per unit sold</strong>. That budget supports a high-touch, low-volume funnel. Volume lead-gen is the wrong shape for this economics</td></tr>
+          <tr><td class="n">4</td><td><strong>Run the NRI segment deliberately</strong></td><td>Unoccupied across the corridor. Needs time-zone-aware response, virtual walkthroughs (video capability already exists), documented remote purchase</td></tr>
+          <tr><td class="n">5</td><td><strong>Make the ₹11,000/sq ft record a paid-search asset</strong></td><td>If accurate, KMV holds the region's highest published villa rate — an unusual, checkable proof point for prospecting the top of the market</td></tr>
+          <tr><td class="n">6</td><td><strong>Retarget on proof, not on product</strong></td><td>Category-wide, everyone retargets on renders and amenities. Construction progress, certification audits and handover records are unoccupied creative territory</td></tr>
+          <tr><td class="n">7</td><td><strong>Use the land-owners page as a real acquisition channel</strong></td><td>It exists, few competitors have one, and Phase 1 established that assembling 22–28 contiguous acres is the binding constraint on the whole project</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Customer experience</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Opportunity</th><th>Why it follows from the evidence</th></tr></thead>
+        <tbody>
+          <tr class="col-win"><td class="n">1</td><td><strong>Reverse the sample-home photography restriction — and publicise the reversal</strong></td><td>A live review complaint; contradicts the transparency position; costs nothing</td></tr>
+          <tr class="col-win"><td class="n">2</td><td><strong>Publish carpet area alongside super-built-up, unprompted</strong></td><td>The single most specific complaint found anywhere in the corridor. KMV has no such complaint on record — declaring the standard first claims the territory</td></tr>
+          <tr><td class="n">3</td><td><strong>Publish construction progress on a fixed cadence</strong></td><td>Nobody in the corridor does. The group's EPC record makes it credible</td></tr>
+          <tr><td class="n">4</td><td><strong>Publish delivery-date performance</strong></td><td>The highest-risk and highest-value commitment. Aparna's Dec-2021-handover-incomplete-in-Dec-2022 is the category's cautionary tale</td></tr>
+          <tr><td class="n">5</td><td><strong>Turn certification into resident-verifiable data</strong></td><td>Actual energy bills from net-zero villas would convert an audited claim into a lived one. No competitor can respond</td></tr>
+          <tr><td class="n">6</td><td><strong>Fix the internal inconsistencies</strong></td><td>In a category whose top complaint is misrepresentation, published inconsistency is an own goal</td></tr>
+          <tr><td class="n">7</td><td><strong>Give the "coming soon" flagship substance, or take it down</strong></td><td>An announcement with no location, scale or timeline is the exact pattern Phase 3 criticised in competitors</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The strategic opportunity, stated once</h3>
+    <p class="stmt"><span class="lb lb-i">Inference</span> Phase 3 identified four defensible white spaces. <strong>KMV Spaces' evidenced assets map onto three of the four more closely than any competitor profiled.</strong></p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Phase 3 white space</th><th>KMV's evidenced position</th></tr></thead>
+        <tbody>
+          <tr><td><strong>The ladder in one address</strong></td><td>Ten years operating villas + tower + commercial in one community — <strong>already done once, never named</strong></td></tr>
+          <tr class="col-win"><td><strong>Delivery proof and post-sale trust</strong></td><td>A 100-year construction group that built AIIMS Mangalagiri and is on the Vijayawada airport project; 4.2 from ~450 reviews; audited certifications — <strong>the strongest proof assets found in any Phase 3 profile</strong></td></tr>
+          <tr><td>Occupancy as a promise</td><td><span class="lb lb-n">Insufficient evidence</span> on Vivaan's occupancy — cannot be assessed</td></tr>
+          <tr><td><strong>Honest density</strong></td><td>Phase I ran 66 villas on 10 acres = <strong>6.6/acre</strong>, among the lowest densities in the region — <strong>precedent exists</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <p class="big">The gap is not capability. It is articulation — the assets that would occupy the corridor's white space are held but not led with, while the message that is led with is the corridor's most crowded.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-head">
+    <div class="sec-num">§12</div>
+    <div>
+      <h2>Insufficient public evidence</h2>
+      <p class="dek">Twenty items, recorded so the boundary of this research is explicit. None is a finding, and none should be treated as a weakness.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cards">
+      <div class="card">
+        <h6>Commercial</h6>
+        <ul>
+          <li>Revenue, profitability, financial performance</li>
+          <li>KMV Spaces headcount (group reported 500–1,000; subsidiary not broken out)</li>
+          <li>Sales velocity, units sold, current inventory — for any project</li>
+          <li>Occupancy at KMV Vivaan</li>
+          <li>Whether ₹11,000/sq ft is a transacting or asking rate</li>
+          <li>Channel-partner structure and brokerage economics</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Corporate</h6>
+        <ul>
+          <li>Whether any Hyderabad residential project exists</li>
+          <li>The purpose of KMV Spaces and Svas Builders LLP (2021)</li>
+          <li>Board and partner composition — only the founder is profiled</li>
+          <li>Marketing team structure, agency relationships, in-house capability</li>
+          <li>Geographic reach — 11 or 18 states, depending on source</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Marketing &amp; digital</h6>
+        <ul>
+          <li>Paid advertising activity — channels, spend, creative, performance. <em>No evidence found either way</em></li>
+          <li>Website traffic, rankings, conversion rates, lead volumes</li>
+          <li>Instagram followers; YouTube subscribers; engagement on any channel</li>
+          <li>CRM, lead response times, site-visit-to-booking conversion</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Reputation &amp; product</h6>
+        <ul>
+          <li>Google Business Profile rating and review count</li>
+          <li>RERA complaints, consumer-forum cases, construction-delay records</li>
+          <li>Actual unit counts — "~92 across 2 phases" conflicts with 66 villas in Phase I alone</li>
+          <li>Tower height — G+20 on one KMV page, 16 floors on another</li>
+          <li>Details of the announced "largest villa community" — no location, size, unit count or timeline</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s13">
+  <div class="sec-head">
+    <div class="sec-num">§13</div>
+    <div>
+      <h2>What carries into the strategy</h2>
+      <p class="dek">Six facts, five constraints, one sentence.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Facts to build on</h3>
+    <ol>
+      <li><strong>India's first net-zero-energy residential villa community</strong> and <strong>AP's first IGBC Platinum pre-certified residential project</strong> — audited, unmatched in the corridor.</li>
+      <li><strong>The group built AIIMS Mangalagiri</strong> — the institutional anchor of the Phase 1 recommended micro-location — and is on the <strong>Vijayawada airport</strong> project.</li>
+      <li><strong>A published villa launch rate of ₹11,000/sq ft</strong>, above the regional ceiling established in Phase 3.</li>
+      <li><strong>4.2 from ~450 reviews</strong> — the deepest review base found in any Phase 3 profile.</li>
+      <li><strong>Ten years running a villa + tower + commercial ladder</strong> in one community.</li>
+      <li><strong>A founder with 4th-generation lineage, NYU construction management and Skanska experience.</strong></li>
+    </ol>
+
+    <h3>Constraints to design around</h3>
+    <ol>
+      <li><strong>Equity sits on Vivaan, not on KMV Spaces</strong> — a corridor project cannot inherit it without an architecture change.</li>
+      <li><strong>The ₹11,000/sq ft record is east-Vijayawada evidence.</strong> It does not transfer automatically to Mangalagiri.</li>
+      <li><strong>KMV Projects' institutional work is EPC for third parties.</strong> Say <em>"our group built"</em>, never <em>"we developed"</em>.</li>
+      <li><strong>Certification must be earned per project</strong>, never carried across.</li>
+      <li><strong>Published inconsistencies must be fixed before launch</strong> — because the position being claimed is transparency.</li>
+    </ol>
+
+    <div class="finding">
+      <span class="lbl">The single sentence this phase produces</span>
+      <p class="big">KMV Spaces already holds more of the corridor's white space than any competitor profiled — audited certification, an institutional delivery record in the exact target belt, a proven premium rate, a deep review base, and ten years of ladder experience. It does not currently lead with any of it.</p>
+      <p><span class="lb lb-i">Inference</span> — drawn from the evidence above and from Phases 1–3.</p>
+    </div>
+  </div>
+</section>
+
+<div class="close">
+  <p>Phase 4 of a multi-part assignment. Phase 1 established the corridor evidence base and micro-location; Phase 2 segment pricing; Phase 3 the competitive field and white space; this phase the developer's own brand position. Positioning, audience, product mix and go-to-market follow — constrained by all four.</p>
+</div>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var tip = document.createElement('div');
+  tip.className = 'tip';
+  tip.setAttribute('role','status');
+  document.body.appendChild(tip);
+  function show(row, e){
+    var n = row.querySelector('b'), v = row.querySelector('.rval');
+    tip.innerHTML = '<strong>' + (n?n.textContent:'') + (v? ' · ' + v.textContent.trim() : '') +
+                    '</strong><span class="t2">' + row.dataset.tip + '</span>';
+    tip.classList.add('on');
+    var r = row.getBoundingClientRect();
+    var x = (e && e.clientX ? e.clientX : r.left + r.width/2);
+    var tr = tip.getBoundingClientRect();
+    var left = Math.min(Math.max(8, x - tr.width/2), window.innerWidth - tr.width - 8);
+    var top = r.top + window.scrollY - tr.height - 10;
+    if (top < window.scrollY + 4) top = r.bottom + window.scrollY + 10;
+    tip.style.left = (left + window.scrollX) + 'px';
+    tip.style.top = top + 'px';
+  }
+  function hide(){ tip.classList.remove('on'); }
+  document.querySelectorAll('.rrow[data-tip]').forEach(function(row){
+    row.tabIndex = 0;
+    row.addEventListener('mousemove', function(e){ show(row, e); });
+    row.addEventListener('mouseleave', hide);
+    row.addEventListener('focus', function(){ show(row, null); });
+    row.addEventListener('blur', hide);
+  });
+  window.addEventListener('scroll', hide, {passive:true});
+})();
+</script>

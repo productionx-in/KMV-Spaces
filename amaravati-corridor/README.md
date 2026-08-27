@@ -34,7 +34,7 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 | --- | --- | --- |
 | 2 | [`02-residential-market.md`](02-residential-market.md) — segment-level pricing & product evidence (also [`.html`](02-residential-market.html)) | **Complete** |
 | 3 | [`03-competitor-landscape.md`](03-competitor-landscape.md) — competitor field, matrix & white space (also [`.html`](03-competitor-landscape.html)) | **Complete** |
-| 4 | [`04-kmv-brand-research.md`](04-kmv-brand-research.md) — independent developer brand research | **Complete** |
+| 4 | [`04-kmv-brand-research.md`](04-kmv-brand-research.md) — independent developer brand research (also [`.html`](04-kmv-brand-research.html)) | **Complete** |
 | 5 | Positioning, audience and product mix | Not started |
 | 6 | Pricing and commercial model | Not started |
 | 7 | Channel, performance and creative strategy | Not started |
