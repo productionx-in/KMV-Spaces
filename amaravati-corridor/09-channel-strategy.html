@@ -1,0 +1,1487 @@
+<title>Amaravati Channel Verdict</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style>
+<style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style>
+<style>
+/* ---------- Phase 4: evidence labels ---------- */
+.lb{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .42rem;border-radius:3px;white-space:nowrap;display:inline-block;border:1px solid transparent;
+  line-height:1.55;vertical-align:.06em}
+.lb-f{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-o{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-i{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+.lb-r{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.lb-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+.stmt{margin:0 0 1rem;max-width:var(--measure)}
+.stmt .lb{margin-right:.5rem}
+.none{color:var(--ink-3);font-style:italic}
+
+.sev-h{color:var(--accent);font-weight:600;font-family:var(--f-mono);font-size:.72rem}
+.sev-m{color:var(--ink-2);font-family:var(--f-mono);font-size:.72rem}
+.sev-l{color:var(--ink-3);font-family:var(--f-mono);font-size:.72rem}
+
+/* ---------- diagram ---------- */
+figure.dia{margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);border-radius:5px;
+  padding:1.4rem 1.5rem 1.1rem;box-shadow:var(--shadow)}
+figure.dia svg{display:block;width:100%;max-width:100%;height:auto;color:var(--ink-2)}
+figure.dia figcaption{margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--rule);
+  font-size:.79rem;color:var(--ink-3);line-height:1.5}
+.dia-head{margin-bottom:1rem}
+.dia-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.dia-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.dia-scroll{overflow-x:auto}
+.dia-scroll > svg{min-width:34rem}
+
+/* ---------- rate bars ---------- */
+.rrow{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.rrow:hover{background:var(--surface-2)}
+.rname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.rname b{display:block;color:var(--ink);font-weight:600}
+.rtrack{height:1.4rem;display:flex;align-items:center;gap:.55rem}
+.rfill{height:.95rem;border-radius:0 4px 4px 0;background:var(--series);flex:none}
+.rfill.other{background:transparent;border:1.5px solid var(--series);border-left:0;box-sizing:border-box}
+.rfill.target{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.rval{font-family:var(--f-mono);font-size:.77rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+</style>
+<style>
+/* ---------- Phase 5 components ---------- */
+
+/* Evidence labels — form, not hue */
+.lb-est{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-app{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-rsn{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+
+/* Priority chips */
+.pri{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.14rem .48rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;border:1px solid transparent}
+.pri-h{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.pri-s{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.pri-l{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Segment profile card */
+.seg{margin:2rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.seg-head{display:grid;grid-template-columns:3.1rem minmax(0,1fr);gap:.9rem;align-items:start;
+  padding:1.05rem 1.3rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.seg-id{font-family:var(--f-mono);font-size:1.28rem;font-weight:600;color:var(--brand);
+  line-height:1;padding-top:.12rem;letter-spacing:-.02em}
+.seg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.08rem;line-height:1.28;
+  margin:0 0 .3rem;color:var(--ink);text-wrap:balance}
+.seg-head .seg-line{font-size:.85rem;color:var(--ink-2);margin:0 0 .6rem;font-style:italic}
+.seg-stats{display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.seg-stats b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.seg-size{padding:.8rem 1.3rem;border-bottom:1px solid var(--rule);font-size:.82rem;
+  line-height:1.55;color:var(--ink-2);background:var(--surface)}
+.seg-size strong{color:var(--ink)}
+
+/* 20-attribute grid */
+.attr{display:grid;grid-template-columns:minmax(8rem,10.5rem) minmax(0,1fr)}
+.attr > dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);padding:.6rem .8rem .6rem 1.3rem;border-top:1px solid var(--rule);
+  line-height:1.45;font-weight:500}
+.attr > dd{margin:0;padding:.6rem 1.3rem .6rem .3rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.attr > dd strong{color:var(--ink);font-weight:600}
+.attr > dt:first-of-type,.attr > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .attr{grid-template-columns:minmax(0,1fr)}
+  .attr > dt{padding:.6rem 1.1rem .1rem;border-top:1px solid var(--rule)}
+  .attr > dd{padding:.15rem 1.1rem .65rem;border-top:0}
+  .attr > dt:first-of-type + dd{border-top:0}
+}
+.seg-close{padding:.95rem 1.3rem;background:var(--surface-2);border-top:1px solid var(--rule);
+  font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.seg-close .lbl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.4rem;font-weight:600}
+.seg-close strong{color:var(--ink)}
+.seg-close p{margin:0 0 .55rem;max-width:none}
+.seg-close p:last-child{margin-bottom:0}
+
+/* Cash-gate escalation */
+.gate{display:flex;flex-direction:column;gap:.55rem}
+.gate-row{display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:.8rem;align-items:center}
+.gate-name{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-2);line-height:1.3}
+.gate-name b{display:block;color:var(--ink);font-weight:600;font-size:.82rem}
+.gate-track{display:flex;align-items:center;gap:.5rem;height:2rem}
+.gate-cash{height:1.3rem;background:var(--series);border-radius:0 3px 3px 0;flex:none}
+.gate-inc{height:1.3rem;border:1.5px dashed var(--emphasis);border-left:0;border-radius:0 3px 3px 0;
+  flex:none;box-sizing:border-box}
+.gate-val{font-family:var(--f-mono);font-size:.76rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap}
+.gate-val i{font-style:normal;color:var(--ink-3)}
+
+/* Hypothesis verdict list */
+.hyp{display:flex;flex-direction:column;gap:0;margin:1.5rem 0;border:1px solid var(--rule);
+  border-radius:5px;background:var(--surface);overflow:hidden}
+.hyp-row{display:grid;grid-template-columns:2.1rem minmax(7rem,11rem) minmax(0,1fr);gap:.75rem;
+  padding:.75rem 1.05rem;border-top:1px solid var(--rule);align-items:start}
+.hyp-row:first-child{border-top:0}
+.hyp-row .num{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;padding-top:.1rem}
+.hyp-name{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.4}
+.hyp-name .v{display:block;margin-top:.3rem}
+.hyp-why{font-size:.83rem;line-height:1.55;color:var(--ink-2)}
+.hyp-why strong{color:var(--ink)}
+.vd{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:.1rem .38rem;border-radius:3px;display:inline-block;line-height:1.5}
+.vd-y{background:var(--brand);color:var(--surface)}
+.vd-p{background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand)}
+.vd-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+@media (max-width:640px){
+  .hyp-row{grid-template-columns:2.1rem minmax(0,1fr);row-gap:.35rem}
+  .hyp-why{grid-column:2}
+}
+
+/* Revenue-by-segment bars, priority encoded by fill treatment */
+.rev-row{display:grid;grid-template-columns:minmax(8.5rem,13rem) minmax(0,1fr);gap:.7rem;
+  align-items:center;padding:3px 0}
+.rev-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.rev-label b{display:block;color:var(--ink);font-weight:600}
+.rev-track{position:relative;height:1.6rem;display:flex;align-items:center;gap:.55rem}
+.rev-fill{height:1.1rem;border-radius:0 4px 4px 0;flex:none;box-sizing:border-box}
+.rev-fill.p-h{background:var(--series)}
+.rev-fill.p-s{background:var(--brand-soft);border:1px solid var(--series);border-left:0}
+.rev-fill.p-l{background:transparent;border:1.5px dashed var(--rule-2);border-left:0}
+.rev-val{font-family:var(--f-mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:500}
+.rev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+td i{color:var(--ink-3);font-style:normal;font-size:.94em}
+
+/* Community mapping strip */
+.commap{display:grid;grid-template-columns:repeat(auto-fit,minmax(13.5rem,1fr));gap:.85rem;margin:1.5rem 0}
+.cm{background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden;
+  display:flex;flex-direction:column}
+.cm-top{padding:.75rem .95rem;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.cm-top h6{font-family:var(--f-display);font-size:1rem;font-weight:600;margin:0;color:var(--ink)}
+.cm-top .cm-t{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);display:block;margin-top:.22rem;
+  font-variant-numeric:tabular-nums}
+.cm-body{padding:.8rem .95rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.cm-body .cm-h{display:block;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 .28rem;font-weight:500}
+.cm-body p{margin:0 0 .7rem;max-width:none}
+.cm-body p:last-child{margin-bottom:0}
+.cm-body strong{color:var(--ink);font-weight:600}
+.cm-win{padding:.7rem .95rem;border-top:1px solid var(--rule);background:var(--accent-soft);
+  font-size:.8rem;line-height:1.45;color:var(--ink-2)}
+.cm-win b{color:var(--accent);font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;display:block;margin-bottom:.25rem;font-weight:600}
+</style>
+<style>
+/* ---------- Phase 7 components ---------- */
+/* Classification tags — form, not hue */
+.tg{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .4rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent;vertical-align:.06em}
+.tg-md{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.tg-bm{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.tg-as{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.tg-cv{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+
+/* Scenario columns */
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.85rem;margin:1.5rem 0}
+.sc{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);
+  display:flex;flex-direction:column}
+.sc.pick{border-color:var(--accent);box-shadow:var(--shadow)}
+.sc-top{padding:.8rem 1rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.sc.pick .sc-top{background:var(--accent-soft)}
+.sc-top h6{font-family:var(--f-display);font-size:1.05rem;font-weight:600;margin:0;color:var(--ink)}
+.sc-top span{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);display:block;margin-top:.24rem}
+.sc.pick .sc-top span{color:var(--accent)}
+.sc-body{padding:.35rem 0;flex:1}
+.sc-l{display:flex;justify-content:space-between;gap:.7rem;padding:.4rem 1rem;font-size:.82rem;
+  border-top:1px solid var(--rule);color:var(--ink-2);line-height:1.4}
+.sc-l:first-child{border-top:0}
+.sc-l b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:600}
+.sc-l.hi{background:var(--surface-2)}
+
+/* Funnel steps */
+.fn{display:flex;flex-direction:column;gap:.3rem;margin:.5rem 0}
+.fn-step{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem;align-items:center}
+.fn-name{font-size:.83rem;line-height:1.3;color:var(--ink-2);text-align:right}
+.fn-name b{display:block;color:var(--ink);font-weight:600}
+.fn-bar{height:2.15rem;display:flex;align-items:center;justify-content:flex-start;
+  background:var(--series);border-radius:3px;padding:0 .7rem;color:var(--surface);
+  font-family:var(--f-mono);font-size:.8rem;font-variant-numeric:tabular-nums;font-weight:600;
+  white-space:nowrap;min-width:5.5rem}
+.fn-bar.lite{background:var(--brand-soft);color:var(--brand);border:1px solid var(--series)}
+.fn-arrow{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem}
+.fn-rate{font-family:var(--f-mono);font-size:.68rem;color:var(--accent);letter-spacing:.04em;padding:.05rem 0 .05rem .7rem}
+.fn-rate::before{content:"↓ ";opacity:.7}
+
+/* Metric grid */
+.mx{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.7rem;margin:1.3rem 0}
+.mx > div{border:1px solid var(--rule);border-radius:5px;padding:.75rem .9rem;background:var(--surface)}
+.mx .k{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.35rem}
+.mx .v{font-family:var(--f-display);font-size:1.5rem;font-weight:600;color:var(--ink);line-height:1;
+  font-variant-numeric:tabular-nums}
+.mx .s{font-size:.75rem;color:var(--ink-3);margin-top:.3rem;line-height:1.4;display:block}
+.mx .v.acc{color:var(--accent)}
+
+/* Warning callout */
+.warn{margin:1.5rem 0;padding:1.1rem 1.3rem;background:var(--surface);border:1px solid var(--accent);
+  border-left:3px solid var(--accent);border-radius:4px;max-width:var(--measure)}
+.warn .wl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.5rem;font-weight:600}
+.warn p{margin:0 0 .65rem;max-width:none;font-size:.92rem;line-height:1.6}
+.warn p:last-child{margin-bottom:0}
+.warn strong{color:var(--ink)}
+</style>
+<style>
+/* ---------- Phase 8 components ---------- */
+/* Layer chips */
+.ly{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.13rem .45rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent}
+.ly-b{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ly-d{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.ly-s{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.ly-a{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* Counted vs estimated */
+.ct{font-family:var(--f-mono);font-size:.56rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:.1rem .36rem;border-radius:3px;display:inline-block;line-height:1.5;border:1px solid transparent}
+.ct-y{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ct-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Stage card */
+.stg{margin:1.5rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.stg-head{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:.85rem;align-items:start;
+  padding:.9rem 1.2rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.stg-n{font-family:var(--f-mono);font-size:1.2rem;font-weight:600;color:var(--brand);line-height:1;padding-top:.1rem}
+.stg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.05rem;line-height:1.25;margin:0 0 .35rem;color:var(--ink)}
+.stg-tags{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center}
+.stg-note{font-size:.82rem;color:var(--ink-2);font-style:italic;margin:.4rem 0 0;line-height:1.45}
+.sg{display:grid;grid-template-columns:minmax(7rem,9rem) minmax(0,1fr)}
+.sg > dt{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.55rem .7rem .55rem 1.2rem;border-top:1px solid var(--rule);line-height:1.45;font-weight:500}
+.sg > dd{margin:0;padding:.55rem 1.2rem .55rem .25rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.sg > dd strong{color:var(--ink);font-weight:600}
+.sg > dt:first-of-type,.sg > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .sg{grid-template-columns:minmax(0,1fr)}
+  .sg > dt{padding:.55rem 1.05rem .1rem;border-top:1px solid var(--rule)}
+  .sg > dd{padding:.1rem 1.05rem .6rem;border-top:0}
+  .sg > dt:first-of-type + dd{border-top:0}
+}
+
+/* Two-column compare */
+.cmp2{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.cmp2 > div{border:1px solid var(--rule);border-radius:5px;padding:.9rem 1.05rem;background:var(--surface)}
+.cmp2 h6{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 .55rem;font-weight:600}
+.cmp2 p{margin:0 0 .55rem;font-size:.86rem;line-height:1.55;max-width:none;color:var(--ink-2)}
+.cmp2 p:last-child{margin-bottom:0}
+.cmp2 strong{color:var(--ink)}
+
+/* Layer band header */
+.lyband{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:2.3rem 0 .3rem;
+  padding:.7rem 1rem;border-radius:5px;background:var(--surface-2);border:1px solid var(--rule)}
+.lyband h3{margin:0;font-family:var(--f-display);font-size:1.12rem;font-weight:600;color:var(--ink)}
+.lyband .lb-meta{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.lyband .lb-meta b{color:var(--ink)}
+
+/* Journey strip */
+.jr{margin:1.3rem 0;border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface)}
+.jr-top{padding:.8rem 1.05rem;border-bottom:1px solid var(--rule);background:var(--surface-2);
+  display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:baseline}
+.jr-top h5{margin:0;font-family:var(--f-display);font-size:1.02rem;font-weight:600;color:var(--ink)}
+.jr-top .jm{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3)}
+.jr-top .jm b{color:var(--ink)}
+.jr-flow{padding:.85rem 1.05rem;display:flex;flex-wrap:wrap;gap:.3rem;align-items:center;
+  border-bottom:1px solid var(--rule)}
+.jr-node{font-family:var(--f-mono);font-size:.66rem;padding:.22rem .5rem;border-radius:3px;
+  background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand);white-space:nowrap}
+.jr-node.skip{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2);text-decoration:line-through}
+.jr-node.key{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.jr-sep{color:var(--ink-3);font-size:.75rem}
+.jr-body{padding:.85rem 1.05rem;font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.jr-body strong{color:var(--ink)}
+.jr-body p{margin:0 0 .6rem;max-width:none}
+.jr-body p:last-child{margin-bottom:0}
+
+/* Leverage bars */
+.lev-row{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:4px 0}
+.lev-lab{font-size:.82rem;line-height:1.3;color:var(--ink-2)}
+.lev-lab b{display:block;color:var(--ink);font-weight:600}
+.lev-track{height:1.7rem;display:flex;align-items:center;gap:.55rem}
+.lev-fill{height:1.2rem;background:var(--brand-soft);border:1px solid var(--series);border-radius:0 4px 4px 0;flex:none}
+.lev-fill.top{background:var(--series);border-color:var(--series)}
+.lev-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.lev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+</style><style>
+/* ---------- Phase 9 components ---------- */
+/* Tier chips — form, not hue */
+.tr{font-family:var(--f-mono);font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.13rem .45rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent}
+.tr-1{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.tr-2{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.tr-3{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.tr-4{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.tr-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2);text-decoration:line-through}
+
+/* Channel card */
+.ch{margin:1.4rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.ch-head{padding:.85rem 1.15rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.ch-head h4{font-family:var(--f-display);font-weight:600;font-size:1.04rem;line-height:1.25;margin:0 0 .4rem;color:var(--ink)}
+.ch-head h4 .sp{font-family:var(--f-mono);font-size:.78rem;font-weight:500;color:var(--accent);margin-left:.5rem;white-space:nowrap}
+.ch-tags{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center}
+.cg{display:grid;grid-template-columns:minmax(6.5rem,8.5rem) minmax(0,1fr)}
+.cg > dt{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.5rem .7rem .5rem 1.15rem;border-top:1px solid var(--rule);line-height:1.45;font-weight:500}
+.cg > dd{margin:0;padding:.5rem 1.15rem .5rem .25rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.cg > dd strong{color:var(--ink)}
+.cg > dt:first-of-type,.cg > dt:first-of-type + dd{border-top:0}
+.cg > dt.neg{color:var(--accent)}
+@media (max-width:640px){
+  .cg{grid-template-columns:minmax(0,1fr)}
+  .cg > dt{padding:.5rem 1rem .1rem;border-top:1px solid var(--rule)}
+  .cg > dd{padding:.1rem 1rem .55rem;border-top:0}
+  .cg > dt:first-of-type + dd{border-top:0}
+}
+
+/* Tier band */
+.trband{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:2.3rem 0 .3rem;
+  padding:.7rem 1rem;border-radius:5px;background:var(--surface-2);border:1px solid var(--rule)}
+.trband h3{margin:0;font-family:var(--f-display);font-size:1.1rem;font-weight:600;color:var(--ink)}
+.trband .tb-meta{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.trband .tb-meta b{color:var(--ink)}
+
+/* Budget treemap-ish strip */
+.bud{display:flex;flex-direction:column;gap:.5rem;margin:.4rem 0}
+.bud-lay{display:flex;height:2.6rem;border-radius:4px;overflow:hidden;border:1px solid var(--rule-2)}
+.bud-lay > div{display:flex;align-items:center;justify-content:center;min-width:0;padding:0 .3rem;
+  border-right:1px solid var(--rule-2);font-family:var(--f-mono);font-size:.63rem;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.bud-lay > div:last-child{border-right:0}
+.bud-name{display:flex;justify-content:space-between;align-items:baseline;gap:.7rem;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.bud-name b{color:var(--ink);font-size:.78rem}
+.bd-1{background:var(--brand-soft);color:var(--brand)}
+.bd-2{background:var(--series);color:var(--surface)}
+.bd-3{background:var(--accent-soft);color:var(--accent)}
+.bd-4{background:var(--accent);color:var(--surface)}
+.bd-5{background:var(--surface-2);color:var(--ink-2)}
+
+/* Trap callout */
+.trap{margin:1.5rem 0;padding:1.1rem 1.3rem;background:var(--accent-soft);border:1px solid var(--accent);
+  border-radius:4px;max-width:var(--measure)}
+.trap .tl2{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.5rem;font-weight:600}
+.trap p{margin:0 0 .65rem;max-width:none;font-size:.92rem;line-height:1.6;color:var(--ink-2)}
+.trap p:last-child{margin-bottom:0}
+.trap strong{color:var(--ink)}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">Phase 9 of 9<strong>Channel Verdict</strong></div>
+  <div class="toc">
+    <a href="#s0"><span class="n">§0</span><span>How each was judged</span></a>
+    <a href="#s1"><span class="n">§1</span><span>The verdict</span></a>
+    <a href="#s2"><span class="n">§2</span><span>The budget</span></a>
+    <a href="#s3"><span class="n">§3</span><span>The channels</span></a>
+    <a href="#s4"><span class="n">§4</span><span>Cost per booking</span></a>
+    <a href="#s5"><span class="n">§5</span><span>Plan by journey</span></a>
+    <a href="#s6"><span class="n">§6</span><span>Year one</span></a>
+    <a href="#s7"><span class="n">§7</span><span>Risks</span></a>
+  </div>
+  <div>
+    <h4>The five tiers</h4>
+    <div class="legend-stack">
+      <span class="tr tr-1">Tier 1 · Load-bearing</span>
+      <span class="tr tr-2">Tier 2 · At scale</span>
+      <span class="tr tr-3">Tier 3 · Small</span>
+      <span class="tr tr-4">Tier 4 · Capped</span>
+      <span class="tr tr-5">Tier 5 · Cut</span>
+    </div>
+  </div>
+  <div>
+    <h4>The instruction</h4>
+    <p style="font-size:.76rem;line-height:1.5;color:var(--ink-3);margin:0;max-width:none">
+      <em>&ldquo;Do not assume every channel is necessary.&rdquo;</em>
+      <strong style="color:var(--ink-2)">Five of the twenty-two are cut or reclassified</strong> — four of them because the list as given contains category errors that would produce duplicated budget.
+    </p>
+  </div>
+</nav>
+
+<main class="main">
+<header class="masthead">
+  <p class="eyebrow">Channel roles, allocation and measurement · ₹25.68 crore</p>
+  <h1>The biggest line in this plan is not Meta. It is the show homes.</h1>
+  <p class="sub">Twenty-two channels judged on three questions. Four are load-bearing, five are cut or reclassified, and the allocation that follows is what Phase 7's "conversion beats media price" looks like as a budget.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 9 of 9</span>
+    <span><strong>Largest line</strong> Experience centre ₹4.10 Cr</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> Channel strategy for a hypothetical 25-acre, ₹500 crore corridor development. Nothing here describes an actual KMV Spaces project. Per-channel booking attribution is a Reasoned planning assumption, to be replaced by the booking-stage first-touch field within two quarters of launch.
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head">
+    <div class="sec-num">§0</div>
+    <div>
+      <h2>How each channel was judged</h2>
+      <p class="dek">Three questions, all answerable from Phases 5–8. A channel list where everything is important is not a strategy.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cards">
+      <div class="card">
+        <h6>1 · Whose reach is it, uniquely?</h6>
+        <ul><li>Phase 5 established eight segments with almost non-overlapping media behaviour.</li>
+        <li><strong>A channel that only duplicates reach is a cost, not a channel.</strong></li></ul>
+      </div>
+      <div class="card">
+        <h6>2 · Which stage does it move?</h6>
+        <ul><li>Phase 8: a point at the site-visit stage is worth <strong>₹39.4 crore</strong>; a point at the lead stage, ₹17.2 crore.</li>
+        <li><strong>Volume at the cheapest stage is worth least.</strong></li></ul>
+      </div>
+      <div class="card">
+        <h6>3 · Can its contribution be established?</h6>
+        <ul><li>With a 3–18 month cycle and 47% of bookings arriving without a click trail, <strong>most channel-level attribution here is fiction.</strong></li>
+        <li>Channels are judged on the job they do, not the leads they claim.</li></ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <span class="wl">Four category errors in the list as given</span>
+      <p>Stated plainly, because carrying them through would produce a budget with duplicated lines and double-counted leads.</p>
+      <div class="tw" style="margin:.9rem 0 0">
+        <table>
+          <thead><tr><th style="width:12rem">In the brief</th><th>What it actually is</th><th>Consequence if uncorrected</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Instagram</strong>, listed separately from Meta</td><td><strong>A placement inside Meta</strong>, bought in the same auction from the same account</td><td>Two budget lines, two agency reports, the same leads counted twice</td></tr>
+            <tr><td><strong>Outdoor</strong> and <strong>Hoardings</strong>, listed separately</td><td><strong>The same channel.</strong> Hoardings are the dominant outdoor format in this corridor</td><td>Duplicated line, inflated apparent breadth</td></tr>
+            <tr><td><strong>NRI marketing</strong>, listed as a channel</td><td><strong>An audience, not a channel.</strong> Phase 5 split it into S3 (US, Communities C and D) and S8 (Gulf, A and B), reached through six different channels</td><td>An "NRI budget" that cannot be optimised, because it is a slice of six other channels</td></tr>
+            <tr><td><strong>CRM</strong>, listed as a channel</td><td><strong>Infrastructure.</strong> It reaches nobody — but it determines the lead-to-qualified rate, worth ₹17.2 crore per point</td><td>Under-funded, because it produces no leads of its own</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:.9rem"><strong>CRM stays in the list below</strong> despite not being a channel, because dropping it would be worse than misclassifying it. <strong>Instagram, Hoardings and NRI marketing are folded into Meta, Outdoor and the audience plan</strong> and addressed there.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">§1</div>
+    <div>
+      <h2>The verdict, before the detail</h2>
+      <p class="dek">Every channel placed into one of five tiers, with the reason it sits there.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:7rem">Tier</th><th style="width:16rem">Channels</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tr tr-1">Tier 1</span><br><em style="font-size:.8rem;color:var(--ink-3)">Load-bearing</em></td><td><strong>Experiential / site marketing · Referral · Channel partners · WhatsApp</strong></td><td>The site visit carries <strong>₹39.4 Cr per point.</strong> Referral is <strong>6.1× cheaper</strong> than marketing-sourced. Channel partners deliver <strong>28% of the scheme</strong> on performance. WhatsApp is the primary channel for three segments and the follow-up channel for all eight</td></tr>
+          <tr><td><span class="tr tr-2">Tier 2</span><br><em style="font-size:.8rem;color:var(--ink-3)">At scale</em></td><td><strong>Meta · Google Search · Website + landing pages · Outdoor · CRM</strong></td><td>The volume engine, the intent capture, the verification surface, local legitimacy, and the infrastructure that owns a metric worth ₹17.2 Cr per point</td></tr>
+          <tr><td><span class="tr tr-3">Tier 3</span><br><em style="font-size:.8rem;color:var(--ink-3)">Small</em></td><td>YouTube · SEO · Print · PR · Email</td><td>Each does one specific job for one or two segments. None deserves a large budget; all five would be missed if removed</td></tr>
+          <tr><td><span class="tr tr-4">Tier 4</span><br><em style="font-size:.8rem;color:var(--ink-3)">Capped</em></td><td>Property portals · LinkedIn · Events</td><td>Real, but easily over-bought. Portals sell the same enquiry to several developers; LinkedIn is precise but expensive; off-site events should not run in year one</td></tr>
+          <tr><td><span class="tr tr-5">Tier 5</span><br><em style="font-size:.8rem;color:var(--ink-3)">Cut</em></td><td>Display prospecting · Instagram as a line · Hoardings as a line · NRI marketing as a line · Broad email acquisition</td><td>One genuine cut and four reclassifications. <strong>Display prospecting would inflate lead counts and depress the metric worth ₹17.2 Cr per point</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">§2</div>
+    <div>
+      <h2>The budget</h2>
+      <p class="dek">₹25.68 crore allocated across channels, summing exactly to the Phase 8 layer totals.</p>
+    </div>
+  </div>
+  <div class="body">
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">Four layers, twenty-one funded lines</span>
+        <h5>The largest single line is the experience centre and show homes — not Meta</h5>
+      </div>
+      <div class="bud">
+        <div class="bud-name"><span>Brand building</span><b>₹6.30 Cr · 24.5%</b></div>
+        <div class="bud-lay">
+          <div class="bd-1" style="flex:0 0 33.3%">Outdoor ₹2.10</div>
+          <div class="bd-1" style="flex:0 0 20.6%">YouTube ₹1.30</div>
+          <div class="bd-1" style="flex:0 0 19.8%">Content ₹1.25</div>
+          <div class="bd-1" style="flex:0 0 19.0%">Print ₹1.20</div>
+          <div class="bd-1" style="flex:0 0 7.1%">PR</div>
+        </div>
+        <div class="bud-name"><span>Demand generation</span><b>₹9.84 Cr · 38.3%</b></div>
+        <div class="bud-lay">
+          <div class="bd-2" style="flex:0 0 35.1%">Meta ₹3.45</div>
+          <div class="bd-2" style="flex:0 0 23.4%">Search ₹2.30</div>
+          <div class="bd-2" style="flex:0 0 11.2%">YouTube</div>
+          <div class="bd-2" style="flex:0 0 10.2%">Portals</div>
+          <div class="bd-2" style="flex:0 0 6.1%">Web</div>
+          <div class="bd-2" style="flex:0 0 5.1%">LI</div>
+          <div class="bd-2" style="flex:0 0 4.1%">SEO</div>
+          <div class="bd-2" style="flex:0 0 4.9%">Disp·Email</div>
+        </div>
+        <div class="bud-name"><span>Sales conversion</span><b>₹8.34 Cr · 32.5%</b></div>
+        <div class="bud-lay">
+          <div class="bd-4" style="flex:0 0 49.2%">Experience centre + show homes ₹4.10</div>
+          <div class="bd-3" style="flex:0 0 40.0%">Channel partners ₹3.34</div>
+          <div class="bd-3" style="flex:0 0 6.6%">CRM</div>
+          <div class="bd-3" style="flex:0 0 4.2%">Coll.</div>
+        </div>
+        <div class="bud-name"><span>Customer advocacy</span><b>₹1.20 Cr · 4.7%</b></div>
+        <div class="bud-lay">
+          <div class="bd-5" style="flex:0 0 58.3%">Referral programme ₹0.70</div>
+          <div class="bd-5" style="flex:0 0 25.0%">Events ₹0.30</div>
+          <div class="bd-5" style="flex:0 0 16.7%">Content</div>
+        </div>
+      </div>
+      <div class="figure-foot">
+        Each row is drawn to the width of its own layer, not to a common scale — the layer totals are given alongside. <strong>The experience centre at ₹4.10 crore is larger than Meta, larger than Google Search, and larger than every brand line except outdoor.</strong> That follows directly from Phase 8: the site-visit stage carries ₹39.4 crore per percentage point.
+      </div>
+    </figure>
+
+    <div class="finding">
+      <span class="lbl">What this allocation is</span>
+      <p class="big">Phase 7's sensitivity analysis said <strong>conversion beats media price.</strong> Phase 8 said a point at the site-visit stage is worth 2.3× a point at the lead stage.</p>
+      <p><strong>This budget is what those two findings look like when they are actually acted on</strong> — rather than agreed with and then ignored at allocation time, which is the usual outcome.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">§3</div>
+    <div>
+      <h2>The channels</h2>
+      <p class="dek">Role, audience, funnel stage, expected contribution, KPI, measurement, strength and weakness — for each of the seventeen funded channels. The five cut or reclassified follow at the end.</p>
+    </div>
+  </div>
+  <div class="body">
+
+    <div class="trband">
+      <span class="tr tr-1">Tier 1</span>
+      <h3>Load-bearing</h3>
+      <span class="tb-meta">The plan fails without these · <b>₹9.34 Cr</b></span>
+    </div>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>Experiential / site marketing<span class="sp">₹4.10 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-1">Tier 1</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>Make the density visible.</strong> Phase 6's entire price premium rests on 15 homes per acre against a corridor norm of 53–113, and Phase 2 called that <em>&ldquo;a difference visible from the site gate.&rdquo;</em> The experience centre and show homes are the only place that argument can be made.</dd>
+      <dt>Audience</dt>
+      <dd>All eight segments — but the visit patterns diverge completely. <strong>S1</strong> unannounced Sunday, 3–6 family. <strong>S2</strong> by appointment, couple only, weekday evening. <strong>S5 / S6</strong> Sunday with children, comparing two or three projects. <strong>S3</strong> proxy relative first, then one compressed trip.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Site Visit (8)</strong>, carrying Consultation (7) and Negotiation (9)</dd>
+      <dt>Contribution</dt>
+      <dd>Not a lead source — it converts. <strong>Every one of the 376 bookings passes through it</strong> except the S4 exchange route.</dd>
+      <dt>KPI</dt>
+      <dd>Visit-to-booking 6.9% blended (A 8.1 · B 6.0 · C 7.0 · D 5.6); repeat-visit rate; <strong>peak-Sunday capacity utilisation</strong></dd>
+      <dt>Measurement</dt>
+      <dd>Attendance logged with party size and segment; 24-hour follow-up logged; conversion by community <em>and</em> by salesperson</dd>
+      <dt>Strength</dt>
+      <dd><strong>The highest-return channel in the plan — ₹39.4 crore per point of conversion.</strong> Also the only channel a 5-to-11-acre competitor cannot replicate, because the asset being shown is the land itself.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>Fixed capital, spent before the first booking</strong>, and its capacity is set by peak Sunday, not monthly average — an estimated 35–45 people on site on a busy Sunday. Under-size it and no upstream spend compensates.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>Referral marketing<span class="sp">₹0.70 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-1">Tier 1</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd>Convert buyers into introducers, and <strong>answer S1's first objection structurally.</strong> Phase 5: the opening question from trade families is <em>&ldquo;who else has bought?&rdquo;</em></dd>
+      <dt>Audience</dt>
+      <dd>Every booked buyer, weighted to <strong>S1</strong> — who frequently buys as multiple related households — and <strong>S4</strong>, where <em>&ldquo;the first neighbour to complete a transaction becomes the single most persuasive asset available.&rdquo;</em></dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Referral (11)</strong> — and, uniquely, it feeds back into <strong>Awareness (1)</strong> for Journey 2</dd>
+      <dt>Contribution</dt>
+      <dd><strong>70 bookings — 18.5% of the scheme, ~₹94.5 crore</strong></dd>
+      <dt>KPI</dt>
+      <dd>Referral-sourced bookings against 70; referrals per booked buyer; cost per referral booking</dd>
+      <dt>Measurement</dt>
+      <dd>A <strong>referrer field on every booking</strong>, reconciled monthly against the 18.5% assumption</dd>
+      <dt>Strength</dt>
+      <dd><strong>₹1.71 lakh per booking against ₹10.52 lakh marketing-sourced — 6.1× cheaper.</strong> It also compounds: each cohort of buyers enlarges the next.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>It cannot exist in year one.</strong> Referral requires prior buyers, and at launch there are none.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>Channel partners / brokers<span class="sp">₹3.34 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-1">Tier 1</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd>Distributed reach into networks the developer cannot address directly — particularly S1's trade circles and the Vijayawada–Guntur broker network Phase 5 identified as one of S1's core information sources.</dd>
+      <dt>Audience</dt>
+      <dd>Primarily <strong>S1</strong> and <strong>S6</strong>; secondarily S5. Weakest with S3 and S4.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Lead (5) through Booking (10)</strong> — partners run their own mini-funnel</dd>
+      <dt>Contribution</dt>
+      <dd><strong>105 bookings — 28% of the scheme, ~₹142 crore</strong></dd>
+      <dt>KPI</dt>
+      <dd>Bookings per active partner; partner-sourced visit-to-booking rate; <strong>commission as a share of agreement value against the 2.5% assumption</strong></dd>
+      <dt>Measurement</dt>
+      <dd>Partner code on every lead and booking; monthly active-partner count; conversion tracked separately from direct</dd>
+      <dt>Strength</dt>
+      <dd><strong>Pay-on-performance.</strong> No working capital, no cost until a unit sells, and it scales without a media plan.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>The developer does not control the message.</strong> A partner selling on discount rather than on density erodes the Phase 6 pricing rules, and partners routinely present competing projects in the same conversation.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>WhatsApp<span class="sp">inside CRM &amp; demand-gen</span></h4>
+        <div class="ch-tags"><span class="tr tr-1">Tier 1</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>The primary conversational channel in this catchment</strong>, not a follow-up tool. Phase 5 found it primary for S1, S4 and S8, and the follow-up channel for all eight segments.</dd>
+      <dt>Audience</dt>
+      <dd>All eight. Decisive for <strong>S8</strong> — <em>&ldquo;mobile-only, Telugu-language, WhatsApp-centric… will not fill a desktop web form&rdquo;</em> — and for <strong>S3</strong>, whose form-fill rates are very low but who will respond on WhatsApp.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Lead (5), Qualified Lead (6), Consultation (7)</strong>, and post-booking through Referral (11)</dd>
+      <dt>Contribution</dt>
+      <dd>Not separately attributed. <strong>It is the capture and contact layer under Meta, portals and referral alike.</strong></dd>
+      <dt>KPI</dt>
+      <dd>Response time to inbound; contact-establishment rate versus phone; <strong>lead-to-qualified rate for WhatsApp-originated versus form-originated leads</strong></dd>
+      <dt>Measurement</dt>
+      <dd>WhatsApp Business API integrated into the CRM so conversations are logged as activity, not held on a salesperson's handset</dd>
+      <dt>Strength</dt>
+      <dd>Highest contact rate of any channel here, works across literacy and language, and it is the only channel that spans a Gulf earner and his wife in Vijayawada in one thread.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>Ungoverned by default.</strong> Conversations live on personal phones, leave no CRM trail, and walk out of the door when a salesperson does. Without API integration it is not a channel — it is a liability.</dd>
+      </dl>
+    </article>
+    <div class="trband">
+      <span class="tr tr-2">Tier 2</span>
+      <h3>Necessary at scale</h3>
+      <span class="tb-meta">The working majority of reach and capture · <b>₹9.00 Cr</b></span>
+    </div>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>Meta <span style='font-weight:400;font-size:.86em;color:var(--ink-3)'>(incl. Instagram placements)</span><span class="sp">₹3.45 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-2">Tier 2</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd>The volume engine for Communities A and B, and the only affordable way to reach S3 and S7 by geography-plus-affinity.</dd>
+      <dt>Audience</dt>
+      <dd><strong>S6</strong> and <strong>S5</strong> locally; <strong>S3</strong> by US metro and origin-district affinity; <strong>S7</strong> by Hyderabad geography; <strong>S8</strong> in Telugu. Weak against <strong>S1</strong>, useless against <strong>S4</strong>.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Interest (3) through Lead (5)</strong>, with retargeting into Consideration (4)</dd>
+      <dt>Contribution</dt>
+      <dd><strong>~68 bookings</strong> — the largest single marketing-sourced channel</dd>
+      <dt>KPI</dt>
+      <dd>CPL by community (A ₹350 · B ₹1,600 · C ₹900 · D ₹1,900); <strong>lead-to-qualified rate by campaign</strong>, not lead volume; cost per site visit</dd>
+      <dt>Measurement</dt>
+      <dd>Platform reporting for in-channel optimisation only. <strong>Contribution to bookings comes from the CRM source field, not from Meta's attribution window.</strong></dd>
+      <dt>Strength</dt>
+      <dd>Precision and scale at once — origin-district affinity targeting for S3 is not available anywhere else at this price. Instagram placements carry the villa creative better than any other surface.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>Lead quality is the worst of the paid channels.</strong> A Meta budget judged on CPL will optimise toward exactly the leads Phase 8 showed are worth least.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>Google Search<span class="sp">₹2.30 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-2">Tier 2</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>Intent capture.</strong> Someone typing &ldquo;villas in Mangalagiri&rdquo; or &ldquo;3BHK Amaravati price&rdquo; has done the work; the job is to be there and to answer.</dd>
+      <dt>Audience</dt>
+      <dd><strong>S2</strong> — who <em>&ldquo;will check RERA; most of the catchment will not&rdquo;</em> — plus S6, S5, S3 and S7. Also <strong>S1 in verification mode</strong>, searching the developer's name after a peer mentions it.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Discovery (2) and Lead (5)</strong></dd>
+      <dt>Contribution</dt>
+      <dd><strong>~52 bookings</strong>, at the best lead quality in the plan</dd>
+      <dt>KPI</dt>
+      <dd>Cost per <em>qualified</em> lead, not cost per lead; impression share on a fixed ~20-query commercial set; branded versus non-branded split</dd>
+      <dt>Measurement</dt>
+      <dd>Search Console and Ads, reconciled to CRM qualification outcomes</dd>
+      <dt>Strength</dt>
+      <dd><strong>The highest-intent traffic available</strong>, and the only paid channel that serves Journey 2's verification step. Phase 4 found KMV's search visibility thin — this is where that gap costs money directly.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>Volume is capped by demand.</strong> No budget creates more people searching &ldquo;villas in Mangalagiri.&rdquo; It saturates, and beyond that point the money is better spent elsewhere.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>Website + landing pages<span class="sp">₹0.60 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-2">Tier 2</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>The verification surface.</strong> For Journey 2 — 24% of units and 30% of revenue — this is not a discovery tool. The buyer already knows about the project; the site decides whether they believe it.</dd>
+      <dt>Audience</dt>
+      <dd>All digitally-reachable segments. <strong>Most consequential for S2 and S3</strong>, who research in depth and at length.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Discovery (2), Interest (3), Consideration (4), Lead (5)</strong></dd>
+      <dt>Contribution</dt>
+      <dd>Not separately attributed. <strong>~180 of the 201 marketing-sourced bookings pass through it.</strong></dd>
+      <dt>KPI</dt>
+      <dd>Landing-page conversion by community; time on the price-sheet page; <strong>bounce rate on the four community pages separately</strong></dd>
+      <dt>Measurement</dt>
+      <dd>GA4 with community as a content dimension; UTM discipline enforced by community</dd>
+      <dt>Strength</dt>
+      <dd>The one surface fully under the developer's control, and the cheapest place to publish what competitors will not — <strong>price per square foot, a unit-wise price sheet, the possession date, the RERA number.</strong></dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>It converts nobody on its own.</strong> Over-investing in the site while under-investing in the reasons to visit it is a common and expensive error.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>Outdoor / hoardings<span class="sp">₹2.10 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-2">Tier 2</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>Local legitimacy at the scale a 25-acre scheme needs.</strong> Phase 5 found S1 and S5 read a sustained hoarding presence as evidence of substance — a developer who can hold NH-16 for two years is a developer who will finish.</dd>
+      <dt>Audience</dt>
+      <dd><strong>S1, S5, S6</strong> on the Vijayawada–Guntur corridor; secondarily anyone driving to AIIMS, the Secretariat or the university cluster.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Awareness (1)</strong>, and directional traffic to Site Visit (8)</dd>
+      <dt>Contribution</dt>
+      <dd><strong>Not attributable to bookings, and should not be asked to be.</strong> Its contribution shows up in the booking-stage first-touch field and in recall.</dd>
+      <dt>KPI</dt>
+      <dd>Prompted and unprompted recall in the catchment; share of category search; <strong>first-touch mentions at booking</strong></dd>
+      <dt>Measurement</dt>
+      <dd>Quarterly recall survey, n ≈ 400. <strong>A geo or time-based holdout is the only honest way to test it.</strong></dd>
+      <dt>Strength</dt>
+      <dd>Unmissable in a corridor where the target audience drives the same road daily. And it does what no digital channel does: <strong>it is seen by the buyer's peers</strong> — which matters for a segment whose first question is who else has bought.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>Expensive, committed long, genuinely hard to measure.</strong> The line most likely to be cut under last-click reporting, and the wrong cut to make.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>CRM, martech, telephony <span style='font-weight:400;font-size:.86em;color:var(--ink-3)'>(infrastructure)</span><span class="sp">₹0.55 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-2">Tier 2</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>Owns the lead-to-qualified rate.</strong> Not a channel — it reaches nobody — but Phase 8 values a single point at this stage at <strong>₹17.2 crore.</strong></dd>
+      <dt>Audience</dt>
+      <dd>Internal. Sales team, channel partners, and the relationship managers who own post-booking advocacy.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Every stage from Lead (5) to Advocacy (12)</strong></dd>
+      <dt>Contribution</dt>
+      <dd>Indirect and large. A published benchmark holds that developers without CRM automation <strong>lose 30–50% of qualified leads to follow-up gaps.</strong></dd>
+      <dt>KPI</dt>
+      <dd>Speed to first contact; contact-establishment rate; <strong>stage-transition completeness — the share of bookings carrying a source, a referrer and a first-touch value</strong></dd>
+      <dt>Measurement</dt>
+      <dd>The CRM measures itself. The audit that matters is <strong>field completeness</strong>, not report volume.</dd>
+      <dt>Strength</dt>
+      <dd>It is the only place the counted gates exist, and the only place the booking-stage first-touch field can live. <strong>Everything Phase 8 recommends depends on it.</strong></dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>It fails quietly.</strong> A CRM with 40% of source fields blank produces reports that look fine and decide budget wrongly.</dd>
+      </dl>
+    </article>
+    <div class="trband">
+      <span class="tr tr-3">Tier 3</span>
+      <h3>Necessary, but small</h3>
+      <span class="tb-meta">Each does one specific job for one or two segments · <b>₹3.34 Cr</b></span>
+    </div>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>YouTube<span class="sp">₹1.30 Cr brand + ₹1.10 Cr demand</span></h4>
+        <div class="ch-tags"><span class="tr tr-3">Tier 3</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>Long-form proof for buyers who cannot visit</strong>, and the highest-consumption format in Telugu media.</dd>
+      <dt>Audience</dt>
+      <dd><strong>S3 and S7</strong> — <em>&ldquo;will watch a six-minute walkthrough&rdquo;</em> and <em>&ldquo;will do a video site walkthrough before a physical one.&rdquo;</em> Also <strong>S4 and S8</strong> in Telugu, and <strong>S1</strong> for long-form.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Awareness (1), Interest (3) — and, uniquely, a partial substitute for Site Visit (8)</strong></dd>
+      <dt>Contribution</dt>
+      <dd><strong>~18 bookings</strong> directly, plus a disproportionate assist into Community B where the physical visit is the binding constraint</dd>
+      <dt>KPI</dt>
+      <dd>50% and 75% video completion; cost per completed view; <strong>for B, the share of qualified leads that watch a full walkthrough before a visit</strong></dd>
+      <dt>Measurement</dt>
+      <dd>YouTube analytics for engagement; CRM for the B-specific correlation</dd>
+      <dt>Strength</dt>
+      <dd><strong>The only channel that can partially do the site visit's job remotely</strong> — the single most valuable fix available in the plan.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd>Production-heavy and slow to change. A walkthrough shot before construction ages badly, and re-shooting is a real cost, not a re-upload.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>SEO<span class="sp">₹0.40 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-3">Tier 3</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>Loss prevention on demand that already exists.</strong> For Journey 2 the buyer arrives at search having already been referred; if the results are thin, a live prospect is lost silently.</dd>
+      <dt>Audience</dt>
+      <dd><strong>S2, S3, S7</strong>, and <strong>S1 in verification mode</strong>.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Discovery (2)</strong></dd>
+      <dt>Contribution</dt>
+      <dd><strong>~12 bookings</strong> at low marginal cost — but back-loaded, since organic authority accrues over quarters</dd>
+      <dt>KPI</dt>
+      <dd>Branded search volume; visibility on the ~20-query commercial set; Google Business Profile views and direction requests</dd>
+      <dt>Measurement</dt>
+      <dd>Search Console and rank tracking, <strong>baselined against the Phase 4 audit</strong> so improvement is provable</dd>
+      <dt>Strength</dt>
+      <dd>Compounds, costs nothing per click, and Phase 4 established the baseline is weak — <strong>which makes the gains available unusually large for a small budget.</strong></dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>Slow.</strong> Nothing here helps in the first two quarters, which is exactly when the launch needs volume. It cannot be accelerated with money.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>Print<span class="sp">₹1.20 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-3">Tier 3</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>Legitimacy, not response.</strong> Phase 5 found print retains real credibility with S5 and S1 — a full page in Eenadu is read as evidence of scale.</dd>
+      <dt>Audience</dt>
+      <dd><strong>S5, S1, S6</strong>, and the older decision-influencers Phase 5 identified inside S1 households — the father or eldest brother.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Awareness (1)</strong>, with a launch-moment role</dd>
+      <dt>Contribution</dt>
+      <dd><strong>Not attributable, and should not be bought on response.</strong> Its job is to make the project unmissable at launch and credible thereafter.</dd>
+      <dt>KPI</dt>
+      <dd>Recall; first-touch mentions at booking; <strong>not coupon codes or unique numbers</strong>, which measure the wrong thing here</dd>
+      <dt>Measurement</dt>
+      <dd>Recall survey. Response-tracked print measures the small fraction who respond immediately, not the majority who register the project and act later.</dd>
+      <dt>Strength</dt>
+      <dd>Reaches the household influencers no digital channel reaches, and confers a specific kind of local seriousness.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>Expensive per contact and genuinely unmeasurable.</strong> With outdoor it is ₹3.30 crore that cannot be defended under click-based reporting.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>PR<span class="sp">₹0.45 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-3">Tier 3</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>Build the search results that Journey 2 verifies against.</strong> Its job is Discovery, not Awareness — a referred buyer who searches the name should find third-party coverage, not silence.</dd>
+      <dt>Audience</dt>
+      <dd><strong>S1 and S2</strong> in verification mode; <strong>S3 and S7</strong> researching from a distance; local institutional and government audiences.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Discovery (2)</strong>, with a secondary Awareness role at launch</dd>
+      <dt>Contribution</dt>
+      <dd>Not attributable. <strong>Measured by what it puts on page one, not by leads.</strong></dd>
+      <dt>KPI</dt>
+      <dd>Third-party coverage on page one for the developer and project names; publication quality; <strong>the AIIMS credential appearing in coverage the developer did not write</strong></dd>
+      <dt>Measurement</dt>
+      <dd>Quarterly search-results audit; coverage log with publication tier</dd>
+      <dt>Strength</dt>
+      <dd>Cheapest way to fix a thin search footprint with third-party credibility — worth more than owned content to a verifying buyer.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>Not controllable and not schedulable.</strong> A PR budget judged on volume of coverage will buy the wrong coverage.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>Email + marketing automation<span class="sp">₹0.19 Cr</span></h4>
+        <div class="ch-tags"><span class="tr tr-3">Tier 3</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>Nurture and document delivery — for two segments only.</strong> Not an acquisition channel here.</dd>
+      <dt>Audience</dt>
+      <dd><strong>S2</strong>, who <em>&ldquo;responds to email; often cannot take calls during the day&rdquo;</em>, and <strong>S3</strong>, reading across time zones. Effectively useless for S1, S4, S5 and S8.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Consideration (4) and Consultation (7)</strong></dd>
+      <dt>Contribution</dt>
+      <dd>No independent booking attribution. It shortens the consideration cycle for two segments.</dd>
+      <dt>KPI</dt>
+      <dd>Open and click rate for S2 and S3 cohorts separately; <strong>document-open rate on price sheets and the FEMA / PoA explainer</strong></dd>
+      <dt>Measurement</dt>
+      <dd>Automation platform, integrated to the CRM</dd>
+      <dt>Strength</dt>
+      <dd>Almost free, asynchronous — the whole point for a buyer 10½ hours away — and the right medium for the long documents S3 needs before a remote purchase.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>Narrow.</strong> Applied broadly it produces poor engagement and trains the team to distrust it. It is a two-segment tool and should be budgeted as one.</dd>
+      </dl>
+    </article>
+    <div class="trband">
+      <span class="tr tr-4">Tier 4</span>
+      <h3>Presence only, capped</h3>
+      <span class="tb-meta">Real but easily over-bought · <b>₹1.80 Cr</b></span>
+    </div>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>Property portals<span class="sp">₹1.00 Cr · capped</span></h4>
+        <div class="ch-tags"><span class="tr tr-4">Tier 4</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>Presence is mandatory; lead volume is optional.</strong> A premium project absent from 99acres, MagicBricks and Housing reads as unserious or already sold out. But portal leads are the lowest-quality in the plan.</dd>
+      <dt>Audience</dt>
+      <dd><strong>S5 and S6</strong> predominantly — both shortlist on portals. Marginal for S1, S2, S3.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Discovery (2) and Lead (5)</strong></dd>
+      <dt>Contribution</dt>
+      <dd><strong>~34 bookings</strong>, concentrated in Communities A and B</dd>
+      <dt>KPI</dt>
+      <dd><strong>Lead-to-qualified rate, not lead count.</strong> Cost per qualified lead, benchmarked against Meta and Search</dd>
+      <dt>Measurement</dt>
+      <dd>CRM, with portal leads tagged and their qualification rate reported separately every month</dd>
+      <dt>Strength</dt>
+      <dd>High-intent shoppers actively in market, at moderate cost, with no creative production required.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>The same enquiry is sold to several developers</strong>, so the buyer arrives already comparing on price — the one dimension Phase 6 says this project should not compete on. Uncapped, portals would depress the metric worth ₹17.2 crore per point.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>LinkedIn<span class="sp">₹0.50 Cr · capped, S3 and S7 only</span></h4>
+        <div class="ch-tags"><span class="tr tr-4">Tier 4</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>The only precise way to reach US-based Telugu technology professionals</strong> by employer, seniority, education and geography.</dd>
+      <dt>Audience</dt>
+      <dd><strong>S3</strong> — 1.23 million Telugu-origin people in the US, technology-weighted — and <strong>S7</strong> in Hyderabad. Nobody else.</dd>
+      <dt>Funnel stage</dt>
+      <dd><strong>Interest (3)</strong></dd>
+      <dt>Contribution</dt>
+      <dd><strong>~9 bookings</strong> — but in Communities B and D, so ~₹15–20 crore of revenue from a ₹0.50 crore line</dd>
+      <dt>KPI</dt>
+      <dd>Cost per qualified lead from the S3 and S7 cohorts specifically; <strong>not CPL, which will look poor and be judged wrongly</strong></dd>
+      <dt>Measurement</dt>
+      <dd>CRM cohort tracking. Judge it on booked revenue over 18 months, not quarterly lead cost.</dd>
+      <dt>Strength</dt>
+      <dd>Targeting precision unavailable anywhere else, against the segment with the highest revenue per unit.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd><strong>The most expensive cost per lead in the plan, in a channel built for B2B.</strong> It will look bad on every standard report. Capping it is what makes it defensible — at ₹0.50 crore it is affordable to be wrong about.</dd>
+      </dl>
+    </article>
+    <article class="ch">
+      <div class="ch-head">
+        <h4>Events<span class="sp">₹0.30 Cr on-site · off-site not in year one</span></h4>
+        <div class="ch-tags"><span class="tr tr-4">Tier 4</span></div>
+      </div>
+      <dl class="cg">
+      <dt>Role</dt>
+      <dd><strong>Split verdict.</strong> On-site owner and milestone events are advocacy infrastructure. Off-site lead-generation events — diaspora roadshows, hotel expos — are Tier 4 and should not run in year one.</dd>
+      <dt>Audience</dt>
+      <dd>On-site: booked buyers and the people they bring. Off-site: <strong>S3 and S7</strong>, and only inside the December–January window.</dd>
+      <dt>Funnel stage</dt>
+      <dd>On-site: <strong>Referral (11), Advocacy (12)</strong>. Off-site: Interest (3), Lead (5)</dd>
+      <dt>Contribution</dt>
+      <dd>On-site events deliver a meaningful share of the 70 referral bookings. Off-site: unproven, and unfunded until the referral engine exists.</dd>
+      <dt>KPI</dt>
+      <dd>On-site: attendance, guests brought per owner, <strong>referrals generated per event</strong>. Off-site: cost per qualified lead against the LinkedIn and Meta benchmark</dd>
+      <dt>Measurement</dt>
+      <dd>Event attendance logged to CRM; referrals attributed to the event that produced them</dd>
+      <dt>Strength</dt>
+      <dd>On-site events do what no media buy can: <strong>they let a prospect meet an existing buyer</strong> — the direct answer to S1's opening objection.</dd>
+      <dt class="neg">Weakness</dt>
+      <dd>Off-site events are expensive per contact and easy to justify emotionally. <strong>In year one there is nothing to show at a roadshow that a video call cannot show more cheaply.</strong></dd>
+      </dl>
+    </article>
+
+    <div class="trband">
+      <span class="tr tr-5">Tier 5</span>
+      <h3>Cut, or reclassified</h3>
+      <span class="tb-meta">Five items · <b>one genuine cut, four category corrections</b></span>
+    </div>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:12rem">Item</th><th style="width:9rem">Verdict</th><th>Reasoning</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Google Display — prospecting</strong></td><td><span class="tr tr-5">Cut</span></td><td>Indian real-estate display prospecting produces very high volumes of accidental in-app clicks. It would inflate lead counts and <strong>depress the lead-to-qualified rate — the metric worth ₹17.2 crore per point.</strong> Retargeting retained at ₹0.30 Cr, contributing ~8 assisted bookings, measured on assisted conversions only</td></tr>
+          <tr><td><strong>Instagram as a separate channel</strong></td><td><span class="tr tr-5">Reclassified</span></td><td>A placement inside Meta, bought in the same auction. Budgeted at ₹3.45 Cr inside Meta. <strong>Instagram placements should carry the Community C and D villa creative</strong>, where the format suits the product</td></tr>
+          <tr><td><strong>Hoardings as a separate channel</strong></td><td><span class="tr tr-5">Reclassified</span></td><td>The same channel as Outdoor, and its dominant format here. Budgeted at ₹2.10 Cr inside Outdoor</td></tr>
+          <tr><td><strong>NRI marketing as a separate channel</strong></td><td><span class="tr tr-5">Reclassified</span></td><td>An audience discipline. Phase 5 split it into <strong>S3 (US, Communities C and D) and S8 (Gulf, A and B)</strong> — two segments with different products, languages and ticket bands, executed across six channels. <strong>A single "NRI budget" cannot be optimised, and treating it as one is the error Phase 5 found every competitor making</strong></td></tr>
+          <tr><td><strong>Broad email acquisition</strong></td><td><span class="tr tr-5">Cut</span></td><td>Retained only as an S2 and S3 nurture tool at ₹0.19 Cr</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">§4</div>
+    <div>
+      <h2>Cost per booking by channel — and why this table is a trap</h2>
+      <p class="dek">Direct spend divided by attributed bookings, excluding the brand and infrastructure layers that serve every channel. Included so it can be read correctly rather than discovered later on a dashboard.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Channel</th><th class="n">Spend</th><th class="n">Bookings</th><th class="n">Direct cost per booking</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Referral</strong></td><td class="n">₹1.20 Cr</td><td class="n">70</td><td class="n"><strong>₹1.71 L</strong></td></tr>
+          <tr><td>Property portals</td><td class="n">₹1.00 Cr</td><td class="n">34</td><td class="n">₹2.94 L</td></tr>
+          <tr><td><strong>Channel partners</strong></td><td class="n">₹3.34 Cr</td><td class="n">105</td><td class="n"><strong>₹3.18 L</strong></td></tr>
+          <tr><td>SEO / organic</td><td class="n">₹0.40 Cr</td><td class="n">12</td><td class="n">₹3.33 L</td></tr>
+          <tr><td>Google Display retargeting</td><td class="n">₹0.30 Cr</td><td class="n">8</td><td class="n">₹3.75 L</td></tr>
+          <tr><td>Google Search</td><td class="n">₹2.30 Cr</td><td class="n">52</td><td class="n">₹4.42 L</td></tr>
+          <tr><td>Meta</td><td class="n">₹3.45 Cr</td><td class="n">68</td><td class="n">₹5.07 L</td></tr>
+          <tr><td>LinkedIn</td><td class="n">₹0.50 Cr</td><td class="n">9</td><td class="n">₹5.56 L</td></tr>
+          <tr><td>YouTube demand gen</td><td class="n">₹1.10 Cr</td><td class="n">18</td><td class="n">₹6.11 L</td></tr>
+          <tr><td><strong>Outdoor · Print · PR · brand content</strong></td><td class="n"><strong>₹5.00 Cr</strong></td><td class="n">—</td><td class="n"><strong>not attributable</strong></td></tr>
+          <tr><td><strong>Website · CRM · experience centre</strong></td><td class="n"><strong>₹5.25 Cr</strong></td><td class="n">—</td><td class="n"><strong>serves all channels</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="trap">
+      <span class="tl2">Read naively, this table says the wrong thing</span>
+      <p>It says: cut outdoor, print, PR, the website and the experience centre — they produce nothing — and move <strong>₹10.25 crore</strong> into portals and referral, which look cheapest.</p>
+      <p><strong>Every part of that conclusion is wrong.</strong> Portals look cheap because their <em>leads</em> are cheap, not because their buyers are; their leads carry the worst qualification rate in the plan. Referral looks cheap because 70 buyers were persuaded by a product, a site visit and a delivery record that cost ₹10.25 crore to build — costs that appear in the unattributable rows.</p>
+      <p class="big"><strong>The experience centre "produces nothing" while carrying ₹39.4 crore per point of conversion.</strong></p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h6>Rule 1 · compare within a layer</h6>
+        <ul><li>Meta against Search against portals is fair — same layer, same job.</li>
+        <li><strong>Meta against outdoor is not.</strong></li></ul>
+      </div>
+      <div class="card">
+        <h6>Rule 2 · judge demand gen on cost per qualified lead</h6>
+        <ul><li>Not cost per booking — that imports last-click distortion.</li>
+        <li>Not cost per lead — <strong>that rewards the volume Phase 8 showed is worth least.</strong></li></ul>
+      </div>
+      <div class="card">
+        <h6>Rule 3 · brand and infrastructure need a different measure</h6>
+        <ul><li>Judged by the <strong>booking-stage first-touch field</strong> and by holdout tests.</li>
+        <li>Never by a cost-per-booking figure they cannot produce.</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">§5</div>
+    <div>
+      <h2>Channel plan by journey</h2>
+      <p class="dek">Phase 8 established four journeys carrying very different shares of revenue. The channel mix differs sharply between them, and a single blended plan would serve none of them well.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:9rem"></th><th>1 · Linear</th><th>2 · Referral-entry</th><th>3 · Window</th><th>4 · Document</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Revenue</strong></td><td class="n">₹169.2 Cr · 33.4%</td><td class="n">₹153.5 Cr · 30.3%</td><td class="n">₹155.4 Cr · 30.7%</td><td class="n">₹27.9 Cr · 5.5%</td></tr>
+          <tr><td><strong>Segments</strong></td><td>S5 · S6 · most of S2</td><td>S1 · connected S2</td><td>S3 · S7 · S8</td><td>S4</td></tr>
+          <tr><td><strong>Primary channels</strong></td><td>Meta · Google Search · portals · website</td><td><strong>Channel partners · referral · site visit</strong></td><td><strong>YouTube · Meta · LinkedIn · WhatsApp · video consultation</strong></td><td><strong>In-person village relations · Telugu print and YouTube</strong></td></tr>
+          <tr><td><strong>Supporting</strong></td><td>Outdoor · print · CRM · WhatsApp</td><td>Search <em>(verification)</em> · PR · outdoor · the CA and advocate</td><td>Email · SEO · Dec–Jan events · portals <em>(NRI listings)</em></td><td>The term sheet · the local advocate · a completed precedent</td></tr>
+          <tr><td><strong>Does not work</strong></td><td>—</td><td><strong>Meta and portals as discovery</strong> — <em>digital is a verification channel, not a discovery channel</em></td><td><strong>Anything requiring a physical visit</strong> — the buyer is 13,000 km away for eleven months</td><td><strong>All media.</strong> <em>"Does not respond to advertising; it responds to a document"</em></td></tr>
+          <tr><td><strong>Binding constraint</strong></td><td>Cost per qualified lead against ~3,269 competing units</td><td><strong>Whether fifteen visible local buyers exist yet</strong></td><td><strong>Qualified-lead-to-visit at 18.2%</strong> — the worst stage in the model</td><td><strong>Whether one neighbour has completed an exchange and been treated as promised</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The mix that follows</span>
+      <p>Journey 1 is a conventional paid-media problem and takes the majority of Meta, Search and portal budget. <strong>Journey 2, at 30.3% of revenue, takes almost no media at all</strong> — its budget is channel-partner commission, the referral programme and the experience centre. Journey 3, at 30.7%, is where the December–January concentration and the video-consultation capability live. Journey 4 has no media line; it has a headcount line.</p>
+      <p class="big"><strong>Two of the four journeys — 36% of revenue — are served primarily by things that are not media buys.</strong> A channel strategy allocating only across media would leave them unresourced.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">§6</div>
+    <div>
+      <h2>Year one is not steady state</h2>
+      <p class="dek">Referral requires prior buyers. At launch there are none — and the 18.5% share is a steady-state figure.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="mx">
+      <div><span class="k">Year-one bookings</span><span class="v">~101</span><span class="s">At base run-rate</span></div>
+      <div><span class="k">Referral gap</span><span class="v acc">~19</span><span class="s">Bookings that cannot come from referral</span></div>
+      <div><span class="k">Re-source via media</span><span class="v">₹2.01 Cr</span><span class="s">At ₹10.52 L CAC</span></div>
+      <div><span class="k">Re-source via partners</span><span class="v">₹0.61 Cr</span><span class="s">At ₹3.18 L each</span></div>
+      <div><span class="k">Saving</span><span class="v acc">₹1.41 Cr</span><span class="s">Same units, cheaper route</span></div>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The year-one recommendation</span>
+      <p class="big"><strong>Over-weight channel partners, not media.</strong></p>
+      <p>A channel-partner network can be stood up in weeks and costs nothing until it sells. Buying 19 additional bookings through paid media costs <strong>₹1.41 crore more for the same units.</strong></p>
+      <p><strong>And the advocacy budget's year-one job changes entirely.</strong> In year one, ₹1.20 crore of advocacy spend is not harvesting referrals — there is nothing to harvest. <strong>It is manufacturing the first fifteen visible, named local buyers</strong> whose existence answers S1's opening question and unlocks Journey 2 in year two. Phase 6 said the same thing in product terms: seed Community D's first tranche rather than advertise it.</p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:8rem">Phase</th><th class="n" style="width:9rem">Referral share</th><th>What the advocacy budget is doing</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Year 1</strong></td><td class="n">~0%</td><td>Manufacturing advocates. Seeding Community D. Owner events with the first cohort</td></tr>
+          <tr><td><strong>Year 2</strong></td><td class="n">~15%</td><td>First referrals landing; the programme formalised</td></tr>
+          <tr><td><strong>Years 3–4</strong></td><td class="n"><strong>25%+</strong></td><td>Compounding. Above the 18.5% average — which is what makes the average work</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">§7</div>
+    <div>
+      <h2>Risks</h2>
+      <p class="dek">Eight. One is worth doing before any budget commits; one is not a channel question at all.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:2.5rem">#</th><th style="width:14rem">Risk</th><th>Why it matters</th><th style="width:14rem">Test</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>The per-channel booking split is Reasoned, not observed</strong></td><td>It sets ₹9.84 Cr of demand-generation allocation</td><td>The booking-stage first-touch field. <strong>Two quarters settles it</strong></td></tr>
+          <tr><td class="n">2</td><td><strong>Cost per booking by channel will be produced by someone, and read naively</strong></td><td>§4 shows the naive reading defunds ₹10.25 Cr of the highest-value spend</td><td>Agree the three reading rules <strong>before</strong> the first quarterly review, not during it</td></tr>
+          <tr><td class="n">3</td><td><strong>CPLs are Phase 7 benchmarks from agency sources, adjusted by judgement</strong></td><td>Every channel budget scales off them</td><td>A <strong>₹15–20 lakh paid test across all four community audiences before the main budget commits.</strong> Six weeks, and it repositions the whole allocation if wrong</td></tr>
+          <tr><td class="n">4</td><td><strong>The experience centre is sized for average, not peak</strong></td><td>₹4.10 Cr, the largest line, serving the ₹39.4 Cr-per-point stage</td><td>Size for <strong>peak Sunday</strong> — an estimated 35–45 people on site. Appointment system for S2 and S3 to keep Sunday free for walk-in families</td></tr>
+          <tr><td class="n">5</td><td><strong>WhatsApp runs outside the CRM</strong></td><td>The primary conversational channel for three segments, living by default on personal phones</td><td>API integration on day one. <strong>Un-integrated, it is not a channel — it is a liability</strong></td></tr>
+          <tr><td class="n">6</td><td><strong>Channel partners sell on discount</strong></td><td>28% of bookings sit with people the developer does not control, and Phase 6's two pricing rules are load-bearing</td><td>The monthly discount register, <strong>segmented by partner.</strong> A partner whose average discount exceeds the direct team's is a pricing problem, not a sales asset</td></tr>
+          <tr><td class="n">7</td><td><strong>Outdoor and print — ₹3.30 Cr — cannot be defended under click reporting</strong></td><td>The two lines most likely to be cut for looking unproductive</td><td>Recall survey and a geo or time-based holdout, <strong>agreed before the spend</strong></td></tr>
+          <tr><td class="n">8</td><td><strong>This phase assumes Phase 6's prices hold</strong></td><td>Unchanged through Phases 6, 7 and 8: <strong>31% of revenue sits in a band nobody has proven is occupied</strong></td><td>Not a channel question. <strong>No channel mix compensates for a price the market refuses</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h6>Carry-forward · 1</h6>
+        <ul><li><strong>The largest single channel line is the experience centre, not Meta.</strong></li>
+        <li>That follows from Phase 8's ₹39.4 Cr-per-point finding and Phase 7's "conversion beats media price."</li>
+        <li>This allocation is what those findings look like as a budget.</li></ul>
+      </div>
+      <div class="card">
+        <h6>Carry-forward · 2</h6>
+        <ul><li><strong>36% of revenue is served by things that are not media buys.</strong></li>
+        <li>Journey 2 runs on channel partners, referral and the site. Journey 4 runs on a term sheet and a village relationship.</li></ul>
+      </div>
+      <div class="card">
+        <h6>Carry-forward · 3</h6>
+        <ul><li><strong>Year one over-weights channel partners, not media.</strong></li>
+        <li>Routing the ~19-booking referral gap to partners saves <strong>₹1.41 Cr</strong> for the same units.</li></ul>
+      </div>
+      <div class="card">
+        <h6>Carry-forward · 4</h6>
+        <ul><li><strong>Cost per booking by channel is a trap, and it will be produced anyway.</strong></li>
+        <li>Compare within a layer. Judge demand gen on cost per <em>qualified</em> lead. Judge brand and infrastructure on first-touch and holdouts.</li></ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>One correction to Phase 8.</strong> Referral is <strong>70 bookings, not 71</strong> — the source split derives as 200.8 marketing-sourced, 105.5 channel partner and 69.7 referral, rounding to 201 / 105 / 70. That makes referral <strong>₹1.71 lakh per booking</strong> and <strong>~₹94.5 crore of revenue</strong>, at <strong>6.1× cheaper</strong> than marketing-sourced rather than 6.2×.
+    </div>
+
+    <p style="font-size:.8rem;color:var(--ink-3);margin-top:2.5rem;border-top:1px solid var(--rule);padding-top:1.2rem;max-width:none">
+      Phase 9 of a sequential research and strategy exercise. Hypothetical project; not represented as an actual KMV Spaces development. Phases 1–8 precede this document. Channel budgets sum to the Phase 8 layer totals; per-channel booking attribution is a Reasoned planning assumption to be replaced by the booking-stage first-touch field within two quarters of launch. Segment behaviour throughout derives from Phase 5, which was reconstructed without primary buyer research — every behavioural claim remains a testable hypothesis.
+    </p>
+  </div>
+</section>
+
+</main>
+</div>

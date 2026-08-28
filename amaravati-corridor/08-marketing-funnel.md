@@ -43,16 +43,16 @@ The brief asks for brand building, demand generation, sales conversion and custo
 | **Brand building** | Awareness · Discovery | **The price premium.** Whether a ₹6,500/sq ft villa is credible at all before it is quoted | **₹6.30 Cr** | 24.5% |
 | **Demand generation** | Interest · Consideration · Lead · Qualified Lead | **Lead volume and quality at a cost.** CPL, CPQL, and the 15.8% lead-to-qualified rate | **₹9.84 Cr** | 38.3% |
 | **Sales conversion** | Consultation · Site Visit · Negotiation · Booking | **The 6.9% visit-to-booking rate** — Phase 7's most sensitive variable — and price discipline | **₹8.34 Cr** | 32.5% |
-| **Customer advocacy** | Referral · Advocacy | **71 bookings — 19% of the scheme, ~₹96 crore** — at the lowest cost per booking available | **₹1.20 Cr** | 4.7% |
+| **Customer advocacy** | Referral · Advocacy | **70 bookings — 18.5% of the scheme, ~₹94.5 crore** — at the lowest cost per booking available | **₹1.20 Cr** | 4.7% |
 | | | | **₹25.68 Cr** | 100% |
 
 *Sales conversion holds ₹5.00 Cr of sales infrastructure plus ₹3.34 Cr of channel-partner commission. Brand building holds Phase 7's brand-and-content line.*
 
 ### 1.1 One change to the Phase 7 budget, and why
 
-**Computed.** Phase 7's base case allocated ₹25.67 crore across lead generation, brand, sales infrastructure and channel-partner commission. **It contained no line for advocacy at all** — while simultaneously modelling 19% of bookings as referral-sourced.
+**Computed.** Phase 7's base case allocated ₹25.67 crore across lead generation, brand, sales infrastructure and channel-partner commission. **It contained no line for advocacy at all** — while simultaneously modelling 18.5% of bookings as referral-sourced.
 
-> **A layer delivering 71 bookings and roughly ₹96 crore of revenue had a budget of zero.** That is not frugality; it is an omission that would have shown up as an unexplained shortfall in year two.
+> **A layer delivering 70 bookings and roughly ₹94.5 crore of revenue had a budget of zero.** That is not frugality; it is an omission that would have shown up as an unexplained shortfall in year two.
 
 This phase carves **₹1.20 crore out of the brand line** into an explicit advocacy and referral programme. The arithmetic justifies it immediately:
 
@@ -60,9 +60,9 @@ This phase carves **₹1.20 crore out of the brand line** into an explicit advoc
 | --- | --: | --: | --: |
 | Marketing-sourced | ₹21.14 Cr | 201 | **₹10.52 L** |
 | Channel partner | ₹3.34 Cr | 105 | **₹3.18 L** |
-| **Referral** | **₹1.20 Cr** | **71** | **₹1.69 L** |
+| **Referral** | **₹1.20 Cr** | **71** | **₹1.71 L** |
 
-**Referral is 6.2× cheaper per booking than marketing-sourced demand.** Phase 7 §5.3 found the same thing from the other direction — Community C, the most referral-dependent community, is the most efficient product in the scheme. **Funding the cheapest channel at zero was the single clearest gap in the model.**
+**Referral is 6.1× cheaper per booking than marketing-sourced demand.** Phase 7 §5.3 found the same thing from the other direction — Community C, the most referral-dependent community, is the most efficient product in the scheme. **Funding the cheapest channel at zero was the single clearest gap in the model.**
 
 ### 1.2 The layer boundary that is usually drawn wrong
 
@@ -232,14 +232,14 @@ Each stage carries the eight attributes the brief specifies. Volumes are the Pha
 
 | | |
 | --- | --- |
-| **Objective** | Convert buyers into introducers. **Phase 7 models 19% of bookings — 71 units, roughly ₹96 crore — as referral-sourced**, at ₹1.69 lakh per booking against ₹10.52 lakh for marketing-sourced. |
+| **Objective** | Convert buyers into introducers. **Phase 7 models 18.5% of bookings — 70 units, roughly ₹94.5 crore — as referral-sourced**, at ₹1.71 lakh per booking against ₹10.52 lakh for marketing-sourced. |
 | **Audience** | Every booked buyer, weighted heavily: **S1 frequently buys as multiple related households in the same project**, and Phase 5 found its peers are the most persuasive channel available anywhere in this catchment. **S4's first completed exchange is *"the single most persuasive asset available."*** |
 | **Message** | *"Bring the people you would want as neighbours."* Phase 5 found S1's first objection is **"who else has bought?"** — a referral programme answers that objection structurally rather than rhetorically. |
 | **Channel** | The relationship manager; **construction-milestone events on site for booked buyers**; a WhatsApp group per community; a formal, documented referral scheme with a stated benefit. |
 | **Content / creative** | Site-progress events buyers want to bring people to; a referral benefit expressed as something worth having — **early access to the next tranche is worth more than a token discount** in a scheme where Phase 6 makes villa inventory deliberately scarce. |
 | **CTA** | *"Introduce someone."* |
-| **KPI** | **Referral-sourced bookings against the 71-unit target — 1.6 a month**; referrals per booked buyer; cost per referral booking. |
-| **Measurement** | A **referrer field on every booking**, reconciled monthly against the 19% assumption. Phase 7 §8 flagged a 10-point error here as roughly ₹3.5 crore of misallocated budget. |
+| **KPI** | **Referral-sourced bookings against the 70-unit target — 1.6 a month**; referrals per booked buyer; cost per referral booking. |
+| **Measurement** | A **referrer field on every booking**, reconciled monthly against the 18.5% assumption. Phase 7 §8 flagged a 10-point error here as roughly ₹3.5 crore of misallocated budget. |
 
 #### Stage 12 · Advocacy
 
@@ -401,7 +401,7 @@ The consideration cycle runs **3 to 18 months** (Phase 5), and **47% of bookings
 | --- | --- | --- |
 | **Weekly** | Sales lead | Site visits, visit-to-booking by community and by salesperson, weekend capacity utilisation, **Community B's qualified-to-visit rate separately** |
 | **Monthly** | Marketing lead | Leads and CPL by community, lead-to-qualified, consultation and negotiation counts, **the discount register against the two Phase 6 pricing rules** |
-| **Quarterly** | Both | First-touch mix from booking records reconciled against the 53 / 28 / 19 source assumption; brand recall survey; NPS; **the layer budget re-based on what the reconciliation shows** |
+| **Quarterly** | Both | First-touch mix from booking records reconciled against the 53.4 / 28.1 / 18.5 source assumption; brand recall survey; NPS; **the layer budget re-based on what the reconciliation shows** |
 
 ---
 
@@ -418,7 +418,7 @@ The consideration cycle runs **3 to 18 months** (Phase 5), and **47% of bookings
 | Negotiations | Sales conversion | 574 | 13 | 3 | 19.6% |
 | **Bookings — marketing-sourced** | Sales conversion | **201** | 4.5 | 1.0 | 35.0% |
 | + channel partner | Sales conversion | 105 | 2.3 | — | — |
-| + referral | **Advocacy** | 71 | 1.6 | — | — |
+| + referral | **Advocacy** | 70 | 1.6 | — | — |
 | **Total bookings** | | **376** | **8.4** | 1.9 | — |
 
 *Reconciliation: consultation 42.6% × consultation-to-visit 55.0% = 23.4%, matching Phase 7's qualified-to-visit gate. Visit-to-negotiation 19.6% × negotiation-to-booking 35.0% = 6.9%, matching Phase 7's visit-to-booking gate.*
@@ -476,7 +476,7 @@ The largest absolute loss is at the top. **That is not where the money is.**
 | # | Risk | Why it matters | Test |
 | --- | --- | --- | --- |
 | **1** | **The four-journey split is Reasoned, not observed** | It drives the pacing, the calendar and the layer budget. A wrong split misallocates ₹25.68 Cr | The booking-stage first-touch field (§4.3). **Two quarters of bookings settle it** |
-| **2** | **The 19% referral assumption may not survive a first project** | Referral requires prior buyers. **In year one there are none** — the assumption is structurally back-loaded | Model referral as ramping from ~0% in year one to above 19% in years three to four, not flat. **Year-one budget must carry more demand generation than the average implies** |
+| **2** | **The 18.5% referral assumption may not survive a first project** | Referral requires prior buyers. **In year one there are none** — the assumption is structurally back-loaded | Model referral as ramping from ~0% in year one to above 18.5% by years three to four, not flat. **Year-one budget must carry more demand generation than the average implies** |
 | **3** | **Consultation and negotiation rates are newly derived here** | They are reverse-engineered to reconcile with Phase 7's gates, not observed | They become counted gates on day one. Ninety days of CRM data replaces the derivation |
 | **4** | **Sunday capacity** | The highest-leverage stage may be constrained by physical throughput, not demand | Size the experience centre for peak Sunday at launch. A booked-appointment system for S2 and S3 that keeps Sunday free for walk-in families |
 | **5** | **Brand spend cannot be defended under last-click** | ₹6.30 Cr is the layer most likely to be cut for looking unproductive | The first-touch field, plus a **geo or time-based holdout** on the brand layer. Agree the measurement method *before* the spend, not when it is challenged |
@@ -490,9 +490,9 @@ The largest absolute loss is at the top. **That is not where the money is.**
 **Established and Computed.**
 - **Four counted gates, eight estimated stages.** Promoting Consultation and Negotiation to counted gates costs nothing and makes the sales team's contribution visible.
 - **The linear journey carries 47.5% of units but only 33.4% of revenue.** Two-thirds of the money travels a referral-entry, window or document route that skips, reorders or compresses the twelve stages.
-- **Stage volumes:** 78,880 leads → 12,474 qualified → 5,313 consultations → 2,922 site visits → 574 negotiations → 201 marketing-sourced bookings, plus 105 channel partner and 71 referral = **376.**
+- **Stage volumes:** 78,880 leads → 12,474 qualified → 5,313 consultations → 2,922 site visits → 574 negotiations → 201 marketing-sourced bookings, plus 105 channel partner and 70 referral = **376.**
 - **A point at the site-visit stage is worth ₹39.4 crore** — 2.3× a point at the lead stage. The 66,406 leads lost at the top are the least valuable losses in the funnel.
-- **Referral costs ₹1.69 lakh per booking against ₹10.52 lakh marketing-sourced — 6.2× cheaper.**
+- **Referral costs ₹1.71 lakh per booking against ₹10.52 lakh marketing-sourced — 6.1× cheaper.**
 
 **The four layers, with budget.**
 
@@ -501,9 +501,9 @@ The largest absolute loss is at the top. **That is not where the money is.**
 | Brand building | ₹6.30 Cr | The credibility of the price premium |
 | Demand generation | ₹9.84 Cr | Lead volume and quality at a cost |
 | Sales conversion | ₹8.34 Cr | The 6.9% visit-to-booking rate and price discipline |
-| **Customer advocacy** | **₹1.20 Cr** | **71 bookings, ~₹96 Cr, at the lowest cost per booking available** |
+| **Customer advocacy** | **₹1.20 Cr** | **70 bookings, ~₹94.5 Cr, at the lowest cost per booking available** |
 
-**One change to Phase 7.** ₹1.20 crore moves from the brand line into an explicit advocacy budget. **Phase 7 modelled 19% of bookings as referral-sourced and funded that layer at zero** — an omission that would have surfaced as an unexplained shortfall in year two.
+**One change to Phase 7.** ₹1.20 crore moves from the brand line into an explicit advocacy budget. **Phase 7 modelled 18.5% of bookings as referral-sourced and funded that layer at zero** — an omission that would have surfaced as an unexplained shortfall in year two.
 
 **Three design positions carried forward.**
 1. **Advocacy is an input to awareness, not only an output of booking.** Its year-one job is manufacturing the first fifteen visible, named local buyers who answer S1's opening question. That is why Community D's first tranche is seeded rather than advertised.

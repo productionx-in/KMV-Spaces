@@ -39,8 +39,8 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 | 6 | [`06-community-architecture.md`](06-community-architecture.md) — product, land and price structure for Communities A–D (also [`.html`](06-community-architecture.html)) | **Complete** |
 | 7 | [`07-business-model.md`](07-business-model.md) — funnel model, three scenarios, unit economics (also [`.html`](07-business-model.html)) | **Complete** |
 | 8 | [`08-marketing-funnel.md`](08-marketing-funnel.md) — twelve-stage journey, four layers, four journeys (also [`.html`](08-marketing-funnel.html)) | **Complete** |
-| 9 | Positioning, messaging and creative strategy | Not started |
-| 10 | Channel and performance plan | Not started |
+| 9 | [`09-channel-strategy.md`](09-channel-strategy.md) — twenty-two channels tiered, five cut, ₹25.68 Cr allocated (also [`.html`](09-channel-strategy.html)) | **Complete** |
+| 10 | Positioning, messaging and creative strategy | Not started |
 
 ## Method notes
 
@@ -73,6 +73,13 @@ relationship**, which is the one in-project rate lever the evidence supports.
 silently assumed an apartment density 2.9–6.2× below anything in the corridor. At the lowest observed
 local density the same 25 acres would yield ~₹851 crore. The project is therefore forgoing roughly
 ₹350–500 crore of gross development value to buy the low-density differentiator the price premium rests on.
+
+**Not every channel is necessary.** Phase 9 tiers all twenty-two channels the brief lists and cuts or
+reclassifies five of them — four because the list as given contains category errors that would produce
+duplicated budget: Instagram is a placement inside Meta, hoardings are outdoor, NRI marketing is an
+audience rather than a channel, and CRM is infrastructure. The resulting ₹25.68 crore allocation puts its
+largest single line on the experience centre and show homes (₹4.10 Cr) rather than on Meta (₹3.45 Cr) —
+which is what Phase 7's "conversion beats media price" looks like when it is actually acted on.
 
 **Four journeys, not one.** Phase 8 builds the twelve-stage journey the brief specifies, then shows that
 only 47.5% of units — and 33.4% of revenue — actually travel it. Trade families enter at consultation
