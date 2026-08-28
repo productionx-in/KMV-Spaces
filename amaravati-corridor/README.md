@@ -41,6 +41,7 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 | 8 | [`08-marketing-funnel.md`](08-marketing-funnel.md) — twelve-stage journey, four layers, four journeys (also [`.html`](08-marketing-funnel.html)) | **Complete** |
 | 9 | [`09-channel-strategy.md`](09-channel-strategy.md) — twenty-two channels tiered, five cut, ₹25.68 Cr allocated (also [`.html`](09-channel-strategy.html)) | **Complete** |
 | 10 | [`10-creative-strategy.md`](10-creative-strategy.md) — master idea, narratives, creative system, campaign (also [`.html`](10-creative-strategy.html)) | **Complete** |
+| 11 | [`11-marketing-budget.md`](11-marketing-budget.md) — bottom-up investment model, twelve line items, funnel and ROI (also [`.html`](11-marketing-budget.html)) | **Complete** |
 
 ## Method notes
 
@@ -73,6 +74,14 @@ relationship**, which is the one in-project rate lever the evidence supports.
 silently assumed an apartment density 2.9–6.2× below anything in the corridor. At the lowest observed
 local density the same 25 acres would yield ~₹851 crore. The project is therefore forgoing roughly
 ₹350–500 crore of gross development value to buy the low-density differentiator the price premium rests on.
+
+**Built from the bottom up, not from a percentage.** Phase 11 prices each of the twelve budget line items
+from quantity × unit cost and arrives at **₹32.29 crore — 26% above the ₹25.68 crore Phase 9 allocated
+top-down.** The gap sits entirely in things that are not media: a performance agency fee no earlier phase
+carried, NRI infrastructure that had no home once NRI was correctly reclassified as an audience, the
+production that fills the media, and a launch that was spread invisibly. **53% of the recommended
+₹31.05 crore is not media at all**, only ₹20.47 crore is genuinely flexible, and every ₹1 cut from
+performance media puts roughly ₹24.60 of revenue at risk.
 
 **The idea is a number.** Phase 10 builds the creative platform on the one fact no competitor in this
 corridor can state: **fifteen homes to the acre**, where the local range is 53 to 113. At the corridor's own
