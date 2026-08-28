@@ -1,0 +1,1390 @@
+<title>Amaravati Journey Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style>
+<style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style>
+<style>
+/* ---------- Phase 4: evidence labels ---------- */
+.lb{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .42rem;border-radius:3px;white-space:nowrap;display:inline-block;border:1px solid transparent;
+  line-height:1.55;vertical-align:.06em}
+.lb-f{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-o{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-i{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+.lb-r{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.lb-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+.stmt{margin:0 0 1rem;max-width:var(--measure)}
+.stmt .lb{margin-right:.5rem}
+.none{color:var(--ink-3);font-style:italic}
+
+.sev-h{color:var(--accent);font-weight:600;font-family:var(--f-mono);font-size:.72rem}
+.sev-m{color:var(--ink-2);font-family:var(--f-mono);font-size:.72rem}
+.sev-l{color:var(--ink-3);font-family:var(--f-mono);font-size:.72rem}
+
+/* ---------- diagram ---------- */
+figure.dia{margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);border-radius:5px;
+  padding:1.4rem 1.5rem 1.1rem;box-shadow:var(--shadow)}
+figure.dia svg{display:block;width:100%;max-width:100%;height:auto;color:var(--ink-2)}
+figure.dia figcaption{margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--rule);
+  font-size:.79rem;color:var(--ink-3);line-height:1.5}
+.dia-head{margin-bottom:1rem}
+.dia-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.dia-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.dia-scroll{overflow-x:auto}
+.dia-scroll > svg{min-width:34rem}
+
+/* ---------- rate bars ---------- */
+.rrow{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.rrow:hover{background:var(--surface-2)}
+.rname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.rname b{display:block;color:var(--ink);font-weight:600}
+.rtrack{height:1.4rem;display:flex;align-items:center;gap:.55rem}
+.rfill{height:.95rem;border-radius:0 4px 4px 0;background:var(--series);flex:none}
+.rfill.other{background:transparent;border:1.5px solid var(--series);border-left:0;box-sizing:border-box}
+.rfill.target{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.rval{font-family:var(--f-mono);font-size:.77rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+</style>
+<style>
+/* ---------- Phase 5 components ---------- */
+
+/* Evidence labels — form, not hue */
+.lb-est{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-app{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-rsn{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+
+/* Priority chips */
+.pri{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.14rem .48rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;border:1px solid transparent}
+.pri-h{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.pri-s{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.pri-l{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Segment profile card */
+.seg{margin:2rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.seg-head{display:grid;grid-template-columns:3.1rem minmax(0,1fr);gap:.9rem;align-items:start;
+  padding:1.05rem 1.3rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.seg-id{font-family:var(--f-mono);font-size:1.28rem;font-weight:600;color:var(--brand);
+  line-height:1;padding-top:.12rem;letter-spacing:-.02em}
+.seg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.08rem;line-height:1.28;
+  margin:0 0 .3rem;color:var(--ink);text-wrap:balance}
+.seg-head .seg-line{font-size:.85rem;color:var(--ink-2);margin:0 0 .6rem;font-style:italic}
+.seg-stats{display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.seg-stats b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.seg-size{padding:.8rem 1.3rem;border-bottom:1px solid var(--rule);font-size:.82rem;
+  line-height:1.55;color:var(--ink-2);background:var(--surface)}
+.seg-size strong{color:var(--ink)}
+
+/* 20-attribute grid */
+.attr{display:grid;grid-template-columns:minmax(8rem,10.5rem) minmax(0,1fr)}
+.attr > dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);padding:.6rem .8rem .6rem 1.3rem;border-top:1px solid var(--rule);
+  line-height:1.45;font-weight:500}
+.attr > dd{margin:0;padding:.6rem 1.3rem .6rem .3rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.attr > dd strong{color:var(--ink);font-weight:600}
+.attr > dt:first-of-type,.attr > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .attr{grid-template-columns:minmax(0,1fr)}
+  .attr > dt{padding:.6rem 1.1rem .1rem;border-top:1px solid var(--rule)}
+  .attr > dd{padding:.15rem 1.1rem .65rem;border-top:0}
+  .attr > dt:first-of-type + dd{border-top:0}
+}
+.seg-close{padding:.95rem 1.3rem;background:var(--surface-2);border-top:1px solid var(--rule);
+  font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.seg-close .lbl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.4rem;font-weight:600}
+.seg-close strong{color:var(--ink)}
+.seg-close p{margin:0 0 .55rem;max-width:none}
+.seg-close p:last-child{margin-bottom:0}
+
+/* Cash-gate escalation */
+.gate{display:flex;flex-direction:column;gap:.55rem}
+.gate-row{display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:.8rem;align-items:center}
+.gate-name{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-2);line-height:1.3}
+.gate-name b{display:block;color:var(--ink);font-weight:600;font-size:.82rem}
+.gate-track{display:flex;align-items:center;gap:.5rem;height:2rem}
+.gate-cash{height:1.3rem;background:var(--series);border-radius:0 3px 3px 0;flex:none}
+.gate-inc{height:1.3rem;border:1.5px dashed var(--emphasis);border-left:0;border-radius:0 3px 3px 0;
+  flex:none;box-sizing:border-box}
+.gate-val{font-family:var(--f-mono);font-size:.76rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap}
+.gate-val i{font-style:normal;color:var(--ink-3)}
+
+/* Hypothesis verdict list */
+.hyp{display:flex;flex-direction:column;gap:0;margin:1.5rem 0;border:1px solid var(--rule);
+  border-radius:5px;background:var(--surface);overflow:hidden}
+.hyp-row{display:grid;grid-template-columns:2.1rem minmax(7rem,11rem) minmax(0,1fr);gap:.75rem;
+  padding:.75rem 1.05rem;border-top:1px solid var(--rule);align-items:start}
+.hyp-row:first-child{border-top:0}
+.hyp-row .num{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;padding-top:.1rem}
+.hyp-name{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.4}
+.hyp-name .v{display:block;margin-top:.3rem}
+.hyp-why{font-size:.83rem;line-height:1.55;color:var(--ink-2)}
+.hyp-why strong{color:var(--ink)}
+.vd{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:.1rem .38rem;border-radius:3px;display:inline-block;line-height:1.5}
+.vd-y{background:var(--brand);color:var(--surface)}
+.vd-p{background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand)}
+.vd-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+@media (max-width:640px){
+  .hyp-row{grid-template-columns:2.1rem minmax(0,1fr);row-gap:.35rem}
+  .hyp-why{grid-column:2}
+}
+
+/* Revenue-by-segment bars, priority encoded by fill treatment */
+.rev-row{display:grid;grid-template-columns:minmax(8.5rem,13rem) minmax(0,1fr);gap:.7rem;
+  align-items:center;padding:3px 0}
+.rev-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.rev-label b{display:block;color:var(--ink);font-weight:600}
+.rev-track{position:relative;height:1.6rem;display:flex;align-items:center;gap:.55rem}
+.rev-fill{height:1.1rem;border-radius:0 4px 4px 0;flex:none;box-sizing:border-box}
+.rev-fill.p-h{background:var(--series)}
+.rev-fill.p-s{background:var(--brand-soft);border:1px solid var(--series);border-left:0}
+.rev-fill.p-l{background:transparent;border:1.5px dashed var(--rule-2);border-left:0}
+.rev-val{font-family:var(--f-mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:500}
+.rev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+td i{color:var(--ink-3);font-style:normal;font-size:.94em}
+
+/* Community mapping strip */
+.commap{display:grid;grid-template-columns:repeat(auto-fit,minmax(13.5rem,1fr));gap:.85rem;margin:1.5rem 0}
+.cm{background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden;
+  display:flex;flex-direction:column}
+.cm-top{padding:.75rem .95rem;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.cm-top h6{font-family:var(--f-display);font-size:1rem;font-weight:600;margin:0;color:var(--ink)}
+.cm-top .cm-t{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);display:block;margin-top:.22rem;
+  font-variant-numeric:tabular-nums}
+.cm-body{padding:.8rem .95rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.cm-body .cm-h{display:block;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 .28rem;font-weight:500}
+.cm-body p{margin:0 0 .7rem;max-width:none}
+.cm-body p:last-child{margin-bottom:0}
+.cm-body strong{color:var(--ink);font-weight:600}
+.cm-win{padding:.7rem .95rem;border-top:1px solid var(--rule);background:var(--accent-soft);
+  font-size:.8rem;line-height:1.45;color:var(--ink-2)}
+.cm-win b{color:var(--accent);font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;display:block;margin-bottom:.25rem;font-weight:600}
+</style>
+<style>
+/* ---------- Phase 7 components ---------- */
+/* Classification tags — form, not hue */
+.tg{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .4rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent;vertical-align:.06em}
+.tg-md{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.tg-bm{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.tg-as{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.tg-cv{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+
+/* Scenario columns */
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.85rem;margin:1.5rem 0}
+.sc{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);
+  display:flex;flex-direction:column}
+.sc.pick{border-color:var(--accent);box-shadow:var(--shadow)}
+.sc-top{padding:.8rem 1rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.sc.pick .sc-top{background:var(--accent-soft)}
+.sc-top h6{font-family:var(--f-display);font-size:1.05rem;font-weight:600;margin:0;color:var(--ink)}
+.sc-top span{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);display:block;margin-top:.24rem}
+.sc.pick .sc-top span{color:var(--accent)}
+.sc-body{padding:.35rem 0;flex:1}
+.sc-l{display:flex;justify-content:space-between;gap:.7rem;padding:.4rem 1rem;font-size:.82rem;
+  border-top:1px solid var(--rule);color:var(--ink-2);line-height:1.4}
+.sc-l:first-child{border-top:0}
+.sc-l b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:600}
+.sc-l.hi{background:var(--surface-2)}
+
+/* Funnel steps */
+.fn{display:flex;flex-direction:column;gap:.3rem;margin:.5rem 0}
+.fn-step{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem;align-items:center}
+.fn-name{font-size:.83rem;line-height:1.3;color:var(--ink-2);text-align:right}
+.fn-name b{display:block;color:var(--ink);font-weight:600}
+.fn-bar{height:2.15rem;display:flex;align-items:center;justify-content:flex-start;
+  background:var(--series);border-radius:3px;padding:0 .7rem;color:var(--surface);
+  font-family:var(--f-mono);font-size:.8rem;font-variant-numeric:tabular-nums;font-weight:600;
+  white-space:nowrap;min-width:5.5rem}
+.fn-bar.lite{background:var(--brand-soft);color:var(--brand);border:1px solid var(--series)}
+.fn-arrow{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem}
+.fn-rate{font-family:var(--f-mono);font-size:.68rem;color:var(--accent);letter-spacing:.04em;padding:.05rem 0 .05rem .7rem}
+.fn-rate::before{content:"↓ ";opacity:.7}
+
+/* Metric grid */
+.mx{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.7rem;margin:1.3rem 0}
+.mx > div{border:1px solid var(--rule);border-radius:5px;padding:.75rem .9rem;background:var(--surface)}
+.mx .k{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.35rem}
+.mx .v{font-family:var(--f-display);font-size:1.5rem;font-weight:600;color:var(--ink);line-height:1;
+  font-variant-numeric:tabular-nums}
+.mx .s{font-size:.75rem;color:var(--ink-3);margin-top:.3rem;line-height:1.4;display:block}
+.mx .v.acc{color:var(--accent)}
+
+/* Warning callout */
+.warn{margin:1.5rem 0;padding:1.1rem 1.3rem;background:var(--surface);border:1px solid var(--accent);
+  border-left:3px solid var(--accent);border-radius:4px;max-width:var(--measure)}
+.warn .wl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.5rem;font-weight:600}
+.warn p{margin:0 0 .65rem;max-width:none;font-size:.92rem;line-height:1.6}
+.warn p:last-child{margin-bottom:0}
+.warn strong{color:var(--ink)}
+</style><style>
+/* ---------- Phase 8 components ---------- */
+/* Layer chips */
+.ly{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.13rem .45rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent}
+.ly-b{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ly-d{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.ly-s{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.ly-a{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* Counted vs estimated */
+.ct{font-family:var(--f-mono);font-size:.56rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:.1rem .36rem;border-radius:3px;display:inline-block;line-height:1.5;border:1px solid transparent}
+.ct-y{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ct-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Stage card */
+.stg{margin:1.5rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.stg-head{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:.85rem;align-items:start;
+  padding:.9rem 1.2rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.stg-n{font-family:var(--f-mono);font-size:1.2rem;font-weight:600;color:var(--brand);line-height:1;padding-top:.1rem}
+.stg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.05rem;line-height:1.25;margin:0 0 .35rem;color:var(--ink)}
+.stg-tags{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center}
+.stg-note{font-size:.82rem;color:var(--ink-2);font-style:italic;margin:.4rem 0 0;line-height:1.45}
+.sg{display:grid;grid-template-columns:minmax(7rem,9rem) minmax(0,1fr)}
+.sg > dt{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.55rem .7rem .55rem 1.2rem;border-top:1px solid var(--rule);line-height:1.45;font-weight:500}
+.sg > dd{margin:0;padding:.55rem 1.2rem .55rem .25rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.sg > dd strong{color:var(--ink);font-weight:600}
+.sg > dt:first-of-type,.sg > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .sg{grid-template-columns:minmax(0,1fr)}
+  .sg > dt{padding:.55rem 1.05rem .1rem;border-top:1px solid var(--rule)}
+  .sg > dd{padding:.1rem 1.05rem .6rem;border-top:0}
+  .sg > dt:first-of-type + dd{border-top:0}
+}
+
+/* Two-column compare */
+.cmp2{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.cmp2 > div{border:1px solid var(--rule);border-radius:5px;padding:.9rem 1.05rem;background:var(--surface)}
+.cmp2 h6{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 .55rem;font-weight:600}
+.cmp2 p{margin:0 0 .55rem;font-size:.86rem;line-height:1.55;max-width:none;color:var(--ink-2)}
+.cmp2 p:last-child{margin-bottom:0}
+.cmp2 strong{color:var(--ink)}
+
+/* Layer band header */
+.lyband{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:2.3rem 0 .3rem;
+  padding:.7rem 1rem;border-radius:5px;background:var(--surface-2);border:1px solid var(--rule)}
+.lyband h3{margin:0;font-family:var(--f-display);font-size:1.12rem;font-weight:600;color:var(--ink)}
+.lyband .lb-meta{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.lyband .lb-meta b{color:var(--ink)}
+
+/* Journey strip */
+.jr{margin:1.3rem 0;border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface)}
+.jr-top{padding:.8rem 1.05rem;border-bottom:1px solid var(--rule);background:var(--surface-2);
+  display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:baseline}
+.jr-top h5{margin:0;font-family:var(--f-display);font-size:1.02rem;font-weight:600;color:var(--ink)}
+.jr-top .jm{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3)}
+.jr-top .jm b{color:var(--ink)}
+.jr-flow{padding:.85rem 1.05rem;display:flex;flex-wrap:wrap;gap:.3rem;align-items:center;
+  border-bottom:1px solid var(--rule)}
+.jr-node{font-family:var(--f-mono);font-size:.66rem;padding:.22rem .5rem;border-radius:3px;
+  background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand);white-space:nowrap}
+.jr-node.skip{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2);text-decoration:line-through}
+.jr-node.key{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.jr-sep{color:var(--ink-3);font-size:.75rem}
+.jr-body{padding:.85rem 1.05rem;font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.jr-body strong{color:var(--ink)}
+.jr-body p{margin:0 0 .6rem;max-width:none}
+.jr-body p:last-child{margin-bottom:0}
+
+/* Leverage bars */
+.lev-row{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:4px 0}
+.lev-lab{font-size:.82rem;line-height:1.3;color:var(--ink-2)}
+.lev-lab b{display:block;color:var(--ink);font-weight:600}
+.lev-track{height:1.7rem;display:flex;align-items:center;gap:.55rem}
+.lev-fill{height:1.2rem;background:var(--brand-soft);border:1px solid var(--series);border-radius:0 4px 4px 0;flex:none}
+.lev-fill.top{background:var(--series);border-color:var(--series)}
+.lev-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.lev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">Phase 8 of 8<strong>The Journey Map</strong></div>
+  <div class="toc">
+    <a href="#s0"><span class="n">§0</span><span>Two problems first</span></a>
+    <a href="#s1"><span class="n">§1</span><span>The four layers</span></a>
+    <a href="#s2"><span class="n">§2</span><span>The twelve stages</span></a>
+    <a href="#s3"><span class="n">§3</span><span>Four journeys</span></a>
+    <a href="#s4"><span class="n">§4</span><span>Measurement</span></a>
+    <a href="#s5"><span class="n">§5</span><span>Stage volumes</span></a>
+    <a href="#s6"><span class="n">§6</span><span>Where it breaks</span></a>
+    <a href="#s7"><span class="n">§7</span><span>Risks</span></a>
+  </div>
+  <div>
+    <h4>The four layers</h4>
+    <div class="legend-stack">
+      <span class="ly ly-b">Brand building</span>
+      <span class="ly ly-d">Demand generation</span>
+      <span class="ly ly-s">Sales conversion</span>
+      <span class="ly ly-a">Customer advocacy</span>
+    </div>
+  </div>
+  <div>
+    <h4>Counted or estimated</h4>
+    <div class="legend-stack">
+      <span class="ct ct-y">Counted</span>
+      <span class="ct ct-n">Estimated</span>
+    </div>
+    <p style="font-size:.76rem;line-height:1.5;color:var(--ink-3);margin:.6rem 0 0;max-width:none">
+      Four of the twelve stages are system-recorded events. The other eight are
+      <strong style="color:var(--ink-2)">inferred from proxies</strong> — and a proxy treated as a count is how dashboards fill with numbers that move without meaning anything.
+    </p>
+  </div>
+</nav>
+
+<main class="main">
+<header class="masthead">
+  <p class="eyebrow">Customer journey · twelve stages · four layers</p>
+  <h1>Only a third of the revenue travels the journey the funnel describes</h1>
+  <p class="sub">The twelve-stage model is built here in full. Then mapped against how the eight segments actually buy — where it turns out three of them skip, reorder or compress it.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 8 of 8</span>
+    <span><strong>Base case</strong> 78,880 leads → 376 bookings</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> Journey design for a hypothetical 25-acre, ₹500 crore corridor development. Nothing here describes an actual KMV Spaces project. Stage volumes derive from the Phase 7 base case; consultation and negotiation rates are derived here to reconcile with Phase 7's measured gates and are flagged as new assumptions.
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head">
+    <div class="sec-num">§0</div>
+    <div>
+      <h2>Two problems with the model, before it is built</h2>
+      <p class="dek">A journey map that hides these produces a dashboard nobody can act on.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cmp2">
+      <div>
+        <h6>Problem 1 · it is a planning device, not a measurement system</h6>
+        <p>Of the twelve stages, <strong>four are hard gates</strong> — a system records an unambiguous event. The other eight are <strong>inferred from proxies.</strong></p>
+        <p>That matters commercially: a stage that cannot be counted cannot justify budget on its own, and <strong>treating a proxy as a count is how marketing dashboards fill with numbers that move without meaning anything.</strong></p>
+      </div>
+      <div>
+        <h6>Problem 2 · the linear journey describes about half the buyers</h6>
+        <p><strong>S1 trade families</strong> — <em>"referral first… digital is a verification channel, not a discovery channel."</em> They enter at Consultation.</p>
+        <p><strong>S3 diaspora</strong> — 6–18 months of consideration, then a five-day decision window. Stages stretch, then compress.</p>
+        <p><strong>S4 landowners</strong> — <em>"responds to a document, not to advertising."</em> They never enter the media funnel at all.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Why that second problem is expensive</span>
+      <p class="big">Building one journey and running everyone through it would <strong>misallocate the budget toward the segments that are cheapest to reach and least valuable per unit.</strong></p>
+      <p>Which is precisely the failure Phase 7 warned about when it found a Community D booking is worth <strong>3.38 Community A bookings.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">§1</div>
+    <div>
+      <h2>The four layers</h2>
+      <p class="dek">Separated by what each is accountable for and what budget it holds — the only separation that survives contact with a P&amp;L.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:11rem">Layer</th><th>Accountable for</th><th class="n">Budget</th><th class="n">Share</th></tr></thead>
+        <tbody>
+          <tr><td><span class="ly ly-b">Brand building</span></td><td><strong>The price premium.</strong> Whether a ₹6,500/sq ft villa is credible at all before it is quoted</td><td class="n"><strong>₹6.30 Cr</strong></td><td class="n">24.5%</td></tr>
+          <tr><td><span class="ly ly-d">Demand generation</span></td><td><strong>Lead volume and quality at a cost.</strong> CPL, CPQL, and the 15.8% lead-to-qualified rate</td><td class="n"><strong>₹9.84 Cr</strong></td><td class="n">38.3%</td></tr>
+          <tr><td><span class="ly ly-s">Sales conversion</span></td><td><strong>The 6.9% visit-to-booking rate</strong> — Phase 7's most sensitive variable — and price discipline</td><td class="n"><strong>₹8.34 Cr</strong></td><td class="n">32.5%</td></tr>
+          <tr><td><span class="ly ly-a">Customer advocacy</span></td><td><strong>71 bookings — 19% of the scheme, ~₹96 crore</strong> — at the lowest cost per booking available</td><td class="n"><strong>₹1.20 Cr</strong></td><td class="n">4.7%</td></tr>
+          <tr class="tot"><td></td><td></td><td class="n"><strong>₹25.68 Cr</strong></td><td class="n">100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">One change to the Phase 7 budget</span>
+      <p class="big">Phase 7 modelled <strong>19% of bookings as referral-sourced</strong> — and contained <strong>no line for advocacy at all.</strong></p>
+      <p>A layer delivering 71 bookings and roughly ₹96 crore of revenue had a budget of zero. That is not frugality; it is an omission that would have surfaced as an unexplained shortfall in year two. <strong>₹1.20 crore moves from the brand line into an explicit advocacy programme.</strong></p>
+      <div class="tw" style="margin:.9rem 0 0">
+        <table>
+          <thead><tr><th>Source</th><th class="n">Budget</th><th class="n">Bookings</th><th class="n">Cost per booking</th></tr></thead>
+          <tbody>
+            <tr><td>Marketing-sourced</td><td class="n">₹21.14 Cr</td><td class="n">201</td><td class="n">₹10.52 L</td></tr>
+            <tr><td>Channel partner</td><td class="n">₹3.34 Cr</td><td class="n">105</td><td class="n">₹3.18 L</td></tr>
+            <tr class="tot"><td><strong>Referral</strong></td><td class="n"><strong>₹1.20 Cr</strong></td><td class="n"><strong>71</strong></td><td class="n"><strong>₹1.69 L</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:.9rem"><strong>Referral is 6.2× cheaper per booking than marketing-sourced demand.</strong> Funding the cheapest channel at zero was the single clearest gap in the model.</p>
+    </div>
+
+    <div class="warn">
+      <span class="wl">The layer boundary that is usually drawn wrong</span>
+      <p>Advocacy is conventionally drawn as the <em>last</em> layer — what happens after the sale. <strong>In this project it is also the first.</strong></p>
+      <p>Phase 5 found S1's opening objection is <strong>"who else has bought?"</strong> Phase 6 concluded Community D's first tranche should be <strong>seeded rather than advertised.</strong> Phase 7 found the segment that cannot be bought with advertising delivers the cheapest revenue.</p>
+      <p class="big"><strong>The funnel is a loop.</strong> Drawn as a straight line ending in advocacy, the model places the cheapest and most persuasive asset in the project at the point furthest from the launch — where it can do nothing.</p>
+      <p><strong>The operational consequence:</strong> the advocacy layer starts working <strong>before the first booking.</strong> Its year-one job is not referral volume — it is manufacturing the first fifteen visible, named, local buyers whose existence answers S1's first question.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">§2</div>
+    <div>
+      <h2>The twelve stages</h2>
+      <p class="dek">Each with objective, audience, message, channel, content, CTA, KPI and measurement method. Volumes are the Phase 7 base case over a 45-month window.</p>
+    </div>
+  </div>
+  <div class="body">
+
+    <div class="lyband">
+      <span class="ly ly-b">Brand building</span>
+      <h3>Accountable for the price premium — whether ₹6,500/sq ft is credible before it is quoted</h3>
+      <span class="lb-meta"><b>₹6.30 Cr · 24.5%</b></span>
+    </div>
+    <article class="stg" id="st1">
+      <div class="stg-head">
+        <div class="stg-n">1</div>
+        <div>
+          <h4>Awareness</h4>
+          <div class="stg-tags"><span class="ly ly-b">Brand building</span><span class="ct ct-n">Estimated</span></div>
+          
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd>Establish that a 25-acre, low-density development exists on this corridor, and that its developer built AIIMS Mangalagiri. <strong>Make the price premium thinkable before it is ever quoted.</strong></dd>
+      <dt>Audience</dt>
+      <dd>The full Phase 5 universe, weighted to S1, S5 and S6 in the Vijayawada–Guntur catchment; S7 in Hyderabad; S3 in US metros with coastal-Andhra origin.</dd>
+      <dt>Message</dt>
+      <dd>Not &ldquo;luxury homes in Amaravati&rdquo; — every competitor says that. The two things none of them can say: <strong>the developer that built AIIMS Mangalagiri is building 25 acres beside it</strong>, and <strong>fifteen homes per acre where the corridor builds fifty-three to a hundred and thirteen.</strong> Delivery and density, not aspiration.</dd>
+      <dt>Channel</dt>
+      <dd>NH-16 and Vijayawada–Guntur corridor hoardings; Mangalagiri bypass; Telugu press (Eenadu, Sakshi, Andhra Jyothi); Telugu YouTube and regional OTT; Meta and Google video for reach; Hyderabad OOH for S7; diaspora digital for S3.</dd>
+      <dt>Content / creative</dt>
+      <dd>A 60-second film shot on the actual corridor. An aerial holding 25 acres against the 5-to-11-acre neighbours — <strong>the density difference is a visual fact, not a claim.</strong> The AIIMS credential as a verifiable title card.</dd>
+      <dt>CTA</dt>
+      <dd><strong>None — deliberately.</strong> An awareness asset carrying a lead form is a demand-generation asset with its reach wasted. The next stage exists to catch the response.</dd>
+      <dt>KPI</dt>
+      <dd>Prompted and unprompted brand recall in the catchment; <strong>share of category search</strong> against the eleven Phase 3 competitors.</dd>
+      <dt>Measurement</dt>
+      <dd>Quarterly recall survey, n ≈ 400, split Vijayawada / Guntur / Mangalagiri. Search-volume share on a fixed competitor set. <strong>Not clicks, and not reach.</strong></dd>
+      </dl>
+    </article>
+    <article class="stg" id="st2">
+      <div class="stg-head">
+        <div class="stg-n">2</div>
+        <div>
+          <h4>Discovery</h4>
+          <div class="stg-tags"><span class="ly ly-b">Brand building</span><span class="ct ct-n">Estimated</span></div>
+          
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd>When someone goes looking — because they saw a hoarding, a peer mentioned it, or they searched &ldquo;villas in Mangalagiri&rdquo; — they find something authoritative. <strong>Phase 4 found KMV's search visibility thin. This stage is where that costs money.</strong></dd>
+      <dt>Audience</dt>
+      <dd>Anyone actively looking. Highest value: <strong>S2</strong>, who Phase 5 found <em>&ldquo;will check RERA — most of the catchment will not&rdquo;</em>; <strong>S3</strong>, researching at night from a different time zone; <strong>S7</strong>.</dd>
+      <dt>Message</dt>
+      <dd>Proof, in this order: RERA number · land parcel · density · developer record · possession date. <strong>Specificity is the message.</strong></dd>
+      <dt>Channel</dt>
+      <dd>Organic search; Google Business Profile; the project website; the RERA listing; portal listings (99acres, MagicBricks, Housing) treated as <em>presence</em>, not as a lead source; YouTube; Telugu-language search.</dd>
+      <dt>Content / creative</dt>
+      <dd>A project site that answers the questions Phase 5's segments actually ask — including the ones competitors avoid: price per square foot, a unit-wise price sheet, the possession date, the RERA number, and the AIIMS credential with evidence attached.</dd>
+      <dt>CTA</dt>
+      <dd><em>&ldquo;See the price sheet.&rdquo; &ldquo;Check the RERA registration.&rdquo;</em> Low friction and <strong>not lead-gated</strong> — gating price is what makes a buyer leave for a competitor who publishes it.</dd>
+      <dt>KPI</dt>
+      <dd>Branded search volume; organic visibility on a fixed set of ~20 corridor commercial queries; Google Business Profile views and direction requests.</dd>
+      <dt>Measurement</dt>
+      <dd>Search Console; GBP Insights; rank tracking on the fixed query set, <strong>baselined against the Phase 4 audit</strong> so the improvement is provable rather than asserted.</dd>
+      </dl>
+    </article>
+    <div class="lyband">
+      <span class="ly ly-d">Demand generation</span>
+      <h3>Accountable for lead volume and quality at a cost — CPL, CPQL, the 15.8% qualification rate</h3>
+      <span class="lb-meta"><b>₹9.84 Cr · 38.3%</b></span>
+    </div>
+    <article class="stg" id="st3">
+      <div class="stg-head">
+        <div class="stg-n">3</div>
+        <div>
+          <h4>Interest</h4>
+          <div class="stg-tags"><span class="ly ly-d">Demand generation</span><span class="ct ct-n">Estimated</span></div>
+          
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd>Convert passive attention into a <strong>self-identified product interest</strong> — which of the four communities, which ticket band. Routing starts here, not at the lead form.</dd>
+      <dt>Audience</dt>
+      <dd>Segmented four ways from the first impression, because Phase 6 established the four communities share almost no buyer.</dd>
+      <dt>Message</dt>
+      <dd><strong>Four messages, never one.</strong> <strong>A</strong> — <em>the lowest-density apartment in the corridor, from ₹59 lakh.</em> <strong>B</strong> — <em>own it from anywhere; leave it without worrying.</em> <strong>C</strong> — <em>a villa inside a masterplan, not a villa on a plot.</em> <strong>D</strong> — <em>estate-scale living below the price the luxury tier starts at.</em></dd>
+      <dt>Channel</dt>
+      <dd>Meta and Google demand generation structured by community; YouTube; Telugu digital for S8; LinkedIn, diaspora associations and <strong>APNRTS in Guntur</strong> for S3 and S7.</dd>
+      <dt>Content / creative</dt>
+      <dd>Community-specific and comparative: a walkthrough film per community; floor plates; <strong>the density comparison graphic</strong>; a commute-time map to AIIMS, the Secretariat and Benz Circle — Phase 5 found S2 wants the drive <em>measured</em>, not described.</dd>
+      <dt>CTA</dt>
+      <dd><em>&ldquo;Download the [community] brochure.&rdquo; &ldquo;See the floor plans.&rdquo;</em> A content exchange, not a hard enquiry.</dd>
+      <dt>KPI</dt>
+      <dd>Engaged sessions per community; video 50%-completion rate; brochure downloads; <strong>cost per engaged session by community</strong>.</dd>
+      <dt>Measurement</dt>
+      <dd>GA4 with community as a content dimension; platform view-through; <strong>UTM discipline enforced by community</strong> — without it, nothing downstream can be attributed to the right product.</dd>
+      </dl>
+    </article>
+    <article class="stg" id="st4">
+      <div class="stg-head">
+        <div class="stg-n">4</div>
+        <div>
+          <h4>Consideration</h4>
+          <div class="stg-tags"><span class="ly ly-d">Demand generation</span><span class="ct ct-n">Estimated</span></div>
+          
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd>Get the buyer to compare deliberately — <strong>and to compare on the dimensions where this project wins</strong> (density, masterplan, delivery record) rather than the one where it does not (₹/sq ft against Prime Grandeur).</dd>
+      <dt>Audience</dt>
+      <dd>Active shoppers. Phase 5: S6 compares three to five projects across two or three weekends; S2 builds a spreadsheet; S3 researches for months.</dd>
+      <dt>Message</dt>
+      <dd><strong>Set the comparison frame before the competitor does.</strong> <em>&ldquo;Twenty homes an acre, or a hundred and thirteen. That is the choice.&rdquo;</em> For Community C, the +20% over Prime Grandeur is <strong>explained</strong> in land, neighbours and delivery record — not defended.</dd>
+      <dt>Channel</dt>
+      <dd>Website comparison content; retargeting across Meta, Google and YouTube; email and WhatsApp nurture; third-party proof — RERA, the AIIMS record, construction progress.</dd>
+      <dt>Content / creative</dt>
+      <dd>A density comparison tool. An <strong>EMI and eligibility calculator</strong> — Phase 5 found S5 responds directly to these. A <em>&ldquo;what ₹1.8 crore actually buys, here and elsewhere&rdquo;</em> piece. Monthly construction-progress updates.</dd>
+      <dt>CTA</dt>
+      <dd><em>&ldquo;Book a call with the project lead.&rdquo; &ldquo;Get the full price sheet.&rdquo;</em></dd>
+      <dt>KPI</dt>
+      <dd>Return-visit rate; days from first to second visit; calculator completions; retargeting-assisted conversions.</dd>
+      <dt>Measurement</dt>
+      <dd>GA4 return-visitor cohorts; CRM lag from first touch to enquiry. <strong>This stage's value shows up as a shorter consideration cycle, not as a conversion count.</strong></dd>
+      </dl>
+    </article>
+    <article class="stg" id="st5">
+      <div class="stg-head">
+        <div class="stg-n">5</div>
+        <div>
+          <h4>Lead</h4>
+          <div class="stg-tags"><span class="ly ly-d">Demand generation</span><span class="ct ct-y">Counted</span></div>
+          <p class="stg-note">78,880 total · 1,753/month · 67 per working day</p>
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd>Capture a contactable record carrying enough to route it to the right community and the right salesperson.</dd>
+      <dt>Audience</dt>
+      <dd>All eight segments — <strong>but they do not submit in the same way.</strong> Phase 5: S5 and S6 <em>&ldquo;will submit enquiry forms — one of the few segments that reliably will.&rdquo;</em> S1 <em>&ldquo;is unlikely to fill a portal form; likely to call a number seen on a hoarding.&rdquo;</em> S3 has <em>&ldquo;very low form-fill rates.&rdquo;</em> S4 does not fill forms at all.</dd>
+      <dt>Message</dt>
+      <dd>Match the promise the channel made. <strong>Never gate at the form what was promised ungated in the ad.</strong></dd>
+      <dt>Channel</dt>
+      <dd>Website forms; click-to-call; <strong>WhatsApp Business as a first-class capture path, not an afterthought</strong>; portal enquiries; walk-ins; channel-partner submissions; <strong>a missed-call number for the low-digital cohort</strong>.</dd>
+      <dt>Content / creative</dt>
+      <dd>A four-field form — name, phone, community of interest, timeline. Nothing longer. Every additional field costs leads from the segments that were reluctant to begin with.</dd>
+      <dt>CTA</dt>
+      <dd><em>&ldquo;Talk to us.&rdquo; &ldquo;Request a callback.&rdquo;</em> Or simply the WhatsApp icon.</dd>
+      <dt>KPI</dt>
+      <dd><strong>78,880 leads over 45 months — 1,753 a month, 67 a working day.</strong> Cost per lead by community: <strong>A ₹350 · B ₹1,600 · C ₹900 · D ₹1,900.</strong></dd>
+      <dt>Measurement</dt>
+      <dd>The CRM as single source of truth. Every lead carries source, campaign and community — and the <strong>self-reported first-touch question is asked at booking, not here</strong>, for the reason in §4.</dd>
+      </dl>
+    </article>
+    <article class="stg" id="st6">
+      <div class="stg-head">
+        <div class="stg-n">6</div>
+        <div>
+          <h4>Qualified Lead</h4>
+          <div class="stg-tags"><span class="ly ly-d">Demand generation</span><span class="ct ct-y">Counted</span></div>
+          <p class="stg-note">12,474 total · 277/month · 15.8% of leads</p>
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd>Establish contact, budget, timeline and intent. <strong>Phase 7's model assumes only 15.8% survive this</strong> — 12,474 of 78,880.</dd>
+      <dt>Audience</dt>
+      <dd>All leads. The qualifying questions differ by community: <strong>A</strong> on down-payment readiness; <strong>B</strong> on residency and travel window; <strong>C and D</strong> on cash position and who else is in the decision.</dd>
+      <dt>Message</dt>
+      <dd>Helpful, not pushy. Phase 5 found S2 <em>&ldquo;highly averse to sales pressure&rdquo;</em> and S3's stated primary concern is <strong>fraud</strong> — a hard-sell first call confirms exactly the fear that stops the purchase.</dd>
+      <dt>Channel</dt>
+      <dd>Outbound call within 15 minutes of the enquiry; <strong>WhatsApp for S3 and S8</strong>; email for S2, who Phase 5 found <em>&ldquo;often cannot take calls during the day.&rdquo;</em></dd>
+      <dt>Content / creative</dt>
+      <dd>A qualification script per community. For S3: a <strong>time-zone-aware scheduling link</strong>, not a call attempt at 11 a.m. IST.</dd>
+      <dt>CTA</dt>
+      <dd><em>&ldquo;Let's find twenty minutes.&rdquo;</em></dd>
+      <dt>KPI</dt>
+      <dd><strong>Lead → qualified 15.8%</strong> (A 19.8% · B 13.5% · C 18.0% · D 15.3%); speed to first contact; contact rate; <strong>277 qualified leads a month</strong>.</dd>
+      <dt>Measurement</dt>
+      <dd>CRM stage transitions with timestamps; sampled call-recording review. <strong>Community B's rate tracked separately and reported weekly</strong>, since the model assumes it runs 30% worse and B consumes 65% of the lead-generation budget.</dd>
+      </dl>
+    </article>
+    <div class="lyband">
+      <span class="ly ly-s">Sales conversion</span>
+      <h3>Accountable for the 6.9% visit-to-booking rate and for price discipline</h3>
+      <span class="lb-meta"><b>₹8.34 Cr · 32.5%</b></span>
+    </div>
+    <article class="stg" id="st7">
+      <div class="stg-head">
+        <div class="stg-n">7</div>
+        <div>
+          <h4>Consultation</h4>
+          <div class="stg-tags"><span class="ly ly-s">Sales conversion</span><span class="ct ct-n">Estimated — promote to counted</span></div>
+          <p class="stg-note">5,313 total · 118/month · 42.6% of qualified</p>
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd>A structured conversation <strong>before</strong> the site visit that fixes need, budget and community — so the visit is a confirmation rather than a discovery.</dd>
+      <dt>Audience</dt>
+      <dd>Qualified leads. <strong>For S3 this is the primary sales interaction</strong>, because the physical visit may never happen before the decision.</dd>
+      <dt>Message</dt>
+      <dd>Diagnostic, not pitching — including <strong>recommending Community A to someone who enquired on D</strong>. Phase 6's architecture only works if buyers land in the community built for them; a mis-sold B unit to a resident family is a cancellation waiting to happen.</dd>
+      <dt>Channel</dt>
+      <dd>In person at the experience centre; video call for S3, S7 and S8; <strong>the family CA or advocate included for S1</strong> — Phase 5 found they are gatekeepers <em>&ldquo;not currently addressed by any competitor.&rdquo;</em></dd>
+      <dt>Content / creative</dt>
+      <dd>Price sheet, payment-plan options, EMI working, possession schedule, RERA documents. For S3: a <strong>FEMA, Power of Attorney and repatriation explainer</strong> — the fraud objection answered with process rather than reassurance.</dd>
+      <dt>CTA</dt>
+      <dd><em>&ldquo;Come and walk it.&rdquo;</em> Or, for S3: <em>&ldquo;Let's schedule the live walkthrough.&rdquo;</em></dd>
+      <dt>KPI</dt>
+      <dd><strong>42.6% of qualified leads reach consultation.</strong> Consultation → visit 55%. <strong>Community-reassignment rate</strong>, which measures routing quality.</dd>
+      <dt>Measurement</dt>
+      <dd>CRM activity logging. <strong>Phase 7 does not model this as a separate gate</strong> — it sits inside the 23.4% qualified-to-visit conversion. It must be logged as an explicit sub-step or it stays invisible and unmanageable.</dd>
+      </dl>
+    </article>
+    <article class="stg" id="st8">
+      <div class="stg-head">
+        <div class="stg-n">8</div>
+        <div>
+          <h4>Site Visit</h4>
+          <div class="stg-tags"><span class="ly ly-s">Sales conversion</span><span class="ct ct-y">Counted</span></div>
+          <p class="stg-note">2,922 total · 65/month · 15 per week</p>
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd><strong>Make the density visible.</strong> Phase 6: <em>&ldquo;a difference visible from the site gate.&rdquo;</em> Phase 7: visit-to-booking is the single most sensitive variable in the model — a two-point fall costs more than a 25% rise in media prices.</dd>
+      <dt>Audience</dt>
+      <dd><strong>2,922 visits over 45 months — 65 a month, 15 a week.</strong> And they arrive completely differently: <strong>S1</strong> unannounced, Sunday, 3–6 family members. <strong>S2</strong> by appointment, couple only, weekday evening. <strong>S5 and S6</strong> Sunday with children, comparing two or three projects the same day. <strong>S3</strong> by proxy relative first, then one compressed trip. <strong>S7</strong> Friday-to-Sunday combined with a family visit.</dd>
+      <dt>Message</dt>
+      <dd><strong>The site does the talking.</strong> The sales role is to time the drive from AIIMS or the Secretariat on the way in, and to walk the central open space rather than describe it.</dd>
+      <dt>Channel</dt>
+      <dd>The experience centre and two show homes — Phase 7's ₹5.00 crore line. Plus a <strong>live video walkthrough capability</strong> for S3 and S8, staffed to their time zones.</dd>
+      <dt>Content / creative</dt>
+      <dd>A furnished show home in C or D; the masterplan model; <strong>the density comparison demonstrated on site, not on paper</strong>; visible construction progress; a Telugu-speaking host.</dd>
+      <dt>CTA</dt>
+      <dd><em>&ldquo;Choose your plot.&rdquo; &ldquo;Block a unit.&rdquo;</em></dd>
+      <dt>KPI</dt>
+      <dd><strong>Visit → booking 6.9% blended</strong> — A 8.1% · B 6.0% · C 7.0% · D 5.6%. Repeat-visit rate; visits per booking; <strong>weekend capacity utilisation</strong>, since S1, S5 and S6 all visit on Sundays and the constraint is host availability, not demand.</dd>
+      <dt>Measurement</dt>
+      <dd>Attendance logged with <strong>party size and segment</strong>; 24-hour follow-up logged; visit-to-booking tracked by community <em>and</em> by salesperson. <strong>This is the number to instrument first.</strong></dd>
+      </dl>
+    </article>
+    <article class="stg" id="st9">
+      <div class="stg-head">
+        <div class="stg-n">9</div>
+        <div>
+          <h4>Negotiation</h4>
+          <div class="stg-tags"><span class="ly ly-s">Sales conversion</span><span class="ct ct-n">Estimated — promote to counted</span></div>
+          <p class="stg-note">574 total · 13/month · 19.6% of visits</p>
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd>Close <strong>without breaking the two Phase 6 pricing rules</strong>: Community B never above ₹1.50 crore, Community C never below ₹1.65 crore. Breaking either collapses the ₹24 lakh gap that keeps them from competing.</dd>
+      <dt>Audience</dt>
+      <dd>Visited, engaged, not yet committed. The decision unit is rarely one person: S1's CA and eldest brother; S2's spouse, co-equal; S3's inspecting relative, who holds effective veto; S8's spouse in India, who will actually live there.</dd>
+      <dt>Message</dt>
+      <dd><strong>Flexibility on structure, discipline on price.</strong> Phase 5 found S2 clears the ₹94,800 EMI but struggles with ₹52 lakh in cash — <strong>a construction-linked payment plan is worth more to that buyer than a discount</strong>, and costs the project less.</dd>
+      <dt>Channel</dt>
+      <dd>In person; a dedicated meeting with the family CA or advocate for S1; a scheduled call <strong>including the spouse</strong> for S2 and S8.</dd>
+      <dt>Content / creative</dt>
+      <dd>Payment-plan comparison; home-loan pre-approval tie-ups; the allotment letter; <strong>for S4, the exchange-structure term sheet</strong> — the document Phase 5 said this segment responds to instead of advertising.</dd>
+      <dt>CTA</dt>
+      <dd><em>&ldquo;Pay the token.&rdquo;</em></dd>
+      <dt>KPI</dt>
+      <dd>Negotiation → booking 35%; <strong>average discount as a share of list price — the single number protecting the whole Phase 6 architecture</strong>; days in negotiation.</dd>
+      <dt>Measurement</dt>
+      <dd>CRM stage carrying <strong>quoted price and final price on every deal</strong>, with a <strong>discount register reviewed monthly against the two pricing rules.</strong> A rule that is not reported is not a rule.</dd>
+      </dl>
+    </article>
+    <article class="stg" id="st10">
+      <div class="stg-head">
+        <div class="stg-n">10</div>
+        <div>
+          <h4>Booking</h4>
+          <div class="stg-tags"><span class="ly ly-s">Sales conversion</span><span class="ct ct-y">Counted</span></div>
+          <p class="stg-note">376 total · 8.4/month · 201 marketing-sourced</p>
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd>Token to signed agreement — <strong>and capture the one data field that fixes attribution for the entire programme.</strong></dd>
+      <dt>Audience</dt>
+      <dd>376 buyers across 36–54 months. <strong>8.4 a month</strong> in the base case: 4.5 marketing-sourced, 2.3 channel partner, 1.6 referral.</dd>
+      <dt>Message</dt>
+      <dd>Confirmation and reassurance. Phase 5 found <strong>delivery anxiety is the one concern shared by all eight segments</strong> — it is what the first post-booking communication should address.</dd>
+      <dt>Channel</dt>
+      <dd>In person; <strong>remote under registered Power of Attorney for S3</strong>, which Phase 5 established is legally routine and is the difference between capturing that segment and losing it to a travel schedule.</dd>
+      <dt>Content / creative</dt>
+      <dd>Allotment letter; RERA-compliant agreement; payment schedule; a <strong>named relationship manager</strong>; the construction-update cadence, committed in writing.</dd>
+      <dt>CTA</dt>
+      <dd><em>&ldquo;Complete the agreement.&rdquo;</em></dd>
+      <dt>KPI</dt>
+      <dd>Bookings a month against 8.4; token-to-agreement conversion; <strong>cancellation rate</strong>; revenue per booking ₹1.35 crore.</dd>
+      <dt>Measurement</dt>
+      <dd>CRM plus RERA filings. <strong>And the field that matters most: self-reported first touch — &ldquo;how did you first hear about us&rdquo; — asked here, at booking.</strong> §4 explains why this one question is worth more than the attribution model.</dd>
+      </dl>
+    </article>
+    <div class="lyband">
+      <span class="ly ly-a">Customer advocacy</span>
+      <h3>Accountable for 71 bookings — ~₹96 Cr — at the lowest cost per booking available</h3>
+      <span class="lb-meta"><b>₹1.20 Cr · 4.7%</b></span>
+    </div>
+    <article class="stg" id="st11">
+      <div class="stg-head">
+        <div class="stg-n">11</div>
+        <div>
+          <h4>Referral</h4>
+          <div class="stg-tags"><span class="ly ly-a">Customer advocacy</span><span class="ct ct-n">Estimated</span></div>
+          <p class="stg-note">71 bookings · 1.6/month · ₹1.69 L each</p>
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd>Convert buyers into introducers. <strong>Phase 7 models 19% of bookings — 71 units, roughly ₹96 crore — as referral-sourced</strong>, at ₹1.69 lakh per booking against ₹10.52 lakh for marketing-sourced.</dd>
+      <dt>Audience</dt>
+      <dd>Every booked buyer, weighted heavily: <strong>S1 frequently buys as multiple related households in the same project</strong>, and Phase 5 found its peers are the most persuasive channel available anywhere in this catchment. <strong>S4's first completed exchange is <em>&ldquo;the single most persuasive asset available.&rdquo;</em></strong></dd>
+      <dt>Message</dt>
+      <dd><em>&ldquo;Bring the people you would want as neighbours.&rdquo;</em> Phase 5 found S1's first objection is <strong>&ldquo;who else has bought?&rdquo;</strong> — a referral programme answers that objection structurally rather than rhetorically.</dd>
+      <dt>Channel</dt>
+      <dd>The relationship manager; <strong>construction-milestone events on site for booked buyers</strong>; a WhatsApp group per community; a formal, documented referral scheme with a stated benefit.</dd>
+      <dt>Content / creative</dt>
+      <dd>Site-progress events buyers want to bring people to; a referral benefit expressed as something worth having — <strong>early access to the next tranche is worth more than a token discount</strong> in a scheme where Phase 6 makes villa inventory deliberately scarce.</dd>
+      <dt>CTA</dt>
+      <dd><em>&ldquo;Introduce someone.&rdquo;</em></dd>
+      <dt>KPI</dt>
+      <dd><strong>Referral-sourced bookings against the 71-unit target — 1.6 a month</strong>; referrals per booked buyer; cost per referral booking.</dd>
+      <dt>Measurement</dt>
+      <dd>A <strong>referrer field on every booking</strong>, reconciled monthly against the 19% assumption. Phase 7 flagged a 10-point error here as roughly ₹3.5 crore of misallocated budget.</dd>
+      </dl>
+    </article>
+    <article class="stg" id="st12">
+      <div class="stg-head">
+        <div class="stg-n">12</div>
+        <div>
+          <h4>Advocacy</h4>
+          <div class="stg-tags"><span class="ly ly-a">Customer advocacy</span><span class="ct ct-n">Estimated</span></div>
+          
+        </div>
+      </div>
+      <dl class="sg">
+      <dt>Objective</dt>
+      <dd><strong>Public, findable proof</strong> — and the credential for the next project. Phase 4 found KMV's search visibility thin and its review presence sparse; this is the stage that fixes that at source rather than through SEO.</dd>
+      <dt>Audience</dt>
+      <dd>Booked and possessed buyers; the local community around the site; <strong>the AIIMS and institutional networks</strong>, which Phase 5 found are small, highly connected, and where <em>&ldquo;a colleague buying&rdquo;</em> is itself a purchase trigger.</dd>
+      <dt>Message</dt>
+      <dd><strong>Let them say it.</strong> The most valuable content at this stage is not produced by the marketing function.</dd>
+      <dt>Channel</dt>
+      <dd>Google reviews; resident films on YouTube; Telugu press; <strong>the landowner community across the 29 capital-area villages</strong>, where Phase 5 found precedent is the decisive factor; institutional word-of-mouth at AIIMS and the hospital cluster.</dd>
+      <dt>Content / creative</dt>
+      <dd>Resident video testimonials; handover films; <strong>a published construction and delivery record</strong> — the asset Phase 4 established the developer already has in AIIMS Mangalagiri and does not yet use.</dd>
+      <dt>CTA</dt>
+      <dd><em>&ldquo;Share your experience.&rdquo;</em></dd>
+      <dt>KPI</dt>
+      <dd>Google review volume and rating; NPS at defined milestones; unprompted mentions; <strong>the share of new leads self-reporting &ldquo;someone I know&rdquo; as first touch</strong> — the loop closing measurably.</dd>
+      <dt>Measurement</dt>
+      <dd>Review monitoring; quarterly NPS at booking, at slab completion and at handover; the booking-stage first-touch field read in aggregate over time.</dd>
+      </dl>
+    </article>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">§3</div>
+    <div>
+      <h2>The four journeys</h2>
+      <p class="dek">§2 specifies twelve stages. Four different journeys draw on them — and only one runs through all twelve in order.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:11rem">Journey</th><th>Segments</th><th class="n">Units</th><th class="n">Share</th><th class="n">Revenue</th><th class="n">Share</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1 · Linear</strong></td><td>S5 government · S6 upgraders · 60% of S2 medical</td><td class="n"><strong>178</strong></td><td class="n">47.5%</td><td class="n"><strong>₹169.2 Cr</strong></td><td class="n">33.4%</td></tr>
+          <tr><td><strong>2 · Referral-entry</strong></td><td>S1 trade families · 40% of S2 medical</td><td class="n"><strong>91</strong></td><td class="n">24.1%</td><td class="n"><strong>₹153.5 Cr</strong></td><td class="n">30.3%</td></tr>
+          <tr><td><strong>3 · Window</strong></td><td>S3 US diaspora · S7 Hyderabad · S8 Gulf</td><td class="n"><strong>95</strong></td><td class="n">25.2%</td><td class="n"><strong>₹155.4 Cr</strong></td><td class="n">30.7%</td></tr>
+          <tr><td><strong>4 · Document</strong></td><td>S4 land-pooling landowners</td><td class="n"><strong>12</strong></td><td class="n">3.3%</td><td class="n"><strong>₹27.9 Cr</strong></td><td class="n">5.5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The finding that should govern the whole plan</span>
+      <p class="big"><strong>The linear journey — the one the twelve-stage model describes — carries 47.5% of units but only 33.4% of revenue.</strong></p>
+      <p>The other two-thirds of revenue travels one of three routes that skip, reorder or compress the stages. <strong>A media plan built to the linear model would be pacing 100% of its budget against a third of the money.</strong></p>
+    </div>
+
+    <div class="jr">
+      <div class="jr-top"><h5>Journey 1 · Linear</h5><span class="jm"><b>178 units</b> · ₹169.2 Cr · S5, S6, most of S2 · Communities A and B · <b>3–10 months</b></span></div>
+      <div class="jr-flow">
+        <span class="jr-node">Awareness</span><span class="jr-sep">→</span><span class="jr-node">Discovery</span><span class="jr-sep">→</span><span class="jr-node">Interest</span><span class="jr-sep">→</span><span class="jr-node">Consideration</span><span class="jr-sep">→</span><span class="jr-node">Lead</span><span class="jr-sep">→</span><span class="jr-node">Qualified</span><span class="jr-sep">→</span><span class="jr-node">Consultation</span><span class="jr-sep">→</span><span class="jr-node key">Site visit</span><span class="jr-sep">→</span><span class="jr-node">Negotiation</span><span class="jr-sep">→</span><span class="jr-node">Booking</span>
+      </div>
+      <div class="jr-body">
+        <p>Runs through all twelve stages roughly in order. Awareness through Consideration are genuinely media-driven; the lead form works; they visit on a Sunday comparing two or three projects; the close follows a price-sheet conversation.</p>
+        <p><strong>This is the journey the standard funnel was designed for, and the only one where conventional pacing applies.</strong> It is also the journey competing hardest — Phase 3's 3,269 mid-market units are aimed at exactly these households.</p>
+      </div>
+    </div>
+
+    <div class="jr">
+      <div class="jr-top"><h5>Journey 2 · Referral-entry</h5><span class="jm"><b>91 units</b> · ₹153.5 Cr · S1 and the connected minority of S2 · Communities C and D</span></div>
+      <div class="jr-flow">
+        <span class="jr-node skip">Awareness</span><span class="jr-node skip">Interest</span><span class="jr-node skip">Consideration</span><span class="jr-sep">&nbsp;</span><span class="jr-node key">Someone else's advocacy</span><span class="jr-sep">→</span><span class="jr-node">Discovery <em>(verification)</em></span><span class="jr-sep">→</span><span class="jr-node">Consultation</span><span class="jr-sep">→</span><span class="jr-node">Site visit</span><span class="jr-sep">→</span><span class="jr-node">Negotiation</span><span class="jr-sep">→</span><span class="jr-node">Booking</span><span class="jr-sep">→</span><span class="jr-node key">Referral</span>
+      </div>
+      <div class="jr-body">
+        <p><strong>Stages 1–4 happen socially, not through media.</strong> Phase 5: <em>"referral and personal introduction first… digital is a verification channel, not a discovery channel."</em> By the time this buyer is reachable they already know the project exists, who is building it, and — critically — <strong>who else has bought.</strong></p>
+        <p><strong>1 · Discovery is a verification stage, not a discovery stage.</strong> They will search the developer's name and read page one. Phase 4 found that page is thin. For this journey, fixing search visibility is not lead generation — it is <strong>loss prevention on demand that already exists.</strong></p>
+        <p><strong>2 · The entry point is a person, not a campaign.</strong> Which is why Phase 6 specified Community D's first tranche should be seeded rather than advertised.</p>
+        <p><strong>3 · The CA and the family advocate are in this journey and addressed by nobody.</strong> Phase 5 flagged them as gatekeepers no Phase 3 competitor engages. A consultation designed to include them is a cheap, uncontested advantage.</p>
+      </div>
+    </div>
+
+    <div class="jr">
+      <div class="jr-top"><h5>Journey 3 · Window</h5><span class="jm"><b>95 units</b> · ₹155.4 Cr · S3, S7, S8 · Communities B and D</span></div>
+      <div class="jr-flow">
+        <span class="jr-node">Awareness</span><span class="jr-sep">→</span><span class="jr-node">Discovery</span><span class="jr-sep">→</span><span class="jr-node">Interest</span><span class="jr-sep">→</span><span class="jr-node">Consideration</span><span class="jr-sep" style="font-family:var(--f-mono);font-size:.66rem;color:var(--accent)">&nbsp;6–18 MONTHS&nbsp;→</span><span class="jr-node">Lead</span><span class="jr-sep">→</span><span class="jr-node">Qualified</span><span class="jr-sep">→</span><span class="jr-node key">Consultation <em>(video)</em></span><span class="jr-sep" style="font-family:var(--f-mono);font-size:.66rem;color:var(--accent)">&nbsp;5 DAYS&nbsp;→</span><span class="jr-node">Site visit</span><span class="jr-sep">→</span><span class="jr-node">Booking</span>
+      </div>
+      <div class="jr-body">
+        <p><strong>The stages do not compress evenly — they stretch, then collapse.</strong> Awareness to Consideration takes 6–18 months of slow, self-directed, digital research at odd hours, with very low form-fill rates. Site visit to Booking compresses entirely into a travel window. Phase 5, on S3: <em>"if the site is not ready to close in that window, the sale is lost for a year."</em></p>
+        <p><strong>1 · The buying windows are December–January and summer</strong>, set by the diaspora travel calendar, not the Indian festive quarter. <strong>A launch calendar built on Dasara–Diwali misses ₹155 crore of demand.</strong></p>
+        <p><strong>2 · The site visit may be performed by a proxy.</strong> Phase 5 found the inspecting relative holds effective veto and <em>"is almost never the person the marketing is aimed at."</em> Stage 8 needs a proxy-visit protocol; Stage 7 needs to work over video as the primary interaction.</p>
+        <p><strong>3 · This is where the worst funnel stage sits.</strong> Community B's qualified-to-visit rate of 18.2% is 30% below project average, and Phase 7 found B consumes 65% of the lead-generation budget for 22% of units. <strong>The constraint is not lead cost — it is that this buyer physically cannot visit.</strong></p>
+      </div>
+    </div>
+
+    <div class="jr">
+      <div class="jr-top"><h5>Journey 4 · Document</h5><span class="jm"><b>12 units</b> · ₹27.9 Cr · S4 landowners · Community D, and a land supplier · <b>6–24 months</b></span></div>
+      <div class="jr-flow">
+        <span class="jr-node skip">Awareness</span><span class="jr-node skip">Interest</span><span class="jr-node skip">Lead</span><span class="jr-node skip">Site visit</span><span class="jr-sep">&nbsp;</span><span class="jr-node">Village relationship</span><span class="jr-sep">→</span><span class="jr-node key">Term sheet</span><span class="jr-sep">→</span><span class="jr-node">Family consultation</span><span class="jr-sep">→</span><span class="jr-node key">Precedent</span><span class="jr-sep">→</span><span class="jr-node">Exchange</span>
+      </div>
+      <div class="jr-body">
+        <p><strong>This journey does not use the media funnel at all.</strong> Phase 5: <em>"does not respond to advertising; it responds to a document"</em> — and <em>"does not need to visit: they live there."</em></p>
+        <p><strong>1 · Stage 8 is meaningless and Stage 12 is everything.</strong> They can see the site from their land. What they need is proof that someone they know was treated as promised — <em>"the first neighbour to complete a transaction becomes the single most persuasive asset available."</em></p>
+        <p><strong>2 · It needs a function, not a campaign</strong> — a land-owner relations role working in Telugu, in the villages, with the local advocate and surveyor. Phase 3 found <strong>no competitor in the screened set offers a structured land-for-home proposition at all.</strong></p>
+        <p><strong>3 · Twelve units and ₹27.9 crore understates it.</strong> Phase 5: this segment <em>"supplies land, absorbs inventory and creates local advocacy at the same time."</em> Its 6–24 month cycle means <strong>it must start in year one to deliver in year three.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">§4</div>
+    <div>
+      <h2>Measurement architecture</h2>
+      <p class="dek">Four gates are counted. Eight stages are estimated. And with this cycle length, no attribution model can be made honest.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:12rem">Stage</th><th style="width:9rem">Type</th><th>What actually records it</th></tr></thead>
+        <tbody>
+          <tr><td>1 Awareness</td><td><span class="ct ct-n">Estimated</span></td><td>Quarterly recall survey · search-volume share</td></tr>
+          <tr><td>2 Discovery</td><td><span class="ct ct-n">Estimated</span></td><td>Branded search volume · organic visibility · GBP views</td></tr>
+          <tr><td>3 Interest</td><td><span class="ct ct-n">Estimated</span></td><td>Engaged sessions · video 50% completion · brochure downloads</td></tr>
+          <tr><td>4 Consideration</td><td><span class="ct ct-n">Estimated</span></td><td>Return-visit cohorts · calculator completions · first-touch-to-enquiry lag</td></tr>
+          <tr><td><strong>5 Lead</strong></td><td><span class="ct ct-y">Counted</span></td><td><strong>CRM record created</strong></td></tr>
+          <tr><td><strong>6 Qualified Lead</strong></td><td><span class="ct ct-y">Counted</span></td><td><strong>CRM stage change after qualification call</strong></td></tr>
+          <tr><td>7 Consultation</td><td><span class="ct ct-n">Estimated</span></td><td>CRM activity log — <strong>not a gate in the Phase 7 model.</strong> Recommend promoting to counted</td></tr>
+          <tr><td><strong>8 Site Visit</strong></td><td><span class="ct ct-y">Counted</span></td><td><strong>Attendance logged, with party size and segment</strong></td></tr>
+          <tr><td>9 Negotiation</td><td><span class="ct ct-n">Estimated</span></td><td>CRM stage with quoted vs final price. Recommend promoting to counted</td></tr>
+          <tr><td><strong>10 Booking</strong></td><td><span class="ct ct-y">Counted</span></td><td><strong>Token received</strong></td></tr>
+          <tr><td>11 Referral</td><td><span class="ct ct-n">Estimated</span></td><td>Referrer field on the booking record</td></tr>
+          <tr><td>12 Advocacy</td><td><span class="ct ct-n">Estimated</span></td><td>Review volume · NPS · first-touch self-report</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Two recommendations follow directly.</strong> Promote <strong>Consultation</strong> and <strong>Negotiation</strong> to counted gates. Both are CRM stage changes that cost nothing to record, both sit inside conversions Phase 7 measures only in aggregate, and <strong>both are where the sales team's own performance is currently invisible.</strong> That gives <strong>six counted gates instead of four</strong> — and lets the visit-to-booking rate, the model's most sensitive variable, be decomposed into its two halves rather than watched as one number.
+    </div>
+
+    <div class="warn">
+      <span class="wl">The attribution problem, and the one-question fix</span>
+      <p>The consideration cycle runs <strong>3 to 18 months</strong>, and <strong>47% of bookings arrive through channel partners and referral</strong> — routes that leave no click trail at all.</p>
+      <p class="big">Under last-click attribution the brand layer will appear to produce nothing, the referral layer will appear to produce nothing, and <strong>the last paid touch before booking will appear to produce everything.</strong> Budget follows the report. Within two quarters that logic defunds the two layers delivering the cheapest revenue in the project.</p>
+      <p><strong>The fix is not a better attribution model.</strong> With this cycle length and this channel mix, no click-based model can be made honest. <strong>The fix is one question, asked at booking:</strong> <em>"How did you first hear about us?"</em> — asked by the relationship manager, recorded as a required CRM field, with a fixed option list.</p>
+      <div class="tw" style="margin:.9rem 0 0">
+        <table>
+          <thead><tr><th></th><th class="n">Attribution model</th><th class="n">First-touch self-report at booking</th></tr></thead>
+          <tbody>
+            <tr><td>Captures referral</td><td class="n">No</td><td class="n"><strong>Yes</strong></td></tr>
+            <tr><td>Captures a hoarding seen 14 months ago</td><td class="n">No</td><td class="n"><strong>Yes</strong></td></tr>
+            <tr><td>Captures the peer who mentioned it</td><td class="n">No</td><td class="n"><strong>Yes</strong></td></tr>
+            <tr><td>Sample size</td><td class="n">Every click</td><td class="n"><strong>376 responses</strong></td></tr>
+            <tr><td>Cost</td><td class="n">A martech stack</td><td class="n"><strong>One field</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:.9rem"><strong>376 honest answers beat 78,880 attributed clicks</strong>, because the question is asked of the only people whose answer matters. Digital attribution still runs — it optimises campaigns <em>within</em> the demand-generation layer, where clicks and conversions are close together. <strong>It does not decide the split between layers.</strong></p>
+    </div>
+
+    <h3>Reporting cadence</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:7rem">Cadence</th><th style="width:9rem">Who</th><th>What</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Weekly</strong></td><td>Sales lead</td><td>Site visits · visit-to-booking by community and by salesperson · weekend capacity utilisation · <strong>Community B's qualified-to-visit rate, separately</strong></td></tr>
+          <tr><td><strong>Monthly</strong></td><td>Marketing lead</td><td>Leads and CPL by community · lead-to-qualified · consultation and negotiation counts · <strong>the discount register against the two Phase 6 pricing rules</strong></td></tr>
+          <tr><td><strong>Quarterly</strong></td><td>Both</td><td>First-touch mix from booking records reconciled against the 53 / 28 / 19 source assumption · brand recall survey · NPS · <strong>the layer budget re-based on what the reconciliation shows</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">§5</div>
+    <div>
+      <h2>Stage volumes</h2>
+      <p class="dek">Phase 7 base case, 45-month window. The four Phase 7 gates are shown in bold; the two proposed additions reconcile exactly to them.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Stage</th><th>Layer</th><th class="n">Total</th><th class="n">Per month</th><th class="n">Per week</th><th class="n">From prior</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Leads</strong></td><td><span class="ly ly-d">Demand gen</span></td><td class="n"><strong>78,880</strong></td><td class="n">1,753</td><td class="n">405</td><td class="n">—</td></tr>
+          <tr><td><strong>Qualified leads</strong></td><td><span class="ly ly-d">Demand gen</span></td><td class="n"><strong>12,474</strong></td><td class="n">277</td><td class="n">64</td><td class="n"><strong>15.8%</strong></td></tr>
+          <tr><td>Consultations</td><td><span class="ly ly-s">Sales</span></td><td class="n">5,313</td><td class="n">118</td><td class="n">27</td><td class="n">42.6%</td></tr>
+          <tr><td><strong>Site visits</strong></td><td><span class="ly ly-s">Sales</span></td><td class="n"><strong>2,922</strong></td><td class="n">65</td><td class="n">15</td><td class="n">55.0%</td></tr>
+          <tr><td>Negotiations</td><td><span class="ly ly-s">Sales</span></td><td class="n">574</td><td class="n">13</td><td class="n">3</td><td class="n">19.6%</td></tr>
+          <tr><td><strong>Bookings — marketing-sourced</strong></td><td><span class="ly ly-s">Sales</span></td><td class="n"><strong>201</strong></td><td class="n">4.5</td><td class="n">1.0</td><td class="n">35.0%</td></tr>
+          <tr><td>+ channel partner</td><td><span class="ly ly-s">Sales</span></td><td class="n">105</td><td class="n">2.3</td><td class="n">—</td><td class="n">—</td></tr>
+          <tr><td>+ referral</td><td><span class="ly ly-a">Advocacy</span></td><td class="n">71</td><td class="n">1.6</td><td class="n">—</td><td class="n">—</td></tr>
+          <tr class="tot"><td><strong>Total bookings</strong></td><td></td><td class="n"><strong>376</strong></td><td class="n"><strong>8.4</strong></td><td class="n">1.9</td><td class="n">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:.8rem;color:var(--ink-3)">Reconciliation: consultation 42.6% × consultation-to-visit 55.0% = 23.4%, matching Phase 7's qualified-to-visit gate. Visit-to-negotiation 19.6% × negotiation-to-booking 35.0% = 6.9%, matching Phase 7's visit-to-booking gate.</p>
+
+    <div class="finding">
+      <span class="lbl">The capacity constraint hiding in these numbers</span>
+      <p class="big"><strong>65 site visits a month is not the hard number — the distribution is.</strong></p>
+      <p>Phase 5 established that S1, S5 and S6 all visit <strong>on Sundays</strong>, and that S1 arrives <strong>unannounced with three to six family members.</strong> If two-thirds of monthly visits land on four Sundays, that is roughly <strong>eleven visiting parties per Sunday, averaging three to four people each — 35 to 45 people on site in a day.</strong></p>
+      <p>The experience centre and show homes are not sized by monthly visits; they are sized by <strong>peak Sunday.</strong> Under-sizing them caps the highest-leverage stage in the plan, and no amount of media spend upstream can push more people through a constrained Sunday. <strong>This should be settled at the design stage of Phase 7's ₹5.00 crore sales-infrastructure line, not discovered in month four.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">§6</div>
+    <div>
+      <h2>Where the funnel breaks</h2>
+      <p class="dek">The largest loss is at the top. That is not where the money is.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Stage transition</th><th class="n">In</th><th class="n">Out</th><th class="n">Rate</th><th class="n">Lost</th></tr></thead>
+        <tbody>
+          <tr><td>Lead → Qualified</td><td class="n">78,880</td><td class="n">12,474</td><td class="n">15.8%</td><td class="n"><strong>66,406</strong></td></tr>
+          <tr><td>Qualified → Consultation</td><td class="n">12,474</td><td class="n">5,313</td><td class="n">42.6%</td><td class="n">7,161</td></tr>
+          <tr><td>Consultation → Site visit</td><td class="n">5,313</td><td class="n">2,922</td><td class="n">55.0%</td><td class="n">2,391</td></tr>
+          <tr><td>Site visit → Negotiation</td><td class="n">2,922</td><td class="n">574</td><td class="n">19.6%</td><td class="n">2,348</td></tr>
+          <tr><td>Negotiation → Booking</td><td class="n">574</td><td class="n">201</td><td class="n">35.0%</td><td class="n">373</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">One percentage point added at each stage, everything else held</span>
+        <h5>A point at the site-visit stage is worth ₹39.4 crore</h5>
+      </div>
+      <div class="bars">
+        <div class="lev-row"><div class="lev-lab"><b>Site visit → Booking</b>6.9% → 7.9%</div><div class="lev-track"><div class="lev-fill top" style="width:100%"></div><span class="lev-val">₹39.4 Cr <i>· +29.2 bookings</i></span></div></div>
+        <div class="lev-row"><div class="lev-lab"><b>Lead → Qualified</b>15.8% → 16.8%</div><div class="lev-track"><div class="lev-fill" style="width:43.7%"></div><span class="lev-val">₹17.2 Cr <i>· +12.7 bookings</i></span></div></div>
+        <div class="lev-row"><div class="lev-lab"><b>Qualified → Site visit</b>23.4% → 24.4%</div><div class="lev-track"><div class="lev-fill" style="width:29.4%"></div><span class="lev-val">₹11.6 Cr <i>· +8.6 bookings</i></span></div></div>
+      </div>
+      <div class="figure-foot">
+        A point at the site-visit stage is worth <strong>2.3× a point at the lead stage</strong> and 3.4× a point at the visit-scheduling stage. This confirms Phase 7's sensitivity analysis from a different direction.
+      </div>
+    </figure>
+
+    <div class="finding">
+      <span class="lbl">The counter-intuitive consequence</span>
+      <p class="big"><strong>The 66,406 leads lost at the top are the least valuable losses in the funnel.</strong></p>
+      <p>Chasing them with more media, better forms or cheaper CPL is optimising the cheapest stage. <strong>The 2,348 people who visited the site and did not proceed are worth far more</strong> — they have been paid for all the way through, they have stood on the land, and the difference between 6.9% and 7.9% is ₹39.4 crore.</p>
+    </div>
+
+    <h3>The three specific breakages, named</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:2.5rem">#</th><th style="width:13rem">Break</th><th style="width:8rem">Where</th><th>Why</th><th style="width:13rem">Fix</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>Community B, qualified → site visit: 18.2%</strong> — 30% below project average</td><td>Journey 3<br>Stage 8</td><td>The buyer <strong>physically cannot visit.</strong> A proxy relative goes first; the personal visit compresses into one India trip</td><td>A <strong>proxy-visit protocol</strong> and a staffed live-walkthrough capability. Moving this to 25% cuts B's lead requirement by 27% and saves ~₹1.7 crore</td></tr>
+          <tr><td class="n">2</td><td><strong>Community D, site visit → booking: 5.6%</strong> — the lowest close rate in the scheme</td><td>Journey 2<br>Stages 8–9</td><td>Largest decision, longest family consultation, and Phase 5's first objection — <em>"who else has bought?"</em> — is unanswerable at launch</td><td><strong>Seed the first tranche.</strong> Fifteen named local buyers convert this from a marketing problem into a social fact</td></tr>
+          <tr><td class="n">3</td><td><strong>Consultation and Negotiation are unmeasured</strong></td><td>All journeys<br>Stages 7, 9</td><td>Both sit inside Phase 7 aggregates. <strong>The sales team's own contribution is currently invisible</strong></td><td>Promote both to counted CRM gates. Zero cost, and it decomposes the model's most sensitive variable</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">§7</div>
+    <div>
+      <h2>Risks, and what would falsify this design</h2>
+      <p class="dek">Seven. One of them changes the year-one budget shape; one of them is not a marketing question at all.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:2.5rem">#</th><th style="width:14rem">Risk</th><th>Why it matters</th><th style="width:15rem">Test</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>The four-journey split is Reasoned, not observed</strong></td><td>It drives the pacing, the calendar and the layer budget. A wrong split misallocates ₹25.68 Cr</td><td>The booking-stage first-touch field. <strong>Two quarters of bookings settle it</strong></td></tr>
+          <tr><td class="n">2</td><td><strong>The 19% referral assumption may not survive a first project</strong></td><td>Referral requires prior buyers. <strong>In year one there are none</strong> — the assumption is structurally back-loaded</td><td>Model referral ramping from ~0% in year one to above 19% by years three to four, not flat. <strong>Year-one budget must carry more demand generation than the average implies</strong></td></tr>
+          <tr><td class="n">3</td><td><strong>Consultation and negotiation rates are newly derived here</strong></td><td>They are reverse-engineered to reconcile with Phase 7's gates, not observed</td><td>They become counted gates on day one. Ninety days of CRM data replaces the derivation</td></tr>
+          <tr><td class="n">4</td><td><strong>Sunday capacity</strong></td><td>The highest-leverage stage may be constrained by physical throughput, not demand</td><td>Size the experience centre for peak Sunday at launch. A booked-appointment system for S2 and S3 that keeps Sunday free for walk-in families</td></tr>
+          <tr><td class="n">5</td><td><strong>Brand spend cannot be defended under last-click</strong></td><td>₹6.30 Cr is the layer most likely to be cut for looking unproductive</td><td>The first-touch field, plus a <strong>geo or time-based holdout</strong> on the brand layer. Agree the measurement method <em>before</em> the spend, not when it is challenged</td></tr>
+          <tr><td class="n">6</td><td><strong>The two Phase 6 pricing rules erode quietly</strong></td><td>B above ₹1.50 Cr or C below ₹1.65 Cr collapses the gap that stops them competing</td><td>The <strong>monthly discount register.</strong> A rule that is not reported is not a rule</td></tr>
+          <tr><td class="n">7</td><td><strong>This phase assumes Phase 6's prices hold</strong></td><td>Phase 6 and Phase 7 both flag that <strong>31% of revenue sits in a band nobody has proven is occupied</strong></td><td>Unchanged and unresolved. <strong>No journey design compensates for a price the market refuses</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h6>Carry-forward · position 1</h6>
+        <ul><li><strong>Advocacy is an input to awareness, not only an output of booking.</strong></li>
+        <li>Its year-one job is manufacturing the first fifteen visible, named local buyers who answer S1's opening question.</li>
+        <li>That is why Community D's first tranche is seeded rather than advertised.</li></ul>
+      </div>
+      <div class="card">
+        <h6>Carry-forward · position 2</h6>
+        <ul><li><strong>One question at booking beats any attribution model here.</strong></li>
+        <li>With a 3–18 month cycle and 47% of bookings arriving without a click trail, last-click reporting would defund the two cheapest layers within two quarters.</li></ul>
+      </div>
+      <div class="card">
+        <h6>Carry-forward · position 3</h6>
+        <ul><li><strong>The diaspora calendar is not the Indian festive calendar.</strong></li>
+        <li>₹155.4 crore of demand buys in December–January and summer travel windows.</li>
+        <li>A launch plan paced on Dasara–Diwali misses it.</li></ul>
+      </div>
+    </div>
+
+    <p style="font-size:.8rem;color:var(--ink-3);margin-top:2.5rem;border-top:1px solid var(--rule);padding-top:1.2rem;max-width:none">
+      Phase 8 of a sequential research and strategy exercise. Hypothetical project; not represented as an actual KMV Spaces development. Phases 1–7 precede this document. Stage volumes and conversion rates derive from the Phase 7 base case; consultation and negotiation rates are derived here to reconcile with Phase 7's measured gates and are flagged as new assumptions. Segment behaviour throughout is drawn from Phase 5, which was itself reconstructed without primary buyer research — every behavioural claim in this journey remains a testable hypothesis.
+    </p>
+  </div>
+</section>
+
+</main>
+</div>
