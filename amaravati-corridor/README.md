@@ -38,8 +38,9 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 | 5 | [`05-customer-research.md`](05-customer-research.md) — buyer universe, segment priority & derived audience mapping (also [`.html`](05-customer-research.html)) | **Complete** |
 | 6 | [`06-community-architecture.md`](06-community-architecture.md) — product, land and price structure for Communities A–D (also [`.html`](06-community-architecture.html)) | **Complete** |
 | 7 | [`07-business-model.md`](07-business-model.md) — funnel model, three scenarios, unit economics (also [`.html`](07-business-model.html)) | **Complete** |
-| 8 | Positioning, messaging and creative strategy | Not started |
-| 9 | Channel and performance plan | Not started |
+| 8 | [`08-marketing-funnel.md`](08-marketing-funnel.md) — twelve-stage journey, four layers, four journeys (also [`.html`](08-marketing-funnel.html)) | **Complete** |
+| 9 | Positioning, messaging and creative strategy | Not started |
+| 10 | Channel and performance plan | Not started |
 
 ## Method notes
 
@@ -72,6 +73,13 @@ relationship**, which is the one in-project rate lever the evidence supports.
 silently assumed an apartment density 2.9–6.2× below anything in the corridor. At the lowest observed
 local density the same 25 acres would yield ~₹851 crore. The project is therefore forgoing roughly
 ₹350–500 crore of gross development value to buy the low-density differentiator the price premium rests on.
+
+**Four journeys, not one.** Phase 8 builds the twelve-stage journey the brief specifies, then shows that
+only 47.5% of units — and 33.4% of revenue — actually travel it. Trade families enter at consultation
+because a peer introduced them; diaspora buyers stretch consideration over 6–18 months then compress the
+decision into a five-day travel window; land-pooling landowners never enter the media funnel at all. It
+also separates the four counted gates from the eight estimated stages, and argues that one question asked
+at booking beats any attribution model when 47% of bookings arrive without a click trail.
 
 **Every number classified.** Phase 7 tags each input as MARKET DATA / BENCHMARK / ASSUMPTION / CALCULATED,
 and flags that essentially all Indian real-estate funnel benchmarks are published by agencies and CRM
