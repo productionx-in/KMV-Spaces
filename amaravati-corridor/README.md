@@ -24,7 +24,7 @@ residential development on the Amaravati–Mangalagiri corridor, Andhra Pradesh.
 
 | # | Document | Status |
 | --- | --- | --- |
-| 1 | [`01-market-research.md`](01-market-research.md) — Amaravati / Mangalagiri evidence base | **Complete** |
+| 1 | [`01-market-research.md`](01-market-research.md) — Amaravati / Mangalagiri evidence base | **Complete** *(sales task revised to ~397 units by Phase 5 §5.5)* |
 
 The same document is also published as a designed, self-contained page:
 [`01-market-research.html`](01-market-research.html) — evidence grades rendered as chips,
@@ -35,9 +35,10 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 | 2 | [`02-residential-market.md`](02-residential-market.md) — segment-level pricing & product evidence (also [`.html`](02-residential-market.html)) | **Complete** |
 | 3 | [`03-competitor-landscape.md`](03-competitor-landscape.md) — competitor field, matrix & white space (also [`.html`](03-competitor-landscape.html)) | **Complete** |
 | 4 | [`04-kmv-brand-research.md`](04-kmv-brand-research.md) — independent developer brand research (also [`.html`](04-kmv-brand-research.html)) | **Complete** |
-| 5 | Positioning, audience and product mix | Not started |
-| 6 | Pricing and commercial model | Not started |
-| 7 | Channel, performance and creative strategy | Not started |
+| 5 | [`05-customer-research.md`](05-customer-research.md) — buyer universe, segment priority & derived audience mapping (also [`.html`](05-customer-research.html)) | **Complete** |
+| 6 | Positioning and messaging | Not started |
+| 7 | Pricing and commercial model | Not started |
+| 8 | Channel, performance and creative strategy | Not started |
 
 ## Method notes
 
@@ -60,10 +61,20 @@ published by brokers and developers who profit from the numbers being high. Sour
 and their treatment are set out in the Phase 1 appendix. Listing-portal rates are treated
 as an upper bound on realisable price throughout, never as market rates.
 
-**Known limitation.** Phase 1 was researched through search-surfaced reporting; direct
+**Segmentation by income source.** Phase 5 found the binding constraint on this project is
+**cash at purchase** (₹17.6 lakh for Community A rising to ₹74.1 lakh for Community D), not
+documented income — so the segmentation is built on *where the money comes from* rather than on
+life stage or geography. The brief's fifteen hypothesis segments resolve into eight mutually
+exclusive ones; §4 of that document tests each hypothesis explicitly, and the A/B/C/D audience
+mapping is derived in §6 as an output rather than assumed as an input.
+
+**Known limitation.** All phases were researched through search-surfaced reporting; direct
 retrieval of primary documents (APCRDA orders, IGRS registration data, RERA filings) was
-not possible. §12 of the Phase 1 document lists the ten evidence gaps and names the primary
-source that would close each one.
+not possible, and **no primary buyer research — surveys, interviews, CRM or walk-in data — was
+available for Phase 5.** Each document closes with its evidence gaps and the primary source that
+would close each one: Phase 1 §12 (ten gaps), Phase 2 §15, Phase 3 §8, Phase 4 §13 (twenty
+unverifiable items), Phase 5 §7 (fifteen gaps, six of them closeable from registration and
+institutional data alone).
 
 ## Relationship to `/kmv-spaces-cmo`
 
