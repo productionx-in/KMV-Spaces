@@ -1,0 +1,2211 @@
+<title>The Verification Pass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style><style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style><style>
+/* ---------- Phase 4: evidence labels ---------- */
+.lb{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .42rem;border-radius:3px;white-space:nowrap;display:inline-block;border:1px solid transparent;
+  line-height:1.55;vertical-align:.06em}
+.lb-f{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-o{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-i{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+.lb-r{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.lb-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+.stmt{margin:0 0 1rem;max-width:var(--measure)}
+.stmt .lb{margin-right:.5rem}
+.none{color:var(--ink-3);font-style:italic}
+
+.sev-h{color:var(--accent);font-weight:600;font-family:var(--f-mono);font-size:.72rem}
+.sev-m{color:var(--ink-2);font-family:var(--f-mono);font-size:.72rem}
+.sev-l{color:var(--ink-3);font-family:var(--f-mono);font-size:.72rem}
+
+/* ---------- diagram ---------- */
+figure.dia{margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);border-radius:5px;
+  padding:1.4rem 1.5rem 1.1rem;box-shadow:var(--shadow)}
+figure.dia svg{display:block;width:100%;max-width:100%;height:auto;color:var(--ink-2)}
+figure.dia figcaption{margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--rule);
+  font-size:.79rem;color:var(--ink-3);line-height:1.5}
+.dia-head{margin-bottom:1rem}
+.dia-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.dia-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.dia-scroll{overflow-x:auto}
+.dia-scroll > svg{min-width:34rem}
+
+/* ---------- rate bars ---------- */
+.rrow{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.rrow:hover{background:var(--surface-2)}
+.rname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.rname b{display:block;color:var(--ink);font-weight:600}
+.rtrack{height:1.4rem;display:flex;align-items:center;gap:.55rem}
+.rfill{height:.95rem;border-radius:0 4px 4px 0;background:var(--series);flex:none}
+.rfill.other{background:transparent;border:1.5px solid var(--series);border-left:0;box-sizing:border-box}
+.rfill.target{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.rval{font-family:var(--f-mono);font-size:.77rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+</style><style>
+/* ---------- Phase 5 components ---------- */
+
+/* Evidence labels — form, not hue */
+.lb-est{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-app{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-rsn{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+
+/* Priority chips */
+.pri{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.14rem .48rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;border:1px solid transparent}
+.pri-h{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.pri-s{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.pri-l{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Segment profile card */
+.seg{margin:2rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.seg-head{display:grid;grid-template-columns:3.1rem minmax(0,1fr);gap:.9rem;align-items:start;
+  padding:1.05rem 1.3rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.seg-id{font-family:var(--f-mono);font-size:1.28rem;font-weight:600;color:var(--brand);
+  line-height:1;padding-top:.12rem;letter-spacing:-.02em}
+.seg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.08rem;line-height:1.28;
+  margin:0 0 .3rem;color:var(--ink);text-wrap:balance}
+.seg-head .seg-line{font-size:.85rem;color:var(--ink-2);margin:0 0 .6rem;font-style:italic}
+.seg-stats{display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.seg-stats b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.seg-size{padding:.8rem 1.3rem;border-bottom:1px solid var(--rule);font-size:.82rem;
+  line-height:1.55;color:var(--ink-2);background:var(--surface)}
+.seg-size strong{color:var(--ink)}
+
+/* 20-attribute grid */
+.attr{display:grid;grid-template-columns:minmax(8rem,10.5rem) minmax(0,1fr)}
+.attr > dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);padding:.6rem .8rem .6rem 1.3rem;border-top:1px solid var(--rule);
+  line-height:1.45;font-weight:500}
+.attr > dd{margin:0;padding:.6rem 1.3rem .6rem .3rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.attr > dd strong{color:var(--ink);font-weight:600}
+.attr > dt:first-of-type,.attr > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .attr{grid-template-columns:minmax(0,1fr)}
+  .attr > dt{padding:.6rem 1.1rem .1rem;border-top:1px solid var(--rule)}
+  .attr > dd{padding:.15rem 1.1rem .65rem;border-top:0}
+  .attr > dt:first-of-type + dd{border-top:0}
+}
+.seg-close{padding:.95rem 1.3rem;background:var(--surface-2);border-top:1px solid var(--rule);
+  font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.seg-close .lbl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.4rem;font-weight:600}
+.seg-close strong{color:var(--ink)}
+.seg-close p{margin:0 0 .55rem;max-width:none}
+.seg-close p:last-child{margin-bottom:0}
+
+/* Cash-gate escalation */
+.gate{display:flex;flex-direction:column;gap:.55rem}
+.gate-row{display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:.8rem;align-items:center}
+.gate-name{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-2);line-height:1.3}
+.gate-name b{display:block;color:var(--ink);font-weight:600;font-size:.82rem}
+.gate-track{display:flex;align-items:center;gap:.5rem;height:2rem}
+.gate-cash{height:1.3rem;background:var(--series);border-radius:0 3px 3px 0;flex:none}
+.gate-inc{height:1.3rem;border:1.5px dashed var(--emphasis);border-left:0;border-radius:0 3px 3px 0;
+  flex:none;box-sizing:border-box}
+.gate-val{font-family:var(--f-mono);font-size:.76rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap}
+.gate-val i{font-style:normal;color:var(--ink-3)}
+
+/* Hypothesis verdict list */
+.hyp{display:flex;flex-direction:column;gap:0;margin:1.5rem 0;border:1px solid var(--rule);
+  border-radius:5px;background:var(--surface);overflow:hidden}
+.hyp-row{display:grid;grid-template-columns:2.1rem minmax(7rem,11rem) minmax(0,1fr);gap:.75rem;
+  padding:.75rem 1.05rem;border-top:1px solid var(--rule);align-items:start}
+.hyp-row:first-child{border-top:0}
+.hyp-row .num{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;padding-top:.1rem}
+.hyp-name{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.4}
+.hyp-name .v{display:block;margin-top:.3rem}
+.hyp-why{font-size:.83rem;line-height:1.55;color:var(--ink-2)}
+.hyp-why strong{color:var(--ink)}
+.vd{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:.1rem .38rem;border-radius:3px;display:inline-block;line-height:1.5}
+.vd-y{background:var(--brand);color:var(--surface)}
+.vd-p{background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand)}
+.vd-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+@media (max-width:640px){
+  .hyp-row{grid-template-columns:2.1rem minmax(0,1fr);row-gap:.35rem}
+  .hyp-why{grid-column:2}
+}
+
+/* Revenue-by-segment bars, priority encoded by fill treatment */
+.rev-row{display:grid;grid-template-columns:minmax(8.5rem,13rem) minmax(0,1fr);gap:.7rem;
+  align-items:center;padding:3px 0}
+.rev-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.rev-label b{display:block;color:var(--ink);font-weight:600}
+.rev-track{position:relative;height:1.6rem;display:flex;align-items:center;gap:.55rem}
+.rev-fill{height:1.1rem;border-radius:0 4px 4px 0;flex:none;box-sizing:border-box}
+.rev-fill.p-h{background:var(--series)}
+.rev-fill.p-s{background:var(--brand-soft);border:1px solid var(--series);border-left:0}
+.rev-fill.p-l{background:transparent;border:1.5px dashed var(--rule-2);border-left:0}
+.rev-val{font-family:var(--f-mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:500}
+.rev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+td i{color:var(--ink-3);font-style:normal;font-size:.94em}
+
+/* Community mapping strip */
+.commap{display:grid;grid-template-columns:repeat(auto-fit,minmax(13.5rem,1fr));gap:.85rem;margin:1.5rem 0}
+.cm{background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden;
+  display:flex;flex-direction:column}
+.cm-top{padding:.75rem .95rem;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.cm-top h6{font-family:var(--f-display);font-size:1rem;font-weight:600;margin:0;color:var(--ink)}
+.cm-top .cm-t{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);display:block;margin-top:.22rem;
+  font-variant-numeric:tabular-nums}
+.cm-body{padding:.8rem .95rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.cm-body .cm-h{display:block;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 .28rem;font-weight:500}
+.cm-body p{margin:0 0 .7rem;max-width:none}
+.cm-body p:last-child{margin-bottom:0}
+.cm-body strong{color:var(--ink);font-weight:600}
+.cm-win{padding:.7rem .95rem;border-top:1px solid var(--rule);background:var(--accent-soft);
+  font-size:.8rem;line-height:1.45;color:var(--ink-2)}
+.cm-win b{color:var(--accent);font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;display:block;margin-bottom:.25rem;font-weight:600}
+</style><style>
+/* ---------- Phase 7 components ---------- */
+/* Classification tags — form, not hue */
+.tg{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .4rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent;vertical-align:.06em}
+.tg-md{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.tg-bm{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.tg-as{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.tg-cv{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+
+/* Scenario columns */
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.85rem;margin:1.5rem 0}
+.sc{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);
+  display:flex;flex-direction:column}
+.sc.pick{border-color:var(--accent);box-shadow:var(--shadow)}
+.sc-top{padding:.8rem 1rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.sc.pick .sc-top{background:var(--accent-soft)}
+.sc-top h6{font-family:var(--f-display);font-size:1.05rem;font-weight:600;margin:0;color:var(--ink)}
+.sc-top span{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);display:block;margin-top:.24rem}
+.sc.pick .sc-top span{color:var(--accent)}
+.sc-body{padding:.35rem 0;flex:1}
+.sc-l{display:flex;justify-content:space-between;gap:.7rem;padding:.4rem 1rem;font-size:.82rem;
+  border-top:1px solid var(--rule);color:var(--ink-2);line-height:1.4}
+.sc-l:first-child{border-top:0}
+.sc-l b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:600}
+.sc-l.hi{background:var(--surface-2)}
+
+/* Funnel steps */
+.fn{display:flex;flex-direction:column;gap:.3rem;margin:.5rem 0}
+.fn-step{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem;align-items:center}
+.fn-name{font-size:.83rem;line-height:1.3;color:var(--ink-2);text-align:right}
+.fn-name b{display:block;color:var(--ink);font-weight:600}
+.fn-bar{height:2.15rem;display:flex;align-items:center;justify-content:flex-start;
+  background:var(--series);border-radius:3px;padding:0 .7rem;color:var(--surface);
+  font-family:var(--f-mono);font-size:.8rem;font-variant-numeric:tabular-nums;font-weight:600;
+  white-space:nowrap;min-width:5.5rem}
+.fn-bar.lite{background:var(--brand-soft);color:var(--brand);border:1px solid var(--series)}
+.fn-arrow{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem}
+.fn-rate{font-family:var(--f-mono);font-size:.68rem;color:var(--accent);letter-spacing:.04em;padding:.05rem 0 .05rem .7rem}
+.fn-rate::before{content:"↓ ";opacity:.7}
+
+/* Metric grid */
+.mx{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.7rem;margin:1.3rem 0}
+.mx > div{border:1px solid var(--rule);border-radius:5px;padding:.75rem .9rem;background:var(--surface)}
+.mx .k{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.35rem}
+.mx .v{font-family:var(--f-display);font-size:1.5rem;font-weight:600;color:var(--ink);line-height:1;
+  font-variant-numeric:tabular-nums}
+.mx .s{font-size:.75rem;color:var(--ink-3);margin-top:.3rem;line-height:1.4;display:block}
+.mx .v.acc{color:var(--accent)}
+
+/* Warning callout */
+.warn{margin:1.5rem 0;padding:1.1rem 1.3rem;background:var(--surface);border:1px solid var(--accent);
+  border-left:3px solid var(--accent);border-radius:4px;max-width:var(--measure)}
+.warn .wl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.5rem;font-weight:600}
+.warn p{margin:0 0 .65rem;max-width:none;font-size:.92rem;line-height:1.6}
+.warn p:last-child{margin-bottom:0}
+.warn strong{color:var(--ink)}
+</style><style>
+/* ---------- Phase 8 components ---------- */
+/* Layer chips */
+.ly{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.13rem .45rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent}
+.ly-b{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ly-d{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.ly-s{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.ly-a{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* Counted vs estimated */
+.ct{font-family:var(--f-mono);font-size:.56rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:.1rem .36rem;border-radius:3px;display:inline-block;line-height:1.5;border:1px solid transparent}
+.ct-y{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ct-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Stage card */
+.stg{margin:1.5rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.stg-head{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:.85rem;align-items:start;
+  padding:.9rem 1.2rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.stg-n{font-family:var(--f-mono);font-size:1.2rem;font-weight:600;color:var(--brand);line-height:1;padding-top:.1rem}
+.stg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.05rem;line-height:1.25;margin:0 0 .35rem;color:var(--ink)}
+.stg-tags{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center}
+.stg-note{font-size:.82rem;color:var(--ink-2);font-style:italic;margin:.4rem 0 0;line-height:1.45}
+.sg{display:grid;grid-template-columns:minmax(7rem,9rem) minmax(0,1fr)}
+.sg > dt{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.55rem .7rem .55rem 1.2rem;border-top:1px solid var(--rule);line-height:1.45;font-weight:500}
+.sg > dd{margin:0;padding:.55rem 1.2rem .55rem .25rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.sg > dd strong{color:var(--ink);font-weight:600}
+.sg > dt:first-of-type,.sg > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .sg{grid-template-columns:minmax(0,1fr)}
+  .sg > dt{padding:.55rem 1.05rem .1rem;border-top:1px solid var(--rule)}
+  .sg > dd{padding:.1rem 1.05rem .6rem;border-top:0}
+  .sg > dt:first-of-type + dd{border-top:0}
+}
+
+/* Two-column compare */
+.cmp2{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.cmp2 > div{border:1px solid var(--rule);border-radius:5px;padding:.9rem 1.05rem;background:var(--surface)}
+.cmp2 h6{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 .55rem;font-weight:600}
+.cmp2 p{margin:0 0 .55rem;font-size:.86rem;line-height:1.55;max-width:none;color:var(--ink-2)}
+.cmp2 p:last-child{margin-bottom:0}
+.cmp2 strong{color:var(--ink)}
+
+/* Layer band header */
+.lyband{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:2.3rem 0 .3rem;
+  padding:.7rem 1rem;border-radius:5px;background:var(--surface-2);border:1px solid var(--rule)}
+.lyband h3{margin:0;font-family:var(--f-display);font-size:1.12rem;font-weight:600;color:var(--ink)}
+.lyband .lb-meta{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.lyband .lb-meta b{color:var(--ink)}
+
+/* Journey strip */
+.jr{margin:1.3rem 0;border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface)}
+.jr-top{padding:.8rem 1.05rem;border-bottom:1px solid var(--rule);background:var(--surface-2);
+  display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:baseline}
+.jr-top h5{margin:0;font-family:var(--f-display);font-size:1.02rem;font-weight:600;color:var(--ink)}
+.jr-top .jm{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3)}
+.jr-top .jm b{color:var(--ink)}
+.jr-flow{padding:.85rem 1.05rem;display:flex;flex-wrap:wrap;gap:.3rem;align-items:center;
+  border-bottom:1px solid var(--rule)}
+.jr-node{font-family:var(--f-mono);font-size:.66rem;padding:.22rem .5rem;border-radius:3px;
+  background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand);white-space:nowrap}
+.jr-node.skip{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2);text-decoration:line-through}
+.jr-node.key{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.jr-sep{color:var(--ink-3);font-size:.75rem}
+.jr-body{padding:.85rem 1.05rem;font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.jr-body strong{color:var(--ink)}
+.jr-body p{margin:0 0 .6rem;max-width:none}
+.jr-body p:last-child{margin-bottom:0}
+
+/* Leverage bars */
+.lev-row{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:4px 0}
+.lev-lab{font-size:.82rem;line-height:1.3;color:var(--ink-2)}
+.lev-lab b{display:block;color:var(--ink);font-weight:600}
+.lev-track{height:1.7rem;display:flex;align-items:center;gap:.55rem}
+.lev-fill{height:1.2rem;background:var(--brand-soft);border:1px solid var(--series);border-radius:0 4px 4px 0;flex:none}
+.lev-fill.top{background:var(--series);border-color:var(--series)}
+.lev-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.lev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+</style><style>
+/* ---------- Phase 9 components ---------- */
+/* Tier chips — form, not hue */
+.tr{font-family:var(--f-mono);font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.13rem .45rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent}
+.tr-1{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.tr-2{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.tr-3{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.tr-4{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.tr-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2);text-decoration:line-through}
+
+/* Channel card */
+.ch{margin:1.4rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.ch-head{padding:.85rem 1.15rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.ch-head h4{font-family:var(--f-display);font-weight:600;font-size:1.04rem;line-height:1.25;margin:0 0 .4rem;color:var(--ink)}
+.ch-head h4 .sp{font-family:var(--f-mono);font-size:.78rem;font-weight:500;color:var(--accent);margin-left:.5rem;white-space:nowrap}
+.ch-tags{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center}
+.cg{display:grid;grid-template-columns:minmax(6.5rem,8.5rem) minmax(0,1fr)}
+.cg > dt{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.5rem .7rem .5rem 1.15rem;border-top:1px solid var(--rule);line-height:1.45;font-weight:500}
+.cg > dd{margin:0;padding:.5rem 1.15rem .5rem .25rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.cg > dd strong{color:var(--ink)}
+.cg > dt:first-of-type,.cg > dt:first-of-type + dd{border-top:0}
+.cg > dt.neg{color:var(--accent)}
+@media (max-width:640px){
+  .cg{grid-template-columns:minmax(0,1fr)}
+  .cg > dt{padding:.5rem 1rem .1rem;border-top:1px solid var(--rule)}
+  .cg > dd{padding:.1rem 1rem .55rem;border-top:0}
+  .cg > dt:first-of-type + dd{border-top:0}
+}
+
+/* Tier band */
+.trband{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:2.3rem 0 .3rem;
+  padding:.7rem 1rem;border-radius:5px;background:var(--surface-2);border:1px solid var(--rule)}
+.trband h3{margin:0;font-family:var(--f-display);font-size:1.1rem;font-weight:600;color:var(--ink)}
+.trband .tb-meta{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.trband .tb-meta b{color:var(--ink)}
+
+/* Budget treemap-ish strip */
+.bud{display:flex;flex-direction:column;gap:.5rem;margin:.4rem 0}
+.bud-lay{display:flex;height:2.6rem;border-radius:4px;overflow:hidden;border:1px solid var(--rule-2)}
+.bud-lay > div{display:flex;align-items:center;justify-content:center;min-width:0;padding:0 .3rem;
+  border-right:1px solid var(--rule-2);font-family:var(--f-mono);font-size:.63rem;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.bud-lay > div:last-child{border-right:0}
+.bud-name{display:flex;justify-content:space-between;align-items:baseline;gap:.7rem;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.bud-name b{color:var(--ink);font-size:.78rem}
+.bd-1{background:var(--brand-soft);color:var(--brand)}
+.bd-2{background:var(--series);color:var(--surface)}
+.bd-3{background:var(--accent-soft);color:var(--accent)}
+.bd-4{background:var(--accent);color:var(--surface)}
+.bd-5{background:var(--surface-2);color:var(--ink-2)}
+
+/* Trap callout */
+.trap{margin:1.5rem 0;padding:1.1rem 1.3rem;background:var(--accent-soft);border:1px solid var(--accent);
+  border-radius:4px;max-width:var(--measure)}
+.trap .tl2{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.5rem;font-weight:600}
+.trap p{margin:0 0 .65rem;max-width:none;font-size:.92rem;line-height:1.6;color:var(--ink-2)}
+.trap p:last-child{margin-bottom:0}
+.trap strong{color:var(--ink)}
+</style><style>
+/* ---------- Phase 10 components ---------- */
+/* Master idea slab */
+.idea{margin:2rem 0;padding:2.2rem 2rem;background:var(--surface);border:1px solid var(--rule-2);
+  border-radius:6px;box-shadow:var(--shadow)}
+.idea .eyeb{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:1rem}
+.idea .big-idea{font-family:var(--f-display);font-weight:600;font-size:clamp(1.35rem,3.6vw,2.1rem);
+  line-height:1.24;letter-spacing:-.015em;color:var(--ink);margin:0;text-wrap:balance;max-width:22ch}
+.idea .sub-idea{font-size:.95rem;line-height:1.6;color:var(--ink-2);margin:1.1rem 0 0;max-width:var(--measure)}
+.idea .sub-idea strong{color:var(--ink)}
+
+/* The signature line */
+.sig{margin:1.6rem 0;padding:2rem 1.9rem;border-radius:6px;background:var(--ink);color:var(--ground);
+  text-align:left}
+.sig .l1{font-family:var(--f-display);font-weight:700;font-size:clamp(2rem,6.5vw,3.5rem);
+  line-height:1;letter-spacing:-.03em;margin:0;color:var(--ground)}
+.sig .l2{font-family:var(--f-display);font-weight:400;font-size:clamp(1.1rem,3.2vw,1.7rem);
+  line-height:1.2;margin:.5rem 0 0;color:var(--ground);opacity:.72}
+.sig .te{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.1em;margin:1.2rem 0 0;
+  color:var(--ground);opacity:.5;text-transform:uppercase}
+
+/* Density comparison — the 874 vs 376 */
+.dens{display:flex;flex-direction:column;gap:.55rem;margin:.4rem 0}
+.dens-row{display:grid;grid-template-columns:minmax(8rem,13rem) minmax(0,1fr);gap:.8rem;align-items:center}
+.dens-lab{font-size:.82rem;line-height:1.3;color:var(--ink-2)}
+.dens-lab b{display:block;color:var(--ink);font-weight:600}
+.dens-track{display:flex;align-items:center;gap:.6rem;height:2rem}
+.dens-fill{height:1.35rem;border-radius:0 3px 3px 0;flex:none}
+.dens-fill.ghost{background:transparent;border:1.5px dashed var(--rule-2);border-left:0;box-sizing:border-box}
+.dens-fill.real{background:var(--accent)}
+.dens-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:600}
+.dens-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+/* Four community numbers */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.8rem;margin:1.5rem 0}
+.numcard{border:1px solid var(--rule);border-radius:5px;background:var(--surface);overflow:hidden;
+  display:flex;flex-direction:column}
+.numcard .nc-top{padding:1.1rem 1rem .7rem;text-align:center;background:var(--surface-2);
+  border-bottom:1px solid var(--rule)}
+.numcard .nc-n{font-family:var(--f-display);font-weight:700;font-size:2.6rem;line-height:.9;
+  color:var(--accent);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.numcard .nc-u{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-top:.45rem}
+.numcard .nc-b{padding:.8rem 1rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.numcard .nc-b b{display:block;color:var(--ink);font-family:var(--f-display);font-size:.95rem;
+  font-weight:600;margin-bottom:.35rem}
+.numcard.master{border-color:var(--accent)}
+.numcard.master .nc-top{background:var(--accent-soft)}
+
+/* Hoarding sequence */
+.hoard{display:flex;gap:.4rem;align-items:stretch;overflow-x:auto;padding:.3rem 0 .6rem;margin:.5rem 0}
+.hb{flex:0 0 auto;min-width:5.2rem;border:1px solid var(--rule-2);border-radius:4px;
+  background:var(--surface-2);padding:1.1rem .6rem;text-align:center}
+.hb .hn{font-family:var(--f-display);font-weight:700;font-size:1.85rem;line-height:1;
+  color:var(--ink-2);font-variant-numeric:tabular-nums}
+.hb .hs{font-family:var(--f-mono);font-size:.55rem;letter-spacing:.08em;color:var(--ink-3);
+  display:block;margin-top:.4rem;text-transform:uppercase}
+.hb.ours{background:var(--accent);border-color:var(--accent)}
+.hb.ours .hn{color:var(--surface)}
+.hb.ours .hs{color:var(--surface);opacity:.8}
+.hb.gate{background:var(--ink);border-color:var(--ink);display:flex;flex-direction:column;
+  justify-content:center;min-width:8.5rem}
+.hb.gate .hn{font-size:.9rem;font-family:var(--f-display);font-weight:600;color:var(--ground);line-height:1.25}
+.hb.gate .hs{color:var(--ground);opacity:.55}
+.harrow{display:flex;align-items:center;color:var(--ink-3);font-size:.8rem;flex:0 0 auto}
+
+/* Do / don't */
+.dodont{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.dd{border:1px solid var(--rule);border-radius:5px;padding:.9rem 1.05rem;background:var(--surface)}
+.dd h6{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;
+  margin:0 0 .6rem;font-weight:600}
+.dd.yes h6{color:var(--brand)}
+.dd.no h6{color:var(--ink-3)}
+.dd ul{margin:0;padding-left:1.05rem;font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.dd li{margin-bottom:.4rem}
+.dd li:last-child{margin-bottom:0}
+.dd.no ul{color:var(--ink-3)}
+.dd strong{color:var(--ink)}
+
+/* Narrative block — the long copy */
+.narr{margin:1.6rem 0;padding:1.6rem 1.7rem;background:var(--surface);border-left:3px solid var(--accent);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:0 5px 5px 0;
+  max-width:var(--measure);box-shadow:var(--shadow)}
+.narr p{font-family:var(--f-display);font-size:1.03rem;line-height:1.62;color:var(--ink-2);
+  margin:0 0 .9rem;max-width:none}
+.narr p:last-child{margin-bottom:0}
+.narr strong{color:var(--ink);font-weight:600}
+.narr .close{font-weight:600;color:var(--ink);font-size:1.15rem}
+
+/* Copy line — a headline shown as work */
+.cline{margin:1.1rem 0;padding:1.1rem 1.3rem;background:var(--surface-2);border:1px solid var(--rule);
+  border-radius:5px;max-width:var(--measure)}
+.cline .ch1{font-family:var(--f-display);font-weight:600;font-size:1.28rem;line-height:1.22;
+  color:var(--ink);margin:0;letter-spacing:-.012em}
+.cline .ch2{font-family:var(--f-display);font-weight:400;font-size:1.28rem;line-height:1.22;
+  color:var(--ink-2);margin:.2rem 0 0}
+.cline .cmeta{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.6rem}
+
+/* Swatches */
+.pal{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}
+.pw{flex:1 1 8rem;border:1px solid var(--rule);border-radius:4px;overflow:hidden;min-width:8rem}
+.pw .chip{height:3.2rem}
+.pw .pn{padding:.5rem .6rem;font-family:var(--f-mono);font-size:.63rem;line-height:1.4;color:var(--ink-2);
+  background:var(--surface)}
+.pw .pn b{display:block;color:var(--ink);font-size:.68rem}
+</style><style>
+/* ---------- Phase 11 components ---------- */
+/* Line-item card */
+.li{margin:1.2rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden}
+.li-head{display:grid;grid-template-columns:2.3rem minmax(0,1fr) auto;gap:.8rem;align-items:baseline;
+  padding:.75rem 1.05rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.li-n{font-family:var(--f-mono);font-size:.95rem;font-weight:600;color:var(--brand)}
+.li-head h4{font-family:var(--f-display);font-weight:600;font-size:1rem;margin:0;color:var(--ink);line-height:1.25}
+.li-amt{font-family:var(--f-mono);font-size:1.02rem;font-weight:600;color:var(--accent);white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.li-note{padding:.7rem 1.05rem;font-size:.84rem;line-height:1.55;color:var(--ink-2);
+  border-top:1px solid var(--rule);background:var(--surface-2)}
+.li-note strong{color:var(--ink)}
+
+/* Structure bar */
+.strc{display:flex;height:3.2rem;border-radius:5px;overflow:hidden;border:1px solid var(--rule-2);margin:.5rem 0}
+.strc > div{display:flex;flex-direction:column;justify-content:center;padding:0 .7rem;min-width:0;
+  border-right:1px solid var(--rule-2);overflow:hidden}
+.strc > div:last-child{border-right:0}
+.strc b{font-family:var(--f-mono);font-size:.78rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.strc span{font-family:var(--f-mono);font-size:.6rem;margin-top:.2rem;opacity:.75;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.st-cap{background:var(--accent);color:var(--surface)}
+.st-pop{background:var(--brand-soft);color:var(--brand)}
+.st-var{background:var(--series);color:var(--surface)}
+.st-semi{background:var(--surface-2);color:var(--ink-2)}
+.strc-key{display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3)}
+
+/* Case columns */
+.cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.85rem;margin:1.4rem 0}
+.cs{border:1px solid var(--rule);border-radius:5px;background:var(--surface);overflow:hidden;
+  display:flex;flex-direction:column}
+.cs.pick{border-color:var(--accent);box-shadow:var(--shadow)}
+.cs.warn2{border-color:var(--rule-2)}
+.cs-top{padding:.8rem 1rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.cs.pick .cs-top{background:var(--accent-soft)}
+.cs-top h6{font-family:var(--f-display);font-size:1.02rem;font-weight:600;margin:0;color:var(--ink)}
+.cs-top .amt{font-family:var(--f-mono);font-size:1.5rem;font-weight:600;color:var(--ink);display:block;
+  margin-top:.35rem;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.cs.pick .cs-top .amt{color:var(--accent)}
+.cs-top .pct{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);display:block;margin-top:.2rem}
+.cs-l{display:flex;justify-content:space-between;gap:.6rem;padding:.4rem 1rem;font-size:.81rem;
+  border-top:1px solid var(--rule);color:var(--ink-2);line-height:1.4}
+.cs-l:first-child{border-top:0}
+.cs-l b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:600}
+.cs-l.hi{background:var(--surface-2)}
+.cs-l.bad b{color:var(--accent)}
+
+/* Phase burn */
+.burn{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1.2rem 0;align-items:end}
+.bn{border:1px solid var(--rule);border-radius:5px;background:var(--surface);padding:.9rem 1rem;text-align:center}
+.bn .bh{background:var(--accent);border-radius:3px 3px 0 0;margin:0 auto .6rem}
+.bn .bv{font-family:var(--f-mono);font-size:1.15rem;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.bn .bl{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-top:.35rem}
+.bn .bs{font-size:.78rem;color:var(--ink-2);display:block;margin-top:.45rem;line-height:1.4}
+</style><style>
+/* ---------- Phase 12 components ---------- */
+/* Gap type badge */
+.gt{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .42rem;border-radius:3px;display:inline-block;line-height:1.5;border:1px solid transparent;white-space:nowrap}
+.gt-e{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.gt-o{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.gt-b{background:var(--surface-2);color:var(--ink-2);border-color:var(--rule-2)}
+.ev{font-family:var(--f-mono);font-size:.6rem;color:var(--ink-3);font-style:italic}
+
+/* Gap card */
+.gap{margin:1.15rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden}
+.gap.exp{border-left:3px solid var(--accent)}
+.gap.opp{border-left:3px solid var(--series)}
+.gap.bth{border-left:3px solid var(--brand)}
+.gap-head{padding:.8rem 1.1rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.gap-id{display:flex;flex-wrap:wrap;gap:.4rem .6rem;align-items:center;margin-bottom:.45rem}
+.gap-n{font-family:var(--f-mono);font-size:.78rem;font-weight:600;color:var(--brand);letter-spacing:.04em}
+.gap-head h4{font-family:var(--f-display);font-weight:600;font-size:1.02rem;margin:0;color:var(--ink);
+  line-height:1.32;text-wrap:balance}
+.gap-body{padding:.2rem 1.1rem .3rem}
+.fld{display:grid;grid-template-columns:8.4rem minmax(0,1fr);gap:.85rem;padding:.62rem 0;
+  border-bottom:1px solid var(--rule)}
+.fld:last-child{border-bottom:0}
+.fld-k{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);padding-top:.14rem;line-height:1.5}
+.fld.act .fld-k{color:var(--accent)}
+.fld.kpi .fld-k{color:var(--brand)}
+.fld-v{font-size:.875rem;line-height:1.58;color:var(--ink-2)}
+.fld-v strong{color:var(--ink)}
+.fld.kpi .fld-v{background:var(--surface-2);margin:-.2rem -.5rem;padding:.36rem .5rem;border-radius:3px}
+
+/* Cost buckets */
+.bkt{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.75rem;margin:1.4rem 0}
+.bk{border:1px solid var(--rule);border-radius:5px;background:var(--surface);padding:.9rem 1rem}
+.bk.free{border-color:var(--brand)}
+.bk .bkn{font-family:var(--f-display);font-weight:700;font-size:2.1rem;line-height:1;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.bk.free .bkn{color:var(--brand)}
+.bk .bkl{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-top:.4rem}
+.bk .bkd{font-size:.8rem;line-height:1.5;color:var(--ink-2);margin-top:.5rem;
+  padding-top:.5rem;border-top:1px solid var(--rule)}
+.bk .bkd b{color:var(--ink)}
+
+/* Category index strip */
+.idx{display:grid;grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr));gap:.5rem;margin:1.3rem 0}
+.ix{border:1px solid var(--rule);border-radius:4px;background:var(--surface);padding:.55rem .7rem;
+  display:block;text-decoration:none;color:inherit;transition:border-color .12s ease,background .12s ease}
+.ix:hover{border-color:var(--rule-2);background:var(--surface-2)}
+.ix .ixn{font-family:var(--f-mono);font-size:.6rem;color:var(--ink-3);letter-spacing:.08em}
+.ix .ixt{font-size:.82rem;color:var(--ink);font-weight:500;display:block;margin-top:.15rem;line-height:1.3}
+.ix .ixg{font-family:var(--f-mono);font-size:.62rem;color:var(--ink-3);display:block;margin-top:.28rem}
+</style>
+<style>
+/* ---------- Phase 13 components ---------- */
+/* Evidence type badges */
+.ty{font-family:var(--f-mono);font-size:.55rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  padding:.1rem .34rem;border-radius:3px;display:inline-block;line-height:1.5;border:1px solid transparent;white-space:nowrap}
+.ty-fact{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ty-off{background:var(--series);color:var(--surface);border-color:var(--series)}
+.ty-mkt{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.ty-news{background:var(--surface-2);color:var(--ink-2);border-color:var(--rule-2)}
+.ty-est{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.ty-inf{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.ty-hyp{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.ty-gap{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* Confidence pip */
+.cn{font-family:var(--f-mono);font-size:.62rem;white-space:nowrap;font-weight:500}
+.cn-h{color:var(--brand)}
+.cn-m{color:var(--ink-2)}
+.cn-l{color:var(--accent);font-weight:600}
+
+/* Evidence table */
+.evt{overflow-x:auto;margin:1.2rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+.evt table{font-size:.79rem;min-width:46rem}
+.evt th{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  background:var(--surface-2);font-weight:500;white-space:nowrap}
+.evt td{vertical-align:top;line-height:1.45}
+.evt td.u{max-width:16rem}
+.evt td.u a{font-family:var(--f-mono);font-size:.66rem;color:var(--series);text-decoration:none;
+  word-break:break-all;line-height:1.4;display:inline-block}
+.evt td.u a:hover{text-decoration:underline}
+.evt td.d{font-family:var(--f-mono);font-size:.68rem;white-space:nowrap;color:var(--ink-2)}
+.evt tr.gaprow td{background:var(--accent-soft)}
+.evt-cap{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.5rem .8rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+
+/* Overturned-finding cards */
+.ovt{margin:1rem 0;border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:5px;
+  background:var(--surface);overflow:hidden}
+.ovt.up{border-left-color:var(--brand)}
+.ovt-h{display:grid;grid-template-columns:2rem minmax(0,1fr);gap:.7rem;align-items:baseline;
+  padding:.7rem 1rem;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.ovt-n{font-family:var(--f-mono);font-size:.9rem;font-weight:600;color:var(--accent)}
+.ovt.up .ovt-n{color:var(--brand)}
+.ovt-h h5{font-family:var(--f-display);font-size:.98rem;font-weight:600;margin:0;color:var(--ink);line-height:1.3}
+.ovt-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:0}
+.ovt-c{padding:.75rem 1rem;border-right:1px solid var(--rule);font-size:.83rem;line-height:1.5;color:var(--ink-2)}
+.ovt-c:last-child{border-right:0}
+.ovt-c b{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.3rem;font-weight:500}
+.ovt-c.was{background:var(--surface-2)}
+.ovt-c.now strong{color:var(--ink)}
+.ovt-c.con{border-top:1px solid var(--rule);grid-column:1/-1;background:var(--accent-soft);color:var(--ink)}
+.ovt.up .ovt-c.con{background:var(--brand-soft)}
+
+/* Verify checklist */
+.vfy{counter-reset:v;margin:1.2rem 0}
+.vr{display:grid;grid-template-columns:2.1rem minmax(0,1fr) minmax(0,.75fr) minmax(0,.7fr);gap:.8rem;
+  padding:.6rem .3rem;border-bottom:1px solid var(--rule);align-items:baseline}
+.vr:last-child{border-bottom:0}
+.vr-n{font-family:var(--f-mono);font-size:.8rem;font-weight:600;color:var(--brand);text-align:right}
+.vr.top .vr-n{color:var(--accent)}
+.vr-w{font-size:.86rem;line-height:1.45;color:var(--ink)}
+.vr-s{font-size:.78rem;line-height:1.45;color:var(--ink-3);font-family:var(--f-mono)}
+.vr-c{font-size:.78rem;line-height:1.45;color:var(--ink-2)}
+.vr-c b{color:var(--ink)}
+.vhead{display:grid;grid-template-columns:2.1rem minmax(0,1fr) minmax(0,.75fr) minmax(0,.7fr);gap:.8rem;
+  padding:.4rem .3rem;border-bottom:1px solid var(--rule-2);
+  font-family:var(--f-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+
+/* Strategic answer block */
+.ans{margin:1.05rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface);overflow:hidden}
+.ans.warn3{border-color:var(--accent)}
+.ans-h{display:grid;grid-template-columns:2rem minmax(0,1fr);gap:.7rem;align-items:baseline;
+  padding:.7rem 1rem;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.ans.warn3 .ans-h{background:var(--accent-soft)}
+.ans-n{font-family:var(--f-mono);font-size:.85rem;font-weight:600;color:var(--brand)}
+.ans.warn3 .ans-n{color:var(--accent)}
+.ans-h h5{font-family:var(--f-display);font-size:1rem;font-weight:600;margin:0;color:var(--ink);line-height:1.3}
+.ans-b{padding:.85rem 1rem;font-size:.88rem;line-height:1.6;color:var(--ink-2)}
+.ans-b p{margin:0 0 .6rem;max-width:none}
+.ans-b p:last-child{margin-bottom:0}
+.ans-b strong{color:var(--ink)}
+.fals{margin-top:.7rem;padding-top:.6rem;border-top:1px solid var(--rule);font-size:.8rem;color:var(--ink-3)}
+.fals b{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+
+/* Tier bars */
+.tier{display:flex;flex-direction:column;gap:2px;margin:1.2rem 0}
+.tr-row{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:2px 0}
+.tr-l{font-size:.8rem;color:var(--ink-2);line-height:1.3}
+.tr-l b{display:block;color:var(--ink);font-weight:600;font-family:var(--f-mono);font-size:.68rem;
+  letter-spacing:.06em;text-transform:uppercase}
+.tr-t{position:relative;height:1.4rem;display:flex;align-items:center;gap:.5rem}
+.tr-f{height:1rem;border-radius:0 3px 3px 0;background:var(--series);flex:none}
+.tr-f.zero{background:transparent;border:1.5px dashed var(--accent);border-left:0;width:2.5rem;box-sizing:border-box}
+.tr-v{font-family:var(--f-mono);font-size:.74rem;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">Phase 13 of 13<strong>Research Dossier</strong></div>
+  <div class="toc">
+    <a href="#s0"><span class="n">§0</span><span>Six things overturned</span></a>
+    <a href="#s1"><span class="n">01</span><span>Executive snapshot</span></a>
+    <a href="#s2"><span class="n">02</span><span>The corridor market</span></a>
+    <a href="#s3"><span class="n">03</span><span>Infrastructure</span></a>
+    <a href="#s4"><span class="n">04</span><span>Residential market</span></a>
+    <a href="#s5"><span class="n">05</span><span>Pricing</span></a>
+    <a href="#s6"><span class="n">06</span><span>Competitors</span></a>
+    <a href="#s7"><span class="n">07</span><span>KMV brand audit</span></a>
+    <a href="#s8"><span class="n">08</span><span>Segmentation</span></a>
+    <a href="#s9"><span class="n">09</span><span>Community architecture</span></a>
+    <a href="#s10"><span class="n">10</span><span>Revenue &amp; funnel</span></a>
+    <a href="#s11"><span class="n">11</span><span>Channels</span></a>
+    <a href="#s12"><span class="n">12</span><span>Creative opportunity</span></a>
+    <a href="#s13"><span class="n">13</span><span>Gaps &amp; white spaces</span></a>
+    <a href="#s14"><span class="n">14</span><span>Opportunities</span></a>
+    <a href="#s15"><span class="n">15</span><span>Risks</span></a>
+    <a href="#s16"><span class="n">16</span><span>Sources &amp; conflicts</span></a>
+    <a href="#s17"><span class="n">17</span><span>Assumptions</span></a>
+    <a href="#s18"><span class="n">II</span><span>The sixteen answers</span></a>
+    <a href="#s19"><span class="n">A&ndash;F</span><span>Appendices</span></a>
+  </div>
+  <div>
+    <h4>Evidence type</h4>
+    <div class="legend-stack">
+      <span class="ty ty-fact">Fact</span>
+      <span class="ty ty-off">Official data</span>
+      <span class="ty ty-mkt">Market report</span>
+      <span class="ty ty-news">News report</span>
+      <span class="ty ty-est">Estimate</span>
+      <span class="ty ty-inf">Inference</span>
+      <span class="ty ty-hyp">Strategic hypothesis</span>
+      <span class="ty ty-gap">Gap</span>
+    </div>
+  </div>
+  <div>
+    <h4>The one hard limit</h4>
+    <p style="font-size:.76rem;line-height:1.5;color:var(--ink-3);margin:0;max-width:none">
+      Search works. <strong style="color:var(--accent)">Page retrieval does not.</strong>
+      The URLs are real; <strong style="color:var(--ink-2)">not one of them was opened.</strong>
+      That is why Appendix A exists.
+    </p>
+  </div>
+</nav>
+
+<main class="main">
+<header class="masthead">
+  <p class="eyebrow">Research dossier · 77 evidence rows · 24 sourced domains</p>
+  <h1>The verification pass — and the six findings that overturn what twelve phases asserted</h1>
+  <p class="sub">Phases 1&ndash;12 were built without the ability to retrieve a single web page. This phase is the first with working search. It did not confirm the earlier work; it contradicted it in six places, four of which weaken the plan.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 13 of 13</span>
+    <span><strong>Status</strong> foundation, not strategy</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> Research dossier for a hypothetical 25-acre, &#8377;500 crore corridor development. Nothing here describes an actual KMV Spaces project or commitment. <strong>Critically: no URL in this document was opened.</strong> Page retrieval was blocked throughout; every citation is search-surfaced, and no row is independently verified however authoritative its domain looks.
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head">
+    <div class="sec-num">§0</div>
+    <div>
+      <h2>Six findings that overturn earlier phases</h2>
+      <p class="dek">Read these first. Four of the six weaken the strategy, and one of them is the credential everything else rests on.</p>
+    </div>
+  </div>
+  <div class="body">
+
+    <div class="ovt">
+      <div class="ovt-h"><span class="ovt-n">1</span><h5>The AIIMS credential is unverified as to scope &mdash; and the whole brand position rests on it</h5></div>
+      <div class="ovt-g">
+        <div class="ovt-c was"><b>Phases 1&ndash;12 said</b>&ldquo;KMV Projects built AIIMS Mangalagiri.&rdquo; Recorded as <strong>FACT</strong> in Phase 4 and used as the answer to the one anxiety all eight segments share.</div>
+        <div class="ovt-c now"><b>Verification found</b>KMV lists it on its own site. But the <strong>Ministry of Health tender names HSCC (India) Ltd as Executing Agency</strong>, and a third source references <strong>L&amp;T</strong>. <strong>No source found establishes KMV's scope</strong> &mdash; main contractor, package, or sub.</div>
+        <div class="ovt-c con"><b>Consequence</b>The two are not actually contradictory &mdash; HSCC is the government's agency, contractors sit beneath it. <strong>But only the weakest source asserts KMV.</strong> A work order resolves it in one document; until then the sentence cannot be published in Phase 4's form.</div>
+      </div>
+    </div>
+
+    <div class="ovt">
+      <div class="ovt-h"><span class="ovt-n">2</span><h5>KMV Vivaan is not on the corridor, and its density was wrong</h5></div>
+      <div class="ovt-g">
+        <div class="ovt-c was"><b>Phases 1&ndash;12 said</b>Vivaan is the corridor precedent for both the product ladder and honest density, at <strong>6.6 units/acre</strong>.</div>
+        <div class="ovt-c now"><b>Verification found</b>Vivaan is at <strong>Poranki / Penamaluru, Vijayawada</strong> &mdash; confirmed by a government environment-clearance filing naming Survey No. 20/P, Poranki. <strong>92 units on 10 acres = 9.2/acre.</strong></div>
+        <div class="ovt-c con"><b>Consequence</b>The precedent is real but it is <strong>not a corridor precedent</strong>, and the density figure was overstated by 39%.</div>
+      </div>
+    </div>
+
+    <div class="ovt">
+      <div class="ovt-h"><span class="ovt-n">3</span><h5>KMV already sells villas above the price this plan calls ambitious</h5></div>
+      <div class="ovt-g">
+        <div class="ovt-c was"><b>Phases 1&ndash;12 said</b>Community D at <strong>&#8377;2.30&ndash;2.74 Cr</strong> is the top of the ladder, in a band seven phases could not prove was occupied.</div>
+        <div class="ovt-c now"><b>Verification found</b>KMV Vivaan asks <strong>from &#8377;3.59 Cr (Phase I) and &#8377;5.21 Cr (Phase II)</strong> &mdash; on the developer's own site.</div>
+        <div class="ovt-c con"><b>Consequence</b>The developer's existing villa product is priced <strong>above</strong> the proposed Community D. <strong>They hold booking data twelve phases lacked</strong>, and it may resolve the largest open question in the exercise in an afternoon.</div>
+      </div>
+    </div>
+
+    <div class="ovt">
+      <div class="ovt-h"><span class="ovt-n">4</span><h5>The plan asks a 50% premium to the locality &mdash; and nobody had ever sized it</h5></div>
+      <div class="ovt-g">
+        <div class="ovt-c was"><b>Phases 1&ndash;12 said</b>Blended realisation <strong>&#8377;6,098/sq ft</strong>, derived bottom-up from competitor tickets.</div>
+        <div class="ovt-c now"><b>Verification found</b>Mangalagiri locality average asking is <strong>&#8377;4,062/sq ft</strong>; the wider micromarket <strong>&#8377;5,489</strong>. Manjeera Monarch, a delivered comparable, sits at <strong>&#8377;5,100</strong>.</div>
+        <div class="ovt-c con"><b>Consequence</b>A <strong>50% premium to locality, 11% to micromarket.</strong> Defensible for low-density product &mdash; but <strong>Community A at &#8377;5,150 now prices above a delivered apartment comparable</strong>, with no delivery record to justify it. A is 45% of the units.</div>
+      </div>
+    </div>
+
+    <div class="ovt up">
+      <div class="ovt-h"><span class="ovt-n">5</span><h5>Amaravati's capital status is stronger than any earlier phase could establish</h5></div>
+      <div class="ovt-g">
+        <div class="ovt-c was"><b>Phases 1&ndash;12 said</b>Graded cautiously throughout, because no primary source could be retrieved.</div>
+        <div class="ovt-c now"><b>Verification found</b><strong>Parliament granted statutory status to Amaravati as AP's sole capital</strong> (Prasar Bharati, 2 Apr 2026). Works worth <strong>&#8377;57,821 crore</strong> in progress; <strong>&#8377;15,000 crore</strong> in the 2025&ndash;26 state budget.</div>
+        <div class="ovt-c con"><b>Consequence</b><strong>Upgrade to CONFIRMED.</strong> The largest political risk in the demand thesis is resolved by statute &mdash; though statutory status is not population, and construction spend is not consumer demand.</div>
+      </div>
+    </div>
+
+    <div class="ovt">
+      <div class="ovt-h"><span class="ovt-n">6</span><h5>The net-zero claim could not be corroborated at all</h5></div>
+      <div class="ovt-g">
+        <div class="ovt-c was"><b>Phases 1&ndash;12 said</b>&ldquo;India's first net-zero-energy residential villa community&rdquo; &mdash; the audited proof asset, and a Phase 10 creative pillar.</div>
+        <div class="ovt-c now"><b>Verification found</b><strong>Nothing.</strong> Not in the two KMV Spaces project pages surfaced, not in portal listings, not in the 2016 environment-clearance filing, not in news coverage.</div>
+        <div class="ovt-c con"><b>Consequence</b>Absence in search is not disproof. But <strong>a first-in-India superlative that does not surface in a direct search must not be published without the certificate in hand.</strong></div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <span class="wl">The limitation that governs every table in this document</span>
+      <p><strong>Search works. Page retrieval does not.</strong> Direct requests to <code>crda.ap.gov.in</code> and <code>rera.ap.gov.in</code> returned <code>CONNECT tunnel failed, 403</code>. Every fetch attempt &mdash; government, developer, portal alike &mdash; returned <code>EGRESS_BLOCKED</code>.</p>
+      <p><strong>So: the URLs are real and they resolve. I have not opened any of them.</strong> Claim content comes from search-engine summaries, not from reading the source. <strong>A Tier 1 domain in the Source column means the domain is authoritative &mdash; not that the document was read.</strong></p>
+      <p>This is why <strong>Appendix A is the real deliverable</strong>. Treat this dossier as a map of where the evidence is, not as the evidence.</p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Confidence</th><th>Definition &mdash; applied strictly throughout</th></tr></thead>
+        <tbody>
+          <tr><td><span class="cn cn-h">High</span></td><td>Tier 1&ndash;3 source, figure consistent across independent search results, internally consistent with other verified figures. <strong>Still not page-verified.</strong></td></tr>
+          <tr><td><span class="cn cn-m">Medium</span></td><td>Single credible source, or a figure varying between sources within a narrow band.</td></tr>
+          <tr><td><span class="cn cn-l">Low</span></td><td>Single source, interested party, uncorroborated, or sources materially conflict.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt"><strong>Type is used strictly as the brief specifies.</strong> The distinction that matters most: <strong>INFERENCE and STRATEGIC HYPOTHESIS are mine, not the source's.</strong> No source in this document is cited for a conclusion drawn from it &mdash; those rows name <em>this exercise</em> in the Source column.</p>
+  </div>
+</section>
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">01</div>
+    <div>
+      <h2>Executive market snapshot</h2>
+      <p class="dek">What is established, what is not — in eight lines.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Position</th><th>Grade</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>Amaravati is AP's sole capital by statute</strong>; works funded and visibly active</td><td><span class="ty ty-fact">Confirmed</span></td></tr>
+          <tr><td class="n">2</td><td>Corridor asking prices run <strong>&#8377;4,062/sq ft (Mangalagiri) to &#8377;5,489 (micromarket)</strong></td><td><span class="ty ty-mkt">Market report</span></td></tr>
+          <tr><td class="n">3</td><td>Named competitors priced: Manjeera Monarch <strong>&#8377;5,100</strong>, SLV Amaravathi Pride <strong>&#8377;4,210</strong></td><td><span class="ty ty-mkt">Market report</span></td></tr>
+          <tr class="gaprow"><td class="n">4</td><td><strong>The &#8377;2.2&ndash;2.8 crore villa band &mdash; 31% of proposed revenue &mdash; could not be corroborated by direct search</strong></td><td><span class="ty ty-gap">Unresolved, 8th phase</span></td></tr>
+          <tr><td class="n">5</td><td>Land pooling phase 2 authorised for <strong>16,666.57 acres</strong> across seven named villages</td><td><span class="ty ty-off">Official data</span></td></tr>
+          <tr><td class="n">6</td><td>The <strong>ORR is approved and in land acquisition</strong> &mdash; not under construction</td><td><span class="ty ty-news">Approved, not built</span></td></tr>
+          <tr class="gaprow"><td class="n">7</td><td>No verified 2026 headcount for government staff working in Amaravati</td><td><span class="ty ty-gap">Gap</span></td></tr>
+          <tr class="gaprow"><td class="n">8</td><td><strong>No transaction data obtained. Every price here is an asking price</strong></td><td><span class="ty ty-gap">Gap &mdash; the largest</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <span class="lbl">The one-sentence read</span>
+      <p class="big">The capital is real and funded; the corridor's price level is knowable and lower than the plan assumes; the band carrying a third of the revenue is not evidenced; and the developer's central credential needs a document nobody has produced.</p>
+    </div>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;01 &nbsp;·&nbsp; 7 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>Parliament granted statutory status to Amaravati as AP&#x27;s sole capital</td><td>Prasar Bharati / NewsOnAir (Govt of India)</td><td class="u"><a href="https://www.newsonair.gov.in/parliament-clears-capf-general-administration-also-grants-statutory-status-to-amaravati-as-andhra-pradeshs-sole-capital" target="_blank" rel="noopener">www.newsonair.gov.in/parliament-clears-capf-general-adm…</a></td><td class="d">2 Apr 2026</td><td><span class="ty ty-off">Official data</span></td><td><span class="cn cn-h">High</span></td></tr>
+          <tr><td>Works worth ₹57,821 crore in progress in Amaravati</td><td>Search-surfaced, attributed to capital-status reporting</td><td class="u"><a href="https://thesouthfirst.com/andhrapradesh/as-overhang-on-capital-status-lifts-naidu-sets-clock-ticking-for-amaravati/" target="_blank" rel="noopener">thesouthfirst.com/andhrapradesh/as-overhang-on-capital-…</a></td><td class="d">2026</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>₹15,000 crore allocated in the 2025&ndash;26 state budget for capital region infrastructure</td><td>Search-surfaced</td><td class="u"><a href="https://www.deccanherald.com/india/andhra-pradesh/amaravati-relaunch-farmers-rejoice-at-revival-of-their-capital-city-dream-after-a-more-than-5-year-fight-3522352" target="_blank" rel="noopener">www.deccanherald.com/india/andhra-pradesh/amaravati-rel…</a></td><td class="d">2025&ndash;26</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Mangalagiri average asking rate ₹4,062/sq ft</td><td>SquareYards locality page</td><td class="u"><a href="https://www.squareyards.com/property-rates/mangalagiri-vijayawada" target="_blank" rel="noopener">www.squareyards.com/property-rates/mangalagiri-vijayawada</a></td><td class="d">Sept 2025 / page dated Mar 2026</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Micromarket including Mangalagiri rose ₹4,805 → ₹5,489/sq ft, Mar&ndash;Dec 2025</td><td>SquareYards</td><td class="u"><a href="https://www.squareyards.com/property-rates/mangalagiri-vijayawada" target="_blank" rel="noopener">www.squareyards.com/property-rates/mangalagiri-vijayawada</a></td><td class="d">Mar&ndash;Dec 2025</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>CM reviewing capital works with weekly/monthly targets</td><td>Prasar Bharati / NewsOnAir</td><td class="u"><a href="https://www.newsonair.gov.in/andhra-pradesh-cm-holds-high-level-review-of-ongoing-capital-city-construction-works-at-his-camp-office-in-amaravati" target="_blank" rel="noopener">www.newsonair.gov.in/andhra-pradesh-cm-holds-high-level…</a></td><td class="d">4 Apr 2026</td><td><span class="ty ty-off">Official data</span></td><td><span class="cn cn-h">High</span></td></tr>
+          <tr><td>APCRDA briefed CM on development progress</td><td>Prasar Bharati / NewsOnAir</td><td class="u"><a href="https://www.newsonair.gov.in/apcrda-updates-cm-chandrababu-naidu-on-amaravati-development-progress" target="_blank" rel="noopener">www.newsonair.gov.in/apcrda-updates-cm-chandrababu-naid…</a></td><td class="d">22 Feb 2026</td><td><span class="ty ty-off">Official data</span></td><td><span class="cn cn-h">High</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">02</div>
+    <div>
+      <h2>Amaravati–Mangalagiri market</h2>
+      <p class="dek">The most favourable finding in the dossier, and the three cautions that go with it.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="dodont">
+      <div class="dd yes">
+        <h6>What resolved</h6>
+        <ul>
+          <li>The capital question that hung over the corridor from 2019 to 2024 is <strong>settled by statute</strong>, not by announcement.</li>
+          <li>That is a different kind of fact from anything Phase 1 could establish.</li>
+          <li>It removes <strong>the single largest political risk</strong> from the demand thesis.</li>
+        </ul>
+      </div>
+      <div class="dd no">
+        <h6>What it does not establish &mdash; the brief is explicit that future infrastructure does not create demand</h6>
+        <ul>
+          <li><strong>Statutory status is not population.</strong> No verified count of people living in the capital region as a result.</li>
+          <li><strong>Government relocation is only partly evidenced</strong> &mdash; the figures found (~2,000 secretariat staff; a 15,000 deadline) are <strong>2016&ndash;17 reporting.</strong></li>
+          <li><strong>Construction spend is not consumer demand.</strong> &#8377;57,821 crore of works generates contractor activity, not villa buyers.</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">The segment nobody markets to, now sized</span>
+        <h5>Land pooling, in numbers that were not available to any earlier phase</h5>
+      </div>
+      <div class="tw" style="margin:.6rem 0 0;border:0">
+        <table>
+          <tbody>
+            <tr><td>Phase 1 land pooled</td><td class="n"><strong>33,000+ acres</strong> from ~29 villages, Guntur and Krishna districts</td></tr>
+            <tr><td>Returnable plots allotted by e-lottery</td><td class="n"><strong>115</strong> on 23 Jan 2026 <i>(145 planned; 30 postponed at farmers' request)</i></td></tr>
+            <tr><td>Phase 2 authorised</td><td class="n"><strong>16,666.57 acres</strong> across 7 named villages</td></tr>
+            <tr><td>Farmers reportedly willing to offer</td><td class="n">36,000 acres <i>(minister's statement &mdash; interested party)</i></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="figure-foot">This corroborates Phase 5's S4 segment materially: the population is real, large, and named by village. <strong>What remains entirely untested is whether any of them want a land-for-unit exchange.</strong></div>
+    </figure>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;02 &nbsp;·&nbsp; 8 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>33,000+ acres pooled from ~29 villages in Guntur and Krishna districts</td><td>Search-surfaced, multiple outlets</td><td class="u"><a href="https://www.deccanherald.com/india/andhra-pradesh/amaravati-relaunch-farmers-rejoice-at-revival-of-their-capital-city-dream-after-a-more-than-5-year-fight-3522352" target="_blank" rel="noopener">www.deccanherald.com/india/andhra-pradesh/amaravati-rel…</a></td><td class="d">2025</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>APCRDA allotted 115 returnable plots by e-lottery; 145 planned, 30 postponed</td><td>ThePrint</td><td class="u"><a href="https://theprint.in/india/crda-allots-returnable-plots-to-amaravati-farmers-through-e-lottery/2835222/" target="_blank" rel="noopener">theprint.in/india/crda-allots-returnable-plots-to-amara…</a></td><td class="d">23 Jan 2026</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Phase 2 land pooling authorised: 16,666.57 acres, 7 named villages</td><td>Deccan Herald</td><td class="u"><a href="https://www.deccanherald.com/india/andhra-pradesh/andhra-pradesh-gets-ready-for-another-round-of-land-pooling-for-amaravati-3817447" target="_blank" rel="noopener">www.deccanherald.com/india/andhra-pradesh/andhra-prades…</a></td><td class="d">2026</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Farmers ready to offer 36,000 acres in phase 2</td><td>Deccan Herald, quoting a minister</td><td class="u"><a href="https://www.deccanherald.com/india/andhra-pradesh/farmers-ready-to-offer-36000-acres-under-second-phase-land-pooling-for-amaravati-minister-3568780" target="_blank" rel="noopener">www.deccanherald.com/india/andhra-pradesh/farmers-ready…</a></td><td class="d">2026</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-l">Low &mdash; interested party</span></td></tr>
+          <tr><td>Government set timelines to resolve land-pooling farmer grievances</td><td>The South First</td><td class="u"><a href="https://thesouthfirst.com/andhrapradesh/amaravati-land-pooling-government-sets-tight-timelines-to-resolve-decade-long-farmer-grievances/" target="_blank" rel="noopener">thesouthfirst.com/andhrapradesh/amaravati-land-pooling-…</a></td><td class="d">2026</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>~2,000 secretariat employees; 15,000 shift deadline</td><td>Deccan Chronicle</td><td class="u"><a href="https://www.deccanchronicle.com/nation/current-affairs/021016/andhra-pradesh-staff-begin-to-shift-to-secretariat-in-amaravati.html" target="_blank" rel="noopener">www.deccanchronicle.com/nation/current-affairs/021016/a…</a></td><td class="d"><strong>2 Oct 2016</strong></td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-l">Low &mdash; decade old</span></td></tr>
+          <tr><td>Secretariat functioning in Amaravati; CM chairing reviews there</td><td>Prasar Bharati / NewsOnAir</td><td class="u"><a href="https://www.newsonair.gov.in/andhra-pradesh-chief-minister-n-chandrababu-naidu-to-chair-review-meeting-at-state-secretariat" target="_blank" rel="noopener">www.newsonair.gov.in/andhra-pradesh-chief-minister-n-ch…</a></td><td class="d">9 Feb 2026</td><td><span class="ty ty-off">Official data</span></td><td><span class="cn cn-h">High</span></td></tr>
+          <tr class="gaprow"><td><strong>No verified 2026 count of staff working in Amaravati exists</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">03</div>
+    <div>
+      <h2>Infrastructure and development</h2>
+      <p class="dek">Graded on Phase 1's system. The APPROVED / UNDER CONSTRUCTION distinction is the one the category abuses, and it is enforced here.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Asset</th><th>Status</th><th>What may be claimed</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Amaravati as sole capital</strong></td><td><span class="ty ty-fact">Confirmed</span></td><td>State it plainly. The strongest fact available</td></tr>
+          <tr><td><strong>AIIMS Mangalagiri, operational</strong></td><td><span class="ty ty-fact">Confirmed</span></td><td>An operational hospital ~3 km from the corridor</td></tr>
+          <tr><td><strong>Capital works underway</strong></td><td><span class="ty ty-fact">Confirmed</span></td><td>Works are active and funded</td></tr>
+          <tr style="background:var(--accent-soft)"><td><strong>Amaravati ORR, 189 km</strong></td><td><span class="ty ty-news">Approved &mdash; land acquisition</span></td><td><strong>&ldquo;Approved, land acquisition begun.&rdquo;</strong> Never &ldquo;coming&rdquo; or &ldquo;under construction&rdquo;</td></tr>
+          <tr><td>Bangalore&ndash;Vijayawada Expressway</td><td><span class="ty ty-mkt">Under construction</span></td><td>May be described as under construction</td></tr>
+          <tr class="gaprow"><td><strong>Amaravati greenfield airport</strong></td><td><span class="ty ty-gap">Speculative</span></td><td><strong>Do not mention.</strong> No DPR or notification found in two attempts</td></tr>
+          <tr class="gaprow"><td>Metro</td><td><span class="ty ty-gap">Not established</span></td><td>Do not mention</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn">
+      <span class="wl">The ORR is the discipline test</span>
+      <p>It is genuinely approved, genuinely 189 km, genuinely &#8377;16,000 crore &mdash; and genuinely <strong>not built</strong>, with land acquisition only beginning in 2026.</p>
+      <p>Indian real-estate advertising routinely presents exactly this status as an existing amenity. <strong>A brand positioned on verifiability cannot.</strong></p>
+    </div>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;03 &nbsp;·&nbsp; 9 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>PM dedicated AIIMS Mangalagiri to the nation (with 4 others)</td><td>PIB, Government of India</td><td class="u"><a href="https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2008922&amp;reg=48&amp;lang=2" target="_blank" rel="noopener">www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2008922…</a></td><td class="d">Feb 2024</td><td><span class="ty ty-off">Official data</span></td><td><span class="cn cn-h">High</span></td></tr>
+          <tr><td>AIIMS Mangalagiri accelerated under PRAGATI platform</td><td>Prasar Bharati / NewsOnAir</td><td class="u"><a href="https://www.newsonair.gov.in/pms-flagship-platform-pragati-accelerates-aiims-mangalagiri-project-in-andhra-pradesh/" target="_blank" rel="noopener">www.newsonair.gov.in/pms-flagship-platform-pragati-acce…</a></td><td class="d">21 Jan 2026</td><td><span class="ty ty-off">Official data</span></td><td><span class="cn cn-h">High</span></td></tr>
+          <tr><td>AIIMS Mangalagiri OPD services commenced</td><td>CellIT</td><td class="u"><a href="https://cellit.in/aiims-mangalagiri-to-commence-opd-services-from-12th-march/" target="_blank" rel="noopener">cellit.in/aiims-mangalagiri-to-commence-opd-services-fr…</a></td><td class="d">undated in snippet</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-l">Low</span></td></tr>
+          <tr><td>Centre approved Amaravati ORR project</td><td>Indian Infrastructure</td><td class="u"><a href="https://indianinfrastructure.com/2025/01/16/centre-approves-amaravati-outer-ring-road-project/" target="_blank" rel="noopener">indianinfrastructure.com/2025/01/16/centre-approves-ama…</a></td><td class="d">16 Jan 2025</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>MoRTH approved 140 m width for six-lane ORR</td><td>Indian Infrastructure</td><td class="u"><a href="https://indianinfrastructure.com/2025/05/05/morth-approves-140-m-of-width-for-amaravati-six-lane-outer-ring-road-in-andhra-pradesh/" target="_blank" rel="noopener">indianinfrastructure.com/2025/05/05/morth-approves-140-…</a></td><td class="d">5 May 2025</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>ORR: 189 km, ₹160 billion incl. land acquisition, serving 5 districts</td><td>Search-surfaced, corroborated across two trade outlets</td><td class="u"><a href="https://www.constructionworld.in/transport-infrastructure/highways-and-roads-infrastructure/centre-approves-amaravati-outer-ring-road-project/67638/" target="_blank" rel="noopener">www.constructionworld.in/transport-infrastructure/highw…</a></td><td class="d">2025</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>ORR in planning / land acquisition phase as of 2026</td><td>Search-surfaced</td><td class="u"><a href="https://orramaravati.in/" target="_blank" rel="noopener">orramaravati.in/</a></td><td class="d">2026</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-l">Low &mdash; commercial site</span></td></tr>
+          <tr><td>Bangalore&ndash;Vijayawada Expressway under construction, completion expected 2026</td><td>BlackRidge Research</td><td class="u"><a href="https://www.blackridgeresearch.com/project-profiles/bangalore-vijayawada-expressway-length-route-map-cost-contractors-current-status-completion-date-updates" target="_blank" rel="noopener">www.blackridgeresearch.com/project-profiles/bangalore-v…</a></td><td class="d">Jan 2025</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr class="gaprow"><td><strong>Amaravati greenfield airport &mdash; no DPR or official notification found</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap / speculative</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">04</div>
+    <div>
+      <h2>Residential market</h2>
+      <p class="dek">Three competitors corroborated, two existence-only, one returned nothing at all.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Project</th><th>Location</th><th>Type / scale</th><th class="n">Price found</th><th class="n">Tier</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Manjeera Monarch</strong></td><td>Mangalagiri</td><td>Apartments 2/3/4 BHK, 5 acres, 1,070&ndash;2,724 sq ft</td><td class="n"><strong>&#8377;5,100/sq ft</strong><br><i>from &#8377;54.57 L</i></td><td class="n">5</td></tr>
+          <tr><td>SLV Amaravathi Pride</td><td>Mangalagiri</td><td>Apartments</td><td class="n">&#8377;4,210/sq ft</td><td class="n">5</td></tr>
+          <tr><td>IJM RTPDK Villas 64</td><td>Mangalagiri, Guntur</td><td>Villas, possession Sept 2027</td><td class="n">not found</td><td class="n">5</td></tr>
+          <tr><td>IJM Township</td><td>Mangalagiri</td><td>Township</td><td class="n">not found</td><td class="n">5</td></tr>
+          <tr style="background:var(--brand-soft)"><td><strong>KMV Vivaan Ph I</strong></td><td><strong>Poranki, Vijayawada</strong></td><td>Villas 3/4 BHK &mdash; 10 acres, 92 units both phases</td><td class="n"><strong>from &#8377;3.59 Cr</strong></td><td class="n">3</td></tr>
+          <tr style="background:var(--brand-soft)"><td><strong>KMV Vivaan Ph II</strong></td><td><strong>Poranki, Vijayawada</strong></td><td><i>(as above)</i></td><td class="n"><strong>from &#8377;5.21 Cr</strong></td><td class="n">3</td></tr>
+          <tr class="gaprow"><td><strong>Jayabheri The Capital</strong></td><td>&mdash;</td><td>&mdash;</td><td class="n"><strong>no results returned</strong></td><td class="n">&mdash;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <span class="lbl">Two things this table shows that eleven phases did not</span>
+      <p><strong>First, Jayabheri The Capital returned nothing.</strong> Phase 3 profiled it as a named competitor and Phase 10 used it as the density comparator at 52.9 units/acre. A direct search returned no result at all. That does not mean it does not exist &mdash; <strong>but the comparator anchoring the campaign's signature claim is, at present, unsourced.</strong></p>
+      <p><strong>Second, the villa segment is thinly evidenced.</strong> Searching directly for &#8377;2&ndash;3 crore villas returned portal <em>listing</em> pages and one 4BHK house at &#8377;2 crore in Arundelpet, Guntur. <strong>No project-level evidence of depth in the band was found.</strong></p>
+    </div>
+    <div class="warn">
+      <span class="wl">The band on its eighth phase unresolved &mdash; and the counterweight that may settle it free</span>
+      <p>Seven phases of inability to find evidence, plus one direct search that also found none, is <strong>weak evidence of absence</strong> &mdash; not proof, but enough that the burden has shifted. <strong>Community D and the top of C are &#8377;268 crore priced into that band.</strong></p>
+      <p><strong>But KMV Vivaan sells from &#8377;3.59 Cr and &#8377;5.21 Cr.</strong> If those clear, the developer has already sold above the band this exercise cannot evidence &mdash; and holds the booking data twelve phases lacked. <strong>That is the first question to ask them.</strong></p>
+    </div>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;04 &nbsp;·&nbsp; 12 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>Manjeera Monarch: ₹5,100/sq ft, 5 acres, 1,070&ndash;2,724 sq ft, from ₹54.57 L</td><td>SquareYards project page</td><td class="u"><a href="https://www.squareyards.com/vijayawada-residential-property/manjeera-monarch/10076/project" target="_blank" rel="noopener">www.squareyards.com/vijayawada-residential-property/man…</a></td><td class="d">page dated 2026</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Manjeera Monarch listed on multiple portals</td><td>CommonFloor</td><td class="u"><a href="https://www.commonfloor.com/manjeera-monarch-vijayawada/povp-iot2f8" target="_blank" rel="noopener">www.commonfloor.com/manjeera-monarch-vijayawada/povp-io…</a></td><td class="d">undated</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-l">Low</span></td></tr>
+          <tr><td>SLV Amaravathi Pride: ₹4,210/sq ft</td><td>SquareYards</td><td class="u"><a href="https://www.squareyards.com/vijayawada-residential-property/slv-amaravathi-pride/102855/project" target="_blank" rel="noopener">www.squareyards.com/vijayawada-residential-property/slv…</a></td><td class="d">2026</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>IJM RTPDK Villas 64: Mangalagiri Guntur, under construction, possession Sept 2027</td><td>99acres</td><td class="u"><a href="https://www.99acres.com/ijm-rtpdk-villas-64-mangalagiri-guntur-npxid-r438456" target="_blank" rel="noopener">www.99acres.com/ijm-rtpdk-villas-64-mangalagiri-guntur-…</a></td><td class="d">2026</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>IJM Township, Mangalagiri</td><td>SquareYards</td><td class="u"><a href="https://www.squareyards.com/vijayawada-residential-property/ijm-township/45093/project" target="_blank" rel="noopener">www.squareyards.com/vijayawada-residential-property/ijm…</a></td><td class="d">2026</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-l">Low</span></td></tr>
+          <tr><td>KMV Vivaan: Poranki/Penamaluru Vijayawada, 10 acres, 92 units, 3&ndash;4 BHK villas</td><td>99acres</td><td class="u"><a href="https://www.99acres.com/kmv-vivaan-villas-penamaluru-vijayawada-npxid-r370665" target="_blank" rel="noopener">www.99acres.com/kmv-vivaan-villas-penamaluru-vijayawada…</a></td><td class="d">2026</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>KMV Vivaan Phase I from ₹3.59 Cr</td><td>KMV Spaces (official)</td><td class="u"><a href="https://www.kmvspaces.com/projects/villas-in-vijayawada" target="_blank" rel="noopener">www.kmvspaces.com/projects/villas-in-vijayawada</a></td><td class="d">undated</td><td><span class="ty ty-fact">Fact</span><i style="display:block;font-size:.62rem;color:var(--ink-3);margin-top:.2rem">self-reported asking price</i></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>KMV Vivaan Phase II from ₹5.21 Cr</td><td>KMV Spaces (official)</td><td class="u"><a href="https://www.kmvspaces.com/projects/luxury-villas-for-sale-in-vijayawada" target="_blank" rel="noopener">www.kmvspaces.com/projects/luxury-villas-for-sale-in-vi…</a></td><td class="d">undated</td><td><span class="ty ty-fact">Fact</span><i style="display:block;font-size:.62rem;color:var(--ink-3);margin-top:.2rem">self-reported asking price</i></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>KMV Vivaan RERA number P06180030814</td><td>Search-surfaced via portal</td><td class="u"><a href="https://regrob.com/project/kmv-vivaan-villas-poranki-vijayawada/" target="_blank" rel="noopener">regrob.com/project/kmv-vivaan-villas-poranki-vijayawada/</a></td><td class="d">undated</td><td><span class="ty ty-off">Official data</span><i style="display:block;font-size:.62rem;color:var(--ink-3);margin-top:.2rem">RERA no., unverified against register</i></td><td><span class="cn cn-l">Low</span></td></tr>
+          <tr><td>KMV Vivaan sited at Survey No. 20/P, Poranki</td><td>MoEFCC environment clearance filing</td><td class="u"><a href="https://environmentclearance.nic.in/writereaddata/FormB/EC/FORM_1/020620163BFNM71GKMVVivaanForms.pdf" target="_blank" rel="noopener">environmentclearance.nic.in/writereaddata/FormB/EC/FORM…</a></td><td class="d">2016</td><td><span class="ty ty-off">Official data</span></td><td><span class="cn cn-h">High &mdash; government filing</span></td></tr>
+          <tr class="gaprow"><td><strong>Jayabheri The Capital &mdash; no search result returned</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+          <tr class="gaprow"><td><strong>No project-level evidence of ₹2.2&ndash;2.8 Cr villa depth found</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">05</div>
+    <div>
+      <h2>Pricing</h2>
+      <p class="dek">The locality benchmark eleven phases never had — and the premium nobody had sized.</p>
+    </div>
+  </div>
+  <div class="body">
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">&#8377; per sq ft &nbsp;·&nbsp; solid = observed market &nbsp;·&nbsp; outlined = this plan</span>
+        <h5>The plan asks a 50% premium to the locality and 11% to the micromarket</h5>
+      </div>
+      <div class="tier">
+        <div class="tr-row"><div class="tr-l">Mangalagiri locality average, asking</div><div class="tr-t"><div class="tr-f" style="width:56.4%"></div><span class="tr-v">&#8377;4,062</span></div></div>
+        <div class="tr-row"><div class="tr-l">Mangalagiri, June 2025</div><div class="tr-t"><div class="tr-f" style="width:56.9%"></div><span class="tr-v">&#8377;4,098</span></div></div>
+        <div class="tr-row"><div class="tr-l">Wider micromarket, Mar 2025</div><div class="tr-t"><div class="tr-f" style="width:66.7%"></div><span class="tr-v">&#8377;4,805</span></div></div>
+        <div class="tr-row"><div class="tr-l">Wider micromarket, Dec 2025</div><div class="tr-t"><div class="tr-f" style="width:76.2%"></div><span class="tr-v">&#8377;5,489</span></div></div>
+        <div class="tr-row"><div class="tr-l">Tadepalli</div><div class="tr-t"><div class="tr-f" style="width:78.5%"></div><span class="tr-v">&#8377;5,653</span></div></div>
+        <div class="tr-row"><div class="tr-l">Patamata</div><div class="tr-t"><div class="tr-f" style="width:74.6%"></div><span class="tr-v">&#8377;5,369</span></div></div>
+        <div class="tr-row"><div class="tr-l">SLV Amaravathi Pride</div><div class="tr-t"><div class="tr-f" style="width:58.5%"></div><span class="tr-v">&#8377;4,210</span></div></div>
+        <div class="tr-row"><div class="tr-l">Manjeera Monarch &mdash; delivered comparable</div><div class="tr-t"><div class="tr-f" style="width:70.8%"></div><span class="tr-v">&#8377;5,100</span></div></div>
+        <div class="tr-row"><div class="tr-l">Phase 6 Community A</div><div class="tr-t"><div class="tr-f zero" style="width:71.5%"></div><span class="tr-v">&#8377;5,150</span></div></div>
+        <div class="tr-row"><div class="tr-l"><strong>Phase 6 plan, blended</strong></div><div class="tr-t"><div class="tr-f zero" style="width:84.7%"></div><span class="tr-v">&#8377;6,098</span></div></div>
+        <div class="tr-row"><div class="tr-l">Phase 6 Community D</div><div class="tr-t"><div class="tr-f zero" style="width:100.0%"></div><span class="tr-v">&#8377;7,200</span></div></div>
+      </div>
+      <div class="figure-foot">Not automatically wrong &mdash; a 15-per-acre scheme with villas <em>should</em> price above a locality average dominated by apartments. <strong>But the premium is now sized, and it never was before.</strong></div>
+    </figure>
+    <div class="cards">
+      <div class="card">
+        <h6>1 · The premium was never sized</h6>
+        <ul><li>Phase 6 built the ladder bottom-up from competitor tickets.</li><li>It never asked <strong>&ldquo;how far above the locality are we?&rdquo;</strong></li><li>The answer is <strong>50%</strong>.</li></ul>
+      </div>
+      <div class="card">
+        <h6>2 · Community A is the exposure nobody flagged</h6>
+        <ul><li>At &#8377;5,150 it prices <strong>above Manjeera Monarch at &#8377;5,100</strong> &mdash; delivered, same locality.</li><li>A is <strong>169 units, 45% of the scheme</strong>, and a garden apartment competes directly on rate.</li></ul>
+      </div>
+      <div class="card">
+        <h6>3 · The series contradict each other</h6>
+        <ul><li>Mangalagiri drifted <strong>down</strong> &#8377;4,098 &rarr; &#8377;4,062 while its own micromarket rose <strong>&#8377;4,805 &rarr; &#8377;5,489.</strong></li><li>Same portal, different aggregations. <strong>Scrutinise before using either.</strong></li></ul>
+      </div>
+    </div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Series</th><th class="n">Figure</th><th>Strength</th><th>Weakness</th></tr></thead>
+        <tbody>
+          <tr><td>Mangalagiri locality</td><td class="n">&#8377;4,062</td><td>Locality-specific; the correct geography</td><td>Asking prices; drifting down against its own micromarket</td></tr>
+          <tr><td>Micromarket</td><td class="n">&#8377;5,489</td><td>Rising trend consistent with capital activity</td><td><strong>Geography undefined</strong> &mdash; may include Tadepalli and Patamata, both higher</td></tr>
+          <tr style="background:var(--brand-soft)"><td><strong>Project-level</strong></td><td class="n">&#8377;4,210&ndash;5,100</td><td><strong>Specific, named, checkable</strong></td><td>Only three projects; all asking</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <span class="lbl">Verdict, per the brief's requirement to resolve conflicts</span>
+      <p><strong>Project-level figures are the strongest of the three</strong>, because they are named and checkable. <strong>The locality average is the weakest</strong>, because it aggregates unknown product mix. Phase 2's method &mdash; derive &#8377;/sq ft from published ticket &divide; published size, project by project &mdash; <strong>was the right one</strong>, and this pass corroborates its outputs at the two points it could check.</p>
+      <p><strong>What should be treated as uncertain: all of it.</strong> Every figure is an asking price. The registration data that would settle it remains unobtained.</p>
+    </div>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;05 &nbsp;·&nbsp; 6 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>Mangalagiri average ₹4,062/sq ft, down from ₹4,098 in June 2025</td><td>SquareYards</td><td class="u"><a href="https://www.squareyards.com/property-rates/mangalagiri-vijayawada" target="_blank" rel="noopener">www.squareyards.com/property-rates/mangalagiri-vijayawada</a></td><td class="d">Sept 2025</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Micromarket ₹4,805 (Mar 2025) → ₹5,489 (Dec 2025)</td><td>SquareYards</td><td class="u"><a href="https://www.squareyards.com/property-rates/mangalagiri-vijayawada" target="_blank" rel="noopener">www.squareyards.com/property-rates/mangalagiri-vijayawada</a></td><td class="d">Mar&ndash;Dec 2025</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Tadepalli ₹5,653/sq ft; Patamata ₹5,369/sq ft</td><td>SquareYards</td><td class="u"><a href="https://www.squareyards.com/property-rates/mangalagiri-vijayawada" target="_blank" rel="noopener">www.squareyards.com/property-rates/mangalagiri-vijayawada</a></td><td class="d">2025&ndash;26</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Plan asks 50% premium to locality, 11% to micromarket</td><td><em>This exercise</em> &mdash; 6,098 ÷ 4,062 and ÷ 5,489</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">Aug 2026</td><td><span class="ty ty-inf">Inference</span></td><td><span class="cn cn-h">High (arithmetic)</span></td></tr>
+          <tr><td>Community A at ₹5,150 exceeds Manjeera Monarch at ₹5,100</td><td><em>This exercise</em>, comparing Phase 6 to portal data</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">Aug 2026</td><td><span class="ty ty-inf">Inference</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr class="gaprow"><td><strong>No transaction/registration price data obtained</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">06</div>
+    <div>
+      <h2>Competitive landscape</h2>
+      <p class="dek">Of eleven profiled in Phase 3, three corroborated, two existence-only, one absent.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Phase 3 claim</th><th>Verification status</th></tr></thead>
+        <tbody>
+          <tr><td>Manjeera Monarch &mdash; apartments, high density</td><td><strong>Corroborated.</strong> 5 acres, 2/3/4 BHK, &#8377;5,100/sq ft, from &#8377;54.57 L</td></tr>
+          <tr><td>IJM Villas 64 / RTPDK &mdash; villas, Mangalagiri</td><td><strong>Existence corroborated.</strong> Under construction, possession Sept 2027. <strong>No price found</strong></td></tr>
+          <tr><td>IJM Township</td><td>Existence corroborated only</td></tr>
+          <tr style="background:var(--brand-soft)"><td>SLV Amaravathi Pride</td><td><strong>Corroborated</strong>, &#8377;4,210/sq ft. <i>Not in Phase 3's set &mdash; a new find</i></td></tr>
+          <tr class="gaprow"><td><strong>Jayabheri The Capital</strong></td><td><strong>No result returned</strong></td></tr>
+          <tr><td>TAG AIRA, Prime Grandeur, Aparna, Vertex, Undavalli, Raintree Park</td><td>Not searched in this pass</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn">
+      <span class="wl">Why Phase 12's G7 was right, and worse than it stated</span>
+      <p>The signature line rests on comparators including <strong>Jayabheri at 52.9 units/acre</strong> and <strong>Manjeera Monarch at 113.4</strong>. Manjeera is now partly checkable &mdash; 5 acres, units 1,070&ndash;2,724 sq ft &mdash; and 113.4/acre implies <strong>567 units on 5 acres</strong>, plausible but <strong>stated by no source found.</strong> Jayabheri's figure has <strong>no source at all.</strong></p>
+      <p><strong>Both comparators anchoring the campaign's central claim are unsourced at the level of published unit counts.</strong> G7 said bound the claim before media runs. This strengthens it to: <strong>source the comparators first, then bound the claim.</strong></p>
+    </div>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;06 &nbsp;·&nbsp; 5 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>Manjeera Monarch: 5 acres, 2/3/4 BHK, 1,070&ndash;2,724 sq ft</td><td>SquareYards</td><td class="u"><a href="https://www.squareyards.com/vijayawada-residential-property/manjeera-monarch/10076/project" target="_blank" rel="noopener">www.squareyards.com/vijayawada-residential-property/man…</a></td><td class="d">2026</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>IJM RTPDK Villas 64 under construction, possession Sept 2027</td><td>99acres</td><td class="u"><a href="https://www.99acres.com/ijm-rtpdk-villas-64-mangalagiri-guntur-npxid-r438456" target="_blank" rel="noopener">www.99acres.com/ijm-rtpdk-villas-64-mangalagiri-guntur-…</a></td><td class="d">2026</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Golden Villas: 4BHK triplex, 237 sq yd, 4,500 sq ft, possession Jan 2026</td><td>Search-surfaced portal listing</td><td class="u"><a href="https://www.99acres.com/villas-in-mangalagiri-guntur-ffid" target="_blank" rel="noopener">www.99acres.com/villas-in-mangalagiri-guntur-ffid</a></td><td class="d">2026</td><td><span class="ty ty-mkt">Market report</span></td><td><span class="cn cn-l">Low</span></td></tr>
+          <tr><td>Manjeera Monarch at 113.4 units/acre implies 567 units on 5 acres</td><td><em>This exercise</em></td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">Aug 2026</td><td><span class="ty ty-inf">Inference</span></td><td><span class="cn cn-l">Low &mdash; unit count unsourced</span></td></tr>
+          <tr class="gaprow"><td><strong>Jayabheri The Capital density of 52.9/acre &mdash; no source found</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">07</div>
+    <div>
+      <h2>KMV Spaces brand audit</h2>
+      <p class="dek">The finding that matters most in this document.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Source</th><th>What it indicates</th><th class="n">Tier</th></tr></thead>
+        <tbody>
+          <tr><td><strong>KMV Projects' own site</strong> carries a dedicated AIIMS Mangalagiri project page</td><td>KMV worked on the project</td><td class="n"><strong>3</strong><br><i>self-reported,<br>interested party</i></td></tr>
+          <tr style="background:var(--brand-soft)"><td><strong>MoHFW / PMSSY tender</strong> titled <em>&ldquo;HSCC (INDIA) LIMITED as Executing Agency of&rdquo;</em> for Guntur</td><td><strong>HSCC is the government's executing agency</strong></td><td class="n"><strong>1</strong><br><i>government</i></td></tr>
+          <tr><td>A video title references <em>&ldquo;L &amp; T Mangalagiri L/T KMV Construction&rdquo;</em></td><td>L&amp;T may hold a contractor role</td><td class="n"><strong>8</strong><br><i>user-generated,<br>weakest</i></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding">
+      <span class="lbl">Reconciling them &mdash; the sources are not actually in conflict</span>
+      <p>Under the PMSSY structure, HSCC (India) Ltd is routinely the government's executing agency for AIIMS projects, with civil contractors appointed beneath it. <strong>KMV being a contractor is entirely consistent with HSCC being the executing agency.</strong> The two describe different layers.</p>
+      <p class="big">What is not established by any source found is KMV's scope: main civil contractor for the whole campus, contractor for certain packages, or sub-contractor.</p>
+      <p><strong>Why this is decisive rather than pedantic.</strong> The strategy does not need KMV to have been the executing agency. <strong>It needs a defensible sentence.</strong> &ldquo;KMV built AIIMS Mangalagiri&rdquo; may be true, overstated, or misleading depending on scope &mdash; and it will be published to a market whose top complaint is misrepresentation. <strong>A work order resolves it in one document.</strong></p>
+    </div>
+    <div class="dodont">
+      <div class="dd no">
+        <h6>The net-zero claim could not be corroborated</h6>
+        <ul>
+          <li>Not in the two KMV Spaces project pages surfaced, not in portal listings, not in the 2016 environment-clearance filing, not in news.</li>
+          <li><strong>Absence in search is not disproof.</strong></li>
+          <li>But a first-in-India superlative that does not surface in a direct search <strong>must not be published without the certificate in hand.</strong></li>
+        </ul>
+      </div>
+      <div class="dd yes">
+        <h6>Two Phase 4 findings verification strengthened</h6>
+        <ul>
+          <li><strong>Two domains, split equity &mdash; confirmed.</strong> Both surfaced as separate entities in the same searches; portals carry the projects independently.</li>
+          <li><strong>The lineage is real and on the wrong site.</strong> The institutional portfolio sits on <code>kmvprojects.com</code>; the consumer brand is <code>kmvspaces.com</code>.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;07 &nbsp;·&nbsp; 10 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>KMV Projects publishes an AIIMS Mangalagiri project page</td><td>KMV Projects (official)</td><td class="u"><a href="https://www.kmvprojects.com/building-factories/all-india-institute-of-medical-and-sciences-(aiims),-mangalagiri" target="_blank" rel="noopener">www.kmvprojects.com/building-factories/all-india-instit…</a></td><td class="d">undated</td><td><span class="ty ty-fact">Fact</span><i style="display:block;font-size:.62rem;color:var(--ink-3);margin-top:.2rem">that the page exists and claims the project</i></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>KMV Projects institutional portfolio sits on the corporate domain</td><td>KMV Projects</td><td class="u"><a href="https://www.kmvprojects.com/building-factories" target="_blank" rel="noopener">www.kmvprojects.com/building-factories</a></td><td class="d">undated</td><td><span class="ty ty-fact">Fact</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>HSCC (India) Ltd named as Executing Agency in MoHFW/PMSSY tender for Guntur</td><td>Ministry of Health &amp; Family Welfare, PMSSY</td><td class="u"><a href="https://pmssy.mohfw.gov.in/files/tender/GUNTUR_RFP.pdf" target="_blank" rel="noopener">pmssy.mohfw.gov.in/files/tender/GUNTUR_RFP.pdf</a></td><td class="d">undated</td><td><span class="ty ty-off">Official data</span></td><td><span class="cn cn-h">High &mdash; government document</span></td></tr>
+          <tr><td>A video title references L&amp;T alongside KMV on AIIMS Mangalagiri</td><td>YouTube</td><td class="u"><a href="https://www.youtube.com/watch?v=5_zfst5xEYY" target="_blank" rel="noopener">www.youtube.com/watch?v=5_zfst5xEYY</a></td><td class="d">undated</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-l">Low &mdash; user-generated</span></td></tr>
+          <tr><td>AIIMS Mangalagiri: 960 beds, 183.11 acres, 125 MBBS seats</td><td>Search-surfaced, corroborated across results</td><td class="u"><a href="https://en.wikipedia.org/wiki/All_India_Institute_of_Medical_Sciences,_Mangalagiri" target="_blank" rel="noopener">en.wikipedia.org/wiki/All_India_Institute_of_Medical_Sc…</a></td><td class="d">2026</td><td><span class="ty ty-est">Estimate</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>AIIMS Mangalagiri cost &mdash; <strong>sources conflict: ₹1,618.23 Cr / ₹1,680 Cr / ₹1,090 Cr</strong></td><td>Multiple search results</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">2024&ndash;26</td><td><span class="ty ty-news">News report</span><i style="display:block;font-size:.62rem;color:var(--ink-3);margin-top:.2rem">conflicting</i></td><td><span class="cn cn-l">Low</span></td></tr>
+          <tr><td>Project scope: 11 buildings, 94,506 sq m</td><td>Search-surfaced</td><td class="u"><a href="https://pollent.co.in/project/shared-time-human-resources-management/" target="_blank" rel="noopener">pollent.co.in/project/shared-time-human-resources-manag…</a></td><td class="d">undated</td><td><span class="ty ty-est">Estimate</span></td><td><span class="cn cn-l">Low</span></td></tr>
+          <tr><td>KMV Spaces corporate identity separate from KMV Projects</td><td>KMV Spaces</td><td class="u"><a href="https://www.kmvspaces.com/about-us" target="_blank" rel="noopener">www.kmvspaces.com/about-us</a></td><td class="d">undated</td><td><span class="ty ty-fact">Fact</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr class="gaprow"><td><strong>Net-zero-energy villa community claim &mdash; no corroboration found</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+          <tr class="gaprow"><td><strong>KMV&#x27;s contractual scope on AIIMS &mdash; not established by any source</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap</span><i style="display:block;font-size:.62rem;color:var(--ink-3);margin-top:.2rem">the most important one</i></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <span class="lbl">Conflict handling, stated per the brief</span>
+      <p><strong>On AIIMS cost, three figures appear: &#8377;1,618.23 Cr, &#8377;1,680 Cr and &#8377;1,090 Cr.</strong> The strongest available would be a PIB release or MoHFW annual report; neither could be opened. <strong>Treat the cost as uncertain and cite no figure.</strong></p>
+      <p><strong>On KMV's role</strong>, the government document (Tier 1) and the developer's site (Tier 3, interested party) are <strong>not in conflict</strong> &mdash; they describe different layers &mdash; <strong>but only the weaker one asserts KMV.</strong> Where Tier 1 and Tier 3 appear to disagree, Tier 1 wins; here it does not disagree, it is <em>silent</em> on KMV. <strong>Which is why a work order is required rather than an argument.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-head">
+    <div class="sec-num">08</div>
+    <div>
+      <h2>Customer segmentation</h2>
+      <p class="dek">One segment strengthened, one weakened, six untouched — and the core problem search cannot fix.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Segment</th><th class="n">Priority</th><th class="n">Revenue</th><th>Verification status this pass</th></tr></thead>
+        <tbody>
+          <tr><td class="n"><strong>S3</strong></td><td>US / developed-market diaspora</td><td class="n"><strong>4.20</strong></td><td class="n">&mdash;</td><td>Not verified. No origin-district data found</td></tr>
+          <tr style="background:var(--brand-soft)"><td class="n"><strong>S4</strong></td><td><strong>Land-pooling landowners</strong></td><td class="n"><strong>4.05</strong></td><td class="n">&mdash;</td><td><strong>Population materially corroborated</strong> &mdash; 33,000+ acres, ~29 villages, phase 2 of 16,666.57 acres</td></tr>
+          <tr><td class="n"><strong>S1</strong></td><td>Trade and business families</td><td class="n"><strong>4.05</strong></td><td class="n"><strong>&#8377;121.5 Cr</strong></td><td>Not verified. Sizing remains an ITR-filer bounding exercise</td></tr>
+          <tr><td class="n">S7</td><td>Hyderabad households with AP roots</td><td class="n">3.90</td><td class="n">&#8377;55.2 Cr</td><td>Not verified. <strong>No published size exists</strong></td></tr>
+          <tr><td class="n">S2</td><td>Senior medical professionals</td><td class="n">3.90</td><td class="n">&mdash;</td><td><strong>Institution corroborated</strong> &mdash; 960 beds, 125 MBBS seats. Faculty headcount still unfound</td></tr>
+          <tr><td class="n">S6</td><td>Local upgraders</td><td class="n">3.20</td><td class="n">&mdash;</td><td>Not verified</td></tr>
+          <tr class="gaprow"><td class="n">S5</td><td><strong>Government / capital workforce</strong></td><td class="n">2.95</td><td class="n">~&#8377;52 Cr</td><td><strong>Weakened.</strong> Only 2016-era headcounts found. No 2026 figure</td></tr>
+          <tr><td class="n">S8</td><td>Gulf diaspora</td><td class="n">2.45</td><td class="n">&mdash;</td><td>Not verified</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn">
+      <span class="wl">The core problem is untouched</span>
+      <p>Phase 5 §7.1: no surveys, no interviews, no CRM data, no walk-in analysis. <strong>Search cannot fix that</strong> &mdash; it can size populations, not describe behaviour.</p>
+      <p><strong>Every behavioural attribute across all eight segments remains hypothesis</strong>, and &#8377;31.75 crore is allocated against it. Also: <strong>S5 should be de-weighted until a 2026 headcount exists</strong> &mdash; ~&#8377;52 crore currently rests on a 2016 newspaper figure, now nine years stale rather than merely open.</p>
+    </div>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;08 &nbsp;·&nbsp; 6 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>33,000+ acres pooled, ~29 villages &mdash; sizes S4</td><td>Deccan Herald</td><td class="u"><a href="https://www.deccanherald.com/india/andhra-pradesh/amaravati-relaunch-farmers-rejoice-at-revival-of-their-capital-city-dream-after-a-more-than-5-year-fight-3522352" target="_blank" rel="noopener">www.deccanherald.com/india/andhra-pradesh/amaravati-rel…</a></td><td class="d">2025</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Phase 2 pooling: 16,666.57 acres, 7 villages &mdash; extends S4</td><td>Deccan Herald</td><td class="u"><a href="https://www.deccanherald.com/india/andhra-pradesh/andhra-pradesh-gets-ready-for-another-round-of-land-pooling-for-amaravati-3817447" target="_blank" rel="noopener">www.deccanherald.com/india/andhra-pradesh/andhra-prades…</a></td><td class="d">2026</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>AIIMS Mangalagiri 960 beds, 125 MBBS seats &mdash; bounds S2</td><td>Search-surfaced</td><td class="u"><a href="https://en.wikipedia.org/wiki/All_India_Institute_of_Medical_Sciences,_Mangalagiri" target="_blank" rel="noopener">en.wikipedia.org/wiki/All_India_Institute_of_Medical_Sc…</a></td><td class="d">2026</td><td><span class="ty ty-est">Estimate</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Government staff figures are 2016-era only &mdash; weakens S5</td><td>Deccan Chronicle</td><td class="u"><a href="https://www.deccanchronicle.com/nation/current-affairs/021016/andhra-pradesh-staff-begin-to-shift-to-secretariat-in-amaravati.html" target="_blank" rel="noopener">www.deccanchronicle.com/nation/current-affairs/021016/a…</a></td><td class="d">2 Oct 2016</td><td><span class="ty ty-news">News report</span></td><td><span class="cn cn-l">Low &mdash; stale</span></td></tr>
+          <tr><td>Segment priority scores and revenue allocation</td><td><em>This exercise</em>, Phase 5 §5.5</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">Aug 2026</td><td><span class="ty ty-inf">Inference</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr class="gaprow"><td><strong>No primary buyer research of any kind exists</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap</span><i style="display:block;font-size:.62rem;color:var(--ink-3);margin-top:.2rem">the largest</i></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="sec-head">
+    <div class="sec-num">09</div>
+    <div>
+      <h2>Community architecture</h2>
+      <p class="dek">Structure carried from Phase 6 unchanged — with two pricing observations that point in opposite directions.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th></th><th>Product</th><th class="n">Acres</th><th class="n">Units/acre</th><th class="n">Units</th><th class="n">&#8377;/sq ft</th><th class="n">Ticket</th><th class="n">Revenue</th></tr></thead>
+        <tbody>
+          <tr style="background:var(--accent-soft)"><td><strong>A</strong></td><td>Low-rise garden apartments</td><td class="n">6.5</td><td class="n">26</td><td class="n"><strong>169</strong></td><td class="n"><strong>5,150</strong></td><td class="n">&#8377;59&ndash;90 L</td><td class="n">&#8377;126.2 Cr</td></tr>
+          <tr><td><strong>B</strong></td><td>Managed residences</td><td class="n">3.5</td><td class="n">24</td><td class="n">84</td><td class="n">5,700</td><td class="n">&#8377;1.23&ndash;1.45 Cr</td><td class="n">&#8377;112.5 Cr</td></tr>
+          <tr><td><strong>C</strong></td><td>Compact detached villas</td><td class="n">6.0</td><td class="n">10</td><td class="n">60</td><td class="n">6,500</td><td class="n">&#8377;1.69&ndash;1.95 Cr</td><td class="n">&#8377;109.2 Cr</td></tr>
+          <tr><td><strong>D</strong></td><td>Estate villas</td><td class="n">9.0</td><td class="n">7</td><td class="n">63</td><td class="n">7,200</td><td class="n">&#8377;2.30&ndash;2.74 Cr</td><td class="n">&#8377;158.8 Cr</td></tr>
+          <tr class="tot"><td><strong>&Sigma;</strong></td><td><strong>Total</strong></td><td class="n"><strong>25.0</strong></td><td class="n"><strong>15.0</strong></td><td class="n"><strong>376</strong></td><td class="n"><strong>6,098</strong></td><td class="n">&mdash;</td><td class="n"><strong>&#8377;506.7 Cr</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt">Two hard rules from Phase 6 stand: <strong>B never above &#8377;1.50 Cr; C never below &#8377;1.65 Cr.</strong></p>
+    <div class="dodont">
+      <div class="dd no">
+        <h6>1 · Community A may be over-priced</h6>
+        <ul>
+          <li>At &#8377;5,150/sq ft it prices <strong>above Manjeera Monarch (&#8377;5,100)</strong>, a delivered apartment project in the same locality, and <strong>27% above the Mangalagiri average.</strong></li>
+          <li>A is <strong>169 units &mdash; 45% of the scheme</strong> &mdash; and the community least able to justify a premium, because a garden apartment competes directly on rate.</li>
+        </ul>
+      </div>
+      <div class="dd yes">
+        <h6>2 · Community D may be under-priced</h6>
+        <ul>
+          <li>KMV Vivaan asks <strong>&#8377;3.59&ndash;5.21 Cr</strong> for villas.</li>
+          <li>If those clear, <strong>D at &#8377;2.30&ndash;2.74 Cr sits below the developer's own achieved range</strong> &mdash; which would make the eight-phase worry about the &#8377;2.2&ndash;2.8 Cr band <strong>the wrong worry entirely.</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="finding">
+      <span class="lbl">Both are testable from data the developer already holds</span>
+      <p class="big">What did Vivaan actually sell for, and how fast? That single conversation is the most efficient one available anywhere in this exercise.</p>
+    </div>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;09 &nbsp;·&nbsp; 3 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>Community architecture, land model, price ladder</td><td><em>This exercise</em>, Phase 6</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">Aug 2026</td><td><span class="ty ty-hyp">Strategic hypothesis</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+          <tr><td>A at ₹5,150 exceeds Manjeera Monarch at ₹5,100 in the same locality</td><td><em>This exercise</em> vs SquareYards</td><td class="u"><a href="https://www.squareyards.com/vijayawada-residential-property/manjeera-monarch/10076/project" target="_blank" rel="noopener">www.squareyards.com/vijayawada-residential-property/man…</a></td><td class="d">Aug 2026</td><td><span class="ty ty-inf">Inference</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>KMV Vivaan asks ₹3.59&ndash;5.21 Cr, above proposed Community D</td><td>KMV Spaces (official)</td><td class="u"><a href="https://www.kmvspaces.com/projects/luxury-villas-for-sale-in-vijayawada" target="_blank" rel="noopener">www.kmvspaces.com/projects/luxury-villas-for-sale-in-vi…</a></td><td class="d">undated</td><td><span class="ty ty-inf">Inference</span><i style="display:block;font-size:.62rem;color:var(--ink-3);margin-top:.2rem">from asking prices</i></td><td><span class="cn cn-m">Medium</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="sec-head">
+    <div class="sec-num">10</div>
+    <div>
+      <h2>₹500 Cr revenue and funnel model</h2>
+      <p class="dek">Carried from Phases 7, 8 and 11. No external source verifies any of it — it is a model, and is labelled as one.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Stage</th><th class="n">Volume</th><th class="n">Per month</th></tr></thead>
+        <tbody>
+          <tr><td>Leads</td><td class="n">78,880</td><td class="n">1,753</td></tr>
+          <tr><td>Qualified leads</td><td class="n">12,474</td><td class="n">277</td></tr>
+          <tr><td>Consultations</td><td class="n">5,313</td><td class="n">118</td></tr>
+          <tr style="background:var(--accent-soft)"><td><strong>Site visits</strong></td><td class="n"><strong>2,922</strong></td><td class="n"><strong>64.9</strong></td></tr>
+          <tr><td>Negotiations</td><td class="n">574</td><td class="n">12.8</td></tr>
+          <tr><td>Bookings &mdash; marketing-sourced</td><td class="n">201</td><td class="n">4.5</td></tr>
+          <tr><td>Bookings &mdash; channel partner</td><td class="n">105</td><td class="n">2.3</td></tr>
+          <tr><td>Bookings &mdash; referral</td><td class="n">70</td><td class="n">1.6</td></tr>
+          <tr class="tot"><td><strong>Total bookings</strong></td><td class="n"><strong>376</strong></td><td class="n"><strong>8.4</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nums">
+      <div class="numcard"><div class="nc-top"><span class="nc-n">6.27</span><span class="nc-u">per cent</span></div><div class="nc-b"><b>Budget of GDV</b>&#8377;31.75 Cr against &#8377;506.7 Cr.</div></div>
+      <div class="numcard"><div class="nc-top"><span class="nc-n">8.44</span><span class="nc-u">&#8377; lakh</span></div><div class="nc-b"><b>Blended CAC</b>All-in, per booking.</div></div>
+      <div class="numcard master"><div class="nc-top"><span class="nc-n">39.4</span><span class="nc-u">&#8377; crore</span></div><div class="nc-b"><b>Per conversion point</b>At the site-visit stage. 2.3&times; a point at the lead stage.</div></div>
+      <div class="numcard"><div class="nc-top"><span class="nc-n">24.60</span><span class="nc-u">&#8377; at risk</span></div><div class="nc-b"><b>Per &#8377;1 cut</b>From performance media &mdash; <strong>while the CPLs hold, which is untested.</strong></div></div>
+    </div>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;10 &nbsp;·&nbsp; 4 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>Entire funnel model, budget, CAC, ROI, break-even</td><td><em>This exercise</em>, Phases 7/8/11</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">Aug 2026</td><td><span class="ty ty-hyp">Strategic hypothesis</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+          <tr><td>Gross development margin of 28%</td><td><em>This exercise</em> &mdash; explicit placeholder</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">Aug 2026</td><td><span class="ty ty-est">Assumption</span></td><td><span class="cn cn-l">Low &mdash; no cost data exists</span></td></tr>
+          <tr class="gaprow"><td><strong>No cost-per-lead benchmark for this catchment found</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+          <tr class="gaprow"><td><strong>No construction cost benchmark found</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s11">
+  <div class="sec-head">
+    <div class="sec-num">11</div>
+    <div>
+      <h2>Marketing channel analysis</h2>
+      <p class="dek">Verification touched two things, and confirmed both.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cards">
+      <div class="card">
+        <h6>Corroborated · the portal layer is dense and it is rented</h6>
+        <ul>
+          <li>Every named project surfaced on <strong>multiple portals simultaneously</strong> &mdash; SquareYards, 99acres, CommonFloor, Regrob, JLL Homes, RealEstateIndia, Sulekha, QuikrHomes.</li>
+          <li>Phase 3 called portals &ldquo;the dominant lead source, and it is rented.&rdquo; <strong>Verification confirms the pattern precisely: portals, not developers, own the corridor's search results.</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Corroborated · broker sites intercept branded demand, today</h6>
+        <ul>
+          <li>Searching named projects returned <strong>broker and aggregator pages ranking alongside or above developer pages</strong>.</li>
+          <li>Phase 12 G19 said defend branded search before launch. <strong>This is direct evidence the interception is live now.</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Untested · everything else</h6>
+        <ul>
+          <li>Brand &#8377;6.30 Cr, demand generation &#8377;9.84 Cr, sales conversion &#8377;8.34 Cr, advocacy &#8377;1.20 Cr.</li>
+          <li><strong>No catchment CPL benchmark was found in this pass either.</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;11 &nbsp;·&nbsp; 4 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>Named projects appear simultaneously across 6&ndash;10 portals</td><td>Observed across all searches in this pass</td><td class="u"><a href="https://www.99acres.com/kmv-vivaan-villas-penamaluru-vijayawada-npxid-r370665" target="_blank" rel="noopener">www.99acres.com/kmv-vivaan-villas-penamaluru-vijayawada…</a></td><td class="d">Aug 2026</td><td><span class="ty ty-inf">Inference</span><i style="display:block;font-size:.62rem;color:var(--ink-3);margin-top:.2rem">from search results</i></td><td><span class="cn cn-h">High</span></td></tr>
+          <tr><td>Broker/aggregator pages rank on developers&#x27; project names</td><td>Observed</td><td class="u"><a href="https://regrob.com/project/kmv-vivaan-villas-poranki-vijayawada/" target="_blank" rel="noopener">regrob.com/project/kmv-vivaan-villas-poranki-vijayawada/</a></td><td class="d">Aug 2026</td><td><span class="ty ty-inf">Inference</span></td><td><span class="cn cn-h">High</span></td></tr>
+          <tr><td>Third-party sites rank on CRDA/Amaravati land terms</td><td>Topline Realty</td><td class="u"><a href="https://crda.toplinerealty.in/amaravathi-land-rates/" target="_blank" rel="noopener">crda.toplinerealty.in/amaravathi-land-rates/</a></td><td class="d">2026</td><td><span class="ty ty-inf">Inference</span></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Channel allocation across four layers</td><td><em>This exercise</em>, Phase 9</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">Aug 2026</td><td><span class="ty ty-hyp">Strategic hypothesis</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-head">
+    <div class="sec-num">12</div>
+    <div>
+      <h2>Creative opportunity analysis</h2>
+      <p class="dek">One claim materially weakened, one opportunity reinforced.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="warn">
+      <span class="wl">The signature claim is not dead. It is unsourced.</span>
+      <p>&sect;06 establishes that <strong>neither anchoring density comparator is sourced at the level of published unit counts</strong>, and Phase 12 G7 already established the claim is false against two named villa competitors unless bounded.</p>
+      <p>Bounded to <em>&ldquo;fifteen to the acre across all twenty-five acres, apartments included&rdquo;</em> it remains true and unmatched. <strong>But a campaign whose production rule is &ldquo;what is the number?&rdquo; cannot run on a number whose comparator has no published source.</strong> Sourcing the comparators is now a pre-launch dependency, not a nicety.</p>
+    </div>
+    <div class="finding">
+      <span class="lbl">What verification did support</span>
+      <p>The corridor's marketing is generic and proof-free. Search returned promotional language of exactly the kind Phase 3 identified &mdash; <em>&ldquo;best time to buy villas in the Amaravati region because current prices are very low, and prices may increase rapidly.&rdquo;</em></p>
+      <p class="big">That is an unevidenced investment claim published by a seller. It is the category norm, and it is precisely the territory a verifiable brand can take.</p>
+    </div>
+    <div class="evt">
+      <div class="evt-cap">Evidence &mdash; &sect;12 &nbsp;·&nbsp; 3 rows &nbsp;·&nbsp; no URL below was opened</div>
+      <table>
+        <thead><tr><th>Claim</th><th>Source</th><th>URL</th><th>Date</th><th>Type</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>Unevidenced price-appreciation claims are published by corridor sellers</td><td>Search-surfaced promotional copy</td><td class="u"><a href="https://www.sitaramgroup.org/villas-sale-guntur-amaravati.html" target="_blank" rel="noopener">www.sitaramgroup.org/villas-sale-guntur-amaravati.html</a></td><td class="d">2026</td><td><span class="ty ty-inf">Inference</span><i style="display:block;font-size:.62rem;color:var(--ink-3);margin-top:.2rem">from observed copy</i></td><td><span class="cn cn-m">Medium</span></td></tr>
+          <tr><td>Master idea and signature line</td><td><em>This exercise</em>, Phase 10</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">Aug 2026</td><td><span class="ty ty-hyp">Strategic hypothesis</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+          <tr class="gaprow"><td><strong>Density comparators are unsourced at published-unit-count level</strong></td><td>&mdash;</td><td class="u"><span style="color:var(--ink-3)">&mdash;</span></td><td class="d">&mdash;</td><td><span class="ty ty-gap">Gap</span></td><td><span class="cn" style="color:var(--ink-3)">&mdash;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<section id="s13">
+  <div class="sec-head">
+    <div class="sec-num">13</div>
+    <div>
+      <h2>Gaps and white spaces</h2>
+      <p class="dek">Phase 12 catalogued thirty-six. This reports only what verification changed.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">Gap</th><th>Phase 12 status</th><th>After verification</th></tr></thead>
+        <tbody>
+          <tr><td class="n"><strong>G1</strong></td><td>Asking vs achieved, &#8377;50.7 Cr at risk</td><td><strong>Unchanged and now quantified.</strong> Locality asking &#8377;4,062; plan asks &#8377;6,098</td></tr>
+          <tr style="background:var(--brand-soft)"><td class="n"><strong>G2</strong></td><td>&#8377;2.2&ndash;2.8 Cr band, &#8377;158.8 Cr</td><td><strong>Strengthened as a concern</strong> &mdash; direct search found no depth. <strong>But possibly resolvable free</strong>: KMV's own Vivaan sells at &#8377;3.59&ndash;5.21 Cr</td></tr>
+          <tr><td class="n"><strong>G3</strong></td><td>Landowner segment, appetite untested</td><td><strong>Population confirmed and sized.</strong> Appetite still untested</td></tr>
+          <tr class="gaprow"><td class="n"><strong>G7</strong></td><td>Density claim unbounded, cheapest fix</td><td><strong>Worse than stated.</strong> Comparators are <em>unsourced</em>, not merely unbounded</td></tr>
+          <tr><td class="n"><strong>G13</strong></td><td>No delivery promise, cheapest white space</td><td><strong>Now conditional</strong> on the AIIMS scope being documentable</td></tr>
+          <tr><td class="n"><strong>G14</strong></td><td>Two domains, free to fix</td><td><strong>Confirmed live.</strong> Both surfaced independently</td></tr>
+          <tr><td class="n"><strong>G19</strong></td><td>Brokers own branded search</td><td><strong>Confirmed live today</strong>, across every project searched</td></tr>
+          <tr><td class="n"><strong>G22</strong></td><td>No CPL benchmark, highest leverage</td><td><strong>Unchanged.</strong> Nothing found</td></tr>
+          <tr class="gaprow"><td class="n"><strong>NEW</strong></td><td>&mdash;</td><td><strong>Community A is priced above a delivered comparable in the same locality</strong></td></tr>
+          <tr class="gaprow"><td class="n"><strong>NEW</strong></td><td>&mdash;</td><td><strong>The AIIMS credential's scope is undocumented</strong></td></tr>
+          <tr class="gaprow"><td class="n"><strong>NEW</strong></td><td>&mdash;</td><td><strong>The net-zero claim could not be corroborated</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>White space</th><th>Phase 3 verdict</th><th>Verification</th></tr></thead>
+        <tbody>
+          <tr><td><strong>The ladder in one address</strong></td><td>Strongest</td><td><strong>Holds.</strong> No corridor competitor surfaced selling a full tier ladder</td></tr>
+          <tr><td><strong>Delivery proof and post-sale trust</strong></td><td>Cheapest to occupy</td><td><strong>Holds, conditionally</strong> &mdash; see &sect;07</td></tr>
+          <tr><td>Occupancy as a promise</td><td>Insufficient evidence</td><td>Still insufficient</td></tr>
+          <tr class="gaprow"><td><strong>Honest density</strong></td><td>Precedent exists</td><td><strong>Weakened.</strong> The precedent is Poranki, not the corridor, and 9.2/acre not 6.6</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s14">
+  <div class="sec-head">
+    <div class="sec-num">14</div>
+    <div>
+      <h2>Strategic opportunities</h2>
+      <p class="dek">Ranked by what verification did to each.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Opportunity</th><th>Effect of verification</th></tr></thead>
+        <tbody>
+          <tr style="background:var(--brand-soft)"><td class="n"><strong>1</strong></td><td><strong>Land-for-unit exchange with pooling landowners</strong></td><td><strong>Strengthened most.</strong> Population sized and named by village; phase 2 adds 16,666.57 acres of newly-eligible households</td></tr>
+          <tr><td class="n">2</td><td>Publish a delivery charter with a stated remedy</td><td><strong>Conditional</strong> on Appendix A #1</td></tr>
+          <tr style="background:var(--accent-soft)"><td class="n"><strong>3</strong></td><td><strong>Defend branded search before launch</strong></td><td><strong>Confirmed urgent</strong> &mdash; interception is live today</td></tr>
+          <tr><td class="n">4</td><td>Publish carpet area alongside super-built-up</td><td>Unchanged. Still unoccupied</td></tr>
+          <tr><td class="n">5</td><td>Construction proof feed</td><td>Unchanged. Still unoccupied corridor-wide</td></tr>
+          <tr><td class="n">6</td><td>Land-share arithmetic as the investor argument</td><td>Unchanged, <strong>and reinforced</strong> &mdash; sellers publish unevidenced appreciation claims instead</td></tr>
+          <tr><td class="n">7</td><td>The upgrade covenant</td><td>Unchanged. Still the only mechanism that makes the ladder real</td></tr>
+          <tr><td class="n">8</td><td>Absentee-owner service level for Community D</td><td>Unchanged</td></tr>
+          <tr><td class="n">9</td><td>Founder-led construction content</td><td><strong>Strengthened</strong> &mdash; the institutional portfolio is real and sits on the wrong domain</td></tr>
+          <tr><td class="n">10</td><td>Statutory capital status as a factual anchor</td><td><strong>New</strong> &mdash; but <strong>every competitor can use it too</strong>, so it is table stakes rather than differentiation</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s15">
+  <div class="sec-head">
+    <div class="sec-num">15</div>
+    <div>
+      <h2>Risks and unknowns</h2>
+      <p class="dek">Eleven, of which four are new to this phase.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Risk</th><th>Severity</th><th>Status after verification</th></tr></thead>
+        <tbody>
+          <tr class="gaprow"><td class="n"><strong>1</strong></td><td><strong>The AIIMS credential cannot be documented at the scope implied</strong></td><td><strong>Critical</strong></td><td><strong>New.</strong> The brand position's foundation</td></tr>
+          <tr class="gaprow"><td class="n"><strong>2</strong></td><td><strong>The &#8377;2.2&ndash;2.8 Cr band is thin</strong></td><td><strong>Critical</strong></td><td>Eighth phase. &#8377;158.8 Cr</td></tr>
+          <tr class="gaprow"><td class="n"><strong>3</strong></td><td><strong>Community A is priced above a delivered comparable</strong></td><td>High</td><td><strong>New.</strong> &#8377;126.2 Cr, 45% of units</td></tr>
+          <tr><td class="n">4</td><td>Every price is an asking price</td><td>High</td><td>Unchanged. Registration data unobtained</td></tr>
+          <tr class="gaprow"><td class="n"><strong>5</strong></td><td><strong>The net-zero claim is uncorroborated</strong></td><td>High</td><td><strong>New.</strong> Publishing it unverified would invert the strategy</td></tr>
+          <tr class="gaprow"><td class="n"><strong>6</strong></td><td><strong>Density comparators are unsourced</strong></td><td>High</td><td><strong>Worse than Phase 12 stated</strong></td></tr>
+          <tr><td class="n">7</td><td>No 2026 government headcount</td><td>Medium</td><td>S5's ~&#8377;52 Cr rests on 2016 reporting</td></tr>
+          <tr><td class="n">8</td><td>No CPL benchmark</td><td>Medium</td><td>&#8377;11.02 Cr allocated on borrowed numbers</td></tr>
+          <tr><td class="n">9</td><td>No construction cost data</td><td>Medium</td><td>Margin, and therefore ROI, is a placeholder</td></tr>
+          <tr class="gaprow"><td class="n"><strong>10</strong></td><td><strong>No primary buyer research</strong></td><td><strong>Critical</strong></td><td>Unchanged. Search cannot fix it</td></tr>
+          <tr class="gaprow"><td class="n"><strong>11</strong></td><td><strong>Nothing in this dossier is page-verified</strong></td><td><strong>Structural</strong></td><td>See &sect;0 and Appendix A</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s16">
+  <div class="sec-head">
+    <div class="sec-num">16</div>
+    <div>
+      <h2>Evidence and sources</h2>
+      <p class="dek">Twenty-four domains across eight tiers — and two tiers that are completely empty.</p>
+    </div>
+  </div>
+  <div class="body">
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">Source register by tier &nbsp;·&nbsp; the brief's priority order</span>
+        <h5>The two tiers that would settle pricing and legitimacy are the two that are empty</h5>
+      </div>
+      <div class="tier">
+        <div class="tr-row"><div class="tr-l"><b>Tier 1 — Government / official</b>PIB; Prasar Bharati NewsOnAir &times;4; MoHFW PMSSY tender; MoEFCC environment clearance</div><div class="tr-t"><div class="tr-f" style="width:80.0%"></div><span class="tr-v">8</span></div></div>
+        <div class="tr-row"><div class="tr-l"><b>Tier 2 — RERA / regulatory</b><strong>None obtained.</strong> One RERA number surfaced via a portal, unverified against the register</div><div class="tr-t"><div class="tr-f zero" style="width:0.0%"></div><span class="tr-v">none</span></div></div>
+        <div class="tr-row"><div class="tr-l"><b>Tier 3 — Official developer</b>kmvprojects.com &times;2; kmvspaces.com &times;3</div><div class="tr-t"><div class="tr-f" style="width:50.0%"></div><span class="tr-v">5</span></div></div>
+        <div class="tr-row"><div class="tr-l"><b>Tier 4 — Established research</b><strong>None obtained</strong></div><div class="tr-t"><div class="tr-f zero" style="width:0.0%"></div><span class="tr-v">none</span></div></div>
+        <div class="tr-row"><div class="tr-l"><b>Tier 5 — Property portals</b>SquareYards &times;4; 99acres &times;3; JLL Homes; Regrob; CommonFloor</div><div class="tr-t"><div class="tr-f" style="width:100.0%"></div><span class="tr-v">10</span></div></div>
+        <div class="tr-row"><div class="tr-l"><b>Tier 6 — Major business / news</b>Deccan Herald &times;3; ThePrint; Deccan Chronicle; Construction World; Indian Infrastructure &times;2</div><div class="tr-t"><div class="tr-f" style="width:80.0%"></div><span class="tr-v">8</span></div></div>
+        <div class="tr-row"><div class="tr-l"><b>Tier 7 — Credible local</b>The South First &times;2; CellIT</div><div class="tr-t"><div class="tr-f" style="width:30.0%"></div><span class="tr-v">3</span></div></div>
+        <div class="tr-row"><div class="tr-l"><b>Tier 8 — Secondary, corroboration only</b>Wikipedia &times;2; orramaravati.in; themetrorailguy; pollent.co.in; YouTube</div><div class="tr-t"><div class="tr-f" style="width:60.0%"></div><span class="tr-v">6</span></div></div>
+      </div>
+      <div class="figure-foot"><strong>Tiers 2 and 4 are empty.</strong> No RERA record and no established research report was obtained &mdash; precisely the two tiers that would settle pricing, absorption and project legitimacy. Their absence is why &sect;05 cannot escape asking prices and &sect;04 cannot establish velocity.</div>
+    </figure>
+    <div class="warn">
+      <span class="wl">Restating the limitation, because it governs every table above</span>
+      <p><strong>The URLs are real; I have not opened any of them.</strong> A Tier 1 domain in the Source column means the <em>domain</em> is authoritative &mdash; <strong>not that the document was read.</strong></p>
+    </div>
+    <h3 style="font-family:var(--f-display);font-size:1.15rem;font-weight:600;margin:2.2rem 0 .3rem;color:var(--ink)">Where sources conflict — the full register</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Conflict</th><th>Positions</th><th>Stronger source</th><th>Treat as uncertain</th></tr></thead>
+        <tbody>
+          <tr class="gaprow"><td><strong>KMV's role on AIIMS</strong></td><td>KMV's site claims it; MoHFW names <strong>HSCC</strong> as Executing Agency; a video references <strong>L&amp;T</strong></td><td><strong>MoHFW (Tier 1)</strong> &mdash; but it is <em>silent</em> on KMV rather than contradicting it</td><td><strong>KMV's contractual scope.</strong> Needs a work order</td></tr>
+          <tr><td>AIIMS project cost</td><td>&#8377;1,618.23 Cr / &#8377;1,680 Cr / &#8377;1,090 Cr</td><td>None retrievable</td><td><strong>All three. Cite no figure</strong></td></tr>
+          <tr><td>Mangalagiri price direction</td><td>Locality <strong>falling</strong> &#8377;4,098&rarr;4,062; micromarket <strong>rising</strong> &#8377;4,805&rarr;5,489</td><td>Neither &mdash; same portal, different aggregations</td><td><strong>Both.</strong> The micromarket's geography is undefined</td></tr>
+          <tr><td>Corridor rate level</td><td>Locality &#8377;4,062 vs project-level &#8377;4,210&ndash;5,100</td><td><strong>Project-level</strong> &mdash; named and checkable</td><td>The locality average's product mix</td></tr>
+          <tr><td>Vivaan density</td><td>Phase 4 claimed 6.6/acre; portal gives 92 units on 10 acres</td><td><strong>Portal (Tier 5) beats our own inference</strong></td><td>Whether 92 is both phases or one</td></tr>
+          <tr><td>Government headcount</td><td>~2,000 secretariat / 15,000 deadline, both 2016</td><td>Neither is current</td><td><strong>The entire S5 sizing</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s17">
+  <div class="sec-head">
+    <div class="sec-num">17</div>
+    <div>
+      <h2>Assumptions register</h2>
+      <p class="dek">Fifteen load-bearing assumptions, and what would replace each.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Assumption</th><th>Used for</th><th>Replaced by</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td>Development gross margin <strong>28%</strong></td><td>ROI 3.5&times;, break-even 84 units</td><td>Contractor quotations</td></tr>
+          <tr><td class="n">2</td><td>Price ladder <strong>&#8377;5,150&ndash;7,200/sq ft</strong> achievable</td><td>The whole &#8377;506.7 Cr</td><td>IGRS registration series</td></tr>
+          <tr><td class="n">3</td><td>Sell window <strong>45 months + 6 pre-launch</strong></td><td>Every rate and run-rate</td><td>Board decision</td></tr>
+          <tr><td class="n">4</td><td><strong>CPLs</strong> A &#8377;350 · B &#8377;1,600 · C &#8377;900 · D &#8377;1,900</td><td>&#8377;11.02 Cr of media</td><td>A &#8377;15&ndash;20 L six-week test</td></tr>
+          <tr><td class="n">5</td><td>Conversion: lead&rarr;qualified <strong>15.8%</strong>, visit&rarr;booking <strong>6.9%</strong></td><td>The entire funnel</td><td>Two quarters of CRM data</td></tr>
+          <tr><td class="n">6</td><td>Source mix: marketing <strong>53%</strong> / CP <strong>28%</strong> / referral <strong>19%</strong></td><td>Channel and budget allocation</td><td>Booking-stage first-touch field</td></tr>
+          <tr><td class="n">7</td><td>Eight segments' <strong>behavioural</strong> attributes</td><td>All messaging and journey design</td><td>30&ndash;40 depth interviews</td></tr>
+          <tr><td class="n">8</td><td>Segment <strong>sizes</strong> (six of eight)</td><td>The revenue allocation</td><td>Sub-registrar and institutional data</td></tr>
+          <tr><td class="n">9</td><td>Shared costs allocated <strong>by revenue share</strong></td><td>Community CAC comparison</td><td>A finance decision</td></tr>
+          <tr class="gaprow"><td class="n">10</td><td><strong>KMV built AIIMS Mangalagiri</strong></td><td><strong>The entire brand position</strong></td><td><strong>A work order or completion certificate</strong></td></tr>
+          <tr class="gaprow"><td class="n">11</td><td>The <strong>net-zero certification</strong> exists as claimed</td><td>A creative pillar</td><td>The audit certificate</td></tr>
+          <tr class="gaprow"><td class="n">12</td><td>Density comparators <strong>52.9 and 113.4/acre</strong></td><td>The campaign's signature claim</td><td>Published unit counts or RERA filings</td></tr>
+          <tr><td class="n">13</td><td>25 contiguous acres are <strong>assemblable and buildable</strong></td><td>Everything</td><td>Title, zoning and survey</td></tr>
+          <tr><td class="n">14</td><td>Show-home shells are <strong>inventory, not marketing</strong></td><td>&#8377;3.62 Cr sales-enablement line</td><td>Agreement with finance</td></tr>
+          <tr><td class="n">15</td><td><strong>Referral produces 70 bookings</strong> at &#8377;1.00 L each</td><td>&#8377;94.3 Cr of revenue contribution</td><td>Year-two actuals</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<section id="s18">
+  <div class="sec-head">
+    <div class="sec-num">II</div>
+    <div>
+      <h2>The sixteen answers</h2>
+      <p class="dek">Read as hypothesis, not conclusion. Each names what would falsify it; four marked &#9888; change materially if the AIIMS scope resolves badly.</p>
+    </div>
+  </div>
+  <div class="body">
+    <p class="stmt"><span class="ty ty-hyp">Strategic hypothesis</span> &nbsp;Everything in this part carries that tag unless stated otherwise. <strong>None of it is a finding.</strong></p>
+
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">1</span><h5>Where should the project be positioned?</h5></div>
+      <div class="ans-b"><p><strong>Against the corridor's density, not its price.</strong> Fifteen homes per acre across twenty-five acres, where the nearest apartment comparable runs at multiples of that. <strong>Not &ldquo;luxury,&rdquo; not &ldquo;premium,&rdquo; not &ldquo;close to the capital&rdquo;</strong> &mdash; Phase 3 established all three are universal and meaningless here.</p><p class="big" style="font-family:var(--f-display);font-size:1.08rem;color:var(--ink);line-height:1.45">The corridor's only development you can move within, at a density you can count.</p>
+        <div class="fals"><b>Falsified by</b> The density comparators failing to source (&sect;06), or the locality proving unwilling to pay a 50% premium (&sect;05).</div>
+      </div>
+    </div>
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">2</span><h5>Who should it target?</h5></div>
+      <div class="ans-b"><p><strong>Not one audience &mdash; four, mapped to four communities.</strong> Priority from Phase 5, adjusted by verification:</p><div class="tw" style="margin:.7rem 0 0;border:0"><table><tbody><tr><td class="n"><strong>1</strong></td><td><strong>S4 landowners</strong> &mdash; best-evidenced population, no competitor contesting</td><td class="n">D and C, via exchange</td></tr><tr><td class="n"><strong>2</strong></td><td><strong>S1 trade families</strong> &mdash; largest revenue, cash-capable</td><td class="n">C and D</td></tr><tr><td class="n"><strong>3</strong></td><td><strong>S3 US diaspora</strong> &mdash; highest priority score</td><td class="n">B and C</td></tr><tr><td class="n"><strong>4</strong></td><td><strong>S2 senior medical</strong> &mdash; institution confirmed, ladder maps to pay scale</td><td class="n">A through C</td></tr><tr><td class="n">5</td><td>S7 Hyderabad, S6 upgraders</td><td class="n">A and B</td></tr><tr style="background:var(--accent-soft)"><td class="n">&darr;</td><td><strong>De-weight S5 government</strong> &mdash; sizing is nine years stale</td><td class="n">A</td></tr></tbody></table></div>
+        <div class="fals"><b>Falsified by</b> Segment sizing, once six of eight are established from registration and institutional data.</div>
+      </div>
+    </div>
+    <div class="ans warn3">
+      <div class="ans-h"><span class="ans-n">3</span><h5>&#9888; Why would those people buy?</h5></div>
+      <div class="ans-b"><p><strong>Different reasons per segment &mdash; conflating them is the error the brief warns against.</strong></p><ul style="margin:.5rem 0 0;padding-left:1.1rem;line-height:1.6"><li><strong>S4</strong> &mdash; converts an illiquid returnable plot into a built, income-capable asset <strong>without finding cash.</strong></li><li><strong>S1</strong> &mdash; a verifiable, low-density asset in a corridor where everything else is a tower.</li><li><strong>S3</strong> &mdash; a managed, remotely-purchasable home in the origin district, with someone answering in their time zone.</li><li><strong>S2</strong> &mdash; proximity to AIIMS, and a ladder that matches a published pay scale rung for rung.</li><li><strong>All eight</strong> &mdash; <strong>delivery certainty</strong>, which Phase 5 found is the one shared anxiety. &#9888; <em>This is the answer that depends on &sect;07.</em></li></ul>
+        <div class="fals"><b>Falsified by</b> The AIIMS scope failing to document, which removes the proof behind the shared objection.</div>
+      </div>
+    </div>
+    <div class="ans warn3">
+      <div class="ans-h"><span class="ans-n">4</span><h5>&#9888; What should KMV own in the customer's mind?</h5></div>
+      <div class="ans-b"><p class="big" style="font-family:var(--f-display);font-size:1.15rem;color:var(--ink);line-height:1.4">&ldquo;The builder who shows you the evidence.&rdquo;</p><p>Not luxury, not scale. The construction lineage, published delivery performance, ungated pricing, carpet area declared unprompted, a live construction feed. <strong>Phase 3 found not one competitor markets against the category's own top complaint.</strong></p><p>&#9888; <strong>This is the recommendation most exposed by verification.</strong> It rests on institutional credentials whose scope is undocumented (&sect;07) and a certification that could not be corroborated. <strong>If neither documents, fall back to what is provable without any credential at all: the density arithmetic and the ungated price sheet.</strong></p>
+        <div class="fals"><b>Falsified by</b> Appendix A #1 and #4. Both are single documents held by the developer.</div>
+      </div>
+    </div>
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">5</span><h5>How should A/B/C/D be differentiated?</h5></div>
+      <div class="ans-b"><p><strong>By buyer constraint, not by finish level.</strong></p><div class="tw" style="margin:.7rem 0 0;border:0"><table><thead><tr><th></th><th>Differentiated by</th><th>Primary buyer</th><th>The question it answers</th></tr></thead><tbody><tr><td><strong>A</strong></td><td>Entry price and rental logic</td><td>S2 junior, S6, S5</td><td>&ldquo;Can I own here at all?&rdquo;</td></tr><tr><td><strong>B</strong></td><td><strong>Management and absence</strong></td><td>S3, S8</td><td>&ldquo;Can I own this from 12,000 km away?&rdquo;</td></tr><tr><td><strong>C</strong></td><td>Land and privacy at a reachable ticket</td><td>S1, S2 senior</td><td>&ldquo;Can I have a plot without &#8377;2.5 crore?&rdquo;</td></tr><tr><td><strong>D</strong></td><td>Scale, and permanence</td><td>S1, S4, S3 senior</td><td>&ldquo;Is this the last house I buy?&rdquo;</td></tr></tbody></table></div><p style="margin-top:.7rem">The anti-cannibalisation rules are <strong>structural, not promotional</strong>: B never above &#8377;1.50 Cr, C never below &#8377;1.65 Cr, and <strong>B is defined by service while C is defined by land</strong> &mdash; a buyer choosing between them is choosing between two products, not two price points.</p>
+        <div class="fals"><b>Falsified by</b> Community A's pricing (&sect;09), which may need to fall below Manjeera Monarch rather than above it.</div>
+      </div>
+    </div>
+    <div class="ans warn3">
+      <div class="ans-h"><span class="ans-n">6</span><h5>&#9888; What should the master campaign communicate?</h5></div>
+      <div class="ans-b"><p><strong>One computable fact, and an invitation to check it.</strong> Fifteen to the acre; everything else is open.</p><p><strong>What it must not do:</strong> claim superlatives, claim future infrastructure as present (&sect;03), or lead with the AIIMS credential until &sect;07 resolves. &#9888;</p>
+        <div class="fals"><b>Falsified by</b> The comparators failing to source &mdash; in which case the claim must be withdrawn or rebuilt, not softened.</div>
+      </div>
+    </div>
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">7</span><h5>Which channels should drive awareness?</h5></div>
+      <div class="ans-b"><p><strong>Outdoor on the corridor, Telugu OTT and regional cinema, and PR against the capital narrative.</strong> These reach the domestic segments in-market and <strong>cannot be judged on click metrics</strong> &mdash; Phase 9 risk 7.</p><p><strong>Plus one that verification made urgent: branded and category search.</strong> Broker interception is live today (&sect;11).</p>
+        <div class="fals"><b>Falsified by</b> Nothing found contradicts this. It is untested rather than at risk.</div>
+      </div>
+    </div>
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">8</span><h5>Which channels should drive demand?</h5></div>
+      <div class="ans-b"><p><strong>Meta and Google Search carry it; portals are capped; LinkedIn is S3/S7 only.</strong></p><p><strong>The correction verification forces:</strong> portals are the corridor's dominant organic surface and they are rented. <strong>Capping portal spend at &#8377;1.00 Cr only works if owned search is defended simultaneously</strong> &mdash; otherwise capping the rented channel while leaving the owned one intercepted loses both.</p>
+        <div class="fals"><b>Falsified by</b> The CPL assumptions, which are borrowed from other markets and untested here.</div>
+      </div>
+    </div>
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">9</span><h5>How should leads be qualified?</h5></div>
+      <div class="ans-b"><p><strong>On cash at purchase, not income</strong> &mdash; Phase 5's central finding. The gate is <strong>&#8377;17.6 L for A rising to &#8377;74.1 L for D.</strong></p><p><strong>Three required fields at capture:</strong> budget band, timeline, and <strong>country / origin district.</strong> Qualification criteria must be <strong>written down and owned by a named person</strong> &mdash; Phase 12 found neither exists.</p>
+        <div class="fals"><b>Falsified by</b> Nothing external. This is an internal discipline question.</div>
+      </div>
+    </div>
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">10</span><h5>How should site visits be generated?</h5></div>
+      <div class="ans-b"><p><strong>The site visit is the &#8377;39.4-crore-per-point stage. Treat it as the product.</strong></p><p><strong>Domestic:</strong> the counted walk, with an accessible route. <strong>Overseas:</strong> the proxy-visit protocol and video walkthrough &mdash; <strong>piloted on the existing project before launch</strong>, because &#8377;12.63 Cr of Community B budget depends on a capability never once tried.</p>
+        <div class="fals"><b>Falsified by</b> The proxy-visit pilot converting below half the physical-visit rate.</div>
+      </div>
+    </div>
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">11</span><h5>How should marketing work with sales?</h5></div>
+      <div class="ans-b"><p><strong>On one shared number: site-visit-to-booking rate, weekly, by community and by consultant.</strong></p><p>Marketing owns everything up to the booked visit; sales owns the visit onward; <strong>both are read on the same metric so neither can blame the other's stage.</strong> A structured visit debrief with a closed objection taxonomy is the handover artefact.</p>
+        <div class="fals"><b>Falsified by</b> Nothing external.</div>
+      </div>
+    </div>
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">12</span><h5>What should the CRM journey look like?</h5></div>
+      <div class="ans-b"><p><strong>Twelve stages, of which two are currently fictional.</strong> Consultation and negotiation are modelled but have no defined trigger &mdash; define both before go-live.</p><p><strong>Non-negotiable on day one:</strong> WhatsApp Business API integrated (un-integrated it is a liability, not a channel), first-touch attribution as a mandatory picklist, and a named CRM owner.</p>
+        <div class="fals"><b>Falsified by</b> Nothing external.</div>
+      </div>
+    </div>
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">13</span><h5>What should be measured weekly?</h5></div>
+      <div class="ans-b">
+        <div class="tw" style="margin:0;border:0"><table><thead><tr><th>Metric</th><th>Why</th></tr></thead><tbody>
+          <tr><td><strong>Site-visit-to-booking rate</strong>, by community and consultant</td><td>&#8377;39.4 Cr per point. <strong>The single number</strong></td></tr>
+          <tr><td>Site visits booked and held</td><td>The leading indicator</td></tr>
+          <tr><td>Lead-to-qualified rate</td><td>&#8377;17.2 Cr per point</td></tr>
+          <tr><td>CPL and CPQL by community, <strong>media-only</strong></td><td>Campaign optimisation</td></tr>
+          <tr><td>Follow-up latency after visit</td><td>Cheapest controllable variable</td></tr>
+          <tr><td>Discount register, <strong>by channel partner</strong></td><td>Pricing rules are load-bearing</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">14</span><h5>What should be measured monthly?</h5></div>
+      <div class="ans-b">
+        <div class="tw" style="margin:0;border:0"><table><thead><tr><th>Metric</th><th>Why</th></tr></thead><tbody>
+          <tr><td><strong>All-in CAC</strong>, and CAC by source</td><td>The board number</td></tr>
+          <tr><td>Bookings by source, <strong>first-touch</strong></td><td>Retires the largest Reasoned assumption</td></tr>
+          <tr><td>Inventory released vs sold, per community</td><td>B's gate at 25% qualified-to-visit</td></tr>
+          <tr><td><strong>Achieved price vs list, per community</strong></td><td>The only internal check on &sect;05</td></tr>
+          <tr><td>Creative frequency and CPL drift</td><td>Fatigue trigger</td></tr>
+          <tr><td>Referral bookings per owner</td><td>The compounding asset</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">15</span><h5>What should determine marketing budget allocation?</h5></div>
+      <div class="ans-b">
+        <p><strong>Four rules, in order:</strong></p>
+        <ol style="margin:.5rem 0 0;padding-left:1.2rem;line-height:1.6">
+          <li><strong>Bottom-up, never a percentage.</strong> Phase 11 showed top-down under-funds everything that is not media by 28%.</li>
+          <li><strong>By structural class, not by total.</strong> Only &#8377;21.17 Cr of &#8377;31.75 Cr is genuinely flexible.</li>
+          <li><strong>By marginal revenue at risk.</strong> &#8377;1 cut from performance media risks &#8377;24.60 &mdash; <em>while the CPLs hold, which is untested.</em></li>
+          <li><strong>Re-based annually</strong>, falling toward the 4&ndash;5% norm as referral compounds.</li>
+        </ol>
+        <div class="fals"><b>Falsified by</b> The catchment CPL test returning materially different numbers, which re-bases rule 3 entirely.</div>
+      </div>
+    </div>
+
+    <div class="ans">
+      <div class="ans-h"><span class="ans-n">16</span><h5>How do we optimise toward revenue rather than vanity metrics?</h5></div>
+      <div class="ans-b">
+        <ol style="margin:0;padding-left:1.2rem;line-height:1.65">
+          <li><strong>Never optimise the top of the funnel.</strong> 66,406 leads are lost at the top and they are the least valuable losses. <strong>2,348 lost site visits are worth more.</strong></li>
+          <li><strong>Compare within a layer, never across.</strong> The naive cost-per-booking-by-channel reading defunds &#8377;10.25 Cr of the highest-value spend &mdash; put the rule in the reporting template <em>before</em> the first review.</li>
+          <li><strong>Judge brand, outdoor and the experience centre on holdouts and first-touch</strong>, never on last click.</li>
+          <li><strong>Report revenue at risk, not spend efficiency.</strong> &ldquo;CPL improved 12%&rdquo; is not a result; <strong>&ldquo;site-visit conversion moved 0.4 points, worth &#8377;15.8 Cr&rdquo;</strong> is.</li>
+          <li><strong>Kill metrics that cannot change a decision.</strong> Impressions, reach, followers and page views appear nowhere in 13 or 14 &mdash; deliberately.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="warn">
+      <span class="wl">The measurement instruction that matters most</span>
+      <p>Of the six weekly metrics, <strong>five require CRM discipline that does not currently exist</strong> &mdash; a named owner, written qualification criteria, WhatsApp integration, defined stage triggers, and a mandatory first-touch field.</p>
+      <p><strong>Building the measurement system is a pre-launch dependency, not a reporting task.</strong></p>
+    </div>
+  </div>
+</section>
+<section id="s19">
+  <div class="sec-head">
+    <div class="sec-num">A–F</div>
+    <div>
+      <h2>Appendices</h2>
+      <p class="dek">Six checklists. The first is the real deliverable, because nothing in this dossier was page-verified.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3 style="font-family:var(--f-display);font-size:1.2rem;font-weight:600;margin:.4rem 0 .3rem;color:var(--ink)">A · Top 20 facts I must verify myself</h3>
+    <p class="stmt">Ranked by what a wrong answer costs. <strong>Highlighted rows are the four that carry more risk than the other sixteen combined.</strong></p>
+    <div class="vfy">
+      <div class="vhead"><span>#</span><span>Fact to verify</span><span>Where</span><span>Cost if wrong</span></div>
+      <div class="vr top"><div class="vr-n">1</div><div class="vr-w"><strong>KMV's contractual scope on AIIMS Mangalagiri</strong> &mdash; main contractor, package, or sub?</div><div class="vr-s">Work order / completion certificate, held by KMV</div><div class="vr-c"><b>The entire brand position</b></div></div>
+      <div class="vr top"><div class="vr-n">2</div><div class="vr-w"><strong>Achieved prices</strong> in Mangalagiri and Thullur mandals, 24-month series by band</div><div class="vr-s">IGRS AP registration data</div><div class="vr-c">Up to <b>&#8377;50.7 Cr</b></div></div>
+      <div class="vr top"><div class="vr-n">3</div><div class="vr-w"><strong>What KMV Vivaan actually sold for, and how fast</strong></div><div class="vr-s">KMV's own booking records</div><div class="vr-c"><b>Resolves the &#8377;2.2&ndash;2.8 Cr question free</b></div></div>
+      <div class="vr top"><div class="vr-n">4</div><div class="vr-w"><strong>The net-zero certification</strong> &mdash; issuing body, scope, date, and whether &ldquo;first in India&rdquo; is defensible</div><div class="vr-s">The certificate itself</div><div class="vr-c">A creative pillar, and the transparency position</div></div>
+      <div class="vr"><div class="vr-n">5</div><div class="vr-w"><strong>Published unit counts</strong> for Jayabheri The Capital and Manjeera Monarch</div><div class="vr-s">AP RERA register</div><div class="vr-c">The campaign's signature claim</div></div>
+      <div class="vr"><div class="vr-n">6</div><div class="vr-w"><strong>AP RERA registration status</strong> of every named competitor and of this project</div><div class="vr-s">rera.ap.gov.in</div><div class="vr-c">Legitimacy of the competitor set</div></div>
+      <div class="vr"><div class="vr-n">7</div><div class="vr-w"><strong>Absorption and unsold inventory</strong> in the corridor</div><div class="vr-s">AP RERA quarterly filings</div><div class="vr-c">Whether 376 units in 45 months is achievable</div></div>
+      <div class="vr top"><div class="vr-n">8</div><div class="vr-w"><strong>Velocity in the &#8377;2.2&ndash;2.8 Cr band</strong> at TAG AIRA and Prime Grandeur</div><div class="vr-s">Mystery shopping, 8 weeks</div><div class="vr-c"><b>&#8377;158.8 Cr</b></div></div>
+      <div class="vr"><div class="vr-n">9</div><div class="vr-w"><strong>Current AP government headcount</strong> working in Amaravati</div><div class="vr-s">GAD / APCRDA, via RTI</div><div class="vr-c">S5's ~&#8377;52 Cr</div></div>
+      <div class="vr"><div class="vr-n">10</div><div class="vr-w"><strong>Parcel-level title, zoning and assigned-land status</strong></div><div class="vr-s">Village revenue records; APCRDA zoning</div><div class="vr-c"><b>The project's existence</b></div></div>
+      <div class="vr"><div class="vr-n">11</div><div class="vr-w"><strong>Surveyed flood contours</strong> for the site</div><div class="vr-s">Topographic survey; 2024 inundation mapping</div><div class="vr-c"><b>The project's existence</b></div></div>
+      <div class="vr"><div class="vr-n">12</div><div class="vr-w"><strong>Construction cost benchmarks</strong></div><div class="vr-s">Contractor quotations</div><div class="vr-c">Margin, and therefore all ROI</div></div>
+      <div class="vr"><div class="vr-n">13</div><div class="vr-w"><strong>AIIMS faculty and senior-staff headcount</strong></div><div class="vr-s">Institutional directory</div><div class="vr-c">S2 sizing</div></div>
+      <div class="vr"><div class="vr-n">14</div><div class="vr-w"><strong>Corridor CPL</strong> across all four community audiences</div><div class="vr-s">&#8377;15&ndash;20 L six-week paid test</div><div class="vr-c">&#8377;11.02 Cr of allocation</div></div>
+      <div class="vr"><div class="vr-n">15</div><div class="vr-w"><strong>The real supply pipeline</strong> &mdash; units registered by mandal and date</div><div class="vr-s">AP RERA registration register</div><div class="vr-c">Whether this is 16&ndash;22% of two years' supply</div></div>
+      <div class="vr"><div class="vr-n">16</div><div class="vr-w"><strong>ORR alignment</strong> relative to any site considered</div><div class="vr-s">MoRTH / NHAI alignment notification</div><div class="vr-c">A material location claim</div></div>
+      <div class="vr"><div class="vr-n">17</div><div class="vr-w"><strong>Second-phase land-pooling eligibility</strong> in the seven named villages</div><div class="vr-s">APCRDA notification</div><div class="vr-c">S4's addressable size</div></div>
+      <div class="vr"><div class="vr-n">18</div><div class="vr-w"><strong>Whether AP + Telangana are ~14% of Indian Americans</strong></div><div class="vr-s">US Census ACS / ancestry data</div><div class="vr-c">S3 targeting</div></div>
+      <div class="vr"><div class="vr-n">19</div><div class="vr-w"><strong>The AP 9th Pay Revision Commission timeline</strong></div><div class="vr-s">Finance department notifications</div><div class="vr-c">The S5 purchase-trigger argument</div></div>
+      <div class="vr"><div class="vr-n">20</div><div class="vr-w"><strong>Rental depth</strong>, not yield, around AIIMS / SRM / government</div><div class="vr-s">Letting-agent interviews</div><div class="vr-c">Community A's rental case</div></div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h6>B · Top 10 strategic questions still unanswered</h6>
+        <ul>
+          <li><strong>Will anyone actually relocate, or does the corridor commute?</strong></li>
+          <li>Is the &#8377;2.2&ndash;2.8 crore band occupied?</li>
+          <li>What is the project's actual margin?</li>
+          <li>Would a landowner accept a land-for-unit exchange?</li>
+          <li><strong>Can Community A justify a premium to a delivered comparable?</strong></li>
+          <li>What do buyers here actually object to?</li>
+          <li>Does the ladder motivate, or is it a strategist's idea?</li>
+          <li>Is the corridor's price trend up or down?</li>
+          <li>Who is the real competitor set?</li>
+          <li><strong>Does KMV want to be the transparency brand?</strong> It is a choice with operational consequences the developer must accept.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>C · Top 10 market gaps</h6>
+        <ul>
+          <li>Nobody sells a full product ladder in one address</li>
+          <li>Nobody publishes delivery performance</li>
+          <li>Nobody publishes a construction progress feed</li>
+          <li>Nobody addresses carpet vs super-built-up</li>
+          <li>Nobody runs an NRI journey</li>
+          <li><strong>Nobody markets to land-pooling landowners</strong> &mdash; 33,000+ acres, uncontested</li>
+          <li><strong>Developers do not own their own branded search</strong> &mdash; confirmed live</li>
+          <li>Nobody has replaced the rental-yield argument</li>
+          <li>Nobody publishes pricing ungated</li>
+          <li>Nobody runs founder-led content</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--f-display);font-size:1.2rem;font-weight:600;margin:2rem 0 .3rem;color:var(--ink)">D · Top 10 opportunities</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Opportunity</th><th>Cost</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr style="background:var(--brand-soft)"><td class="n">1</td><td><strong>Land-for-unit exchange for pooling landowners</strong></td><td>Legal structure + village time</td><td><strong>Strengthened by verification</strong></td></tr>
+          <tr style="background:var(--accent-soft)"><td class="n">2</td><td><strong>Defend branded search before launch</strong></td><td>Low</td><td><strong>Urgent &mdash; interception is live</strong></td></tr>
+          <tr><td class="n">3</td><td>Delivery charter with a stated remedy</td><td>Legal drafting</td><td>&#9888; Conditional on Appendix A #1</td></tr>
+          <tr><td class="n">4</td><td>Ungated price sheet with named comparison</td><td><strong>Free</strong></td><td>Ready now</td></tr>
+          <tr><td class="n">5</td><td>Carpet area published unprompted</td><td><strong>Free</strong></td><td>Ready now</td></tr>
+          <tr><td class="n">6</td><td>Construction proof feed from foundation</td><td>Already funded</td><td>Ready at groundbreaking</td></tr>
+          <tr><td class="n">7</td><td>Upgrade covenant making the ladder contractual</td><td>Legal drafting</td><td>Ready pre-launch</td></tr>
+          <tr><td class="n">8</td><td>Absentee-owner service level for D</td><td>Product spec + costing</td><td>Needs a product decision</td></tr>
+          <tr><td class="n">9</td><td>Land-share arithmetic as the investor argument</td><td><strong>Free</strong> &mdash; arithmetic already done</td><td>Ready now</td></tr>
+          <tr><td class="n">10</td><td>Consolidate to one domain and one social identity</td><td><strong>Free</strong></td><td><strong>Overdue</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family:var(--f-display);font-size:1.2rem;font-weight:600;margin:2rem 0 .3rem;color:var(--ink)">E · Top 10 assumptions that could change the strategy</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Assumption</th><th>If it breaks</th></tr></thead>
+        <tbody>
+          <tr class="gaprow"><td class="n">1</td><td><strong>KMV's AIIMS scope is documentable</strong></td><td>&#9888; The proof-led position collapses; fall back to density arithmetic and ungated pricing, <strong>both provable without credentials</strong></td></tr>
+          <tr class="gaprow"><td class="n">2</td><td><strong>The &#8377;2.2&ndash;2.8 Cr band is occupied</strong></td><td>&#8377;158.8 Cr re-cuts toward C; D shrinks or repositions</td></tr>
+          <tr><td class="n">3</td><td>The ladder clears a 50% locality premium</td><td>The whole price model re-bases; <strong>A is most exposed</strong></td></tr>
+          <tr class="gaprow"><td class="n">4</td><td><strong>The net-zero certification is as described</strong></td><td>A creative pillar is deleted &mdash; <strong>and the transparency claim is damaged if it was published first</strong></td></tr>
+          <tr><td class="n">5</td><td>28% gross margin</td><td>ROI, break-even and the budget defence all re-compute</td></tr>
+          <tr><td class="n">6</td><td>Phase 7 CPLs hold in this catchment</td><td>The &#8377;24.60-per-rupee argument &mdash; the plan's main defence &mdash; collapses</td></tr>
+          <tr><td class="n">7</td><td>Eight segments behave as modelled</td><td>Messaging, journeys and channel mix all re-derive</td></tr>
+          <tr><td class="n">8</td><td>Referral delivers 70 bookings</td><td>&#8377;94.3 Cr moves to paid acquisition at 13.7&times; the cost</td></tr>
+          <tr><td class="n">9</td><td>25 contiguous acres are assemblable and buildable</td><td><strong>There is no project</strong></td></tr>
+          <tr><td class="n">10</td><td>Density comparators are real</td><td>The signature claim must be withdrawn or rebuilt</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family:var(--f-display);font-size:1.2rem;font-weight:600;margin:2rem 0 .3rem;color:var(--ink)">F · Top 10 things that should not be claimed without verification</h3>
+    <p class="stmt"><strong>Publishing any of these unverified would invert a strategy built on being checkable.</strong></p>
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Do not claim</th><th>Until</th></tr></thead>
+        <tbody>
+          <tr class="gaprow"><td class="n">1</td><td><strong>&ldquo;KMV built AIIMS Mangalagiri&rdquo;</strong></td><td>The work order defines the scope. <strong>Then claim exactly that scope, in those words</strong></td></tr>
+          <tr class="gaprow"><td class="n">2</td><td><strong>&ldquo;India's first net-zero-energy residential villa community&rdquo;</strong></td><td>The certificate is in hand and &ldquo;first&rdquo; is defensible</td></tr>
+          <tr class="gaprow"><td class="n">3</td><td><strong>&ldquo;The lowest density in the corridor&rdquo;</strong></td><td><strong>Never &mdash; it is false.</strong> IJM Villas 64 at 1.9/acre, Prime Grandeur at 11.9</td></tr>
+          <tr><td class="n">4</td><td>&ldquo;Fifteen to the acre&rdquo; <em>unbounded</em></td><td>Bounded to all 25 acres, apartments included, <strong>with sourced comparators</strong></td></tr>
+          <tr><td class="n">5</td><td>Any reference to the Amaravati greenfield airport</td><td>A DPR or official notification exists. <strong>None found in two attempts</strong></td></tr>
+          <tr><td class="n">6</td><td>The ORR as an existing or imminent amenity</td><td>It is approved and in land acquisition. <strong>Say that</strong></td></tr>
+          <tr><td class="n">7</td><td>Any price-appreciation or investment-return projection</td><td>Registration data supports it. <strong>The category publishes these unevidenced; do not join it</strong></td></tr>
+          <tr><td class="n">8</td><td>Rental yield figures</td><td>Rental <em>depth</em> is measured. Yields are 2.2&ndash;3.2% and thin</td></tr>
+          <tr><td class="n">9</td><td>&ldquo;Largest&rdquo; / &ldquo;tallest&rdquo; / &ldquo;most luxurious&rdquo;</td><td><strong>Never.</strong> Phase 3 found all three false or meaningless</td></tr>
+          <tr><td class="n">10</td><td>A specific AIIMS project cost</td><td>Sources give &#8377;1,618.23 Cr, &#8377;1,680 Cr and &#8377;1,090 Cr. <strong>Cite none</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Closing note on method</span>
+      <p><strong>This phase's contribution is not that it confirmed the previous twelve. It is that it contradicted them in six places</strong>, four of which weaken the plan &mdash; and that it produced, for the first time, <strong>a list of URLs you can open yourself.</strong></p>
+      <p class="big">The single most valuable hour available is not more analysis. It is three conversations: KMV on the AIIMS work order and the Vivaan booking book; a records agent on 24 months of IGRS registrations; and a mystery shopper on two villa projects.</p>
+      <p>Between them they close Appendix A items <strong>1, 2, 3 and 8</strong> &mdash; and those four carry more of this strategy's risk than the other sixteen combined.</p>
+    </div>
+
+    <p style="font-size:.8rem;color:var(--ink-3);margin-top:2.5rem;border-top:1px solid var(--rule);padding-top:1.2rem;max-width:none">
+      Phase 13 of a sequential research and strategy exercise. Hypothetical project; not represented as an actual KMV Spaces development. Phases 1&ndash;12 precede this document and are superseded in the six places listed in &sect;0. <strong>No URL in this document was opened; page retrieval was blocked throughout and every citation is search-surfaced.</strong> Type and Confidence are applied as the brief defines them, and no inference is presented as a fact.
+    </p>
+  </div>
+</section>
+
+</main>
+</div>

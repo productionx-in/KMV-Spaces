@@ -43,6 +43,7 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 | 10 | [`10-creative-strategy.md`](10-creative-strategy.md) — master idea, narratives, creative system, campaign (also [`.html`](10-creative-strategy.html)) | **Complete** |
 | 11 | [`11-marketing-budget.md`](11-marketing-budget.md) — bottom-up investment model, thirteen line items, funnel and ROI (also [`.html`](11-marketing-budget.html)) | **Complete** |
 | 12 | [`12-gaps-opportunities.md`](12-gaps-opportunities.md) — final gap analysis, twelve domains, thirty-six gaps (also [`.html`](12-gaps-opportunities.html)) | **Complete** |
+| 13 | [`13-research-dossier.md`](13-research-dossier.md) — source-backed dossier, 77 evidence rows, 24 domains (also [`.html`](13-research-dossier.html)) | **Complete** |
 
 ## Method notes
 
@@ -50,6 +51,23 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 RECOMMENDATION, and records unverifiable items as "Insufficient public evidence" rather than
 inferring weakness from absence. A private LLP is not obliged to publish financials, headcount or
 spend, and their absence is not a finding.
+
+**Phase 13 is the first with working search — and it contradicted the earlier work.** Phases 1–12
+were built without the ability to retrieve a single web page; sources were recorded by name and tier,
+never by URL. Phase 13 adds 77 evidence rows across 24 domains and overturns six things earlier
+phases asserted, four of which weaken the plan: the AIIMS credential is unverified as to scope (the
+Ministry of Health names HSCC as executing agency, and no source establishes KMV's role); KMV Vivaan
+is in Poranki, not on the corridor, at 9.2 units/acre rather than 6.6; KMV already sells villas above
+the price Community D calls ambitious; the plan asks a 50% premium to the locality average, which
+nobody had ever sized; the net-zero claim could not be corroborated at all; and — the one favourable
+finding — Amaravati's capital status is now statutory.
+
+**One limitation governs that whole phase and is stated at the top of it.** Search worked; page
+retrieval did not. Every fetch returned `EGRESS_BLOCKED` and direct requests to `crda.ap.gov.in` and
+`rera.ap.gov.in` returned a 403 policy denial. So the URLs are real and they resolve, but not one of
+them was opened: every citation is search-surfaced rather than read. A Tier 1 domain in a Source
+column means the domain is authoritative, not that the document was verified. That is why the
+dossier's Appendix A — twenty facts to verify personally — is its real deliverable.
 
 **Two kinds of gap.** Phase 12 separates gaps in the *market* — things nobody is doing that this
 project could do — from gaps in *this plan* — assumptions the eleven earlier phases made and never
