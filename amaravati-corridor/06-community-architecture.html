@@ -1,0 +1,1150 @@
+<title>Amaravati Community Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style>
+<style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style>
+<style>
+/* ---------- Phase 4: evidence labels ---------- */
+.lb{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .42rem;border-radius:3px;white-space:nowrap;display:inline-block;border:1px solid transparent;
+  line-height:1.55;vertical-align:.06em}
+.lb-f{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-o{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-i{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+.lb-r{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.lb-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+.stmt{margin:0 0 1rem;max-width:var(--measure)}
+.stmt .lb{margin-right:.5rem}
+.none{color:var(--ink-3);font-style:italic}
+
+.sev-h{color:var(--accent);font-weight:600;font-family:var(--f-mono);font-size:.72rem}
+.sev-m{color:var(--ink-2);font-family:var(--f-mono);font-size:.72rem}
+.sev-l{color:var(--ink-3);font-family:var(--f-mono);font-size:.72rem}
+
+/* ---------- diagram ---------- */
+figure.dia{margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);border-radius:5px;
+  padding:1.4rem 1.5rem 1.1rem;box-shadow:var(--shadow)}
+figure.dia svg{display:block;width:100%;max-width:100%;height:auto;color:var(--ink-2)}
+figure.dia figcaption{margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--rule);
+  font-size:.79rem;color:var(--ink-3);line-height:1.5}
+.dia-head{margin-bottom:1rem}
+.dia-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.dia-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.dia-scroll{overflow-x:auto}
+.dia-scroll > svg{min-width:34rem}
+
+/* ---------- rate bars ---------- */
+.rrow{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.rrow:hover{background:var(--surface-2)}
+.rname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.rname b{display:block;color:var(--ink);font-weight:600}
+.rtrack{height:1.4rem;display:flex;align-items:center;gap:.55rem}
+.rfill{height:.95rem;border-radius:0 4px 4px 0;background:var(--series);flex:none}
+.rfill.other{background:transparent;border:1.5px solid var(--series);border-left:0;box-sizing:border-box}
+.rfill.target{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.rval{font-family:var(--f-mono);font-size:.77rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+</style>
+<style>
+/* ---------- Phase 5 components ---------- */
+
+/* Evidence labels — form, not hue */
+.lb-est{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-app{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-rsn{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+
+/* Priority chips */
+.pri{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.14rem .48rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;border:1px solid transparent}
+.pri-h{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.pri-s{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.pri-l{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Segment profile card */
+.seg{margin:2rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.seg-head{display:grid;grid-template-columns:3.1rem minmax(0,1fr);gap:.9rem;align-items:start;
+  padding:1.05rem 1.3rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.seg-id{font-family:var(--f-mono);font-size:1.28rem;font-weight:600;color:var(--brand);
+  line-height:1;padding-top:.12rem;letter-spacing:-.02em}
+.seg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.08rem;line-height:1.28;
+  margin:0 0 .3rem;color:var(--ink);text-wrap:balance}
+.seg-head .seg-line{font-size:.85rem;color:var(--ink-2);margin:0 0 .6rem;font-style:italic}
+.seg-stats{display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.seg-stats b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.seg-size{padding:.8rem 1.3rem;border-bottom:1px solid var(--rule);font-size:.82rem;
+  line-height:1.55;color:var(--ink-2);background:var(--surface)}
+.seg-size strong{color:var(--ink)}
+
+/* 20-attribute grid */
+.attr{display:grid;grid-template-columns:minmax(8rem,10.5rem) minmax(0,1fr)}
+.attr > dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);padding:.6rem .8rem .6rem 1.3rem;border-top:1px solid var(--rule);
+  line-height:1.45;font-weight:500}
+.attr > dd{margin:0;padding:.6rem 1.3rem .6rem .3rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.attr > dd strong{color:var(--ink);font-weight:600}
+.attr > dt:first-of-type,.attr > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .attr{grid-template-columns:minmax(0,1fr)}
+  .attr > dt{padding:.6rem 1.1rem .1rem;border-top:1px solid var(--rule)}
+  .attr > dd{padding:.15rem 1.1rem .65rem;border-top:0}
+  .attr > dt:first-of-type + dd{border-top:0}
+}
+.seg-close{padding:.95rem 1.3rem;background:var(--surface-2);border-top:1px solid var(--rule);
+  font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.seg-close .lbl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.4rem;font-weight:600}
+.seg-close strong{color:var(--ink)}
+.seg-close p{margin:0 0 .55rem;max-width:none}
+.seg-close p:last-child{margin-bottom:0}
+
+/* Cash-gate escalation */
+.gate{display:flex;flex-direction:column;gap:.55rem}
+.gate-row{display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:.8rem;align-items:center}
+.gate-name{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-2);line-height:1.3}
+.gate-name b{display:block;color:var(--ink);font-weight:600;font-size:.82rem}
+.gate-track{display:flex;align-items:center;gap:.5rem;height:2rem}
+.gate-cash{height:1.3rem;background:var(--series);border-radius:0 3px 3px 0;flex:none}
+.gate-inc{height:1.3rem;border:1.5px dashed var(--emphasis);border-left:0;border-radius:0 3px 3px 0;
+  flex:none;box-sizing:border-box}
+.gate-val{font-family:var(--f-mono);font-size:.76rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap}
+.gate-val i{font-style:normal;color:var(--ink-3)}
+
+/* Hypothesis verdict list */
+.hyp{display:flex;flex-direction:column;gap:0;margin:1.5rem 0;border:1px solid var(--rule);
+  border-radius:5px;background:var(--surface);overflow:hidden}
+.hyp-row{display:grid;grid-template-columns:2.1rem minmax(7rem,11rem) minmax(0,1fr);gap:.75rem;
+  padding:.75rem 1.05rem;border-top:1px solid var(--rule);align-items:start}
+.hyp-row:first-child{border-top:0}
+.hyp-row .num{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;padding-top:.1rem}
+.hyp-name{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.4}
+.hyp-name .v{display:block;margin-top:.3rem}
+.hyp-why{font-size:.83rem;line-height:1.55;color:var(--ink-2)}
+.hyp-why strong{color:var(--ink)}
+.vd{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:.1rem .38rem;border-radius:3px;display:inline-block;line-height:1.5}
+.vd-y{background:var(--brand);color:var(--surface)}
+.vd-p{background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand)}
+.vd-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+@media (max-width:640px){
+  .hyp-row{grid-template-columns:2.1rem minmax(0,1fr);row-gap:.35rem}
+  .hyp-why{grid-column:2}
+}
+
+/* Revenue-by-segment bars, priority encoded by fill treatment */
+.rev-row{display:grid;grid-template-columns:minmax(8.5rem,13rem) minmax(0,1fr);gap:.7rem;
+  align-items:center;padding:3px 0}
+.rev-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.rev-label b{display:block;color:var(--ink);font-weight:600}
+.rev-track{position:relative;height:1.6rem;display:flex;align-items:center;gap:.55rem}
+.rev-fill{height:1.1rem;border-radius:0 4px 4px 0;flex:none;box-sizing:border-box}
+.rev-fill.p-h{background:var(--series)}
+.rev-fill.p-s{background:var(--brand-soft);border:1px solid var(--series);border-left:0}
+.rev-fill.p-l{background:transparent;border:1.5px dashed var(--rule-2);border-left:0}
+.rev-val{font-family:var(--f-mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:500}
+.rev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+td i{color:var(--ink-3);font-style:normal;font-size:.94em}
+
+/* Community mapping strip */
+.commap{display:grid;grid-template-columns:repeat(auto-fit,minmax(13.5rem,1fr));gap:.85rem;margin:1.5rem 0}
+.cm{background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden;
+  display:flex;flex-direction:column}
+.cm-top{padding:.75rem .95rem;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.cm-top h6{font-family:var(--f-display);font-size:1rem;font-weight:600;margin:0;color:var(--ink)}
+.cm-top .cm-t{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);display:block;margin-top:.22rem;
+  font-variant-numeric:tabular-nums}
+.cm-body{padding:.8rem .95rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.cm-body .cm-h{display:block;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 .28rem;font-weight:500}
+.cm-body p{margin:0 0 .7rem;max-width:none}
+.cm-body p:last-child{margin-bottom:0}
+.cm-body strong{color:var(--ink);font-weight:600}
+.cm-win{padding:.7rem .95rem;border-top:1px solid var(--rule);background:var(--accent-soft);
+  font-size:.8rem;line-height:1.45;color:var(--ink-2)}
+.cm-win b{color:var(--accent);font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;display:block;margin-bottom:.25rem;font-weight:600}
+</style><style>
+/* ---------- Phase 6 components ---------- */
+.lb-cmp{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent)}
+
+/* Land allocation strip */
+.land{display:flex;height:5.6rem;border-radius:5px;overflow:hidden;border:1px solid var(--rule-2);margin:.4rem 0 .9rem}
+.land > div{display:flex;flex-direction:column;justify-content:center;padding:.5rem .7rem;min-width:0;
+  border-right:1px solid var(--rule-2);color:var(--ink)}
+.land > div:last-child{border-right:0}
+.land b{font-family:var(--f-display);font-size:1.15rem;font-weight:600;line-height:1}
+.land span{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-2);margin-top:.3rem;line-height:1.3}
+.la-a{background:var(--brand-soft)}
+.la-b{background:var(--surface-2)}
+.la-c{background:var(--accent-soft)}
+.la-d{background:var(--accent);color:var(--surface)}
+.la-d b,.la-d span{color:var(--surface)}
+.land-key{display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3)}
+
+/* Ticket ladder with gaps */
+.tl{display:flex;flex-direction:column;gap:0;margin:.4rem 0}
+.tl-row{display:grid;grid-template-columns:minmax(7rem,10rem) minmax(0,1fr) auto;gap:.7rem;align-items:center;padding:.35rem 0}
+.tl-name{font-size:.83rem;color:var(--ink-2);line-height:1.3}
+.tl-name b{display:block;color:var(--ink);font-weight:600}
+.tl-track{position:relative;height:1.5rem;display:flex;align-items:center}
+.tl-band{height:1.1rem;border-radius:3px;background:var(--series);opacity:.9}
+.tl-band.hollow{background:var(--brand-soft);border:1.5px solid var(--series)}
+.tl-val{font-family:var(--f-mono);font-size:.76rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.tl-gap{display:grid;grid-template-columns:minmax(7rem,10rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:.1rem 0}
+.tl-gap .g-lbl{font-family:var(--f-mono);font-size:.65rem;color:var(--accent);text-align:right;letter-spacing:.05em;text-transform:uppercase}
+.tl-gap .g-bar{border-top:1px dashed var(--accent);height:0}
+
+/* Two-column compare */
+.cmp2{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.cmp2 > div{border:1px solid var(--rule);border-radius:5px;padding:.9rem 1.05rem;background:var(--surface)}
+.cmp2 h6{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 .55rem;font-weight:600}
+.cmp2 p{margin:0 0 .55rem;font-size:.86rem;line-height:1.55;max-width:none;color:var(--ink-2)}
+.cmp2 p:last-child{margin-bottom:0}
+.cmp2 strong{color:var(--ink)}
+
+/* Rule callout */
+.rule{margin:1.1rem 0;padding:.85rem 1.1rem;background:var(--accent-soft);border-left:3px solid var(--accent);
+  border-radius:0 4px 4px 0;font-size:.88rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure)}
+.rule b{color:var(--ink);font-weight:600}
+.rule .rn{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.3rem;font-weight:600}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">Phase 6 of 7<strong>Community Architecture</strong></div>
+  <div class="toc">
+    <a href="#s1"><span class="n">§1</span><span>Testing the default</span></a>
+    <a href="#s2"><span class="n">§2</span><span>The capacity finding</span></a>
+    <a href="#s3"><span class="n">§3</span><span>What differentiates</span></a>
+    <a href="#s4"><span class="n">§4</span><span>The architecture</span></a>
+    <a href="#s5"><span class="n">§5</span><span>A vs B · C vs D</span></a>
+    <a href="#s6"><span class="n">§6</span><span>Anti-cannibalisation</span></a>
+    <a href="#s7"><span class="n">§7</span><span>One development</span></a>
+    <a href="#s8"><span class="n">§8</span><span>Risks</span></a>
+  </div>
+  <div>
+    <h4>Evidence labels</h4>
+    <div class="legend-stack">
+      <span class="lb lb-est">Established</span>
+      <span class="lb lb-cmp">Computed</span>
+      <span class="lb lb-rsn">Reasoned</span>
+    </div>
+  </div>
+  <div>
+    <h4>The brief's constraint</h4>
+    <p style="font-size:.76rem;line-height:1.5;color:var(--ink-3);margin:0;max-width:none">
+      Do <strong style="color:var(--ink-2)">not</strong> assign A = 2BHK, B = 3BHK, C = premium, D = villas
+      unless research supports it. §1 tests that assignment and finds three reasons it fails.
+    </p>
+  </div>
+</nav>
+
+<main class="main">
+<header class="masthead">
+  <p class="eyebrow">Product, land and price structure · 25 acres</p>
+  <h1>The default four-community split fails three tests. Here is what replaces it.</h1>
+  <p class="sub">Bedroom count does not price in this corridor. Built form does — by about 30%. The architecture is rebuilt on that.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 6 of 7</span>
+    <span><strong>Structure</strong> 376 units · ₹506.7 Cr · 15.0 units/acre</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> Product and land structure for a hypothetical 25-acre, ₹500 crore corridor development. Nothing here describes an actual KMV Spaces project, land holding or launch. Zoning at any specific parcel is unverified — see §8, Risk 5.
+  </div>
+</header>
+
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">§1</div>
+    <div>
+      <h2>Testing the default assignment</h2>
+      <p class="dek">A = 2BHK, B = 3BHK, C = premium apartments, D = villas. It was used in Phase 2 as a feasibility test, never validated as a customer architecture. Tested now, it fails three ways.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="finding">
+      <span class="lbl">Failure 1 · Configuration is not a pricing lever here</span>
+      <p class="big"><span class="lb lb-est">Established</span> The 2BHK gated band is <strong>₹3,800–4,800/sq ft</strong>. The 3BHK mid-gated band is <strong>₹3,800–4,600/sq ft</strong>. They overlap almost completely.</p>
+      <p>Phase 2 §4.1: in this corridor, moving from a 2BHK to a 3BHK buys <strong>more area at roughly the same rate</strong> — not a better rate. <strong>Size and address price. Bedroom count does not.</strong></p>
+      <p>So A and B split by configuration sit at the same ₹/sq ft, in the same building type, for the same buyer, on the same land. <strong>That is one community with two floor plans</strong> — and calling it two costs two brand identities, two show homes and two sales narratives while buying nothing.</p>
+    </div>
+
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">Failure 2 · the most serious one</span>
+        <h5>The default Community C is priced into a fight it loses</h5>
+        <p class="sub">Same micro-market. Same ticket. Similar size. The competitor's product is a detached villa at a rate 16% lower.</p>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr><th></th><th>Default Community C</th><th>Prime Grandeur, Mangalagiri</th></tr></thead>
+          <tbody>
+            <tr><td>Form</td><td>Apartment</td><td><strong>Detached villa</strong></td></tr>
+            <tr><td>Size</td><td>2,300–2,800 sq ft</td><td>2,480–3,374 sq ft</td></tr>
+            <tr><td>Ticket</td><td>₹1.44–1.75 Cr</td><td><strong>₹1.34–1.82 Cr</strong></td></tr>
+            <tr><td>Rate</td><td class="n"><strong>₹6,250/sq ft</strong></td><td class="n"><strong>₹5,400/sq ft</strong></td></tr>
+            <tr><td>Micro-market</td><td>Mangalagiri corridor</td><td><strong>Mangalagiri</strong></td></tr>
+            <tr><td>Evidence</td><td>Phase 2 §12 feasibility mix</td><td>RERA P07120050381 · derived rate ₹5,394–5,403, <strong>both ends of the published range agree to 0.2%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="figure-foot">
+        A second problem stacks on the first. Phase 2 §4.1 established that the corridor's apartment ceiling of ₹6,300–6,500/sq ft is a <strong>Vijayawada city-centre phenomenon</strong>, set by Vertex Siris Signa. Nothing in Mangalagiri or Tadepalli reaches it. The default Community C requires importing a city-centre rate into a corridor <em>and</em> beating a villa at that ticket.
+      </div>
+    </figure>
+
+    <div class="finding">
+      <span class="lbl">Failure 3 · the area goes where the competition is</span>
+      <p><span class="lb lb-est">Established</span> Phase 3 counted roughly <strong>3,269 mid-market apartment units against ~420 villa units — 8:1.</strong> The crowding is at the apartment end.</p>
+      <p><span class="lb lb-cmp">Computed</span> In the default structure A, B and C are all apartments: <strong>45% of land and 70% of area</strong>, with B and C alone carrying 55% of area inside or adjacent to Prime Grandeur's range.</p>
+      <p>Phase 5 §6.2 reached the same conclusion from the audience side — Community B was the largest unit count in the scheme, in the most contested band. <strong>Two independent analyses, same answer.</strong></p>
+    </div>
+
+    <div class="note">
+      <strong>What survives.</strong> Two of the four assignments hold. <strong>A as the entry apartment tier</strong> — the brief fixes the spectrum's floor at 2BHK apartments. And <strong>D as villas, which strengthens</strong>: Phase 2 found KMV Vivaan achieved ₹8,214–8,271/sq ft, <strong>30% above the best apartment rate recorded anywhere in the region.</strong> Villas are the only product type in the evidence base that reliably clears ₹7,000/sq ft. <strong>What fails is the middle.</strong>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">§2</div>
+    <div>
+      <h2>The finding that reframes the exercise</h2>
+      <p class="dek">One piece of arithmetic was implicit in Phases 1–2 and never stated. Surfacing it changes what ₹500 crore means.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>What density did the earlier phases assume?</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Community</th><th class="n">Area share</th><th class="n">Acres</th><th class="n">Units</th><th class="n">Units/acre</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td class="n">15%</td><td class="n">3.75</td><td class="n">98</td><td class="n">26.1</td></tr>
+          <tr><td>B</td><td class="n">30%</td><td class="n">7.50</td><td class="n">139</td><td class="n">18.5</td></tr>
+          <tr><td>C</td><td class="n">25%</td><td class="n">6.25</td><td class="n">82</td><td class="n">13.1</td></tr>
+          <tr><td>D</td><td class="n">30%</td><td class="n">7.50</td><td class="n">78</td><td class="n">10.4</td></tr>
+          <tr class="tot"><td><strong>Apartments A+B+C</strong></td><td class="n">70%</td><td class="n">17.50</td><td class="n">318</td><td class="n"><strong>18.2</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">Against what the corridor actually builds</span>
+        <h5>The Phase 2 mix assumed an apartment density 2.9× to 6.2× below anything nearby</h5>
+      </div>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-label"><b>Manjeera Monarch</b>5.00 ac · 567 units</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div><span class="bar-val">113.4 <span class="d">units/acre</span></span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Raintree Park II</b>5.67 ac · 632 units</div><div class="bar-track"><div class="bar-fill" style="width:98.3%"></div><span class="bar-val">111.5</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Sree Amaravati Icon</b>4.00 ac · 315 units</div><div class="bar-track"><div class="bar-fill" style="width:69.5%"></div><span class="bar-val">78.8</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Aparna Amaravati One</b>9.29 ac · 612 units</div><div class="bar-track"><div class="bar-fill" style="width:58.1%"></div><span class="bar-val">65.9</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Samruddhi Nexa</b>5.60 ac · 350 units</div><div class="bar-track"><div class="bar-fill" style="width:55.1%"></div><span class="bar-val">62.5</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Vertex Siris Signa</b>3.00 ac · 184 units</div><div class="bar-track"><div class="bar-fill" style="width:54.1%"></div><span class="bar-val">61.3</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Jayabheri The Capital</b>the corridor's lowest</div><div class="bar-track"><div class="bar-fill" style="width:46.6%"></div><span class="bar-val">52.9</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Phase 2 implied</b>A + B + C combined</div><div class="bar-track"><div class="bar-fill req" style="width:16.0%"></div><span class="bar-val">18.2 <span class="d">— never stated as a decision</span></span></div></div>
+      </div>
+      <div class="figure-foot">Solid bars: observed corridor apartment schemes (Phase 2 §5). Dashed bar: the density the Phase 2 area shares imply when applied to 25 acres. At 18.2 units per acre the "apartments" are not apartments as this market builds them.</div>
+    </figure>
+
+    <h3>So what could the land actually produce?</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Apartment density</th><th>Anchor</th><th class="n">Apartments</th><th class="n">Villas</th><th class="n">Saleable</th><th class="n">Indicative GDV</th></tr></thead>
+        <tbody>
+          <tr><td class="n">52.9 / acre</td><td>Jayabheri — the corridor's <strong>lowest</strong></td><td class="n">794</td><td class="n">80</td><td class="n">15.4 L sq ft</td><td class="n"><strong>~₹851 Cr</strong></td></tr>
+          <tr><td class="n">65.9 / acre</td><td>Aparna Amaravati One</td><td class="n">989</td><td class="n">80</td><td class="n">18.5 L sq ft</td><td class="n"><strong>~₹1,013 Cr</strong></td></tr>
+          <tr><td class="n">113.4 / acre</td><td>Manjeera Monarch</td><td class="n">1,701</td><td class="n">80</td><td class="n">29.9 L sq ft</td><td class="n"><strong>~₹1,606 Cr</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:.8rem;color:var(--ink-3)">Indicative only: 60% apartments / 40% villas by land, villas held at 8 units/acre, apartments at ₹5,200/sq ft and villas at ₹7,000/sq ft.</p>
+
+    <div class="finding">
+      <span class="lbl">The reframe</span>
+      <p class="big"><span class="lb lb-est">Established</span> <strong>₹500 crore is not the capacity of 25 acres. It is a low-density choice</strong> — roughly 60% of what the land would yield at the lowest apartment density observed anywhere nearby.</p>
+      <p>This resolves a tension running through the whole exercise. <strong>Phase 1 §6.4</strong> framed the central problem as <em>"manufacture and defend a price premium of roughly 45%."</em> <strong>Phase 2 §11</strong> softened it — against comparable product the premium is +16% over Manjeera and −6% versus Vertex. <strong>Phase 6 closes it:</strong></p>
+      <p class="big">The premium is not manufactured by marketing. <strong>It is purchased with density</strong> — at a price of roughly ₹350–500 crore in forgone gross development value.</p>
+      <p><strong>The operational consequence.</strong> Density is not a residual output of the product mix. It <em>is</em> the product. Any later proposal to "add a tower" or "improve yield" is not a yield decision — it is a decision to spend the differentiator the price premium rests on, and it should face the same scrutiny as a proposal to cut price. <strong>Because arithmetically it is the same decision.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">§3</div>
+    <div>
+      <h2>What actually differentiates here</h2>
+      <p class="dek">If bedroom count does not price, what does? Three candidate levers, tested against the Phase 2 evidence.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:15rem">Candidate lever</th><th style="width:9rem">Does it price?</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Configuration</strong><br>2BHK vs 3BHK</td><td><span class="lb lb-n">No</span></td><td>Phase 2 §4.1 — the bands overlap almost completely</td></tr>
+          <tr><td><strong>Built form</strong><br>apartment / attached / detached villa</td><td><span class="lb lb-est">Yes, strongly</span></td><td>Villas clear ₹7,300–8,300/sq ft; apartments cap at ₹6,300–6,500. <strong>A ~30% step</strong></td></tr>
+          <tr><td><strong>Occupancy model</strong><br>resident vs absentee</td><td><span class="lb lb-rsn">Not on rate — on proposition</span></td><td>Phase 5 §6.2: 45% of top-end revenue is absentee, with a different requirement set</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><span class="lb lb-est">Established</span> <strong>Built form is the only in-project rate lever the evidence supports</strong>, and it is a large one. <span class="lb lb-rsn">Reasoned</span> <strong>Occupancy model is the only in-project <em>proposition</em> lever that creates a distinct community without needing a price step</strong> — which is what makes it useful where the price ladder runs out.</p>
+
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">The corridor's actual price territory</span>
+        <h5>This is a barbell market, not a ladder market</h5>
+        <p class="sub">The bottom is crowded. The ₹1.3–1.9 crore middle is defended by detached villas at apartment pricing. The ₹2.2–2.8 crore band is empty.</p>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Territory</th><th class="n">Rate</th><th class="n">Ticket</th><th>What holds it</th></tr></thead>
+          <tbody>
+            <tr><td>Crowded apartment band</td><td class="n">₹3,800–5,400</td><td class="n">₹45 L – 1.05 Cr</td><td>~3,269 competing units (Phase 3)</td></tr>
+            <tr><td><strong>Prime Grandeur's ground</strong></td><td class="n"><strong>₹5,400</strong></td><td class="n"><strong>₹1.34 – 1.82 Cr</strong></td><td><strong>Detached villas at apartment-tier rates</strong></td></tr>
+            <tr><td>Corridor apartment ceiling</td><td class="n">₹6,300–6,500</td><td class="n">to ~₹1.95 Cr</td><td>City-centre only — Vertex Siris Signa</td></tr>
+            <tr class="tot"><td><strong>The empty band</strong></td><td class="n"><strong>₹5,900 – 7,300</strong></td><td class="n"><strong>₹2.2 – 2.8 Cr</strong></td><td><strong>"Almost nothing between." The least contested territory found anywhere in this research</strong></td></tr>
+            <tr><td>Luxury villas</td><td class="n">₹7,300–8,300</td><td class="n">₹2.8 – 3.8 Cr</td><td>TAG AIRA ₹7,309 · KMV Vivaan ₹8,214–8,271</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="figure-foot">
+        <strong>A structure that puts most of its area in the middle puts it where the competition is strongest and the form disadvantage is worst.</strong> One caution carried forward unresolved from Phase 2 §3.1: whether the ₹2.2–2.8 crore band is empty because nobody has tried, or because buyers refuse it, cannot be determined from listing data alone. §8 quantifies the exposure.
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">§4</div>
+    <div>
+      <h2>The recommended architecture</h2>
+      <p class="dek">Differentiated by built form and ground relationship — the lever that actually prices — with occupancy model separating the two communities the price ladder cannot.</p>
+    </div>
+  </div>
+  <div class="body">
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">25 acres, allocated</span>
+        <h5>Villa forms take 60% of the land and produce 53% of the revenue</h5>
+      </div>
+      <div class="land">
+        <div class="la-a" style="flex:0 0 26%"><b>A</b><span>6.5 ac · 26%<br>169 units<br>₹126.2 Cr</span></div>
+        <div class="la-b" style="flex:0 0 14%"><b>B</b><span>3.5 ac · 14%<br>84 units<br>₹112.5 Cr</span></div>
+        <div class="la-c" style="flex:0 0 24%"><b>C</b><span>6.0 ac · 24%<br>60 units<br>₹109.2 Cr</span></div>
+        <div class="la-d" style="flex:0 0 36%"><b>D</b><span>9.0 ac · 36%<br>63 units<br>₹158.8 Cr</span></div>
+      </div>
+      <div class="land-key">
+        <span>A · Garden apartments</span><span>B · Managed residences</span><span>C · Compact villas</span><span>D · Estate villas</span>
+      </div>
+      <div class="figure-foot">
+        <strong>The 60/40 split toward villas inverts the default structure's 45/55 toward apartments.</strong> It follows from §1.3 — the apartment band is 8:1 oversupplied — and §3.1 — the empty band is at the top.
+      </div>
+    </figure>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th></th><th class="n">A</th><th class="n">B</th><th class="n">C</th><th class="n">D</th><th class="n">Total</th></tr></thead>
+        <tbody>
+          <tr><td>Form</td><td class="n">Garden apartments</td><td class="n">Managed residences</td><td class="n">Compact villas</td><td class="n">Estate villas</td><td class="n">—</td></tr>
+          <tr><td>Unit size</td><td class="n">1,150–1,750</td><td class="n">2,150–2,550</td><td class="n">2,600–3,000</td><td class="n">3,200–3,800</td><td class="n">avg 2,210</td></tr>
+          <tr><td>₹ / sq ft</td><td class="n">5,150</td><td class="n">5,700</td><td class="n">6,500</td><td class="n">7,200</td><td class="n"><strong>6,098</strong></td></tr>
+          <tr><td>Ticket</td><td class="n">₹59–90 L</td><td class="n">₹1.23–1.45 Cr</td><td class="n">₹1.69–1.95 Cr</td><td class="n">₹2.30–2.74 Cr</td><td class="n">avg ₹1.35 Cr</td></tr>
+          <tr><td>Land</td><td class="n">6.5 ac</td><td class="n">3.5 ac</td><td class="n">6.0 ac</td><td class="n">9.0 ac</td><td class="n"><strong>25.0 ac</strong></td></tr>
+          <tr><td>Density</td><td class="n">26 / ac</td><td class="n">24 / ac</td><td class="n">10 / ac</td><td class="n">7 / ac</td><td class="n"><strong>15.0 / ac</strong></td></tr>
+          <tr><td>Units</td><td class="n">169</td><td class="n">84</td><td class="n">60</td><td class="n">63</td><td class="n"><strong>376</strong></td></tr>
+          <tr class="tot"><td><strong>Revenue</strong></td><td class="n">₹126.2 Cr</td><td class="n">₹112.5 Cr</td><td class="n">₹109.2 Cr</td><td class="n">₹158.8 Cr</td><td class="n"><strong>₹506.7 Cr</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong><span class="lb lb-cmp">Computed</span> A convergence worth noting.</strong> This structure was built from the land side — acres × density × unit size × rate. It arrives at <strong>8.31 lakh sq ft and gross FAR 0.76.</strong> Phase 1 §6.4, working from the revenue side, derived <strong>8.33 lakh sq ft at FAR 0.77.</strong> Two independent routes, 0.3% apart. Phase 1 also predicted a 50:50 to 60:40 land split, and Phase 2 predicted 16–22 units/acre; this lands at <strong>60:40 and 15.0</strong> — at the edge of both, on the low-density side, deliberately.
+    </div>
+
+    <article class="seg" id="ca">
+      <div class="seg-head">
+        <div class="seg-id">A</div>
+        <div>
+          <h4>The Apartments</h4>
+          <p class="seg-line">The entry to the address, and the scheme's cash-flow engine.</p>
+          <div class="seg-stats"><span>6.5 acres · 26%</span><span>169 units · 26/acre</span><span>₹126.2 Cr · 24.9%</span></div>
+        </div>
+      </div>
+      <dl class="attr">
+      <dt>Product type</dt>
+      <dd><strong>Low-rise garden apartments</strong>, G+3, 2BHK and 3BHK <em>in one community rather than two</em>. Lift-served but walk-up scale — no high-rise fire-lift or deep-foundation cost.</dd>
+      <dt>Unit size</dt>
+      <dd>1,150 – 1,750 sq ft. 2BHK 1,150–1,350; 3BHK 1,500–1,750.</dd>
+      <dt>Price band</dt>
+      <dd><strong>₹5,150 / sq ft</strong> — upper half of Phase 2's ₹4,500–5,400 premium-gated 3BHK band, and above the ₹3,800–4,800 gated-2BHK band.</dd>
+      <dt>Ticket size</dt>
+      <dd><strong>₹59 – 90 L</strong></dd>
+      <dt>Land allocation</dt>
+      <dd><strong>6.5 acres · 26% of site · 26 units/acre</strong></dd>
+      <dt>Inventory logic</dt>
+      <dd>169 units in <strong>three tranches of ~55</strong>. First at launch to set price and generate velocity; second on foundation completion; third held for appreciation. <strong>Cap the 2BHK share at ~40%</strong> — most contested product in the corridor, lowest revenue per unit in the scheme.</dd>
+      <dt>Primary audience</dt>
+      <dd><strong>S5 — Government and the relocating capital workforce.</strong> The most loan-friendly income in the catchment; constrained by down payment, not EMI.</dd>
+      <dt>Secondary audience</dt>
+      <dd>S6 Vijayawada upgraders (younger cohort) · S8 Gulf remittance households · S2 senior residents at AIIMS</dd>
+      <dt>Customer need</dt>
+      <dd>Ending a long rental period. An owned, secure, gated home near a workplace that is itself relocating. Efficient carpet area, school access, reliable water and power, covered parking.</dd>
+      <dt>Purchase trigger</dt>
+      <dd><strong>The pay-revision arrears window.</strong> 8th CPC effective 1 January 2026 at an expected 30–34%, arrears extending into 2027; AP's 9th PRC constituted. Arrears are precisely the ₹17.6–24 lakh lump sum the down payment needs.</dd>
+      <dt>Positioning</dt>
+      <dd><strong>The lowest-density apartment in the corridor.</strong> 26 units/acre against a corridor range of 52.9–113.4 — <strong>half the density of the least dense competitor.</strong> Countable from the site gate.</dd>
+      <dt>Value proposition</dt>
+      <dd><em>A first home inside a 25-acre address, at half the density of anything else at this price.</em> The buyer is not paying a premium for the apartment — they are paying it for the master plan it sits inside, and for an upgrade path within the same gate.</dd>
+      <dt>Likely demand</dt>
+      <dd><strong>Deep but contested.</strong> ~3,269 competing mid-market units (Phase 3). Phase 5 could not size S5 — no relocating-workforce headcount exists. <strong>Demand is not the constraint here; differentiation is.</strong></dd>
+      <dt>Revenue contribution</dt>
+      <dd><strong>₹126.2 Cr — 24.9% of revenue from 44.9% of units.</strong> Lowest revenue per unit in the scheme at ₹0.75 Cr.</dd>
+      <dt>Strategic role</dt>
+      <dd><strong>Four jobs.</strong> (1) <strong>Cash flow</strong> — early, loan-backed sales that fund construction. (2) <strong>Brief compliance</strong> — the spectrum's fixed floor. (3) <strong>Population</strong> — 169 households make the amenities feel alive at handover faster than 63 villas. (4) <strong>Upgrade feeder</strong> — an A buyer in 2029 is a C buyer in 2036, inside the same brand.</dd>
+      </dl>
+    </article>
+
+    <article class="seg" id="cb">
+      <div class="seg-head">
+        <div class="seg-id">B</div>
+        <div>
+          <h4>The Managed Residences</h4>
+          <p class="seg-line">The community that exists because 45% of premium demand will not be living here.</p>
+          <div class="seg-stats"><span>3.5 acres · 14%</span><span>84 units · 24/acre</span><span>₹112.5 Cr · 22.2%</span></div>
+        </div>
+      </div>
+      <dl class="attr">
+      <dt>Product type</dt>
+      <dd><strong>Large single-level residences with a managed-ownership wrapper.</strong> Lift-served 3.5 and 4BHK, upper floors prioritised for outlook. <strong>The product is the service</strong>: building-managed maintenance, scheduled housekeeping, remote handover, security designed for empty homes, optional rental-management desk.</dd>
+      <dt>Unit size</dt>
+      <dd>2,150 – 2,550 sq ft</dd>
+      <dt>Price band</dt>
+      <dd><strong>₹5,700 / sq ft</strong> — deliberately <strong>6% below Vertex's ₹6,300</strong> corridor ceiling, and below the level at which a detached villa becomes available.</dd>
+      <dt>Ticket size</dt>
+      <dd><strong>₹1.23 – 1.45 Cr</strong> — topping out <strong>below Prime Grandeur's ₹1.82 Cr ceiling</strong>, so this is never the expensive way to buy less form.</dd>
+      <dt>Land allocation</dt>
+      <dd><strong>3.5 acres · 14% of site · 24 units/acre</strong></dd>
+      <dt>Inventory logic</dt>
+      <dd>84 units. <strong>The smallest community, deliberately</strong> — least proven proposition in the corridor, highest acquisition cost in the scheme. <strong>Two tranches of ~42</strong>, the second gated on the managed-service model being demonstrated on the first.</dd>
+      <dt>Primary audience</dt>
+      <dd><strong>S3 — US and developed-market Telugu diaspora.</strong> Phase 5's highest-priority segment at 4.20. Clears this ticket without strain.</dd>
+      <dt>Secondary audience</dt>
+      <dd>S7 Hyderabad-resident Telugu households · <strong>S4 land-pooling parent generation</strong> (single-level, lift access) · S2 senior AIIMS faculty · retiring buyers from any segment</dd>
+      <dt>Customer need</dt>
+      <dd><strong>Lock-and-leave.</strong> Phase 5: the home will be empty eleven months a year and the defining requirement is that it <em>can</em> be. Plus single-level living for ageing parents, guest capacity for the annual visit, and a home that does not deteriorate when nobody is in it.</dd>
+      <dt>Purchase trigger</dt>
+      <dd><strong>The India visit — December–January and summer</strong>, and no other window. Secondary: a parent's health event, a vesting or bonus event, a sibling buying. For S4 and S7: a family visit, festival or wedding.</dd>
+      <dt>Positioning</dt>
+      <dd><strong>The only home here designed to be left.</strong> Not "a premium apartment" — an ownership model. The competitor set sells buildings; this sells the eleven months you are not in it.</dd>
+      <dt>Value proposition</dt>
+      <dd><em>Own it from anywhere. Leave it without worrying.</em> Remote purchase under registered Power of Attorney, remote handover, managed upkeep, rental desk if wanted. <strong>Phase 3 found no competitor in the screened set offering any of this.</strong></dd>
+      <dt>Likely demand</dt>
+      <dd><strong>Real, but must be created rather than harvested.</strong> 60%+ of NRI buyers currently target Hyderabad, NCR or Bengaluru. The pool is large — 1.23 million Telugu-origin people in the US, APNRTS headquartered in Guntur — the active slice is small. <strong>The weakest demand assumption and the highest acquisition cost in the scheme.</strong></dd>
+      <dt>Revenue contribution</dt>
+      <dd><strong>₹112.5 Cr — 22.2% of revenue from 22.3% of units.</strong> ₹1.34 Cr per unit.</dd>
+      <dt>Strategic role</dt>
+      <dd><strong>Two jobs, both strategic rather than volumetric.</strong> (1) <strong>Capture the 45%</strong> — Phase 5 found S3 and S7 take 45% of top-end revenue and are absentee; this is the product built for that fact rather than around it. (2) <strong>Build an operating capability the competition cannot copy from a brochure.</strong> A managed-ownership model costs an operating model, not a campaign — and once running it is reusable across every future project.</dd>
+      </dl>
+    </article>
+
+    <article class="seg" id="cc">
+      <div class="seg-head">
+        <div class="seg-id">C</div>
+        <div>
+          <h4>The Compact Villas</h4>
+          <p class="seg-line">The direct answer to the corridor's most disruptive competitor.</p>
+          <div class="seg-stats"><span>6.0 acres · 24%</span><span>60 units · 10/acre</span><span>₹109.2 Cr · 21.6%</span></div>
+        </div>
+      </div>
+      <dl class="attr">
+      <dt>Product type</dt>
+      <dd><strong>Detached villas, G+1</strong>, on ~200–225 sq yd plots. Private garden on all sides, two covered car spaces, Vaastu-compliant orientation as standard.</dd>
+      <dt>Unit size</dt>
+      <dd>2,600 – 3,000 sq ft built-up</dd>
+      <dt>Price band</dt>
+      <dd><strong>₹6,500 / sq ft — a deliberate +20% over Prime Grandeur's ₹5,400.</strong></dd>
+      <dt>Ticket size</dt>
+      <dd><strong>₹1.69 – 1.95 Cr</strong> — starting above Prime Grandeur's midpoint, ending near its ceiling.</dd>
+      <dt>Land allocation</dt>
+      <dd><strong>6.0 acres · 24% of site · 10 units/acre</strong></dd>
+      <dt>Inventory logic</dt>
+      <dd>60 units. <strong>Released slowest of the four.</strong> Villa inventory here is scarce — Phase 2 found no villa community above ~70 units, on parcels of 4.75–11.69 acres. <strong>Scarcity is the pricing mechanism</strong>; four tranches of 15 preserve it.</dd>
+      <dt>Primary audience</dt>
+      <dd><strong>S1 — Vijayawada and Guntur trade and business families.</strong> Phase 5's largest revenue segment. Clears the ₹52 lakh cash gate more easily than any other resident group.</dd>
+      <dt>Secondary audience</dt>
+      <dd>S2 senior AIIMS faculty and dual-doctor households · S6 upgraders at the top of their range · S7 Hyderabad buyers wanting ground</dd>
+      <dt>Customer need</dt>
+      <dd><strong>Ground.</strong> Space, a private garden, parking for two to three vehicles, a formal receiving area, Vaastu compliance, and a home that reads as a house rather than a flat. Phase 5: space and standing outrank amenity lists and efficiency.</dd>
+      <dt>Purchase trigger</dt>
+      <dd>A good trading season. A daughter's or son's marriage. <strong>A peer in the same trade buying first</strong> — Phase 5 found this decisive for S1. A land sale. Guideline-value revisions that make waiting expensive.</dd>
+      <dt>Positioning</dt>
+      <dd><strong>A villa inside a masterplan, not a villa on a plot.</strong> Prime Grandeur is 10 acres at 11.9 units/acre. This is 25 acres at 10 in this community and 15.0 across the scheme, with a central open space, clubhouse and retail spine no 10-acre parcel can carry.</dd>
+      <dt>Value proposition</dt>
+      <dd><em>The same form, in a place that will still be worth living in when it is finished.</em> The +20% buys 2.5× the land, half the neighbours per acre, and a delivery record the competitor set cannot match — <strong>KMV Projects built AIIMS Mangalagiri, three kilometres away.</strong></dd>
+      <dt>Likely demand</dt>
+      <dd><strong>The strongest evidenced demand in the scheme.</strong> Prime Grandeur's 119 villas prove the form sells at this ticket in this exact micro-market. The question is not whether it sells — it is whether it sells at +20%.</dd>
+      <dt>Revenue contribution</dt>
+      <dd><strong>₹109.2 Cr — 21.6% of revenue from 16.0% of units.</strong> ₹1.82 Cr per unit.</dd>
+      <dt>Strategic role</dt>
+      <dd><strong>The competitive answer.</strong> Every other community is positioned into open or lightly-held territory. C is the one that meets an incumbent head-on, on the two dimensions a 25-acre owner can win: masterplan scale and delivery credibility. <strong>If C sells at +20%, the premium thesis is validated. If it does not, D's pricing is in question too</strong> — which makes C the scheme's most informative early indicator.</dd>
+      </dl>
+    </article>
+
+    <article class="seg" id="cd">
+      <div class="seg-head">
+        <div class="seg-id">D</div>
+        <div>
+          <h4>The Estate Villas</h4>
+          <p class="seg-line">The margin engine, placed in the emptiest price territory the research found.</p>
+          <div class="seg-stats"><span>9.0 acres · 36%</span><span>63 units · 7/acre</span><span>₹158.8 Cr · 31.3%</span></div>
+        </div>
+      </div>
+      <dl class="attr">
+      <dt>Product type</dt>
+      <dd><strong>Detached estate villas, G+1 or G+2</strong>, on ~300–350 sq yd plots. Private garden to all four sides, three to four car spaces, servant provision, plot-level privacy the compact villas do not have.</dd>
+      <dt>Unit size</dt>
+      <dd>3,200 – 3,800 sq ft built-up</dd>
+      <dt>Price band</dt>
+      <dd><strong>₹7,200 / sq ft</strong> — inside Phase 2's empty ₹5,900–7,300 band, <strong>below TAG AIRA's ₹7,309</strong> and 13% below KMV Vivaan's ₹8,214–8,271.</dd>
+      <dt>Ticket size</dt>
+      <dd><strong>₹2.30 – 2.74 Cr</strong> — squarely inside the <strong>₹2.2–2.8 crore band Phase 2 found essentially empty</strong>, and below TAG AIRA's ₹2.79 Cr entry.</dd>
+      <dt>Land allocation</dt>
+      <dd><strong>9.0 acres · 36% of site — the largest allocation — at 7 units/acre</strong></dd>
+      <dt>Inventory logic</dt>
+      <dd>63 units, <strong>anchored to the corridor's own evidence</strong>: KMV Vivaan achieved 66 villas on 10 acres at 6.6/acre; this is 63 on 9 at 7.0. Four tranches of 15–16, with <strong>the first seeded rather than advertised</strong> — Phase 5: S1 does not buy a project, it buys the other buyers.</dd>
+      <dt>Primary audience</dt>
+      <dd><strong>S1 — Vijayawada and Guntur trade and business families.</strong> They clear ₹74.1 lakh in cash more easily than any other resident group, and frequently buy as <strong>multiple related households in the same project.</strong></dd>
+      <dt>Secondary audience</dt>
+      <dd>S3 US diaspora wanting a villa rather than a managed residence · S7 Hyderabad households · <strong>S4 land-pooling landowners entering through an exchange structure</strong> rather than a cash purchase</dd>
+      <dt>Customer need</dt>
+      <dd>Permanence, standing, and space for an extended family — including the formal receiving room, the parking and the servant provision a compact villa cannot carry. For S4: a finished, liveable asset obtained without capital outlay.</dd>
+      <dt>Purchase trigger</dt>
+      <dd>A land sale or a strong trading year. A marriage in the family. <strong>A respected peer buying first.</strong> For S4: plot handover completion, or a neighbour completing an exchange successfully.</dd>
+      <dt>Positioning</dt>
+      <dd><strong>The largest homes in the corridor's least crowded price band.</strong> Not "luxury" — Phase 5 established ₹2.74 crore is an upper-affluent ticket, not a high-net-worth one, and claiming otherwise promises a tier the price sheet does not deliver.</dd>
+      <dt>Value proposition</dt>
+      <dd><em>Estate-scale living below the price the luxury tier starts at.</em> Seven homes per acre. A ticket that stops short of TAG AIRA's ₹2.79 crore entry while offering more land per home than anything at ₹1.8 crore.</dd>
+      <dt>Likely demand</dt>
+      <dd><strong>The scheme's biggest single unknown.</strong> Phase 2 was explicit: whether the ₹2.2–2.8 crore band is empty because nobody has tried, or because buyers refuse it, cannot be determined from listing data. Phase 5 narrowed it — S1, S3 and S7 all clear ₹2.5 crore in cash and all exist here — <strong>but narrowing is not proving.</strong></dd>
+      <dt>Revenue contribution</dt>
+      <dd><strong>₹158.8 Cr — 31.3% of revenue from 16.8% of units.</strong> ₹2.52 Cr per unit, <strong>3.38× Community A's.</strong></dd>
+      <dt>Strategic role</dt>
+      <dd><strong>The margin engine and the price anchor.</strong> D sets the ceiling that makes C's +20% look reasonable and A's ₹5,150 look like access to something expensive. It also carries the <strong>exchange structure for S4 landowners</strong> — the one mechanism here that supplies land, absorbs inventory and creates local advocacy at once. <strong>The highest-return and highest-risk community in the scheme, and those are the same fact.</strong></dd>
+      </dl>
+    </article>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">§5</div>
+    <div>
+      <h2>Why A rather than B. Why C rather than D.</h2>
+      <p class="dek">Two questions the brief asks directly. The second has the sharper answer.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Why would a customer choose A rather than B?</h3>
+    <p><strong>For most buyers this is not a choice — and that is the point.</strong> A tops out at <strong>₹90 lakh</strong>; B starts at <strong>₹1.23 crore</strong>. The gap is <strong>₹33 lakh, or 36%</strong>. Phase 5's financial gate does the separating: an A buyer needs ₹17.6–24 lakh in cash, a B buyer needs ₹40 lakh. Very few households sit on both sides of that line.</p>
+    <p>The narrow band that <em>does</em> face the choice is a household at ₹1.0–1.2 crore of capacity — a dual-income S6 upgrader, or an S2 assistant professor with a working spouse.</p>
+
+    <div class="cmp2">
+      <div>
+        <h6>Choose A if</h6>
+        <p><strong>Occupancy</strong> — you will live here daily.</p>
+        <p><strong>Household</strong> — young children who need ground-level play space.</p>
+        <p><strong>What you get</strong> — more home for the money, at half the corridor's density.</p>
+        <p><strong>The trade</strong> — you handle your own maintenance.</p>
+      </div>
+      <div>
+        <h6>Choose B if</h6>
+        <p><strong>Occupancy</strong> — you will be away for long stretches.</p>
+        <p><strong>Household</strong> — no children at home, or ageing parents needing single-level living.</p>
+        <p><strong>What you get</strong> — less home, plus an operating service that keeps it intact when you are not in it.</p>
+        <p><strong>The trade</strong> — you pay for management you would not need if you were here.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The separation is occupancy, not aspiration</span>
+      <p><span class="lb lb-rsn">Reasoned</span> A is not "the cheap one" and B is not "the better one." <strong>B is worse value per square foot for a resident family and better value for an absent owner.</strong></p>
+      <p><strong>Selling B to a resident family is how this architecture would fail</strong> — that buyer discovers within a year that they paid for a service they do not use.</p>
+    </div>
+
+    <h3>Why would someone choose C rather than D?</h3>
+    <p>The sharper question, because both are detached villas on the same site with the same specification language. <strong>The answer is not the house.</strong></p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th></th><th class="n">C — Compact villa</th><th class="n">D — Estate villa</th><th class="n">The step</th></tr></thead>
+        <tbody>
+          <tr><td>Built-up</td><td class="n">2,600–3,000 sq ft</td><td class="n">3,200–3,800 sq ft</td><td class="n"><strong>+600 to 800 sq ft</strong></td></tr>
+          <tr><td>Plot</td><td class="n">~200–225 sq yd</td><td class="n">~300–350 sq yd</td><td class="n"><strong>+100 to 125 sq yd</strong></td></tr>
+          <tr><td>Density</td><td class="n">10 / acre</td><td class="n">7 / acre</td><td class="n">30% fewer neighbours</td></tr>
+          <tr><td>Parking</td><td class="n">2 covered</td><td class="n">3–4 covered</td><td class="n">—</td></tr>
+          <tr class="tot"><td><strong>Ticket</strong></td><td class="n">₹1.69–1.95 Cr</td><td class="n">₹2.30–2.74 Cr</td><td class="n"><strong>+₹35 L at the join</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The cleanest answer in this architecture</span>
+      <p class="big"><span class="lb lb-est">Established</span> <strong>D does not sell more house. It sells more land.</strong></p>
+      <p>The built-up difference is about 25%. The plot difference is about 50%. <strong>Roughly two-thirds of the price step is land, not construction.</strong></p>
+      <p><strong>Why that works on this audience.</strong> Phase 5 found the primary audience for both C and D — Vijayawada and Guntur trade families — has as its rational driver <em>"land appreciation logic applied to built product"</em>, and as its default alternative <em>"why not just buy land?"</em> <strong>D answers that objection inside the project rather than losing to it outside.</strong> A segment that already thinks in square yards is being sold square yards, in the one form that also comes with a house on it.</p>
+      <p><strong>And the guard against the reverse.</strong> A C buyer is not a failed D buyer. C is the right product for a nuclear family that wants ground without maintaining 350 square yards of it — Phase 5's senior faculty and dual-doctor households, whose scarcest resource is time.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">§6</div>
+    <div>
+      <h2>How the four avoid cannibalising each other</h2>
+      <p class="dek">Cannibalisation happens when two products compete for the same buyer's single purchase. Five mechanisms, in descending order of how much work each does.</p>
+    </div>
+  </div>
+  <div class="body">
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">Mechanism 1 · ticket gaps</span>
+        <h5>Every join has a gap, and none of them is narrow</h5>
+      </div>
+      <div class="tl">
+        <div class="tl-row"><div class="tl-name"><b>A</b>Garden apartments</div><div class="tl-track"><div class="tl-band" style="width:11.3%"></div></div><span class="tl-val">₹59 – 90 L</span></div>
+        <div class="tl-gap"><span class="g-lbl">+36%</span><span class="g-bar"></span></div>
+        <div class="tl-row"><div class="tl-name"><b>B</b>Managed residences</div><div class="tl-track"><div class="tl-band hollow" style="width:8.0%;margin-left:44.9%"></div></div><span class="tl-val">₹1.23 – 1.45 Cr</span></div>
+        <div class="tl-gap"><span class="g-lbl">+16%</span><span class="g-bar"></span></div>
+        <div class="tl-row"><div class="tl-name"><b>C</b>Compact villas</div><div class="tl-track"><div class="tl-band" style="width:9.5%;margin-left:61.7%"></div></div><span class="tl-val">₹1.69 – 1.95 Cr</span></div>
+        <div class="tl-gap"><span class="g-lbl">+18%</span><span class="g-bar"></span></div>
+        <div class="tl-row"><div class="tl-name"><b>D</b>Estate villas</div><div class="tl-track"><div class="tl-band" style="width:16.1%;margin-left:83.9%"></div></div><span class="tl-val">₹2.30 – 2.74 Cr</span></div>
+      </div>
+      <div class="figure-foot">Bands positioned on a common ₹0 – ₹2.74 crore scale. Solid = villa form; hollow = managed apartment form. <strong>B → C is the flashpoint</strong> — narrowest gap, and the only join where the products are comparable in size.</div>
+    </figure>
+
+    <div class="rule">
+      <span class="rn">Pricing rule 1</span>
+      <b>No Community B unit is ever priced above ₹1.50 crore</b> — whatever the floor premium or the view.
+    </div>
+    <div class="rule">
+      <span class="rn">Pricing rule 2</span>
+      <b>No Community C villa is ever discounted below ₹1.65 crore</b> — whatever the quarter-end pressure.
+      <br><br>Breaking either rule closes the gap and turns a ₹24 lakh separation into a direct comparison the apartment loses.
+    </div>
+
+    <h3>Mechanism 2 · a binary attribute at every join, not a gradient</h3>
+    <p>A buyer can argue about ₹24 lakh. They cannot argue about whether a home is detached.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:7rem">Join</th><th>The binary</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A → B</strong></td><td>Managed / not managed</td></tr>
+          <tr><td><strong>B → C</strong></td><td><strong>Detached / not detached</strong></td></tr>
+          <tr><td><strong>C → D</strong></td><td><strong>Large plot / compact plot</strong> — fixed at the masterplan stage, so it cannot drift</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Mechanisms 3 and 4 · different occupancy, different calendars</h3>
+    <p>B is the only community designed to be empty — that is not a feature comparison, it is a different use of a home. And Phase 5 established the triggers and channels independently; they barely overlap.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:4rem"></th><th>Purchase trigger</th><th>Channel</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A</strong></td><td>Pay-revision arrears; rent revision</td><td>Portals, search, departmental word-of-mouth</td></tr>
+          <tr><td><strong>B</strong></td><td>The December–January or summer India visit</td><td>Diaspora digital, APNRTS, community associations</td></tr>
+          <tr><td><strong>C</strong></td><td>A trading season; a peer buying</td><td>Referral, personal introduction, site visit</td></tr>
+          <tr><td><strong>D</strong></td><td>A land sale; a marriage; a peer buying</td><td>Referral, seeded; village relations for S4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Two communities marketed on different calendars, in different languages, to different countries, are not competing for the same buyer.</strong></p>
+
+    <div class="finding">
+      <span class="lbl">Mechanism 5 · the risk nobody names</span>
+      <p class="big"><span class="lb lb-rsn">Reasoned</span> <strong>The real cannibalisation risk here is not between communities. It is between tranches.</strong></p>
+      <p>Four communities × three to four tranches is up to fifteen inventory releases. Two open at once in adjacent bands means the sales team is arbitraging its own price list.</p>
+      <p><strong>The rule: never hold open inventory in two adjacent communities at the same time.</strong> A and C can be open together — ₹59 lakh and ₹1.7 crore do not compete. B and C must not be.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">§7</div>
+    <div>
+      <h2>What makes this one development rather than four projects</h2>
+      <p class="dek">Distinct propositions create a risk the brief implies but does not state — four communities that share nothing forfeit the scale advantage the price premium rests on.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cards">
+      <div class="card">
+        <h6>Bound by a shared spine</h6>
+        <ul>
+          <li>One gate, one address</li>
+          <li>A central open space every community <strong>fronts onto</strong> rather than backs away from</li>
+          <li>One main clubhouse, one retail row, one school site, one sports zone</li>
+          <li><strong>The 25 acres must be legible as 25 acres from inside any of the four</strong> — that is what a 5-to-11-acre competitor cannot answer, and it only works if the open space is central and shared rather than divided four ways</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Bound by one operator</h6>
+        <ul>
+          <li>Security, STP, water, power backup, waste, landscaping — one system, one facilities operator, one standard</li>
+          <li>This is also what makes Community B's managed service economically possible: <strong>an increment on an operator that already exists</strong>, not a standalone business</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Bound by an upgrade path</h6>
+        <ul>
+          <li>A documented internal move-up right from A into C or D in a later phase — priority allocation plus a transfer mechanism</li>
+          <li>Phase 5 found upgraders are a real segment. <strong>The cheapest upgrader to acquire is one who already lives inside the gate.</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The one thing that must not be shared</span>
+      <p class="big"><strong>Not a single amenity charge.</strong> This is the failure mode to avoid.</p>
+      <p>If all four communities pay into one maintenance pool, <strong>D's 63 households subsidise A's 169</strong> — and D buyers, a segment Phase 5 found highly attentive to who else is buying, will notice.</p>
+      <p><strong>Three layers, priced separately:</strong> a shared-spine charge everyone pays per square foot · community-level charges for community-level amenities · an opt-in managed-service charge that exists only in B.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-head">
+    <div class="sec-num">§8</div>
+    <div>
+      <h2>Risks, and what would falsify this</h2>
+      <p class="dek">Seven, with the test that would settle each. One must be closed before anything here is acted on.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:2.5rem">#</th><th style="width:15rem">Risk</th><th style="width:11rem">Exposure</th><th>Falsification test</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>The ₹2.2–2.8 Cr band is empty because buyers refuse it</strong>, not because nobody tried</td><td><strong>₹158.8 Cr — 31% of revenue</strong></td><td>Price-ladder testing with S1 and S3 respondents; booking velocity of any competitor entering the band. <strong>The highest-value test in this phase</strong></td></tr>
+          <tr><td class="n">2</td><td><strong>Community C's +20% over Prime Grandeur does not hold</strong></td><td>₹109.2 Cr — 22%, and it undermines D's anchor too</td><td>C's first tranche of 15. If they do not clear at ₹6,500/sq ft within two quarters, the premium thesis is wrong and D must be repriced</td></tr>
+          <tr><td class="n">3</td><td><strong>The managed-residence proposition is unproven in this market</strong></td><td>₹112.5 Cr — 22%, and the highest acquisition cost in the scheme</td><td>B is deliberately the smallest community and releases in two tranches for exactly this reason. Second tranche gated on the first</td></tr>
+          <tr><td class="n">4</td><td><strong>Density gets "optimised" later</strong></td><td><strong>The entire price premium</strong></td><td>Any proposal to raise FAR or add a tower should be treated as a proposal to cut price, <strong>because arithmetically it is</strong></td></tr>
+          <tr><td class="n">5</td><td><strong>APCRDA zoning at the chosen parcel does not permit this mix</strong></td><td>Structural</td><td>The model assumes gross FAR <strong>0.76</strong> against a ceiling reported at up to 2.5 — a wide margin — but plot-specific zoning, road widths and setbacks are unverified. <strong>Close this before anything else</strong></td></tr>
+          <tr><td class="n">6</td><td><strong>Low-rise garden apartments cost more per sq ft to build</strong> than the mid-rise this market builds</td><td>Community A margin, ₹126.2 Cr of revenue</td><td>A construction-cost estimate at G+3 vs G+9. Lower structural and fire-services cost may offset lower land efficiency; <strong>this phase has no cost data and does not claim it does</strong></td></tr>
+          <tr><td class="n">7</td><td><strong>Community A at 26 units/acre is still 3× the rest of the scheme</strong></td><td>The "half the corridor's density" claim</td><td>True against corridor apartment schemes (52.9–113.4), false against this scheme's own 15.0 average. <strong>The claim must always be made against the competitor set, never against the project</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The concentration, stated plainly</span>
+      <p class="big"><span class="lb lb-cmp">Computed</span> <strong>₹268.0 crore — 53% of revenue — sits in Communities C and D</strong>, at ₹6,500 and ₹7,200 per square foot. Both are above every apartment rate ever recorded in this corridor, and both sit in or above a band Phase 2 could not prove is occupied.</p>
+      <p>That is the structure's central bet, and it is deliberate. The alternative — putting the area in the apartment band — means competing with roughly 3,269 units and, at the ₹1.3–1.9 crore ticket, against a detached villa priced at ₹5,400.</p>
+      <p><strong>The concentration is not an oversight. It is the considered choice of the less crowded risk.</strong> It should be held knowingly, and Risk 1 tested before the masterplan is frozen.</p>
+    </div>
+
+    <p style="font-size:.8rem;color:var(--ink-3);margin-top:2.5rem;border-top:1px solid var(--rule);padding-top:1.2rem;max-width:none">
+      Phase 6 of a sequential research and strategy exercise. Hypothetical project; not represented as an actual KMV Spaces development. Phases 1–5 precede this document; Phase 7 builds the commercial model on this structure. Evidence anchors used here: Phase 2 §3–§5 (villa and apartment rate bands, project densities), Phase 3 §4 (competitive crowding), Phase 4 (developer delivery record), Phase 5 §1–§6 (financial gate, segments, audience mapping).
+    </p>
+  </div>
+</section>
+
+</main>
+</div>
