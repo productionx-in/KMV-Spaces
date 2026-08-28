@@ -1,0 +1,1682 @@
+<title>Amaravati Buyer Universe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style>
+<style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style>
+<style>
+/* ---------- Phase 4: evidence labels ---------- */
+.lb{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .42rem;border-radius:3px;white-space:nowrap;display:inline-block;border:1px solid transparent;
+  line-height:1.55;vertical-align:.06em}
+.lb-f{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-o{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-i{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+.lb-r{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.lb-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+.stmt{margin:0 0 1rem;max-width:var(--measure)}
+.stmt .lb{margin-right:.5rem}
+.none{color:var(--ink-3);font-style:italic}
+
+.sev-h{color:var(--accent);font-weight:600;font-family:var(--f-mono);font-size:.72rem}
+.sev-m{color:var(--ink-2);font-family:var(--f-mono);font-size:.72rem}
+.sev-l{color:var(--ink-3);font-family:var(--f-mono);font-size:.72rem}
+
+/* ---------- diagram ---------- */
+figure.dia{margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);border-radius:5px;
+  padding:1.4rem 1.5rem 1.1rem;box-shadow:var(--shadow)}
+figure.dia svg{display:block;width:100%;max-width:100%;height:auto;color:var(--ink-2)}
+figure.dia figcaption{margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--rule);
+  font-size:.79rem;color:var(--ink-3);line-height:1.5}
+.dia-head{margin-bottom:1rem}
+.dia-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.dia-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.dia-scroll{overflow-x:auto}
+.dia-scroll > svg{min-width:34rem}
+
+/* ---------- rate bars ---------- */
+.rrow{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.rrow:hover{background:var(--surface-2)}
+.rname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.rname b{display:block;color:var(--ink);font-weight:600}
+.rtrack{height:1.4rem;display:flex;align-items:center;gap:.55rem}
+.rfill{height:.95rem;border-radius:0 4px 4px 0;background:var(--series);flex:none}
+.rfill.other{background:transparent;border:1.5px solid var(--series);border-left:0;box-sizing:border-box}
+.rfill.target{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.rval{font-family:var(--f-mono);font-size:.77rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+</style><style>
+/* ---------- Phase 5 components ---------- */
+
+/* Evidence labels — form, not hue */
+.lb-est{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-app{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-rsn{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+
+/* Priority chips */
+.pri{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.14rem .48rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;border:1px solid transparent}
+.pri-h{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.pri-s{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.pri-l{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Segment profile card */
+.seg{margin:2rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.seg-head{display:grid;grid-template-columns:3.1rem minmax(0,1fr);gap:.9rem;align-items:start;
+  padding:1.05rem 1.3rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.seg-id{font-family:var(--f-mono);font-size:1.28rem;font-weight:600;color:var(--brand);
+  line-height:1;padding-top:.12rem;letter-spacing:-.02em}
+.seg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.08rem;line-height:1.28;
+  margin:0 0 .3rem;color:var(--ink);text-wrap:balance}
+.seg-head .seg-line{font-size:.85rem;color:var(--ink-2);margin:0 0 .6rem;font-style:italic}
+.seg-stats{display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.seg-stats b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.seg-size{padding:.8rem 1.3rem;border-bottom:1px solid var(--rule);font-size:.82rem;
+  line-height:1.55;color:var(--ink-2);background:var(--surface)}
+.seg-size strong{color:var(--ink)}
+
+/* 20-attribute grid */
+.attr{display:grid;grid-template-columns:minmax(8rem,10.5rem) minmax(0,1fr)}
+.attr > dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);padding:.6rem .8rem .6rem 1.3rem;border-top:1px solid var(--rule);
+  line-height:1.45;font-weight:500}
+.attr > dd{margin:0;padding:.6rem 1.3rem .6rem .3rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.attr > dd strong{color:var(--ink);font-weight:600}
+.attr > dt:first-of-type,.attr > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .attr{grid-template-columns:minmax(0,1fr)}
+  .attr > dt{padding:.6rem 1.1rem .1rem;border-top:1px solid var(--rule)}
+  .attr > dd{padding:.15rem 1.1rem .65rem;border-top:0}
+  .attr > dt:first-of-type + dd{border-top:0}
+}
+.seg-close{padding:.95rem 1.3rem;background:var(--surface-2);border-top:1px solid var(--rule);
+  font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.seg-close .lbl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.4rem;font-weight:600}
+.seg-close strong{color:var(--ink)}
+.seg-close p{margin:0 0 .55rem;max-width:none}
+.seg-close p:last-child{margin-bottom:0}
+
+/* Cash-gate escalation */
+.gate{display:flex;flex-direction:column;gap:.55rem}
+.gate-row{display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:.8rem;align-items:center}
+.gate-name{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-2);line-height:1.3}
+.gate-name b{display:block;color:var(--ink);font-weight:600;font-size:.82rem}
+.gate-track{display:flex;align-items:center;gap:.5rem;height:2rem}
+.gate-cash{height:1.3rem;background:var(--series);border-radius:0 3px 3px 0;flex:none}
+.gate-inc{height:1.3rem;border:1.5px dashed var(--emphasis);border-left:0;border-radius:0 3px 3px 0;
+  flex:none;box-sizing:border-box}
+.gate-val{font-family:var(--f-mono);font-size:.76rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap}
+.gate-val i{font-style:normal;color:var(--ink-3)}
+
+/* Hypothesis verdict list */
+.hyp{display:flex;flex-direction:column;gap:0;margin:1.5rem 0;border:1px solid var(--rule);
+  border-radius:5px;background:var(--surface);overflow:hidden}
+.hyp-row{display:grid;grid-template-columns:2.1rem minmax(7rem,11rem) minmax(0,1fr);gap:.75rem;
+  padding:.75rem 1.05rem;border-top:1px solid var(--rule);align-items:start}
+.hyp-row:first-child{border-top:0}
+.hyp-row .num{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;padding-top:.1rem}
+.hyp-name{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.4}
+.hyp-name .v{display:block;margin-top:.3rem}
+.hyp-why{font-size:.83rem;line-height:1.55;color:var(--ink-2)}
+.hyp-why strong{color:var(--ink)}
+.vd{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:.1rem .38rem;border-radius:3px;display:inline-block;line-height:1.5}
+.vd-y{background:var(--brand);color:var(--surface)}
+.vd-p{background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand)}
+.vd-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+@media (max-width:640px){
+  .hyp-row{grid-template-columns:2.1rem minmax(0,1fr);row-gap:.35rem}
+  .hyp-why{grid-column:2}
+}
+
+/* Revenue-by-segment bars, priority encoded by fill treatment */
+.rev-row{display:grid;grid-template-columns:minmax(8.5rem,13rem) minmax(0,1fr);gap:.7rem;
+  align-items:center;padding:3px 0}
+.rev-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.rev-label b{display:block;color:var(--ink);font-weight:600}
+.rev-track{position:relative;height:1.6rem;display:flex;align-items:center;gap:.55rem}
+.rev-fill{height:1.1rem;border-radius:0 4px 4px 0;flex:none;box-sizing:border-box}
+.rev-fill.p-h{background:var(--series)}
+.rev-fill.p-s{background:var(--brand-soft);border:1px solid var(--series);border-left:0}
+.rev-fill.p-l{background:transparent;border:1.5px dashed var(--rule-2);border-left:0}
+.rev-val{font-family:var(--f-mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:500}
+.rev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+td i{color:var(--ink-3);font-style:normal;font-size:.94em}
+
+/* Community mapping strip */
+.commap{display:grid;grid-template-columns:repeat(auto-fit,minmax(13.5rem,1fr));gap:.85rem;margin:1.5rem 0}
+.cm{background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden;
+  display:flex;flex-direction:column}
+.cm-top{padding:.75rem .95rem;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.cm-top h6{font-family:var(--f-display);font-size:1rem;font-weight:600;margin:0;color:var(--ink)}
+.cm-top .cm-t{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);display:block;margin-top:.22rem;
+  font-variant-numeric:tabular-nums}
+.cm-body{padding:.8rem .95rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.cm-body .cm-h{display:block;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 .28rem;font-weight:500}
+.cm-body p{margin:0 0 .7rem;max-width:none}
+.cm-body p:last-child{margin-bottom:0}
+.cm-body strong{color:var(--ink);font-weight:600}
+.cm-win{padding:.7rem .95rem;border-top:1px solid var(--rule);background:var(--accent-soft);
+  font-size:.8rem;line-height:1.45;color:var(--ink-2)}
+.cm-win b{color:var(--accent);font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;display:block;margin-bottom:.25rem;font-weight:600}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">
+    Phase 5 of 5
+    <strong>Buyer Universe</strong>
+  </div>
+  <div class="toc">
+    <a href="#s0"><span class="n">§0</span><span>What this is, and is not</span></a>
+    <a href="#s1"><span class="n">§1</span><span>The financial gate</span></a>
+    <a href="#s2"><span class="n">§2</span><span>Income sources</span></a>
+    <a href="#s3"><span class="n">§3</span><span>The eight segments</span></a>
+    <a href="#s4"><span class="n">§4</span><span>Testing the hypotheses</span></a>
+    <a href="#s5"><span class="n">§5</span><span>Priority order</span></a>
+    <a href="#s6"><span class="n">§6</span><span>Community mapping</span></a>
+    <a href="#s7"><span class="n">§7</span><span>Evidence gaps</span></a>
+    <a href="#s8"><span class="n">§8</span><span>Carry-forward</span></a>
+  </div>
+  <div>
+    <h4>Evidence labels</h4>
+    <div class="legend-stack">
+      <span class="lb lb-est">Established</span>
+      <span class="lb lb-app">Applied</span>
+      <span class="lb lb-rsn">Reasoned</span>
+    </div>
+  </div>
+  <div>
+    <h4>Sequencing</h4>
+    <p style="font-size:.76rem;line-height:1.5;color:var(--ink-3);margin:0;max-width:none">
+      The audience for Communities A–D is <strong style="color:var(--ink-2)">derived in §6</strong>,
+      after the universe is analysed and ranked — not assumed at the start.
+    </p>
+  </div>
+</nav>
+
+<main class="main">
+<header class="masthead">
+  <p class="eyebrow">Customer research · no primary buyer data available</p>
+  <h1>Who can actually buy this, and where their money comes from</h1>
+  <p class="sub">The binding constraint is cash at purchase, not income — so the segmentation is built on income <em>source</em>. Fifteen hypotheses resolve into eight real segments.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 5 of 5</span>
+    <span><strong>Labels</strong> Established · Applied · Reasoned</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> Audience foundation for a hypothetical 25-acre, ₹500 crore corridor development. Nothing here describes an actual KMV Spaces project, land holding or launch. No primary buyer research — surveys, interviews, CRM or walk-in data — was available; §0 states what was used instead and §7 lists what would have to be tested.
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head">
+    <div class="sec-num">§0</div>
+    <div>
+      <h2>What this is, and what it is not</h2>
+      <p class="dek">A reconstruction of the buyer universe from three things that can be established. It can size and rank segments. It is not a substitute for talking to buyers.</p>
+    </div>
+  </div>
+  <div class="body">
+    <p>No surveys, no interviews, no focus groups, no CRM data, no walk-in analysis. That is the largest gap in this assignment and it is stated first rather than buried. What replaces it:</p>
+
+    <div class="cards">
+      <div class="card">
+        <h6>1 · The financial gate</h6>
+        <ul>
+          <li>Who can arithmetically afford each ticket band</li>
+          <li>Computed from published RBI loan-to-value rules and lender FOIR norms</li>
+          <li>Yields a hard filter before any behavioural claim is made</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>2 · Income sources that exist</h6>
+        <ul>
+          <li>Published salary scales — AIIMS, pay commissions, private universities</li>
+          <li>District income data and the Guntur trade economy</li>
+          <li>The land-pooling settlement and diaspora population counts</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>3 · National buyer research</h6>
+        <ul>
+          <li>Applied for <strong>direction</strong>, never for magnitude</li>
+          <li>Knight Frank <em>Beyond Bricks</em> 2025 — n=1,629, eight metros</li>
+          <li>None of those metros is Vijayawada, Guntur or Amaravati</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:9.5rem">Label</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><span class="lb lb-est">Established</span></td><td>Computed from published rules, or drawn from a named data source about this catchment</td></tr>
+          <tr><td><span class="lb lb-app">Applied</span></td><td>A national or sector finding transferred to this market, with the transfer risk stated</td></tr>
+          <tr><td><span class="lb lb-rsn">Reasoned</span></td><td>Inference from market structure. Testable, and flagged for testing in §7</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Where the line falls in the segment profiles.</strong> Attributes 1–7 — demographics through financial capacity — are Established. Attributes 8–20 — motivation, objections, channels, timelines, influencers — are Applied or Reasoned, because no primary research for this catchment exists. Every one of them is a testable hypothesis, not a finding.
+    </div>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">§1</div>
+    <div>
+      <h2>The financial gate</h2>
+      <p class="dek">Before asking who wants each product, establish who can pay for it. This filters the universe hard, and it is computable.</p>
+    </div>
+  </div>
+  <div class="body">
+    <p>Computed at a 20-year tenure and 7.25%, using the midpoint of each Phase 2 ticket band, RBI loan-to-value limits and a 40–45% FOIR.</p>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr><th></th><th class="n">Community A</th><th class="n">Community B</th><th class="n">Community C</th><th class="n">Community D</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ticket band</td><td class="n">₹58–70 L</td><td class="n">₹89 L–1.05 Cr</td><td class="n">₹1.44–1.75 Cr</td><td class="n">₹2.00–2.57 Cr</td></tr>
+          <tr><td>Midpoint used</td><td class="n">₹64 L</td><td class="n">₹97 L</td><td class="n">₹1.60 Cr</td><td class="n">₹2.28 Cr</td></tr>
+          <tr><td>Max loan at LTV</td><td class="n">₹51.2 L <i>(80%)</i></td><td class="n">₹72.8 L <i>(75%)</i></td><td class="n">₹1.20 Cr <i>(75%)</i></td><td class="n">₹1.71 Cr <i>(75%)</i></td></tr>
+          <tr><td>Monthly EMI</td><td class="n">₹40,500</td><td class="n">₹57,500</td><td class="n">₹94,800</td><td class="n">₹1,35,200</td></tr>
+          <tr><td><strong>Household income needed</strong></td><td class="n"><strong>₹11–14 L</strong></td><td class="n"><strong>₹15–19 L</strong></td><td class="n"><strong>₹25–30 L</strong></td><td class="n"><strong>₹36–43 L</strong></td></tr>
+          <tr><td>Down payment</td><td class="n">₹12.8 L</td><td class="n">₹24.3 L</td><td class="n">₹40.0 L</td><td class="n">₹57.0 L</td></tr>
+          <tr><td>Stamp duty etc. at 7.5%</td><td class="n">₹4.8 L</td><td class="n">₹7.3 L</td><td class="n">₹12.0 L</td><td class="n">₹17.1 L</td></tr>
+          <tr class="tot"><td><strong>Cash needed at purchase</strong></td><td class="n">₹17.6 L</td><td class="n">₹31.5 L</td><td class="n">₹52.0 L</td><td class="n">₹74.1 L</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">The gate, drawn to scale</span>
+        <h5>Cash at purchase escalates 4.2× across the four communities — faster than income does</h5>
+        <p class="sub">Solid bar: cash required in hand before the first EMI. Dashed bar: annual household income required, on the same scale.</p>
+      </div>
+      <div class="gate">
+        <div class="gate-row">
+          <div class="gate-name">Community<b>A</b></div>
+          <div class="gate-track">
+            <div class="gate-cash" style="width:23.8%"></div>
+            <span class="gate-val">₹17.6 L <i>cash</i></span>
+          </div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-name" aria-hidden="true"></div>
+          <div class="gate-track">
+            <div class="gate-inc" style="width:16.9%"></div>
+            <span class="gate-val"><i>₹12.5 L income p.a.</i></span>
+          </div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-name">Community<b>B</b></div>
+          <div class="gate-track">
+            <div class="gate-cash" style="width:42.5%"></div>
+            <span class="gate-val">₹31.5 L <i>cash</i></span>
+          </div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-name" aria-hidden="true"></div>
+          <div class="gate-track">
+            <div class="gate-inc" style="width:22.9%"></div>
+            <span class="gate-val"><i>₹17.0 L income p.a.</i></span>
+          </div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-name">Community<b>C</b></div>
+          <div class="gate-track">
+            <div class="gate-cash" style="width:70.2%"></div>
+            <span class="gate-val">₹52.0 L <i>cash</i></span>
+          </div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-name" aria-hidden="true"></div>
+          <div class="gate-track">
+            <div class="gate-inc" style="width:37.1%"></div>
+            <span class="gate-val"><i>₹27.5 L income p.a.</i></span>
+          </div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-name">Community<b>D</b></div>
+          <div class="gate-track">
+            <div class="gate-cash" style="width:100%"></div>
+            <span class="gate-val">₹74.1 L <i>cash</i></span>
+          </div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-name" aria-hidden="true"></div>
+          <div class="gate-track">
+            <div class="gate-inc" style="width:53.3%"></div>
+            <span class="gate-val"><i>₹39.5 L income p.a.</i></span>
+          </div>
+        </div>
+      </div>
+      <div class="figure-foot">
+        Both bars share one scale, with ₹74.1 lakh at 100%. Cash rises 4.2× from A to D; required income rises 3.2× — so the gap widens as you go up. Read as a ratio: Community A needs <strong>1.4× annual income in cash</strong>, B, C and D all need <strong>1.9×</strong>. The step happens between A and B, where the loan-to-value limit drops from 80% to 75% above ₹75 lakh.
+      </div>
+    </figure>
+
+    <div class="finding">
+      <span class="lbl">The consequence that shapes everything after this</span>
+      <p class="big">The cash barrier discriminates more sharply than the income test — and it discriminates by <strong>income source</strong>, not income amount.</p>
+      <p>Two households with identical ₹30 lakh incomes — one salaried, one trading — have completely different abilities to put ₹52 lakh on a table, completely different documentation, and completely different objections. <span class="lb lb-est">Established</span> This is why the segmentation in §3 is built on where the money comes from rather than on life stage or geography.</p>
+      <p>Second consequence: <strong>Community D requires household income around ten times district per capita GDP</strong> — NTR district ₹3,60,354, Guntur ₹3,04,175. It cannot be sold primarily to salaried locals. It requires business income, diaspora income, professional income at the top of institutional scales, or asset conversion.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">§2</div>
+    <div>
+      <h2>The income sources that actually exist</h2>
+      <p class="dek">Segments are only real if the money behind them is real. Five sources, and one of them corrects an assumption most plans would make.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Institutional and professional income</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Role at AIIMS Mangalagiri</th><th>Published pay</th><th class="n">Annual</th><th>Reaches</th></tr></thead>
+        <tbody>
+          <tr><td>Senior Resident</td><td>₹90,000–1,10,000/month</td><td class="n">₹11–13 L</td><td><strong>Community A</strong></td></tr>
+          <tr><td>Assistant Professor</td><td>Level 12, basic ₹1,01,500 + 20% NPA + DA</td><td class="n">₹24–26 L</td><td><strong>Community B</strong>, edge of C</td></tr>
+          <tr><td>Additional Professor</td><td>Level 13-A2, ₹1,48,200–2,11,400 + NPA + DA</td><td class="n">₹36–52 L</td><td><strong>Community C / D</strong></td></tr>
+          <tr><td>Professor, super-specialty</td><td>₹3–4 lakh/month all-in</td><td class="n">₹36–48 L</td><td><strong>Community D</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">A correction, before it becomes a media plan</span>
+      <p class="big">In this catchment the high-income institution is <strong>AIIMS</strong> — not the private universities.</p>
+      <p>SRM University AP holds a 100-acre campus at Neerukonda and VIT-AP sits beside the Secretariat, which makes "the university cluster" look like an affluent housing pool. <span class="lb lb-est">Established</span> The published pay does not support it: SRM Assistant Professor pay averages roughly <strong>₹57,000 a month — about ₹6.8 lakh a year, below the Community A threshold.</strong></p>
+      <p>Academic staff at SRM and VIT are a <strong>rental and entry-housing population</strong>, not a premium buyer pool. Any plan treating the university cluster as one affluent segment is wrong on the numbers.</p>
+    </div>
+
+    <h3>Government income, and a dated trigger</h3>
+    <p><span class="lb lb-est">Established</span> The <strong>8th Central Pay Commission</strong> was notified on 3 November 2025, effective 1 January 2026, with an expected 30–34% hike; rollout with retrospective arrears is expected to extend into 2027. Andhra Pradesh has constituted a <strong>Ninth Pay Revision Commission</strong>.</p>
+    <p><span class="lb lb-rsn">Reasoned</span> Government employment reaches Community A comfortably and Community B at senior grades. It does not reach C or D on salary alone. But it is the <strong>most loan-friendly income in the catchment</strong>, and <strong>a pay revision with arrears is a purchase trigger</strong> — it creates exactly the lump sum that clears the down-payment barrier in §1.</p>
+
+    <h3>Trade income — the deepest local pool</h3>
+    <p><span class="lb lb-est">Established</span> Guntur's chilli, tobacco and cotton ecosystem alone moves <strong>USD 4–5 billion</strong>. AP income-tax filers rose from <strong>25.99 to 28.70 lakh</strong>. Purchasing power in this group is materially higher than declared income, which matters more for the cash gate than for the income test.</p>
+
+    <h3>The land-pooling landowners — the source an outsider would miss</h3>
+    <p><span class="lb lb-est">Established</span> <strong>33,008+ acres pooled from approximately 25,000 farmer households</strong>, average holding ~1.3 acres. Each surrendered acre returns roughly <strong>1,000 sq yd of residential plot plus 250–450 sq yd commercial</strong>, against an annuity of ₹30–50,000 per acre per year for ten years, rising 10% annually.</p>
+    <p><strong>Computed:</strong> at prevailing rates of ₹23,000–70,000 per sq yd, a one-acre household holds <strong>₹2.3–7.0 crore of residential land plus ₹1 crore or more of commercial</strong> — against an annual cash income often under ₹2 lakh.</p>
+
+    <div class="finding">
+      <span class="lbl">The structural anomaly</span>
+      <p class="big">These households are <strong>land-rich and cash-thin</strong>. They clear Communities C and D on assets and fail Community A on income.</p>
+      <p>They cannot be sold to with a conventional EMI proposition. They can be sold to with <strong>land-for-home exchange, joint development, or part-consideration in kind</strong> — which is what Phase 4 found KMV's published <code>/land-owners</code> page exists to do, and which no competitor in the Phase 3 screened set offers.</p>
+    </div>
+
+    <h3>Diaspora income — and the split that matters</h3>
+    <p><span class="lb lb-est">Established</span> The Telugu diaspora is estimated at <strong>~3 million worldwide</strong>; an independent count gives ~2.3 million, of which <strong>1,230,000 in the United States</strong> and <strong>388,000 in Saudi Arabia</strong>. <strong>APNRTS, the state's non-resident agency, is headquartered in Guntur</strong> — inside the catchment.</p>
+    <p><span class="lb lb-est">Established — the reality check.</span> A national survey found <strong>60%+ of NRI respondents target Hyderabad, NCR or Bengaluru.</strong> Amaravati is not a top-tier NRI destination. Any plan assuming NRI demand arrives on its own is wrong; here it has to be created, against three cities with better-known markets.</p>
+
+    <div class="note">
+      <strong><span class="lb lb-rsn">Reasoned</span> US-based and Gulf-based Telugu households are two different segments with two different products.</strong> The US pool is technology-weighted and clears Communities C and D. The Gulf pool is remittance-weighted and clears A and B. Phase 3 found every competitor collapsing them into one "NRI" audience — which spends the Gulf budget on a product that audience cannot buy, and under-serves the audience that can.
+    </div>
+
+    <figure class="dia">
+      <div class="dia-head">
+        <span class="kicker">The structural finding</span>
+        <h5>One institution's pay ladder maps rung-for-rung onto the product ladder</h5>
+      </div>
+      <div class="dia-scroll">
+      <svg viewBox="0 0 720 300" role="img" aria-label="Diagram showing the four AIIMS Mangalagiri pay rungs — Senior Resident, Assistant Professor, Additional Professor and super-specialty Professor — each mapping by an arrow to Community A, B, C and D respectively, with estimated unit counts of 10, 28, 21 and 6.">
+        <defs>
+          <marker id="l-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--series)"/>
+          </marker>
+        </defs>
+        <text x="112" y="20" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" letter-spacing="1.2" fill="var(--ink-3)">AIIMS PAY RUNG</text>
+        <text x="608" y="20" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" letter-spacing="1.2" fill="var(--ink-3)">COMMUNITY</text>
+
+        <g font-family="IBM Plex Sans, sans-serif">
+          <rect x="8" y="36" width="208" height="52" rx="4" fill="var(--surface-2)" stroke="var(--rule)"/>
+          <text x="22" y="57" font-size="13" font-weight="600" fill="var(--ink)">Senior Resident</text>
+          <text x="22" y="75" font-size="11.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-3)">₹11–13 L p.a.</text>
+
+          <rect x="8" y="98" width="208" height="52" rx="4" fill="var(--surface-2)" stroke="var(--rule)"/>
+          <text x="22" y="119" font-size="13" font-weight="600" fill="var(--ink)">Assistant Professor</text>
+          <text x="22" y="137" font-size="11.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-3)">₹24–26 L p.a.</text>
+
+          <rect x="8" y="160" width="208" height="52" rx="4" fill="var(--surface-2)" stroke="var(--rule)"/>
+          <text x="22" y="181" font-size="13" font-weight="600" fill="var(--ink)">Additional Professor</text>
+          <text x="22" y="199" font-size="11.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-3)">₹36–52 L p.a.</text>
+
+          <rect x="8" y="222" width="208" height="52" rx="4" fill="var(--surface-2)" stroke="var(--rule)"/>
+          <text x="22" y="243" font-size="13" font-weight="600" fill="var(--ink)">Professor, super-specialty</text>
+          <text x="22" y="261" font-size="11.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-3)">₹36–48 L p.a.</text>
+        </g>
+
+        <g stroke="var(--series)" stroke-width="1.6" fill="none" marker-end="url(#l-arrow)">
+          <line x1="224" y1="62" x2="484" y2="62"/>
+          <line x1="224" y1="124" x2="484" y2="124"/>
+          <line x1="224" y1="186" x2="484" y2="186"/>
+          <line x1="224" y1="248" x2="484" y2="248"/>
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)" text-anchor="middle">
+          <text x="354" y="55">~10 units</text>
+          <text x="354" y="117">~28 units</text>
+          <text x="354" y="179">~21 units</text>
+          <text x="354" y="241">~6 units</text>
+        </g>
+
+        <g font-family="IBM Plex Sans, sans-serif">
+          <rect x="500" y="36" width="212" height="52" rx="4" fill="var(--surface)" stroke="var(--rule-2)"/>
+          <text x="516" y="57" font-size="13" font-weight="600" fill="var(--ink)">A · 2BHK + compact 3BHK</text>
+          <text x="516" y="75" font-size="11.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-3)">₹58–70 L</text>
+
+          <rect x="500" y="98" width="212" height="52" rx="4" fill="var(--surface)" stroke="var(--rule-2)"/>
+          <text x="516" y="119" font-size="13" font-weight="600" fill="var(--ink)">B · 3BHK premium</text>
+          <text x="516" y="137" font-size="11.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-3)">₹89 L – 1.05 Cr</text>
+
+          <rect x="500" y="160" width="212" height="52" rx="4" fill="var(--surface)" stroke="var(--rule-2)"/>
+          <text x="516" y="181" font-size="13" font-weight="600" fill="var(--ink)">C · 3.5 / 4BHK premium</text>
+          <text x="516" y="199" font-size="11.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-3)">₹1.44 – 1.75 Cr</text>
+
+          <rect x="500" y="222" width="212" height="52" rx="4" fill="var(--surface)" stroke="var(--rule-2)"/>
+          <text x="516" y="243" font-size="13" font-weight="600" fill="var(--ink)">D · Villas</text>
+          <text x="516" y="261" font-size="11.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-3)">₹2.00 – 2.57 Cr</text>
+        </g>
+      </svg>
+      </div>
+      <figcaption>
+        The four rungs of one published pay scale land on the four price tiers — which makes senior medical professionals the only segment present in <em>all four</em> communities, reachable through a single institutional relationship. The institution sits about three kilometres from the recommended micro-location, and Phase 4 established that <strong>KMV Projects built it</strong>. Unit estimates are the §5.5 allocation.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">§3</div>
+    <div>
+      <h2>The eight segments that actually exist</h2>
+      <p class="dek">The brief's fifteen labels are three segmentation axes overlaid on each other. Profiling all fifteen would profile the same households three times.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:9rem">Axis</th><th>Hypotheses using it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Life stage</strong></td><td>First-time buyers · young professionals · young couples · growing families · upgraders</td></tr>
+          <tr><td><strong>Affluence</strong></td><td>Established business families · affluent professionals · HNIs · investors</td></tr>
+          <tr><td><strong>Geography</strong></td><td>Local buyers · Vijayawada · Guntur · Amaravati-region · outside AP · NRIs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>A growing family in Vijayawada is simultaneously a life-stage hypothesis, a geography hypothesis and — depending on what the household does for a living — an affluence hypothesis. Segments built that way are not mutually exclusive and cannot be used to allocate a rupee of media spend.</p>
+
+    <div class="finding">
+      <span class="lbl">The organising decision</span>
+      <p class="big"><span class="lb lb-est">Established</span> The discriminator in this catchment is income <strong>source</strong>, not income <strong>amount</strong>.</p>
+      <p>§1 showed why: the binding constraint is cash at purchase. Two households with identical ₹30 lakh incomes — one salaried, one trading — have different abilities to clear that gate, different documentation, different objections and different decision timelines.</p>
+      <p>So the primary axis is <strong>where the money comes from</strong>, and life stage and geography become descriptors <em>within</em> each segment rather than segments in their own right. That produces eight mutually exclusive, individually addressable segments, each traceable to an income source in §2.</p>
+    </div>
+
+    <div class="note">
+      <strong>How to read the profiles.</strong> Each covers the twenty attributes the brief asks for. Attributes 1–7 — demographics through financial capacity — are <strong>Established</strong>. Attributes 8–20 — motivation through influencers — are <strong>Applied or Reasoned</strong>, because no primary research for this catchment exists. Lines carrying different confidence from their neighbours are labelled inline.
+    </div>
+
+    <article class="seg" id="s1">
+      <div class="seg-head">
+        <div class="seg-id">S1</div>
+        <div>
+          <h4>Vijayawada &amp; Guntur trade and business families</h4>
+          <p class="seg-line">The deepest pool of purchase-ready cash in the catchment.</p>
+          <div class="seg-stats">
+            <span class="pri pri-h">HIGH</span>
+            <span>Score <b>4.05</b></span>
+            <span>Horizon <b>Near · 3–9 months</b></span>
+          </div>
+        </div>
+      </div>
+      <div class="seg-size"><strong>Size — Reasoned, order of magnitude only.</strong> AP has <strong>28.70 lakh</strong> income-tax filers. NTR and Guntur districts hold roughly 8% of state population but a disproportionate share of filers, being urban and trade-centred. The slice clearing both the ₹25 lakh income test <em>and</em> the ₹52 lakh cash test is a small fraction of that. A bounding exercise, not a count — §7 flags it.</div>
+      <dl class="attr">
+      <dt>Demographics</dt>
+      <dd>Principal buyer 38–58. Business owner, commission agent, wholesaler, transport operator, jeweller, hospitality, construction supplier. Education varies widely and correlates poorly with wealth.</dd>
+      <dt>Geography</dt>
+      <dd>Vijayawada — Governorpet, Labbipet, Benz Circle, Patamata. Guntur — Brodipet, Arundelpet, Lakshmipuram. Also Tenali, Mangalagiri town, Chilakaluripet.</dd>
+      <dt>Income &amp; power</dt>
+      <dd>Household income frequently ₹25 lakh–1 crore+, but <strong>partly undocumented</strong>. Guntur's chilli, tobacco and cotton ecosystem alone moves USD 4–5 billion. Purchasing power exceeds declared income.</dd>
+      <dt>Family structure</dt>
+      <dd>Joint or semi-joint. Two to four adults contributing. Often <strong>multiple related households buying in the same project</strong>.</dd>
+      <dt>Life stage</dt>
+      <dd>Consolidating. Children in senior school, college or newly married. Frequently buying <em>for</em> the next generation.</dd>
+      <dt>Housing requirement</dt>
+      <dd>3BHK large, 4BHK or villa. Space, parking for 2–4 vehicles and a formal receiving area matter more than efficiency. Vaastu compliance close to non-negotiable. Servant provision assumed.</dd>
+      <dt>Financial capacity</dt>
+      <dd><strong>Clears Communities C and D comfortably on cash</strong> — the ₹52–74 lakh test is the easiest in this document for them. Loan used selectively, for tax or working-capital reasons, not from necessity.</dd>
+      <dt>Purchase motivation</dt>
+      <dd>Converting business cash into a hard, visible asset. Status confirmation within a tight, observant peer network. Providing for children. <strong>Rental yield is close to irrelevant.</strong></dd>
+      <dt>Pain points</dt>
+      <dd>Documentation and title anxiety — this segment has seen local disputes. Distrust of developers who sell and disappear. Reluctance to expose financial detail to a bank.</dd>
+      <dt>Objections</dt>
+      <dd><strong>&ldquo;Who else has bought?&rdquo; is the first objection and the most important one in this document.</strong> Then: will it get built, what is the resale, and why not just buy land — land being their default asset class.</dd>
+      <dt>Purchase triggers</dt>
+      <dd>A good trading season. A daughter's or son's marriage. A peer in the same trade buying first. A land sale. Guideline-value revisions that make waiting more expensive.</dd>
+      <dt>Decision factors</dt>
+      <dd>Developer track record above everything. Then location legibility — &ldquo;everyone knows where that is&rdquo; — then unit size, then who the neighbours will be. Amenity lists rank low.</dd>
+      <dt>Emotional drivers</dt>
+      <dd>Standing. Permanence. Being seen to have arrived, and to have arrived <em>in the capital region</em>. Legacy for children.</dd>
+      <dt>Rational drivers</dt>
+      <dd>Land-appreciation logic applied to built product. Capital preservation. Proximity to existing business premises — <strong>this segment will not move far from its trade base.</strong></dd>
+      <dt>Preferred channels</dt>
+      <dd><strong>Referral and personal introduction first.</strong> Then a physical site visit. Then print and hoardings for legitimacy. Digital is a verification channel, not a discovery channel.</dd>
+      <dt>Information sources</dt>
+      <dd>Trade peers, family, the family advocate and chartered accountant, local brokers, the sub-registrar network. <span class="lb lb-rsn">Reasoned</span> The CA and the advocate are gatekeepers, and no Phase 3 competitor addresses either.</dd>
+      <dt>Digital behaviour</dt>
+      <dd>WhatsApp-primary, YouTube for long-form. Will search the developer's name and read page one — which is where Phase 4's finding on thin search visibility bites hardest. Unlikely to fill a portal form; likely to call a hoarding number.</dd>
+      <dt>Site-visit behaviour</dt>
+      <dd><strong>Visits with family, usually 3–6 people, often unannounced, frequently on a Sunday.</strong> Expects the decision-maker on site. Two or three visits before committing, elders present on the confirming one.</dd>
+      <dt>Decision timeline</dt>
+      <dd><strong>3–9 months.</strong> Long consideration, then a sudden close once the family aligns. Deposit to agreement can be days.</dd>
+      <dt>Influencers</dt>
+      <dd>Spouse, father or eldest brother, the family CA, and one respected peer who has already bought. <span class="lb lb-app">Applied</span> The decision is collective; here the collective is wider than the nuclear family.</dd>
+      </dl>
+      <div class="seg-close">
+        <span class="lbl">The decisive insight</span>
+        <p><strong>This segment does not buy a project; it buys the other buyers.</strong> The first fifteen sales into a recognised local network determine whether the next hundred are easy or impossible.</p><p>That has a direct launch consequence: <strong>seed the premium tiers before advertising them.</strong></p>
+      </div>
+    </article>
+    <article class="seg" id="s2">
+      <div class="seg-head">
+        <div class="seg-id">S2</div>
+        <div>
+          <h4>Senior institutional medical professionals</h4>
+          <p class="seg-line">The most reliably documented high income in the corridor, and the one most tied to the micro-location.</p>
+          <div class="seg-stats">
+            <span class="pri pri-h">HIGH</span>
+            <span>Score <b>3.90</b></span>
+            <span>Horizon <b>Near · 6 weeks–4 months</b></span>
+          </div>
+        </div>
+      </div>
+      <div class="seg-size"><strong>Size — Reasoned.</strong> AIIMS Mangalagiri at full faculty strength, plus NRI Academy of Sciences at Chinakakani, Katuri and Guntur Medical Colleges, and the Vijayawada private hospital cluster. Households clearing Community B or above are order of <strong>low thousands</strong>; the slice clearing D is a few hundred. §7 flags it.</div>
+      <dl class="attr">
+      <dt>Demographics</dt>
+      <dd>32–55. Consultants, faculty, super-specialists, senior residents at the entry end. <strong>Often two doctors in one household</strong> — which changes the arithmetic completely.</dd>
+      <dt>Geography</dt>
+      <dd>Already living in Mangalagiri, Chinakakani, Tadepalli and Vijayawada. <strong>This segment already commutes across the exact corridor the project sits in.</strong></dd>
+      <dt>Income &amp; power</dt>
+      <dd>Senior Resident ₹11–13 L → A. Assistant Professor ₹24–26 L → B. Additional Professor ₹36–52 L → C/D. Super-specialty Professor ₹36–48 L → D. A dual-doctor household at Assistant Professor level clears C.</dd>
+      <dt>Family structure</dt>
+      <dd>Nuclear, one or two children, frequently a dependent parent. Both adults working, often on incompatible shift patterns.</dd>
+      <dt>Life stage</dt>
+      <dd>Establishing or consolidating. Many are recent arrivals — AIIMS Mangalagiri is a young institution — which makes them <strong>actively in-market rather than latently in-market.</strong></dd>
+      <dt>Housing requirement</dt>
+      <dd>3BHK or compact 4BHK. <strong>Commute time to the hospital is the hardest constraint</strong> — a clinician on call cannot live 40 minutes away. Security, a study, quiet and reliable power rank above clubhouse scale.</dd>
+      <dt>Financial capacity</dt>
+      <dd>Highly loan-eligible: documented, stable, salaried, lender-favoured. <strong>But cash-constrained</strong> — clearing a ₹94,800 EMI and finding ₹52 lakh in hand are different problems. <strong>Payment structuring matters more than price here.</strong></dd>
+      <dt>Purchase motivation</dt>
+      <dd>Ending the commute. Converting rent into ownership. A permanent base after a career of institutional transfers. Schooling for children.</dd>
+      <dt>Pain points</dt>
+      <dd>Time, genuinely — not a figure of speech for a clinician. Cannot do multi-week diligence. Cannot attend weekday site visits. Frustrated by processes requiring repetition.</dd>
+      <dt>Objections</dt>
+      <dd>&ldquo;Will it be delivered on time?&rdquo; — delay costs them rent and disruption at once. &ldquo;Is the commute really 12 minutes?&rdquo; &ldquo;What are the schools like?&rdquo; &ldquo;Am I overpaying versus Vijayawada?&rdquo;</dd>
+      <dt>Purchase triggers</dt>
+      <dd>Confirmation in post, or promotion from Senior Resident to faculty. A child reaching school age. Rent revision. Spouse's job confirmation. <strong>A colleague buying — this is a small, highly connected community.</strong></dd>
+      <dt>Decision factors</dt>
+      <dd>Commute time, delivery credibility, build quality, school access, security. <span class="lb lb-app">Applied</span> National buyer work finds professional buyers weighting delivery record above amenity depth; the direction transfers even if the magnitude does not.</dd>
+      <dt>Emotional drivers</dt>
+      <dd>Stability after years of transfers. Belonging in a place they moved to for work. A peer-appropriate address. Relief from logistics.</dd>
+      <dt>Rational drivers</dt>
+      <dd>Rent-to-EMI arithmetic. Loan eligibility they know they possess. Tax deduction. Commute distance measured, not described.</dd>
+      <dt>Preferred channels</dt>
+      <dd><strong>Digital-first, and here that is actually true.</strong> Search, portals, developer website, WhatsApp for follow-up. Responsive to precise information, averse to sales pressure.</dd>
+      <dt>Information sources</dt>
+      <dd>Google, 99acres / MagicBricks / Housing, RERA lookup, colleague referral, resident WhatsApp groups. <span class="lb lb-rsn">Reasoned</span> This segment will check RERA. Most of the catchment will not.</dd>
+      <dt>Digital behaviour</dt>
+      <dd>Researches at night and between shifts. Reads specification detail. Compares 3–5 projects on a spreadsheet. Will watch a six-minute walkthrough. Responds to email; often cannot take calls during the day.</dd>
+      <dt>Site-visit behaviour</dt>
+      <dd><strong>Weekday evening or Sunday, by appointment, couple only.</strong> One focused visit and one confirming visit. Wants the drive from the hospital timed on the way. Family comes on the second visit.</dd>
+      <dt>Decision timeline</dt>
+      <dd><strong>6 weeks to 4 months</strong> — the shortest of the affluent segments, because the trigger is usually dated: a posting, a school year, a lease expiry.</dd>
+      <dt>Influencers</dt>
+      <dd>Spouse — <strong>co-equal, often primary on the home itself</strong>. Then colleagues who have bought, then parents on the financial question.</dd>
+      </dl>
+      <div class="seg-close">
+        <span class="lbl">The structural link to Phase 4</span>
+        <p>Phase 4 established that <strong>KMV Projects built AIIMS Mangalagiri.</strong> For the one segment that most values delivery credibility, and whose workplace <em>is</em> that building, this is not a claim to be written — it is a verifiable fact standing three kilometres from the site.</p><p><strong>No competitor in the Phase 3 screened set has anything comparable to say to this audience.</strong></p>
+      </div>
+    </article>
+    <article class="seg" id="s3">
+      <div class="seg-head">
+        <div class="seg-id">S3</div>
+        <div>
+          <h4>US and developed-market Telugu diaspora households</h4>
+          <p class="seg-line">The largest latent pool, the smallest active one. The gap between the two is the opportunity.</p>
+          <div class="seg-stats">
+            <span class="pri pri-h">HIGH</span>
+            <span>Score <b>4.20</b></span>
+            <span>Horizon <b>Mid · 6–18 months</b></span>
+          </div>
+        </div>
+      </div>
+      <div class="seg-size"><strong>Size — Established at pool level, Reasoned at addressable level.</strong> <strong>1,230,000 Telugu-origin people in the United States</strong> — roughly 400,000 households — plus Canada, Australia and the UK. But <strong>60%+ of NRI buyers target Hyderabad, NCR or Bengaluru.</strong> The active Amaravati-considering slice is small and must be created rather than harvested.</div>
+      <dl class="attr">
+      <dt>Demographics</dt>
+      <dd>33–52. Technology, healthcare, finance, academia. H-1B, green card and naturalised citizens. Household income frequently USD 150,000–400,000.</dd>
+      <dt>Geography</dt>
+      <dd>New Jersey, the Bay Area, Dallas, Chicago, Atlanta, Seattle. <strong>Family origin in Krishna, Guntur, West Godavari, Prakasam</strong> — origin district matters far more for targeting than current city.</dd>
+      <dt>Income &amp; power</dt>
+      <dd><strong>Clears Community D on income without strain.</strong> The constraint is allocation, not affordability: this purchase competes with a US mortgage, college funds and Hyderabad property.</dd>
+      <dt>Family structure</dt>
+      <dd>Nuclear abroad, with <strong>parents still resident in AP</strong> — usually Vijayawada, Guntur or the home village. That parental household is central to everything below.</dd>
+      <dt>Life stage</dt>
+      <dd>Settled abroad, ten to twenty years out. Parents ageing. Beginning to think about a permanent Indian anchor.</dd>
+      <dt>Housing requirement</dt>
+      <dd>Villa or large premium apartment. <strong>Lock-and-leave security is the defining requirement</strong> — the home will be empty eleven months a year. Maintenance handled by someone else. Space for parents, capacity for the annual visit.</dd>
+      <dt>Financial capacity</dt>
+      <dd>Very strong. <strong>NRE/NRO repatriation, PoA execution and FEMA compliance are the friction, not the money.</strong> Purchase can be completed entirely remotely under a registered Power of Attorney.</dd>
+      <dt>Purchase motivation</dt>
+      <dd>Four, and they differ: a home for ageing parents; a return or retirement anchor; currency-hedged asset allocation; identity and a stake in the state capital. Note that the first makes the parents the actual occupant.</dd>
+      <dt>Pain points</dt>
+      <dd><strong>Cannot verify anything personally.</strong> Cannot inspect. Depends on a relative for site visits — whose opinion becomes decisive. Time-zone friction in every conversation. Has heard the horror stories.</dd>
+      <dt>Objections</dt>
+      <dd>&ldquo;How do I know this is real?&rdquo; — fraud is the stated primary NRI concern. Then: who maintains it when empty, can I sell it if I never return, and <strong>&ldquo;why Amaravati and not Hyderabad?&rdquo; — the real competitor here is a city, not a project.</strong></dd>
+      <dt>Purchase triggers</dt>
+      <dd><strong>An India visit — December–January and summer, and those windows are non-negotiable.</strong> A parent's health event. A green card or citizenship milestone. A bonus or vesting event. A sibling buying.</dd>
+      <dt>Decision factors</dt>
+      <dd>Developer credibility and legal cleanliness above all. Then remote-management capability, then rental and resale exit, then the capital-city story. <strong>Amenities matter less here than to any other segment</strong> — the household will not use them.</dd>
+      <dt>Emotional drivers</dt>
+      <dd>Guilt and duty toward parents. Nostalgia for the region. Wanting to be part of the capital's making rather than to watch it from abroad. Standing within the extended family.</dd>
+      <dt>Rational drivers</dt>
+      <dd>INR/USD diversification. Capital appreciation on a capital-city thesis. A physical base for eventual return. Rental income while empty.</dd>
+      <dt>Preferred channels</dt>
+      <dd><strong>Digital, entirely.</strong> Search, YouTube, LinkedIn, Facebook and WhatsApp community groups, diaspora associations, video call. <strong>APNRTS is headquartered in Guntur</strong> — an institutional channel no Phase 3 competitor was found using.</dd>
+      <dt>Information sources</dt>
+      <dd>Google in English, YouTube walkthroughs, diaspora WhatsApp and Facebook groups, family in India, NRI property content, RERA verification.</dd>
+      <dt>Digital behaviour</dt>
+      <dd><strong>Very high intent, very long research cycles, very low form-fill rates.</strong> Watches long video, reads at odd hours relative to India, will take a video walkthrough before a physical one, expects to transact digitally.</dd>
+      <dt>Site-visit behaviour</dt>
+      <dd><strong>A proxy visit by a relative first, then a personal visit compressed into one India trip.</strong> The trip visit is decisive and there is no second chance — if the site is not ready to close in that window, the sale is lost for a year.</dd>
+      <dt>Decision timeline</dt>
+      <dd><strong>6–18 months of consideration, then a five-day decision window during the India visit.</strong> This bimodal pattern is the most important operational fact about the segment.</dd>
+      <dt>Influencers</dt>
+      <dd>Spouse, then parents in India, then <strong>the sibling or cousin who does the physical inspection — who holds effective veto and is almost never the person the marketing is aimed at.</strong></dd>
+      </dl>
+      <div class="seg-close">
+        <span class="lbl">Two structural mistakes to avoid</span>
+        <p><strong>1 · Treating &ldquo;NRI&rdquo; as one segment.</strong> The US and Gulf pools differ in size, income, purpose and product fit. Phase 3 found every competitor collapsing them.</p><p><strong>2 · Campaigning to the diaspora on Indian seasonality.</strong> This segment's buying window is set by <em>their</em> travel calendar — December–January and summer. A launch calendar built on Dasara–Diwali will miss them entirely.</p>
+      </div>
+    </article>
+    <article class="seg" id="s4">
+      <div class="seg-head">
+        <div class="seg-id">S4</div>
+        <div>
+          <h4>Amaravati land-pooling landowner households</h4>
+          <p class="seg-line">Structurally unlike every other segment here, and the one no competitor is built to serve.</p>
+          <div class="seg-stats">
+            <span class="pri pri-s">SECONDARY</span>
+            <span>Score <b>4.05</b></span>
+            <span>Horizon <b>Long · 6–24 months</b></span>
+          </div>
+        </div>
+      </div>
+      <div class="seg-size"><strong>Size — Established.</strong> <strong>33,008+ acres pooled from approximately 25,000 farmer households</strong>, average holding ~1.3 acres. <span class="lb lb-rsn">Reasoned</span> The tier holding one acre or more — order of 12,000–15,000 households — holds <strong>₹2.3–7.0 crore in residential returnable plots</strong> plus commercial land, against an annuity of roughly ₹50,000–85,000 a year.</div>
+      <dl class="attr">
+      <dt>Demographics</dt>
+      <dd>40–70 principally, with sons and daughters aged 25–45 increasingly driving decisions. Agricultural background; many now without an operating farm, the land having been surrendered.</dd>
+      <dt>Geography</dt>
+      <dd><strong>The 29 villages of the capital area</strong> — Thullur, Velagapudi, Rayapudi, Mandadam, Nelapadu, Lingayapalem, Venkatapalem, Nidamarru, Kuragallu, Neerukonda. <strong>They live on top of the recommended micro-location.</strong></dd>
+      <dt>Income &amp; power</dt>
+      <dd><strong>The defining asymmetry: land-rich, cash-thin.</strong> Assets of ₹3–10 crore; annual cash income often under ₹2 lakh from the annuity. Clears C and D on net worth; fails A on income.</dd>
+      <dt>Family structure</dt>
+      <dd>Joint, multi-generational — often 6–12 people across three generations in one compound. Decisions are made by the family, not the individual.</dd>
+      <dt>Life stage</dt>
+      <dd><strong>In forced transition.</strong> The occupation is gone, the land is committed, the returnable plots are being handed over. An entire community re-deciding how it lives — a once-in-a-generation moment that will not recur.</dd>
+      <dt>Housing requirement</dt>
+      <dd><strong>Two distinct needs.</strong> The parent generation wants ground-connected living, space and continuity with village life — a villa, not a flat. The 25–45 generation, urban-employed or aspiring, wants a serviced apartment with security. <strong>One household may need both.</strong></dd>
+      <dt>Financial capacity</dt>
+      <dd><strong>The conventional structure does not work.</strong> No income statement, no ITR history, poor loan eligibility, and no need for a loan. What works: <strong>land-for-home exchange, joint development on the returnable plot, part-consideration in kind, or a plot-plus-cash swap.</strong></dd>
+      <dt>Purchase motivation</dt>
+      <dd>Converting an illiquid, undevelopable plot into a finished, liveable or income-generating asset — without becoming a developer. Separate homes for sons. Re-establishing status where the old marker of it has been surrendered.</dd>
+      <dt>Pain points</dt>
+      <dd><strong>Deep, evidence-based institutional distrust</strong> — the pooling process itself, the capital's stop-start history since 2019, and years of uncertainty before the April 2026 gazette notification. Fear of being outmanoeuvred a second time.</dd>
+      <dt>Objections</dt>
+      <dd>&ldquo;What exactly do I get, and when?&rdquo; &ldquo;What happens if you don't build?&rdquo; <strong>&ldquo;Why should I hand over land again?&rdquo; — emotionally loaded in a way no brochure answers, and the correct objection to have.</strong></dd>
+      <dt>Purchase triggers</dt>
+      <dd>Plot handover completion. A neighbour completing an exchange successfully. A son's marriage. <strong>A specific, written, legally structured offer — this segment does not respond to advertising; it responds to a document.</strong></dd>
+      <dt>Decision factors</dt>
+      <dd>Terms of exchange, legal enforceability, the developer's local standing, and <strong>precedent — has anyone in the village done this and been treated well?</strong></dd>
+      <dt>Emotional drivers</dt>
+      <dd>Dignity. Vindication after a decade of uncertainty. Being a participant in the capital rather than a casualty of it. Provision for sons. <strong>Handled carelessly this is not a lost sale but a local reputational liability.</strong></dd>
+      <dt>Rational drivers</dt>
+      <dd>Asset conversion without capital outlay. Avoiding the cost, risk and expertise of self-development. Income from a portion while retaining a portion.</dd>
+      <dt>Preferred channels</dt>
+      <dd><strong>In person, in the village, in Telugu.</strong> Village elders, farmer associations, the local advocate, the surveyor. <strong>Not digital. Not advertising.</strong> A land-owner relations function, not a campaign.</dd>
+      <dt>Information sources</dt>
+      <dd>Neighbours, family, the village network, the CRDA office, local Telugu press and Telugu YouTube channels.</dd>
+      <dt>Digital behaviour</dt>
+      <dd>Telugu-language YouTube and WhatsApp forwarding are genuinely high here; formal web research is not. The younger generation researches on behalf of the elders.</dd>
+      <dt>Site-visit behaviour</dt>
+      <dd><strong>Does not need to visit — they live there.</strong> What they need instead is to see completed work: a finished building, a delivered promise, someone they know who was paid what they were told they would be paid.</dd>
+      <dt>Decision timeline</dt>
+      <dd><strong>6–24 months.</strong> Slow, consultative, and irreversible once made. Trust accrues over repeated contact, not over a campaign flight.</dd>
+      <dt>Influencers</dt>
+      <dd>The eldest male, the sons, the village elder, the family advocate — and <strong>the first neighbour to complete a transaction, who becomes the single most persuasive asset available.</strong></dd>
+      </dl>
+      <div class="seg-close">
+        <span class="lbl">A defensible white space, and Phase 4 already found the door</span>
+        <p>Phase 3 §5 identified land-owner engagement as a surviving white space — no competitor in the screened set offers a structured land-for-home proposition. Phase 4 §6.1 found KMV Spaces already publishes a <code>/land-owners</code> page. <strong>The asset exists and is unexploited.</strong></p><p><span class="lb lb-rsn">Reasoned</span> This segment does not primarily buy units off a price list — it enters through an <strong>exchange structure that supplies land, absorbs inventory and creates local advocacy at the same time.</strong> It is a supply-side and demand-side segment simultaneously, which is why it is worth more than its unit count suggests.</p>
+      </div>
+    </article>
+    <article class="seg" id="s5">
+      <div class="seg-head">
+        <div class="seg-id">S5</div>
+        <div>
+          <h4>Government, public-sector and the relocating capital workforce</h4>
+          <p class="seg-line">The most loan-eligible income in the catchment, and the one with a dated trigger attached.</p>
+          <div class="seg-stats">
+            <span class="pri pri-s">SECONDARY</span>
+            <span>Score <b>2.95</b></span>
+            <span>Horizon <b>Near · 3–8 months</b></span>
+          </div>
+        </div>
+      </div>
+      <div class="seg-size"><strong>Size — Insufficient public evidence.</strong> No published headcount was found for state employees relocating to Amaravati after the 6 April 2026 gazette notification. Estimates circulate; none traced to a primary source. §7 flags this as a priority gap, because the number materially changes Community A and B sizing.</div>
+      <dl class="attr">
+      <dt>Demographics</dt>
+      <dd>30–52. State government officers, central government staff, PSU and bank employees, teachers, police, judiciary support. Grade determines everything about the profile.</dd>
+      <dt>Geography</dt>
+      <dd>Currently Vijayawada, Guntur, Tadepalli and Mangalagiri; a portion still in Hyderabad and relocating.</dd>
+      <dt>Income &amp; power</dt>
+      <dd>Reaches <strong>Community A comfortably and Community B at senior grades</strong>; does not reach C or D on salary alone. Dual-government households and those with agricultural land alongside reach further.</dd>
+      <dt>Family structure</dt>
+      <dd>Nuclear with one or two children, frequently supporting parents. Single earner in many cases; dual-government households are common and change the arithmetic.</dd>
+      <dt>Life stage</dt>
+      <dd>Establishing to consolidating. Many have rented through a decade of capital uncertainty and deferred buying because of it.</dd>
+      <dt>Housing requirement</dt>
+      <dd>2BHK and 3BHK. Gated security, reliable water and power, school access, covered parking. <strong>Efficient carpet area matters more than showpiece amenity</strong> — the budget is real and precisely known.</dd>
+      <dt>Financial capacity</dt>
+      <dd><strong>The most loan-friendly income in this document</strong> — documented, stable, pensionable, often with subsidised institutional loan access. <strong>The constraint is the down payment, not the EMI.</strong></dd>
+      <dt>Purchase motivation</dt>
+      <dd>Ending a long rental period. Buying before the capital's confirmation is fully priced in. Proximity to a workplace that is itself moving. Children's schooling.</dd>
+      <dt>Pain points</dt>
+      <dd>The down payment. Transfer risk — a posting can move them. A decade of watching the capital start, stop and restart, which has trained caution. Real sensitivity to ₹200–300/sq ft differences.</dd>
+      <dt>Objections</dt>
+      <dd>&ldquo;Can I afford the down payment this year?&rdquo; &ldquo;What if I'm transferred?&rdquo; &ldquo;Is this priced above Vijayawada for the same thing?&rdquo; &ldquo;Will possession actually be in 2029?&rdquo;</dd>
+      <dt>Purchase triggers</dt>
+      <dd><strong>The pay revision.</strong> The 8th CPC is effective 1 January 2026 at an expected 30–34%, with arrears extending into 2027; AP's 9th PRC is constituted. <strong>Retrospective arrears are precisely the lump sum the cash gate demands.</strong></dd>
+      <dt>Decision factors</dt>
+      <dd>Price per square foot, EMI affordability, possession date, commute, RERA registration, school access. <strong>This segment compares on a spreadsheet and will find a ₹150/sq ft difference.</strong></dd>
+      <dt>Emotional drivers</dt>
+      <dd>Security. Ending the rent cycle. Respectability of address. Pride in the capital as a personal rather than abstract project.</dd>
+      <dt>Rational drivers</dt>
+      <dd>Rent versus EMI. Loan eligibility. Section 24 and 80C deductions. Buying ahead of an anticipated price rise.</dd>
+      <dt>Preferred channels</dt>
+      <dd>Mixed. Portals and search for shortlisting; <strong>WhatsApp and departmental word-of-mouth for validation.</strong> Print retains real credibility. Employer-adjacent and association channels are unusually effective and unusually cheap.</dd>
+      <dt>Information sources</dt>
+      <dd>Colleagues, portals, the developer site, RERA, local Telugu press, family.</dd>
+      <dt>Digital behaviour</dt>
+      <dd>Portal-led. <strong>Will submit enquiry forms — one of the few segments that reliably does.</strong> Responds to EMI calculators and price transparency. Mobile-first, Telugu and English mixed.</dd>
+      <dt>Site-visit behaviour</dt>
+      <dd><strong>Sunday, with spouse and children, comparing two or three projects in one day.</strong> Price-sheet driven. Will ask for the all-in number including registration, and should be given it.</dd>
+      <dt>Decision timeline</dt>
+      <dd><strong>3–8 months</strong>, compressing sharply when arrears or a bonus lands.</dd>
+      <dt>Influencers</dt>
+      <dd>Spouse — decisive. Colleagues who have bought. Parents on the down payment, which they often part-fund.</dd>
+      </dl>
+      <div class="seg-close">
+        <span class="lbl">The timing point that should shape the launch calendar</span>
+        <p>A 30%+ pay revision with retrospective arrears is a <strong>once-in-a-decade liquidity event for the exact households Communities A and B need.</strong></p><p>If the AP 9th PRC lands on a comparable timeline, the arrears window is the most valuable dated opportunity in this document — and it is a <em>known</em> date, not a forecast. It should be built around, not discovered.</p>
+      </div>
+    </article>
+    <article class="seg" id="s6">
+      <div class="seg-head">
+        <div class="seg-id">S6</div>
+        <div>
+          <h4>Vijayawada salaried professionals and apartment upgraders</h4>
+          <p class="seg-line">Numerically the largest local segment, and the one facing the most competition.</p>
+          <div class="seg-stats">
+            <span class="pri pri-s">SECONDARY</span>
+            <span>Score <b>3.20</b></span>
+            <span>Horizon <b>Near · 4–10 months</b></span>
+          </div>
+        </div>
+      </div>
+      <div class="seg-size"><strong>Size — Reasoned.</strong> Phase 3 counted approximately <strong>3,269 mid-market apartment units</strong> in the screened competitive set alone, against roughly <strong>420 villa units</strong> — an 8:1 ratio. The existing Vijayawada stock these households would upgrade <em>from</em> is far larger again. The pool is deep; so is the supply aimed at it.</div>
+      <dl class="attr">
+      <dt>Demographics</dt>
+      <dd>30–45. IT services, banking, insurance, pharma distribution, logistics, education administration, healthcare non-clinical. Graduate or postgraduate.</dd>
+      <dt>Geography</dt>
+      <dd>Vijayawada — Benz Circle, Poranki, Gollapudi, Kanuru, Auto Nagar, Ramavarappadu — and Tadepalli. <span class="lb lb-rsn">Reasoned</span> <strong>The barrier is the Krishna river, not the distance.</strong> Moving to Mangalagiri is a relocation decision, not a neighbourhood change.</dd>
+      <dt>Income &amp; power</dt>
+      <dd>₹12–25 lakh household, frequently dual-income. <strong>Clears Community A, reaches B when both earn.</strong> Does not reach C or D.</dd>
+      <dt>Family structure</dt>
+      <dd>Nuclear. One or two children under 12. Often supporting or co-residing with a parent.</dd>
+      <dt>Life stage</dt>
+      <dd>Growing family, currently in a 2BHK, needing a 3BHK. <strong>The classic upgrader — a real segment here, but a contested one.</strong></dd>
+      <dt>Housing requirement</dt>
+      <dd>3BHK, 1,200–1,700 sq ft. Gated community, children's play area, security, parking, power backup, lift reliability. School within a reasonable drive.</dd>
+      <dt>Financial capacity</dt>
+      <dd>Loan-dependent — <span class="lb lb-app">Applied</span> 79% of urban Indian buyers use a home loan. Down payment mixes savings, provident fund and parental contribution. An existing-apartment sale often funds the upgrade, and <strong>Phase 2 found corridor resale is not liquid.</strong></dd>
+      <dt>Purchase motivation</dt>
+      <dd>Space. A better environment for children. Escaping an ageing, unmanaged building. Status progression from &ldquo;flat&rdquo; to &ldquo;gated community&rdquo;.</dd>
+      <dt>Pain points</dt>
+      <dd>Selling the existing apartment. Commute lengthening if they move south. Schooling continuity. Budget stretch. Construction-period double outgo — rent plus EMI.</dd>
+      <dt>Objections</dt>
+      <dd>&ldquo;It's too far from my office.&rdquo; &ldquo;What about the children's school?&rdquo; &ldquo;Can I sell my current flat at a fair price?&rdquo; <strong>&ldquo;Why pay a premium over Vijayawada?&rdquo; — the central objection, and the hardest in the plan to answer honestly.</strong></dd>
+      <dt>Purchase triggers</dt>
+      <dd>A second child. A promotion or job change. The existing building's maintenance failing. A school admission. A landlord's rent revision.</dd>
+      <dt>Decision factors</dt>
+      <dd>Price, size, possession date, commute, school access, developer credibility — and <strong>crucially, comparison against a Vijayawada alternative at a lower per-square-foot rate.</strong></dd>
+      <dt>Emotional drivers</dt>
+      <dd>Doing better for the children. Peer parity with friends who have already moved to gated communities. A sense of arriving in the middle class properly.</dd>
+      <dt>Rational drivers</dt>
+      <dd>Per-square-foot value, appreciation from the capital story, EMI within reach, maintenance quality.</dd>
+      <dt>Preferred channels</dt>
+      <dd><strong>Portals and social — the most conventionally reachable segment here</strong>, and therefore the most expensively contested, since every Phase 3 competitor is buying the same inventory.</dd>
+      <dt>Information sources</dt>
+      <dd>99acres, MagicBricks, Housing, Facebook and Instagram, YouTube walkthroughs, colleagues, brokers.</dd>
+      <dt>Digital behaviour</dt>
+      <dd>High. Fills forms, compares on portals, watches walkthroughs, joins project WhatsApp groups, reads Google reviews. <span class="lb lb-app">Applied</span> This is the behaviour national research describes, and it transfers here better than to any other segment.</dd>
+      <dt>Site-visit behaviour</dt>
+      <dd><strong>Weekend, with spouse and children, three to five projects across two or three weekends.</strong> Highly comparison-driven. Show-flat quality matters disproportionately — it is the only tangible evidence available.</dd>
+      <dt>Decision timeline</dt>
+      <dd><strong>4–10 months</strong>, often extended by the dependency on selling the existing home.</dd>
+      <dt>Influencers</dt>
+      <dd>Spouse — co-equal and frequently primary. Parents on funding. Colleagues and friends who have made the same move.</dd>
+      </dl>
+      <div class="seg-close">
+        <span class="lbl">The honest position</span>
+        <p>This segment is real, large and reachable — and it is where <strong>Phase 3's crowding finding bites hardest</strong>: roughly 3,269 competing units aimed at broadly this household. Winning here on generic mid-market positioning means winning a price war, and the price architecture has no room for one.</p><p>The defensible play is not to out-shout the competitive set but to give this segment a <strong>specific, non-price reason</strong> — commute to the institutional cluster, a masterplan of a scale the apartment glut does not offer, or a delivery credential the competitors cannot claim.</p>
+      </div>
+    </article>
+    <article class="seg" id="s7">
+      <div class="seg-head">
+        <div class="seg-id">S7</div>
+        <div>
+          <h4>Hyderabad-resident Telugu households with Andhra roots</h4>
+          <p class="seg-line">The domestic diaspora. Larger and closer than the international one, and almost entirely unaddressed.</p>
+          <div class="seg-stats">
+            <span class="pri pri-s">SECONDARY</span>
+            <span>Score <b>3.90</b></span>
+            <span>Horizon <b>Mid · 4–12 months</b></span>
+          </div>
+        </div>
+      </div>
+      <div class="seg-size"><strong>Size — Reasoned.</strong> Hyderabad holds a very large population of coastal-Andhra-origin households with continuing family, land and social ties in the Krishna–Guntur belt. No published count isolates them as property buyers; §7 flags it. Directionally, <strong>larger than the US diaspora pool and far cheaper to reach.</strong></div>
+      <dl class="attr">
+      <dt>Demographics</dt>
+      <dd>35–58. IT, pharma, business owners, professionals. Settled in Hyderabad 10–30 years, frequently with parents still in AP. <strong>KMV Spaces LLP is itself registered in Ameerpet, Hyderabad</strong> — the developer already sits inside this segment's home city.</dd>
+      <dt>Geography</dt>
+      <dd>Hyderabad — Gachibowli, Madhapur, Kukatpally, Miyapur, Manikonda, LB Nagar. Origin districts across coastal Andhra.</dd>
+      <dt>Income &amp; power</dt>
+      <dd>₹25 lakh–1 crore+. <strong>Clears Communities C and D.</strong> Already owns Hyderabad property, so this is an additional allocation rather than a first home.</dd>
+      <dt>Family structure</dt>
+      <dd>Nuclear in Hyderabad, extended family in AP. Ageing parents in Vijayawada, Guntur or the home town.</dd>
+      <dt>Life stage</dt>
+      <dd>Established, peak earning years. Beginning to think about parents, retirement, and where the family's centre of gravity should sit.</dd>
+      <dt>Housing requirement</dt>
+      <dd>Villa or premium apartment. <strong>Weekend and periodic use, with parents as potential permanent occupants.</strong> Lock-and-leave. Serviced maintenance.</dd>
+      <dt>Financial capacity</dt>
+      <dd>Strong, and domestic — <strong>no FEMA or repatriation friction, and they can transact in person over a weekend, which the international diaspora cannot.</strong></dd>
+      <dt>Purchase motivation</dt>
+      <dd>A base near ageing parents. Re-establishing a family presence in the home region. <strong>A capital-city bet made by people who watched exactly what Hyderabad's growth did to those who bought early.</strong> Retirement optionality.</dd>
+      <dt>Pain points</dt>
+      <dd>Absentee ownership and maintenance. Not knowing the current Amaravati market despite knowing the region. Being sold to as an outsider in a place they consider home.</dd>
+      <dt>Objections</dt>
+      <dd>&ldquo;Is Amaravati actually going to happen this time?&rdquo; — shaped by having watched 2015–2019 and then the reversal. &ldquo;Who looks after it?&rdquo; &ldquo;Is this better than adding to my Hyderabad portfolio?&rdquo;</dd>
+      <dt>Purchase triggers</dt>
+      <dd><strong>A family visit — festivals, weddings, funerals, all of which bring this segment back into the catchment on predictable dates.</strong> A parent's health event. A Hyderabad property exit. Retirement within sight.</dd>
+      <dt>Decision factors</dt>
+      <dd>Credibility of the capital story, developer track record, maintenance model, distance from parents, resale depth.</dd>
+      <dt>Emotional drivers</dt>
+      <dd>Roots. Duty to parents. Wanting a stake in the capital of their own state. Some quiet competitive feeling relative to Hyderabad — worth understanding, not worth exploiting crudely.</dd>
+      <dt>Rational drivers</dt>
+      <dd>Appreciation on a capital thesis they have personally seen play out once. Diversification outside the Hyderabad market. A retirement asset at Tier-2 pricing.</dd>
+      <dt>Preferred channels</dt>
+      <dd><strong>Digital, plus physical presence in Hyderabad.</strong> Search, social, Telugu digital media. <span class="lb lb-rsn">Reasoned</span> A Hyderabad-side sales presence — an event, a lounge, a partner office — is a cheap, high-yield move Phase 3 found no competitor making.</dd>
+      <dt>Information sources</dt>
+      <dd>Telugu news and YouTube, family in AP, portals, professional and community networks in Hyderabad.</dd>
+      <dt>Digital behaviour</dt>
+      <dd>High and bilingual. Consumes Telugu news and business content heavily. Reachable by geography-plus-affinity targeting far more precisely than most segments.</dd>
+      <dt>Site-visit behaviour</dt>
+      <dd><strong>Combines the visit with a family trip — a four-to-five-hour drive or a short flight, typically Friday to Sunday.</strong> Expects the visit to be worth the journey, which raises the bar on site readiness considerably.</dd>
+      <dt>Decision timeline</dt>
+      <dd><strong>4–12 months.</strong> Slower than a resident buyer because nothing forces it — no lease expiry, no commute to fix. <strong>The absence of urgency is this segment's defining commercial problem.</strong></dd>
+      <dt>Influencers</dt>
+      <dd>Spouse, parents in AP, siblings, and Hyderabad peers who have made similar investments.</dd>
+      </dl>
+      <div class="seg-close">
+        <span class="lbl">Why this segment is underrated</span>
+        <p>It has the diaspora's financial capacity and emotional pull <strong>without the diaspora's verification problem, time-zone friction or once-a-year buying window.</strong> It can drive down on a Saturday.</p><p>Phase 3 found the competitive set marketing almost entirely to the local catchment. <strong>The four-to-five-hour radius is open.</strong></p>
+      </div>
+    </article>
+    <article class="seg" id="s8">
+      <div class="seg-head">
+        <div class="seg-id">S8</div>
+        <div>
+          <h4>Gulf-based Telugu remittance households</h4>
+          <p class="seg-line">Real, but smaller in ticket than its headline numbers suggest — and it needs a different product.</p>
+          <div class="seg-stats">
+            <span class="pri pri-l">LOW</span>
+            <span>Score <b>2.45</b></span>
+            <span>Horizon <b>Long · 9–24 months</b></span>
+          </div>
+        </div>
+      </div>
+      <div class="seg-size"><strong>Size — Established at pool level.</strong> <strong>388,000 Telugu-origin people in Saudi Arabia</strong> alone, with substantial populations across the UAE, Qatar, Kuwait and Oman. Gulf remittance purpose splits <strong>27% investment · 26% family support · 22% retirement planning.</strong></div>
+      <dl class="attr">
+      <dt>Demographics</dt>
+      <dd>28–50. Skilled and semi-skilled trades, technicians, supervisors, nursing, hospitality, driving, retail management. A smaller professional tier above.</dd>
+      <dt>Geography</dt>
+      <dd>Saudi Arabia, the UAE, Qatar, Kuwait, Oman. Origin heavily in coastal AP and Telangana districts.</dd>
+      <dt>Income &amp; power</dt>
+      <dd><strong>Materially lower than the US pool, and tax-free but time-limited.</strong> Realistically reaches <strong>Communities A and B</strong>; C only for the professional tier or with pooled family funds. <strong>Treating Gulf NRIs as a premium villa audience is an error.</strong></dd>
+      <dt>Family structure</dt>
+      <dd><strong>Frequently split — the earner abroad, spouse and children in India with grandparents.</strong> That resident family is the actual occupant and often the actual decision-maker.</dd>
+      <dt>Life stage</dt>
+      <dd>Mid-career abroad with a finite horizon. Gulf employment is not permanent; <strong>most intend to return.</strong> Children's education in India is a live concern.</dd>
+      <dt>Housing requirement</dt>
+      <dd>2BHK and 3BHK apartments. <strong>Security for a family living without the male earner present is the single most important attribute</strong> — more than amenity, more than size. School access. Ready or near-ready possession preferred.</dd>
+      <dt>Financial capacity</dt>
+      <dd>Savings-led rather than income-led. <strong>Loan eligibility is weaker than the US pool</strong> — foreign income, shorter tenures, more documentation. Down payment accumulated over years and paid in tranches.</dd>
+      <dt>Purchase motivation</dt>
+      <dd><strong>Getting the family out of rented accommodation and into a secure, owned home.</strong> This dominant motive is closer to Segment 5's than to Segment 3's. Then retirement planning, then investment.</dd>
+      <dt>Pain points</dt>
+      <dd>Verification from abroad. Limited leave — often 30 days a year or less. Payment scheduling against an irregular savings pattern. Real anxiety about the family's safety in the interim.</dd>
+      <dt>Objections</dt>
+      <dd>&ldquo;Can my wife handle this alone?&rdquo; &ldquo;What if my contract ends?&rdquo; <strong>&ldquo;Is possession certain?&rdquo; — delay risk is felt more acutely here than anywhere else, because a delay means the family stays in rented accommodation without him.</strong></dd>
+      <dt>Purchase triggers</dt>
+      <dd>Contract renewal or a raise. <strong>Annual leave — the visit is the buying window.</strong> A child reaching school age. Accumulated savings crossing the down-payment line. A returning colleague's purchase.</dd>
+      <dt>Decision factors</dt>
+      <dd>Total price and payment flexibility, possession certainty, security, school proximity, the family's approval.</dd>
+      <dt>Emotional drivers</dt>
+      <dd>Providing from a distance. Ending the separation with a permanent home to return to. Proof to the extended family that the years abroad were worth it.</dd>
+      <dt>Rational drivers</dt>
+      <dd>Rent elimination. A retirement asset. Currency advantage. A fixed EMI against rising rent.</dd>
+      <dt>Preferred channels</dt>
+      <dd><strong>WhatsApp above everything.</strong> Telugu-language YouTube and Facebook. Regional community associations in the Gulf. <strong>The resident family in India must be marketed to in parallel — they will do the visiting.</strong></dd>
+      <dt>Information sources</dt>
+      <dd>Family in India, Gulf-based Telugu community groups, YouTube in Telugu, WhatsApp forwards, returning friends.</dd>
+      <dt>Digital behaviour</dt>
+      <dd>Mobile-only, Telugu-language, WhatsApp-centric, video over text. Low tolerance for English brochure content. Will not fill a desktop web form.</dd>
+      <dt>Site-visit behaviour</dt>
+      <dd><strong>The family in India visits; the earner sees it on a video call.</strong> The buyer's physical visit happens during annual leave and is often confirmatory rather than exploratory.</dd>
+      <dt>Decision timeline</dt>
+      <dd><strong>9–24 months</strong> — long accumulation, then a decision compressed into a leave window.</dd>
+      <dt>Influencers</dt>
+      <dd><strong>Spouse in India — decisive, because she will live there.</strong> Parents. Community peers in the Gulf.</dd>
+      </dl>
+      <div class="seg-close">
+        <span class="lbl">The product correction</span>
+        <p>The Gulf pool is large, but its ticket capacity sits at <strong>Communities A and B</strong> while the US pool sits at <strong>C and D</strong>.</p><p>A single &ldquo;NRI campaign&rdquo; pointed at villas will spend the Gulf budget on an audience that cannot buy the product, and under-serve the audience that can. <strong>Two segments, two products, two channel plans, two languages.</strong></p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">§4</div>
+    <div>
+      <h2>Testing the fifteen hypotheses</h2>
+      <p class="dek">The brief was explicit that these are hypotheses, not predetermined audiences. Each is tested against the financial gate, the income sources, and the eight segments those produce.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="legend-stack" style="margin-bottom:1.1rem">
+      <span class="vd vd-y">Real segment</span>
+      <span class="vd vd-p">Real, but resolves elsewhere</span>
+      <span class="vd vd-n">Fails the test</span>
+    </div>
+
+    <div class="hyp">
+      <div class="hyp-row"><div class="num">1</div><div class="hyp-name">First-time buyers<span class="v"><span class="vd vd-p">Descriptor</span></span></div><div class="hyp-why">Cuts across S2 senior residents, S5 government, S6 upgraders and S8 Gulf. All are first-time buyers; none behave alike. <strong>Useful for messaging, useless for targeting.</strong></div></div>
+      <div class="hyp-row"><div class="num">2</div><div class="hyp-name">Young professionals<span class="v"><span class="vd vd-n">Fails the gate</span></span></div><div class="hyp-why">Community A needs ₹11–14 L household income <em>and</em> ₹17.6 L cash. SRM Assistant Professor pay is ~₹6.8 L. <strong>A single young professional here mostly does not clear it.</strong> Real only when dual-income or parent-funded.</div></div>
+      <div class="hyp-row"><div class="num">3</div><div class="hyp-name">Young couples<span class="v"><span class="vd vd-p">Only dual-income</span></span></div><div class="hyp-why">The strong case is the <strong>dual-doctor household</strong>, where two Assistant Professor incomes clear Community C. A single-income young couple sits below A. <strong>The variable is not age; it is the second income.</strong></div></div>
+      <div class="hyp-row"><div class="num">4</div><div class="hyp-name">Growing families<span class="v"><span class="vd vd-y">= S6, part of S5</span></span></div><div class="hyp-why">The classic 2BHK-to-3BHK upgrade. Genuinely the largest local pool — and the most contested: Phase 3 counted ~3,269 competing units aimed at it.</div></div>
+      <div class="hyp-row"><div class="num">5</div><div class="hyp-name">Upgraders<span class="v"><span class="vd vd-y">= S6</span></span></div><div class="hyp-why">With a caveat that matters: many must <strong>sell an existing apartment to fund the move</strong>, and Phase 2 found corridor resale is not liquid. Their purchase carries a dependency the developer does not control.</div></div>
+      <div class="hyp-row"><div class="num">6</div><div class="hyp-name">Established business families<span class="v"><span class="vd vd-y">= S1, the strongest</span></span></div><div class="hyp-why">Clears the cash gate more easily than any other resident group. Deepest local money pool. Buys the top two communities.</div></div>
+      <div class="hyp-row"><div class="num">7</div><div class="hyp-name">Affluent professionals<span class="v"><span class="vd vd-y">= S2, plus senior S5/S7</span></span></div><div class="hyp-why">But &ldquo;affluent professional&rdquo; here means <strong>doctor</strong> — not academic, and not, on salary alone, government officer. The label needs that precision or it produces the wrong media plan.</div></div>
+      <div class="hyp-row"><div class="num">8</div><div class="hyp-name">HNIs<span class="v"><span class="vd vd-n">Not a segment here</span></span></div><div class="hyp-why">Two reasons. The households meeting an HNI definition in this catchment <strong>are already</strong> S1, S3 or S4 — there is no independent HNI population with distinct behaviour. And <strong>Community D tops out at ₹2.57 crore</strong>, which is an upper-affluent ticket, not a high-net-worth one. Positioning to HNIs would promise a tier the price sheet does not deliver.</div></div>
+      <div class="hyp-row"><div class="num">9</div><div class="hyp-name">NRIs<span class="v"><span class="vd vd-p">Two segments, not one</span></span></div><div class="hyp-why">Splits into <strong>S3 — US and developed markets, Communities C and D</strong> and <strong>S8 — Gulf, Communities A and B</strong>. They differ in income, purpose, product fit, language and channel. Phase 3 found every competitor collapsing them.</div></div>
+      <div class="hyp-row"><div class="num">10</div><div class="hyp-name">Investors<span class="v"><span class="vd vd-n">Low, and risky in volume</span></span></div><div class="hyp-why">Phase 2 found yields of <strong>2.2–3.2%</strong> including a <strong>yield inversion in Tadepalli at 2.2%</strong> — premium stock earning less than cheaper stock — and resale that is not liquid. The local investor's default asset is land, which appreciates without maintenance. <strong>Beyond a modest share, investor buyers build a resale book competing with the developer's own unsold inventory at handover.</strong></div></div>
+      <div class="hyp-row"><div class="num">11</div><div class="hyp-name">Local buyers<span class="v"><span class="vd vd-n">Too broad</span></span></div><div class="hyp-why">Resolves into four segments with nothing in common — S1 trade, S4 landowners, S5 government, S6 salaried. Their only shared attribute is a postcode.</div></div>
+      <div class="hyp-row"><div class="num">12</div><div class="hyp-name">Vijayawada buyers<span class="v"><span class="vd vd-p">A geography</span></span></div><div class="hyp-why">Maps to S1 at the top, S6 in the middle, S5 alongside. <strong>The useful Vijayawada finding is not who they are but what stops them: the Krishna river is a psychological boundary, and crossing it is treated as relocation.</strong></div></div>
+      <div class="hyp-row"><div class="num">13</div><div class="hyp-name">Guntur buyers<span class="v"><span class="vd vd-p">A geography — under-rated</span></span></div><div class="hyp-why">Maps to S1 and S5, and worth separating from Vijayawada for one reason: the recommended micro-location — the southern gateway of Mangalagiri mandal toward Chinakakani and Kaza — is <strong>on the Guntur side, with no river crossing.</strong> Phase 3 found competitor marketing heavily Vijayawada-weighted.</div></div>
+      <div class="hyp-row"><div class="num">14</div><div class="hyp-name">Amaravati-region buyers<span class="v"><span class="vd vd-y">= S4, unlike anything else</span></span></div><div class="hyp-why">Not a generic local audience. ~25,000 landowner households in a once-in-a-generation asset transition, needing an exchange structure rather than a price list.</div></div>
+      <div class="hyp-row"><div class="num">15</div><div class="hyp-name">Buyers outside AP<span class="v"><span class="vd vd-p">Splits</span></span></div><div class="hyp-why"><strong>Real: S7</strong>, Hyderabad-resident Telugu households with AP roots — large, wealthy, four hours away, emotionally invested, unaddressed by the Phase 3 set. <strong>Negligible: non-Telugu out-of-state buyers</strong> — no evidence of demand and no plausible mechanism at this stage of the city's development.</div></div>
+    </div>
+
+    <h3>One hypothesis the brief did not list, tested anyway</h3>
+    <p><strong>Private-university faculty and staff at SRM AP and VIT-AP.</strong> The corridor narrative treats the university cluster as an affluent housing catchment. <span class="lb lb-est">Established</span> It is not: SRM Assistant Professor pay averaging ~₹57,000 a month sits below the Community A threshold. <strong>A rental and entry-housing market, not a buyer segment for this product</strong> — worth knowing about because it supports the corridor's rental economy, and therefore the investor case.</p>
+
+    <div class="finding">
+      <span class="lbl">Three findings that survive as corrections to the intuitive reading</span>
+      <p><strong>1 · &ldquo;NRI&rdquo; is two segments, not one</strong> — and the larger one by headcount buys the cheaper product while the smaller one buys the expensive one. Getting this backwards wastes the entire diaspora budget.</p>
+      <p><strong>2 · &ldquo;HNI&rdquo; is not a segment in this catchment</strong>, and Community D at ₹2.57 crore is not an HNI product.</p>
+      <p><strong>3 · The largest and most obvious segment is the most crowded.</strong> Phase 3's 8:1 apartment-to-villa ratio is aimed almost entirely at growing families upgrading in Vijayawada. Being obvious and being winnable are not the same thing.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">§5</div>
+    <div>
+      <h2>Priority order</h2>
+      <p class="dek">Ranking by size alone puts the most crowded segment first. Ranking by ticket alone puts the smallest first. Six criteria, each of which can independently kill a segment.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:12rem">Criterion</th><th class="n" style="width:5rem">Weight</th><th>Why it can kill a segment</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Revenue potential</strong></td><td class="n">25%</td><td>Plausible rupee contribution to the ₹506 Cr. A segment that buys only Community A cannot carry the project.</td></tr>
+          <tr><td><strong>Clears the cash gate</strong></td><td class="n">20%</td><td>The binding constraint is cash at purchase. Segments failing here fail regardless of desire.</td></tr>
+          <tr><td><strong>Addressable size</strong></td><td class="n">15%</td><td>A perfect-fit segment of 200 households cannot absorb 397 units.</td></tr>
+          <tr><td><strong>Reachability</strong></td><td class="n">15%</td><td>Cost and certainty of reaching them. S4 cannot be reached by advertising at all.</td></tr>
+          <tr><td><strong>Low competitive intensity</strong></td><td class="n">15%</td><td>Winning a contested segment costs multiples of winning an uncontested one.</td></tr>
+          <tr><td><strong>KMV-specific advantage</strong></td><td class="n">10%</td><td>Phase 4 found two — the AIIMS construction credential and the published land-owner proposition. An advantage that applies to one segment should shift priority.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><span class="lb lb-rsn">Reasoned throughout.</span> The scores below are judgement applied to Phase 1–4 evidence, not measured values. They are shown so they can be argued with rather than hidden inside a conclusion.</p>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr><th>Segment</th><th class="n">Revenue</th><th class="n">Cash gate</th><th class="n">Size</th><th class="n">Reach</th><th class="n">Low comp.</th><th class="n">KMV adv.</th><th class="n">Score</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>S3</strong> US &amp; developed-market diaspora</td><td class="n">5</td><td class="n">5</td><td class="n">3</td><td class="n">4</td><td class="n">4</td><td class="n">3</td><td class="n"><strong>4.20</strong></td></tr>
+          <tr><td><strong>S4</strong> Land-pooling landowners</td><td class="n">3</td><td class="n">5</td><td class="n">4</td><td class="n">3</td><td class="n">5</td><td class="n">5</td><td class="n"><strong>4.05</strong></td></tr>
+          <tr><td><strong>S1</strong> Trade &amp; business families</td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">3</td><td class="n">3</td><td class="n">3</td><td class="n"><strong>4.05</strong></td></tr>
+          <tr><td><strong>S7</strong> Hyderabad Telugu, AP roots</td><td class="n">4</td><td class="n">4</td><td class="n">3</td><td class="n">4</td><td class="n">5</td><td class="n">3</td><td class="n"><strong>3.90</strong></td></tr>
+          <tr><td><strong>S2</strong> Senior medical professionals</td><td class="n">4</td><td class="n">3</td><td class="n">3</td><td class="n">5</td><td class="n">4</td><td class="n">5</td><td class="n"><strong>3.90</strong></td></tr>
+          <tr><td><strong>S6</strong> Vijayawada upgraders</td><td class="n">3</td><td class="n">3</td><td class="n">5</td><td class="n">5</td><td class="n">1</td><td class="n">2</td><td class="n"><strong>3.20</strong></td></tr>
+          <tr><td><strong>S5</strong> Government / capital workforce</td><td class="n">3</td><td class="n">2</td><td class="n">4</td><td class="n">4</td><td class="n">2</td><td class="n">3</td><td class="n"><strong>2.95</strong></td></tr>
+          <tr><td><strong>S8</strong> Gulf remittance households</td><td class="n">2</td><td class="n">2</td><td class="n">3</td><td class="n">3</td><td class="n">3</td><td class="n">2</td><td class="n"><strong>2.45</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Why a single score would mislead</span>
+      <p class="big">The two highest-scoring segments are also the two slowest to convert.</p>
+      <p><strong>Strategic value and cash timing are different questions.</strong> A segment can be first in importance and last in revenue. S4 is the clearest case — highest KMV-specific advantage, lowest competition, slowest possible conversion.</p>
+      <p>Deferring it because it is slow guarantees it is never ready. Treating it as a launch-quarter revenue line guarantees disappointment. <strong>It has to start early and be measured late.</strong></p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:9rem">Horizon</th><th style="width:12rem">Segments</th><th>Typical decision timeline</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Near</strong> — within a launch window</td><td>S2 · S5 · S1 · S6</td><td class="n">6 weeks – 10 months</td></tr>
+          <tr><td><strong>Mid</strong> — on their calendar, not ours</td><td>S3 · S7</td><td class="n">4 – 18 months, gated by travel</td></tr>
+          <tr><td><strong>Long</strong> — relationship-built, revenue late</td><td>S4 · S8</td><td class="n">9 – 24 months</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The classification</h3>
+
+    <div class="cards">
+      <div class="card">
+        <h6><span class="pri pri-h">High</span></h6>
+        <ul>
+          <li><strong>S1 · Trade and business families</strong> — 4.05, near. Deepest purchase-ready cash, buying the two communities that carry 61% of revenue. Runs on referral, not advertising.</li>
+          <li><strong>S2 · Senior medical professionals</strong> — 3.90, near, fastest-converting. Highest reachability, dated triggers, and a credential no competitor can answer.</li>
+          <li><strong>S3 · US diaspora</strong> — 4.20, mid. Clears Community D without strain and buys the highest-margin product. <em>High priority, not easy priority</em>: the demand has to be created.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6><span class="pri pri-s">Secondary</span></h6>
+        <ul>
+          <li><strong>S4 · Land-pooling landowners</strong> — 4.05, long. Secondary on <em>timing</em>, not importance. Revenue arrives late and partly in kind.</li>
+          <li><strong>S7 · Hyderabad Telugu</strong> — 3.90, mid. Lowest competitive intensity of any sizeable segment. Held back by one thing: <em>nothing forces the purchase.</em></li>
+          <li><strong>S6 · Vijayawada upgraders</strong> — 3.20, near. Must be worked; secondary on purpose. Attacking it head-on is a price war the architecture has no room for.</li>
+          <li><strong>S5 · Government</strong> — 2.95, near. Weak on score, but holds the one genuinely dated liquidity event in this document.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6><span class="pri pri-l">Low</span></h6>
+        <ul>
+          <li><strong>S8 · Gulf remittance</strong> — 2.45, long. Ticket capacity at the crowded end, with the full diaspora cost structure. High cost to serve, low revenue per unit.</li>
+          <li><strong>Investors</strong> — not scored, deliberately. Yields 2.2–3.2%, illiquid resale, and land beats built product. <em>A segment to cap, not to court.</em></li>
+          <li><strong>Private-university faculty</strong> — below the Community A threshold. A rental market.</li>
+          <li><strong>Non-Telugu out-of-state buyers</strong> — no evidence, no mechanism.</li>
+        </ul>
+      </div>
+    </div>
+
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">The check that matters</span>
+        <h5>Does the priority order match where the revenue actually is?</h5>
+        <p class="sub">Reasoned allocation of the Phase 2 price architecture across the eight segments. Fill treatment encodes priority: solid = high, tinted = secondary, dashed = low.</p>
+      </div>
+      <div class="bars">
+        <div class="rev-row"><div class="rev-label"><b>S1</b> Trade &amp; business</div><div class="rev-track"><div class="rev-fill p-h" style="width:100%"></div><span class="rev-val">₹121.5 Cr <i>· 70 units · ₹1.74 Cr each</i></span></div></div>
+        <div class="rev-row"><div class="rev-label"><b>S2</b> Senior medical</div><div class="rev-track"><div class="rev-fill p-h" style="width:65.9%"></div><span class="rev-val">₹80.1 Cr <i>· 64 units · ₹1.25 Cr each</i></span></div></div>
+        <div class="rev-row"><div class="rev-label"><b>S3</b> US diaspora</div><div class="rev-track"><div class="rev-fill p-h" style="width:58.1%"></div><span class="rev-val">₹70.6 Cr <i>· 36 units · ₹1.96 Cr each</i></span></div></div>
+        <div class="rev-row"><div class="rev-label"><b>S6</b> Vijayawada upgraders</div><div class="rev-track"><div class="rev-fill p-s" style="width:56.9%"></div><span class="rev-val">₹69.1 Cr <i>· 83 units · ₹0.83 Cr each</i></span></div></div>
+        <div class="rev-row"><div class="rev-label"><b>S7</b> Hyderabad Telugu</div><div class="rev-track"><div class="rev-fill p-s" style="width:45.4%"></div><span class="rev-val">₹55.2 Cr <i>· 28 units · ₹1.96 Cr each</i></span></div></div>
+        <div class="rev-row"><div class="rev-label"><b>S5</b> Government</div><div class="rev-track"><div class="rev-fill p-s" style="width:42.8%"></div><span class="rev-val">₹52.0 Cr <i>· 67 units · ₹0.78 Cr each</i></span></div></div>
+        <div class="rev-row"><div class="rev-label"><b>S8</b> Gulf remittance</div><div class="rev-track"><div class="rev-fill p-l" style="width:24.4%"></div><span class="rev-val">₹29.6 Cr <i>· 36 units · ₹0.82 Cr each</i></span></div></div>
+        <div class="rev-row"><div class="rev-label"><b>S4</b> Landowners</div><div class="rev-track"><div class="rev-fill p-s" style="width:23.0%"></div><span class="rev-val">₹27.9 Cr <i>· 13 units · ₹2.15 Cr each</i></span></div></div>
+      </div>
+      <div class="figure-foot">
+        Totals ₹506.0 Cr across 397 units. Community unit counts derive from Phase 2 area shares divided by mid-band unit sizes — A 98, B 139, C 82, D 78. The segment split <em>within</em> each community is a Reasoned planning assumption, stated so it can be replaced by actual booking data.
+      </div>
+    </figure>
+
+    <div class="finding">
+      <span class="lbl">Three things the reconciliation shows</span>
+      <p><strong>1 · The three high-priority segments deliver 53.8% of revenue from 43% of units.</strong> The priority order and the revenue architecture agree. That is the check passing.</p>
+      <p><strong>2 · The most contested segment delivers the least revenue per unit.</strong> S6 is 21% of units and 13.7% of revenue, at ₹0.83 crore per unit against S1's ₹1.74 crore and S3's ₹1.96 crore. <strong>Every rupee spent winning a contested S6 sale buys less than half the revenue of an uncontested S3 sale</strong> — the arithmetic case for the secondary classification, independent of any judgement about crowding.</p>
+      <p><strong>3 · A correction to Phase 1 — the sales task is ~397 units, not ~600.</strong> Phase 1 estimated 600 units before Phase 2 set the product mix, implying an average unit of ~1,389 sq ft. The actual mix gives <strong>~2,098 sq ft and ~397 units</strong>. Bookings needed fall to <strong>8.3–11.0 a month</strong>; allowable marketing cost per unit rises from ₹3.3–4.2 lakh to <strong>₹5.0–6.3 lakh</strong>. The absorption task is easier than Phase 1 concluded, and the cost per sale is roughly 50% more generous.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">§6</div>
+    <div>
+      <h2>The community mapping</h2>
+      <p class="dek">Derived, not assumed. The brief was explicit that the audience for A–D must not be decided in advance — and it falls out differently from how it would have been guessed.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="commap">
+      <div class="cm">
+        <div class="cm-top">
+          <h6>Community A</h6>
+          <span class="cm-t">2BHK + compact 3BHK · ₹58–70 L · 98 units · ₹62.7 Cr</span>
+        </div>
+        <div class="cm-body">
+          <p><span class="cm-h">Primary</span><strong>S5</strong> Government &amp; capital workforce</p>
+          <p><span class="cm-h">Secondary</span>S6 upgraders · S8 Gulf · S2 senior residents</p>
+        </div>
+        <div class="cm-win"><b>Wins on</b>Timing — the pay-revision arrears window. <b style="margin-top:.5rem">Loses on</b>Being ₹200/sq ft above a Vijayawada equivalent.</div>
+      </div>
+      <div class="cm">
+        <div class="cm-top">
+          <h6>Community B</h6>
+          <span class="cm-t">3BHK premium · ₹89 L–1.05 Cr · 139 units · ₹134.7 Cr</span>
+        </div>
+        <div class="cm-body">
+          <p><span class="cm-h">Primary</span><strong>S6</strong> Vijayawada upgraders</p>
+          <p><span class="cm-h">Secondary</span>S5 · S2 assistant professors · S8 · S1</p>
+        </div>
+        <div class="cm-win"><b>Wins on</b>A non-price reason to cross the river. <b style="margin-top:.5rem">Loses on</b>Fighting ~3,269 competing units on price.</div>
+      </div>
+      <div class="cm">
+        <div class="cm-top">
+          <h6>Community C</h6>
+          <span class="cm-t">3.5 / 4BHK premium · ₹1.44–1.75 Cr · 82 units · ₹130.5 Cr</span>
+        </div>
+        <div class="cm-body">
+          <p><span class="cm-h">Primary</span><strong>S1</strong> Trade families · <strong>S2</strong> Senior faculty</p>
+          <p><span class="cm-h">Secondary</span>S3 diaspora · S7 Hyderabad · S4 landowners</p>
+        </div>
+        <div class="cm-win"><b>Wins on</b>Villa living without villa maintenance. <b style="margin-top:.5rem">Loses on</b>Being read as &ldquo;just a bigger flat&rdquo;.</div>
+      </div>
+      <div class="cm">
+        <div class="cm-top">
+          <h6>Community D</h6>
+          <span class="cm-t">Villas · ₹2.00–2.57 Cr · 78 units · ₹178.1 Cr</span>
+        </div>
+        <div class="cm-body">
+          <p><span class="cm-h">Primary</span><strong>S1</strong> Trade families · <strong>S3</strong> US diaspora</p>
+          <p><span class="cm-h">Secondary</span>S7 Hyderabad · S4 landowners · S2 senior faculty</p>
+        </div>
+        <div class="cm-win"><b>Wins on</b>Absentee-ready ownership. <b style="margin-top:.5rem">Loses on</b>Being sold as a local status product only.</div>
+      </div>
+    </div>
+
+    <h3>Four things the derivation produced that assumption would not have</h3>
+
+    <div class="finding">
+      <span class="lbl">1 · Community D's largest buyer group will not live in it</span>
+      <p class="big"><strong>S3 and S7 together take 45% of Community D — 35 units and ₹80.1 crore.</strong> Both are absentee owners.</p>
+      <p>Add the S4 parent generation, who <em>will</em> live there permanently, and Community D splits into two occupancy models inside one product.</p>
+      <p><span class="lb lb-rsn">Reasoned</span> The consequence is operational, not creative. A villa community where nearly half the owners are absent needs <strong>managed maintenance, remote handover, security designed for empty homes, and optional rental management</strong> as part of the product. Phase 3 found no competitor offering this. <strong>It is a differentiator that costs an operating model rather than a marketing budget</strong> — which is why it is defensible.</p>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">2 · The largest unit count sits in the most contested band</span>
+      <p><strong>Community B is 139 units — 35% of the scheme by count — at ₹5,400/sq ft, against a competitive set of roughly 3,269 mid-market apartment units.</strong></p>
+      <p>This is the project's largest volume risk, and it was not visible until the audience work was done. Community D is the revenue engine with the thinnest competition; Community B is the volume engine with the thickest. <strong>The marketing effort those two require is not proportional to their revenue.</strong></p>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">3 · Segment 1 is not &ldquo;the villa audience&rdquo;</span>
+      <p>S1's 70 units distribute as <strong>B 14 · C 29 · D 27</strong>. Trade and business families buy across the entire top half of the scheme, frequently as <strong>multiple related households in the same project.</strong></p>
+      <p>That changes the sales approach from unit-selling to family-selling — and it is why seeding the premium tiers before advertising them matters more than any single campaign.</p>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">4 · One pay ladder reaches the whole product ladder</span>
+      <p class="big">Segment 2 is the only segment present in <strong>all four communities</strong> — because AIIMS Mangalagiri's four published pay rungs map cleanly onto the four price tiers.</p>
+      <p>Senior Resident → A (~10 units) · Assistant Professor → B (~28) · Additional Professor → C (~21) · super-specialty Professor → D (~6). <strong>A single institutional relationship can feed the entire ladder</strong>, following a career-stage progression inside one workplace three kilometres from the site — built by the developer's own group company.</p>
+      <p><span class="lb lb-est">Established.</span> No other segment has this property, and no competitor found in Phase 3 is positioned to claim it.</p>
+    </div>
+
+    <h3>What this mapping does <em>not</em> settle</h3>
+    <div class="cards">
+      <div class="card">
+        <h6>Not the messaging</h6>
+        <ul><li>Messaging, channel plan and media weight follow from this mapping. They belong to the phases after it.</li></ul>
+      </div>
+      <div class="card">
+        <h6>Not the Community D price</h6>
+        <ul><li>Phase 2 flagged that ₹2.00–2.57 Cr lands between the mid-premium villa cluster topping out ~₹2.2 Cr and the luxury cluster starting ~₹2.79 Cr.</li>
+        <li><strong>This narrows it:</strong> the segments clearing ₹2.28 Cr on cash — S1, S3, S7 — are all real and all present, which argues the gap is occupiable.</li>
+        <li>What it cannot supply is proof they will pay that number for this product.</li></ul>
+      </div>
+      <div class="card">
+        <h6>Not the segment split</h6>
+        <ul><li>The percentages behind the allocation are a Reasoned planning assumption.</li>
+        <li><strong>Replace them with actual booking data in the first two quarters of sales</strong> and re-run the whole allocation.</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">§7</div>
+    <div>
+      <h2>Evidence gaps</h2>
+      <p class="dek">This method can size and rank segments defensibly. It cannot tell you what a buyer in Guntur actually said. Fifteen gaps, ordered by how much a wrong answer would cost.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:2.5rem">#</th><th style="width:15rem">Gap</th><th>Why it matters</th><th style="width:15rem">How it closes</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>No primary buyer research of any kind</strong></td><td>Every behavioural attribute in §3 — motivations, objections, timelines, channels, influencers — is Applied or Reasoned. <strong>The whole of attributes 8–20 is hypothesis.</strong></td><td>30–40 depth interviews across S1, S2, S3, S6; 8–10 with S4 landowners in Telugu, in the villages. Two weeks of fieldwork.</td></tr>
+          <tr><td class="n">2</td><td><strong>No headcount for the relocating capital workforce</strong></td><td>Directly sizes S5 — 67 units and ₹52 Cr in the allocation — and underpins the pay-arrears timing argument.</td><td>RTI or direct enquiry to GAD / CRDA; departmental relocation schedules.</td></tr>
+          <tr><td class="n">3</td><td><strong>S1 sizing is a bounding exercise, not a count</strong></td><td>S1 is the largest revenue segment at ₹121.5 Cr. Being wrong by 2× changes the whole plan.</td><td>Sub-registrar analysis: buyer occupation and ticket size on registered sales in NTR and Guntur over 24 months.</td></tr>
+          <tr><td class="n">4</td><td><strong>S2 sizing is unverified</strong></td><td>The fastest-converting high-priority segment, and the one carrying the strongest credential.</td><td>Institutional staff directories; medical association membership; hospital HR contact.</td></tr>
+          <tr><td class="n">5</td><td><strong>S7 has no published size at all</strong></td><td>₹55.2 Cr in the allocation, and the largest genuinely uncontested segment.</td><td>Registration data on Hyderabad-resident buyers in the corridor; enquiry-origin analysis from a live competitor project.</td></tr>
+          <tr><td class="n">6</td><td><strong>The segment split within each community is an assumption</strong></td><td>It drives the entire effort allocation.</td><td>Replace with actual booking data in the first two quarters. <strong>The cheapest and highest-value correction available.</strong></td></tr>
+          <tr><td class="n">7</td><td><strong>National buyer research may not transfer</strong></td><td>Used for direction throughout §3. If Tier-2 behaviour differs in kind rather than degree, several profiles shift.</td><td>A short quantitative survey in the catchment — even n=200 would settle direction.</td></tr>
+          <tr><td class="n">8</td><td><strong>Landowner appetite for exchange is untested</strong></td><td>S4 is the most defensible white space here. If the appetite is absent, the white space is empty for a reason.</td><td>Village-level conversations with 20–30 landowner families; review of completed exchange precedents in the capital area.</td></tr>
+          <tr><td class="n">9</td><td><strong>Community D price acceptance</strong></td><td>35% of project revenue. Carried forward unresolved from Phase 2.</td><td>Price-ladder testing with S1 and S3 respondents; competitor booking velocity in the ₹2.2–2.8 Cr band.</td></tr>
+          <tr><td class="n">10</td><td><strong>The Krishna river as a psychological boundary is an inference</strong></td><td>If wrong, S6 is easier to win than assumed and the secondary classification is too cautious.</td><td>Ask. Two questions in any buyer survey settle it.</td></tr>
+          <tr><td class="n">11</td><td><strong>No origin-district breakdown of the US Telugu diaspora</strong></td><td>Origin-district targeting is the difference between an efficient S3 campaign and an expensive one.</td><td>Diaspora association membership data; APNRTS in Guntur is the obvious first call.</td></tr>
+          <tr><td class="n">12</td><td><strong>No channel cost benchmarks for this catchment</strong></td><td>Every downstream channel recommendation is directional until this exists.</td><td>Competitor media monitoring; agency benchmarks; or a small paid test before committing budget.</td></tr>
+          <tr><td class="n">13</td><td><strong>The AP 9th PRC timeline is unconfirmed</strong></td><td>If AP's revision slips two years, the S5 timing case disappears.</td><td>Finance department notifications; commission terms of reference.</td></tr>
+          <tr><td class="n">14</td><td><strong>Competitor booking mix by buyer type is unavailable</strong></td><td>The only external check on the allocation. Flagged in Phase 3 and still open.</td><td>Broker network conversations; sub-registrar analysis of competitor projects.</td></tr>
+          <tr><td class="n">15</td><td><strong>Investor share in comparable launches is unmeasured</strong></td><td>Too high a share creates a resale book competing with unsold inventory at handover.</td><td>Registration analysis: second sales within 24 months of first registration in comparable projects.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The honest summary</span>
+      <p class="big">Gaps 1, 6 and 7 are the same gap seen three ways: <strong>nobody has spoken to a buyer.</strong></p>
+      <p>But of the fifteen, <strong>six can be closed with registration and institutional data alone</strong> — 2, 3, 4, 5, 14 and 15 — at modest cost and without any fieldwork. Those six would convert most of the sizing in this document from Reasoned to Established.</p>
+      <p><strong>They are the first thing to do, and they should be done before media money is committed, not after.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-head">
+    <div class="sec-num">§8</div>
+    <div>
+      <h2>Carry-forward</h2>
+      <p class="dek">What the next phase inherits — separated by how firmly it is held.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cards">
+      <div class="card">
+        <h6><span class="lb lb-est">Established</span></h6>
+        <ul>
+          <li>The binding constraint is <strong>cash at purchase</strong> — ₹17.6 L for A rising to ₹74.1 L for D. It discriminates by income <em>source</em>, not amount.</li>
+          <li>Community D requires household income around <strong>10× district per capita GDP.</strong> It cannot be sold primarily to salaried locals.</li>
+          <li><strong>AIIMS is the corridor's high-income institution; the private universities are not.</strong></li>
+          <li><strong>The AIIMS pay ladder maps rung-for-rung onto Communities A–D.</strong></li>
+          <li><strong>&ldquo;NRI&rdquo; is two segments</strong> — US buys C and D, Gulf buys A and B.</li>
+          <li><strong>&ldquo;HNI&rdquo; is not a segment here</strong>, and ₹2.57 crore is not an HNI ticket.</li>
+          <li><strong>~25,000 land-pooling households</strong> hold ₹2.3–7.0 crore of land each against annuity income under ₹2 lakh.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Correction to Phase 1</h6>
+        <ul>
+          <li>The sales task is <strong>~397 units, not ~600.</strong> Average unit size rises from ~1,389 to ~2,098 sq ft on the Phase 2 mix.</li>
+          <li>Bookings needed fall to <strong>8.3–11.0 a month.</strong></li>
+          <li>Allowable marketing cost per unit rises from ₹3.3–4.2 lakh to <strong>₹5.0–6.3 lakh.</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6><span class="lb lb-rsn">Reasoned</span> — working assumptions</h6>
+        <ul>
+          <li><strong>High:</strong> S1 trade families · S2 senior medical · S3 US diaspora. <strong>Secondary:</strong> S4 landowners · S7 Hyderabad · S6 upgraders · S5 government. <strong>Low:</strong> S8 Gulf · investors.</li>
+          <li>The three high-priority segments deliver <strong>53.8% of revenue from 43% of units.</strong></li>
+          <li><strong>45% of Community D revenue</strong> comes from buyers who will not live there full time.</li>
+          <li><strong>Community B is the largest volume risk</strong> — 139 units in the most contested band.</li>
+          <li>Two dated opportunities, both known now: the <strong>pay-revision arrears window</strong> and the <strong>December–January and summer India-visit windows.</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Still open.</strong> The fifteen gaps in §7 — of which the six sizing gaps are closeable from registration and institutional data before any budget is committed.
+    </div>
+
+    <p style="font-size:.8rem;color:var(--ink-3);margin-top:2.5rem;border-top:1px solid var(--rule);padding-top:1.2rem;max-width:none">
+      Phase 5 of a sequential research and strategy exercise. Hypothetical project; not represented as an actual KMV Spaces development. Phases 1–4 precede this document; the marketing and creative strategy follows it. Sources first used in this phase: RBI loan-to-value guidelines · AIIMS published pay matrix levels · 8th Central Pay Commission notification (3 November 2025) · AP 9th Pay Revision Commission constitution · AP CRDA land-pooling scheme terms · district GDP per capita 2023-24 · AP income-tax filer counts · APNRTS · Knight Frank <em>Beyond Bricks</em> 2025 (n=1,629, eight metros, transferability caveat in §0) · Telugu diaspora population estimates · Gulf remittance purpose survey data · published private-university faculty pay data.
+    </p>
+  </div>
+</section>
+
+</main>
+</div>
