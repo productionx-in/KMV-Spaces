@@ -1,0 +1,1585 @@
+<title>Fifteen to the Acre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style>
+<style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style>
+<style>
+/* ---------- Phase 4: evidence labels ---------- */
+.lb{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .42rem;border-radius:3px;white-space:nowrap;display:inline-block;border:1px solid transparent;
+  line-height:1.55;vertical-align:.06em}
+.lb-f{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-o{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-i{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+.lb-r{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.lb-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+.stmt{margin:0 0 1rem;max-width:var(--measure)}
+.stmt .lb{margin-right:.5rem}
+.none{color:var(--ink-3);font-style:italic}
+
+.sev-h{color:var(--accent);font-weight:600;font-family:var(--f-mono);font-size:.72rem}
+.sev-m{color:var(--ink-2);font-family:var(--f-mono);font-size:.72rem}
+.sev-l{color:var(--ink-3);font-family:var(--f-mono);font-size:.72rem}
+
+/* ---------- diagram ---------- */
+figure.dia{margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);border-radius:5px;
+  padding:1.4rem 1.5rem 1.1rem;box-shadow:var(--shadow)}
+figure.dia svg{display:block;width:100%;max-width:100%;height:auto;color:var(--ink-2)}
+figure.dia figcaption{margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--rule);
+  font-size:.79rem;color:var(--ink-3);line-height:1.5}
+.dia-head{margin-bottom:1rem}
+.dia-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.dia-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.dia-scroll{overflow-x:auto}
+.dia-scroll > svg{min-width:34rem}
+
+/* ---------- rate bars ---------- */
+.rrow{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.rrow:hover{background:var(--surface-2)}
+.rname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.rname b{display:block;color:var(--ink);font-weight:600}
+.rtrack{height:1.4rem;display:flex;align-items:center;gap:.55rem}
+.rfill{height:.95rem;border-radius:0 4px 4px 0;background:var(--series);flex:none}
+.rfill.other{background:transparent;border:1.5px solid var(--series);border-left:0;box-sizing:border-box}
+.rfill.target{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.rval{font-family:var(--f-mono);font-size:.77rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+</style>
+<style>
+/* ---------- Phase 5 components ---------- */
+
+/* Evidence labels — form, not hue */
+.lb-est{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-app{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-rsn{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+
+/* Priority chips */
+.pri{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.14rem .48rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;border:1px solid transparent}
+.pri-h{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.pri-s{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.pri-l{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Segment profile card */
+.seg{margin:2rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.seg-head{display:grid;grid-template-columns:3.1rem minmax(0,1fr);gap:.9rem;align-items:start;
+  padding:1.05rem 1.3rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.seg-id{font-family:var(--f-mono);font-size:1.28rem;font-weight:600;color:var(--brand);
+  line-height:1;padding-top:.12rem;letter-spacing:-.02em}
+.seg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.08rem;line-height:1.28;
+  margin:0 0 .3rem;color:var(--ink);text-wrap:balance}
+.seg-head .seg-line{font-size:.85rem;color:var(--ink-2);margin:0 0 .6rem;font-style:italic}
+.seg-stats{display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.seg-stats b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.seg-size{padding:.8rem 1.3rem;border-bottom:1px solid var(--rule);font-size:.82rem;
+  line-height:1.55;color:var(--ink-2);background:var(--surface)}
+.seg-size strong{color:var(--ink)}
+
+/* 20-attribute grid */
+.attr{display:grid;grid-template-columns:minmax(8rem,10.5rem) minmax(0,1fr)}
+.attr > dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);padding:.6rem .8rem .6rem 1.3rem;border-top:1px solid var(--rule);
+  line-height:1.45;font-weight:500}
+.attr > dd{margin:0;padding:.6rem 1.3rem .6rem .3rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.attr > dd strong{color:var(--ink);font-weight:600}
+.attr > dt:first-of-type,.attr > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .attr{grid-template-columns:minmax(0,1fr)}
+  .attr > dt{padding:.6rem 1.1rem .1rem;border-top:1px solid var(--rule)}
+  .attr > dd{padding:.15rem 1.1rem .65rem;border-top:0}
+  .attr > dt:first-of-type + dd{border-top:0}
+}
+.seg-close{padding:.95rem 1.3rem;background:var(--surface-2);border-top:1px solid var(--rule);
+  font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.seg-close .lbl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.4rem;font-weight:600}
+.seg-close strong{color:var(--ink)}
+.seg-close p{margin:0 0 .55rem;max-width:none}
+.seg-close p:last-child{margin-bottom:0}
+
+/* Cash-gate escalation */
+.gate{display:flex;flex-direction:column;gap:.55rem}
+.gate-row{display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:.8rem;align-items:center}
+.gate-name{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-2);line-height:1.3}
+.gate-name b{display:block;color:var(--ink);font-weight:600;font-size:.82rem}
+.gate-track{display:flex;align-items:center;gap:.5rem;height:2rem}
+.gate-cash{height:1.3rem;background:var(--series);border-radius:0 3px 3px 0;flex:none}
+.gate-inc{height:1.3rem;border:1.5px dashed var(--emphasis);border-left:0;border-radius:0 3px 3px 0;
+  flex:none;box-sizing:border-box}
+.gate-val{font-family:var(--f-mono);font-size:.76rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap}
+.gate-val i{font-style:normal;color:var(--ink-3)}
+
+/* Hypothesis verdict list */
+.hyp{display:flex;flex-direction:column;gap:0;margin:1.5rem 0;border:1px solid var(--rule);
+  border-radius:5px;background:var(--surface);overflow:hidden}
+.hyp-row{display:grid;grid-template-columns:2.1rem minmax(7rem,11rem) minmax(0,1fr);gap:.75rem;
+  padding:.75rem 1.05rem;border-top:1px solid var(--rule);align-items:start}
+.hyp-row:first-child{border-top:0}
+.hyp-row .num{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;padding-top:.1rem}
+.hyp-name{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.4}
+.hyp-name .v{display:block;margin-top:.3rem}
+.hyp-why{font-size:.83rem;line-height:1.55;color:var(--ink-2)}
+.hyp-why strong{color:var(--ink)}
+.vd{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:.1rem .38rem;border-radius:3px;display:inline-block;line-height:1.5}
+.vd-y{background:var(--brand);color:var(--surface)}
+.vd-p{background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand)}
+.vd-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+@media (max-width:640px){
+  .hyp-row{grid-template-columns:2.1rem minmax(0,1fr);row-gap:.35rem}
+  .hyp-why{grid-column:2}
+}
+
+/* Revenue-by-segment bars, priority encoded by fill treatment */
+.rev-row{display:grid;grid-template-columns:minmax(8.5rem,13rem) minmax(0,1fr);gap:.7rem;
+  align-items:center;padding:3px 0}
+.rev-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.rev-label b{display:block;color:var(--ink);font-weight:600}
+.rev-track{position:relative;height:1.6rem;display:flex;align-items:center;gap:.55rem}
+.rev-fill{height:1.1rem;border-radius:0 4px 4px 0;flex:none;box-sizing:border-box}
+.rev-fill.p-h{background:var(--series)}
+.rev-fill.p-s{background:var(--brand-soft);border:1px solid var(--series);border-left:0}
+.rev-fill.p-l{background:transparent;border:1.5px dashed var(--rule-2);border-left:0}
+.rev-val{font-family:var(--f-mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:500}
+.rev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+td i{color:var(--ink-3);font-style:normal;font-size:.94em}
+
+/* Community mapping strip */
+.commap{display:grid;grid-template-columns:repeat(auto-fit,minmax(13.5rem,1fr));gap:.85rem;margin:1.5rem 0}
+.cm{background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden;
+  display:flex;flex-direction:column}
+.cm-top{padding:.75rem .95rem;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.cm-top h6{font-family:var(--f-display);font-size:1rem;font-weight:600;margin:0;color:var(--ink)}
+.cm-top .cm-t{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);display:block;margin-top:.22rem;
+  font-variant-numeric:tabular-nums}
+.cm-body{padding:.8rem .95rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.cm-body .cm-h{display:block;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 .28rem;font-weight:500}
+.cm-body p{margin:0 0 .7rem;max-width:none}
+.cm-body p:last-child{margin-bottom:0}
+.cm-body strong{color:var(--ink);font-weight:600}
+.cm-win{padding:.7rem .95rem;border-top:1px solid var(--rule);background:var(--accent-soft);
+  font-size:.8rem;line-height:1.45;color:var(--ink-2)}
+.cm-win b{color:var(--accent);font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;display:block;margin-bottom:.25rem;font-weight:600}
+</style>
+<style>
+/* ---------- Phase 7 components ---------- */
+/* Classification tags — form, not hue */
+.tg{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .4rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent;vertical-align:.06em}
+.tg-md{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.tg-bm{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.tg-as{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.tg-cv{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+
+/* Scenario columns */
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.85rem;margin:1.5rem 0}
+.sc{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);
+  display:flex;flex-direction:column}
+.sc.pick{border-color:var(--accent);box-shadow:var(--shadow)}
+.sc-top{padding:.8rem 1rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.sc.pick .sc-top{background:var(--accent-soft)}
+.sc-top h6{font-family:var(--f-display);font-size:1.05rem;font-weight:600;margin:0;color:var(--ink)}
+.sc-top span{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);display:block;margin-top:.24rem}
+.sc.pick .sc-top span{color:var(--accent)}
+.sc-body{padding:.35rem 0;flex:1}
+.sc-l{display:flex;justify-content:space-between;gap:.7rem;padding:.4rem 1rem;font-size:.82rem;
+  border-top:1px solid var(--rule);color:var(--ink-2);line-height:1.4}
+.sc-l:first-child{border-top:0}
+.sc-l b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:600}
+.sc-l.hi{background:var(--surface-2)}
+
+/* Funnel steps */
+.fn{display:flex;flex-direction:column;gap:.3rem;margin:.5rem 0}
+.fn-step{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem;align-items:center}
+.fn-name{font-size:.83rem;line-height:1.3;color:var(--ink-2);text-align:right}
+.fn-name b{display:block;color:var(--ink);font-weight:600}
+.fn-bar{height:2.15rem;display:flex;align-items:center;justify-content:flex-start;
+  background:var(--series);border-radius:3px;padding:0 .7rem;color:var(--surface);
+  font-family:var(--f-mono);font-size:.8rem;font-variant-numeric:tabular-nums;font-weight:600;
+  white-space:nowrap;min-width:5.5rem}
+.fn-bar.lite{background:var(--brand-soft);color:var(--brand);border:1px solid var(--series)}
+.fn-arrow{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem}
+.fn-rate{font-family:var(--f-mono);font-size:.68rem;color:var(--accent);letter-spacing:.04em;padding:.05rem 0 .05rem .7rem}
+.fn-rate::before{content:"↓ ";opacity:.7}
+
+/* Metric grid */
+.mx{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.7rem;margin:1.3rem 0}
+.mx > div{border:1px solid var(--rule);border-radius:5px;padding:.75rem .9rem;background:var(--surface)}
+.mx .k{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.35rem}
+.mx .v{font-family:var(--f-display);font-size:1.5rem;font-weight:600;color:var(--ink);line-height:1;
+  font-variant-numeric:tabular-nums}
+.mx .s{font-size:.75rem;color:var(--ink-3);margin-top:.3rem;line-height:1.4;display:block}
+.mx .v.acc{color:var(--accent)}
+
+/* Warning callout */
+.warn{margin:1.5rem 0;padding:1.1rem 1.3rem;background:var(--surface);border:1px solid var(--accent);
+  border-left:3px solid var(--accent);border-radius:4px;max-width:var(--measure)}
+.warn .wl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.5rem;font-weight:600}
+.warn p{margin:0 0 .65rem;max-width:none;font-size:.92rem;line-height:1.6}
+.warn p:last-child{margin-bottom:0}
+.warn strong{color:var(--ink)}
+</style>
+<style>
+/* ---------- Phase 8 components ---------- */
+/* Layer chips */
+.ly{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.13rem .45rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent}
+.ly-b{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ly-d{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.ly-s{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.ly-a{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* Counted vs estimated */
+.ct{font-family:var(--f-mono);font-size:.56rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:.1rem .36rem;border-radius:3px;display:inline-block;line-height:1.5;border:1px solid transparent}
+.ct-y{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ct-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Stage card */
+.stg{margin:1.5rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.stg-head{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:.85rem;align-items:start;
+  padding:.9rem 1.2rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.stg-n{font-family:var(--f-mono);font-size:1.2rem;font-weight:600;color:var(--brand);line-height:1;padding-top:.1rem}
+.stg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.05rem;line-height:1.25;margin:0 0 .35rem;color:var(--ink)}
+.stg-tags{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center}
+.stg-note{font-size:.82rem;color:var(--ink-2);font-style:italic;margin:.4rem 0 0;line-height:1.45}
+.sg{display:grid;grid-template-columns:minmax(7rem,9rem) minmax(0,1fr)}
+.sg > dt{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.55rem .7rem .55rem 1.2rem;border-top:1px solid var(--rule);line-height:1.45;font-weight:500}
+.sg > dd{margin:0;padding:.55rem 1.2rem .55rem .25rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.sg > dd strong{color:var(--ink);font-weight:600}
+.sg > dt:first-of-type,.sg > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .sg{grid-template-columns:minmax(0,1fr)}
+  .sg > dt{padding:.55rem 1.05rem .1rem;border-top:1px solid var(--rule)}
+  .sg > dd{padding:.1rem 1.05rem .6rem;border-top:0}
+  .sg > dt:first-of-type + dd{border-top:0}
+}
+
+/* Two-column compare */
+.cmp2{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.cmp2 > div{border:1px solid var(--rule);border-radius:5px;padding:.9rem 1.05rem;background:var(--surface)}
+.cmp2 h6{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 .55rem;font-weight:600}
+.cmp2 p{margin:0 0 .55rem;font-size:.86rem;line-height:1.55;max-width:none;color:var(--ink-2)}
+.cmp2 p:last-child{margin-bottom:0}
+.cmp2 strong{color:var(--ink)}
+
+/* Layer band header */
+.lyband{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:2.3rem 0 .3rem;
+  padding:.7rem 1rem;border-radius:5px;background:var(--surface-2);border:1px solid var(--rule)}
+.lyband h3{margin:0;font-family:var(--f-display);font-size:1.12rem;font-weight:600;color:var(--ink)}
+.lyband .lb-meta{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.lyband .lb-meta b{color:var(--ink)}
+
+/* Journey strip */
+.jr{margin:1.3rem 0;border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface)}
+.jr-top{padding:.8rem 1.05rem;border-bottom:1px solid var(--rule);background:var(--surface-2);
+  display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:baseline}
+.jr-top h5{margin:0;font-family:var(--f-display);font-size:1.02rem;font-weight:600;color:var(--ink)}
+.jr-top .jm{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3)}
+.jr-top .jm b{color:var(--ink)}
+.jr-flow{padding:.85rem 1.05rem;display:flex;flex-wrap:wrap;gap:.3rem;align-items:center;
+  border-bottom:1px solid var(--rule)}
+.jr-node{font-family:var(--f-mono);font-size:.66rem;padding:.22rem .5rem;border-radius:3px;
+  background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand);white-space:nowrap}
+.jr-node.skip{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2);text-decoration:line-through}
+.jr-node.key{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.jr-sep{color:var(--ink-3);font-size:.75rem}
+.jr-body{padding:.85rem 1.05rem;font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.jr-body strong{color:var(--ink)}
+.jr-body p{margin:0 0 .6rem;max-width:none}
+.jr-body p:last-child{margin-bottom:0}
+
+/* Leverage bars */
+.lev-row{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:4px 0}
+.lev-lab{font-size:.82rem;line-height:1.3;color:var(--ink-2)}
+.lev-lab b{display:block;color:var(--ink);font-weight:600}
+.lev-track{height:1.7rem;display:flex;align-items:center;gap:.55rem}
+.lev-fill{height:1.2rem;background:var(--brand-soft);border:1px solid var(--series);border-radius:0 4px 4px 0;flex:none}
+.lev-fill.top{background:var(--series);border-color:var(--series)}
+.lev-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.lev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+</style>
+<style>
+/* ---------- Phase 9 components ---------- */
+/* Tier chips — form, not hue */
+.tr{font-family:var(--f-mono);font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.13rem .45rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent}
+.tr-1{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.tr-2{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.tr-3{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.tr-4{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.tr-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2);text-decoration:line-through}
+
+/* Channel card */
+.ch{margin:1.4rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.ch-head{padding:.85rem 1.15rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.ch-head h4{font-family:var(--f-display);font-weight:600;font-size:1.04rem;line-height:1.25;margin:0 0 .4rem;color:var(--ink)}
+.ch-head h4 .sp{font-family:var(--f-mono);font-size:.78rem;font-weight:500;color:var(--accent);margin-left:.5rem;white-space:nowrap}
+.ch-tags{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center}
+.cg{display:grid;grid-template-columns:minmax(6.5rem,8.5rem) minmax(0,1fr)}
+.cg > dt{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.5rem .7rem .5rem 1.15rem;border-top:1px solid var(--rule);line-height:1.45;font-weight:500}
+.cg > dd{margin:0;padding:.5rem 1.15rem .5rem .25rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.cg > dd strong{color:var(--ink)}
+.cg > dt:first-of-type,.cg > dt:first-of-type + dd{border-top:0}
+.cg > dt.neg{color:var(--accent)}
+@media (max-width:640px){
+  .cg{grid-template-columns:minmax(0,1fr)}
+  .cg > dt{padding:.5rem 1rem .1rem;border-top:1px solid var(--rule)}
+  .cg > dd{padding:.1rem 1rem .55rem;border-top:0}
+  .cg > dt:first-of-type + dd{border-top:0}
+}
+
+/* Tier band */
+.trband{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:2.3rem 0 .3rem;
+  padding:.7rem 1rem;border-radius:5px;background:var(--surface-2);border:1px solid var(--rule)}
+.trband h3{margin:0;font-family:var(--f-display);font-size:1.1rem;font-weight:600;color:var(--ink)}
+.trband .tb-meta{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.trband .tb-meta b{color:var(--ink)}
+
+/* Budget treemap-ish strip */
+.bud{display:flex;flex-direction:column;gap:.5rem;margin:.4rem 0}
+.bud-lay{display:flex;height:2.6rem;border-radius:4px;overflow:hidden;border:1px solid var(--rule-2)}
+.bud-lay > div{display:flex;align-items:center;justify-content:center;min-width:0;padding:0 .3rem;
+  border-right:1px solid var(--rule-2);font-family:var(--f-mono);font-size:.63rem;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.bud-lay > div:last-child{border-right:0}
+.bud-name{display:flex;justify-content:space-between;align-items:baseline;gap:.7rem;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.bud-name b{color:var(--ink);font-size:.78rem}
+.bd-1{background:var(--brand-soft);color:var(--brand)}
+.bd-2{background:var(--series);color:var(--surface)}
+.bd-3{background:var(--accent-soft);color:var(--accent)}
+.bd-4{background:var(--accent);color:var(--surface)}
+.bd-5{background:var(--surface-2);color:var(--ink-2)}
+
+/* Trap callout */
+.trap{margin:1.5rem 0;padding:1.1rem 1.3rem;background:var(--accent-soft);border:1px solid var(--accent);
+  border-radius:4px;max-width:var(--measure)}
+.trap .tl2{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.5rem;font-weight:600}
+.trap p{margin:0 0 .65rem;max-width:none;font-size:.92rem;line-height:1.6;color:var(--ink-2)}
+.trap p:last-child{margin-bottom:0}
+.trap strong{color:var(--ink)}
+</style><style>
+/* ---------- Phase 10 components ---------- */
+/* Master idea slab */
+.idea{margin:2rem 0;padding:2.2rem 2rem;background:var(--surface);border:1px solid var(--rule-2);
+  border-radius:6px;box-shadow:var(--shadow)}
+.idea .eyeb{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:1rem}
+.idea .big-idea{font-family:var(--f-display);font-weight:600;font-size:clamp(1.35rem,3.6vw,2.1rem);
+  line-height:1.24;letter-spacing:-.015em;color:var(--ink);margin:0;text-wrap:balance;max-width:22ch}
+.idea .sub-idea{font-size:.95rem;line-height:1.6;color:var(--ink-2);margin:1.1rem 0 0;max-width:var(--measure)}
+.idea .sub-idea strong{color:var(--ink)}
+
+/* The signature line */
+.sig{margin:1.6rem 0;padding:2rem 1.9rem;border-radius:6px;background:var(--ink);color:var(--ground);
+  text-align:left}
+.sig .l1{font-family:var(--f-display);font-weight:700;font-size:clamp(2rem,6.5vw,3.5rem);
+  line-height:1;letter-spacing:-.03em;margin:0;color:var(--ground)}
+.sig .l2{font-family:var(--f-display);font-weight:400;font-size:clamp(1.1rem,3.2vw,1.7rem);
+  line-height:1.2;margin:.5rem 0 0;color:var(--ground);opacity:.72}
+.sig .te{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.1em;margin:1.2rem 0 0;
+  color:var(--ground);opacity:.5;text-transform:uppercase}
+
+/* Density comparison — the 874 vs 376 */
+.dens{display:flex;flex-direction:column;gap:.55rem;margin:.4rem 0}
+.dens-row{display:grid;grid-template-columns:minmax(8rem,13rem) minmax(0,1fr);gap:.8rem;align-items:center}
+.dens-lab{font-size:.82rem;line-height:1.3;color:var(--ink-2)}
+.dens-lab b{display:block;color:var(--ink);font-weight:600}
+.dens-track{display:flex;align-items:center;gap:.6rem;height:2rem}
+.dens-fill{height:1.35rem;border-radius:0 3px 3px 0;flex:none}
+.dens-fill.ghost{background:transparent;border:1.5px dashed var(--rule-2);border-left:0;box-sizing:border-box}
+.dens-fill.real{background:var(--accent)}
+.dens-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:600}
+.dens-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+/* Four community numbers */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.8rem;margin:1.5rem 0}
+.numcard{border:1px solid var(--rule);border-radius:5px;background:var(--surface);overflow:hidden;
+  display:flex;flex-direction:column}
+.numcard .nc-top{padding:1.1rem 1rem .7rem;text-align:center;background:var(--surface-2);
+  border-bottom:1px solid var(--rule)}
+.numcard .nc-n{font-family:var(--f-display);font-weight:700;font-size:2.6rem;line-height:.9;
+  color:var(--accent);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.numcard .nc-u{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-top:.45rem}
+.numcard .nc-b{padding:.8rem 1rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.numcard .nc-b b{display:block;color:var(--ink);font-family:var(--f-display);font-size:.95rem;
+  font-weight:600;margin-bottom:.35rem}
+.numcard.master{border-color:var(--accent)}
+.numcard.master .nc-top{background:var(--accent-soft)}
+
+/* Hoarding sequence */
+.hoard{display:flex;gap:.4rem;align-items:stretch;overflow-x:auto;padding:.3rem 0 .6rem;margin:.5rem 0}
+.hb{flex:0 0 auto;min-width:5.2rem;border:1px solid var(--rule-2);border-radius:4px;
+  background:var(--surface-2);padding:1.1rem .6rem;text-align:center}
+.hb .hn{font-family:var(--f-display);font-weight:700;font-size:1.85rem;line-height:1;
+  color:var(--ink-2);font-variant-numeric:tabular-nums}
+.hb .hs{font-family:var(--f-mono);font-size:.55rem;letter-spacing:.08em;color:var(--ink-3);
+  display:block;margin-top:.4rem;text-transform:uppercase}
+.hb.ours{background:var(--accent);border-color:var(--accent)}
+.hb.ours .hn{color:var(--surface)}
+.hb.ours .hs{color:var(--surface);opacity:.8}
+.hb.gate{background:var(--ink);border-color:var(--ink);display:flex;flex-direction:column;
+  justify-content:center;min-width:8.5rem}
+.hb.gate .hn{font-size:.9rem;font-family:var(--f-display);font-weight:600;color:var(--ground);line-height:1.25}
+.hb.gate .hs{color:var(--ground);opacity:.55}
+.harrow{display:flex;align-items:center;color:var(--ink-3);font-size:.8rem;flex:0 0 auto}
+
+/* Do / don't */
+.dodont{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.dd{border:1px solid var(--rule);border-radius:5px;padding:.9rem 1.05rem;background:var(--surface)}
+.dd h6{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;
+  margin:0 0 .6rem;font-weight:600}
+.dd.yes h6{color:var(--brand)}
+.dd.no h6{color:var(--ink-3)}
+.dd ul{margin:0;padding-left:1.05rem;font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.dd li{margin-bottom:.4rem}
+.dd li:last-child{margin-bottom:0}
+.dd.no ul{color:var(--ink-3)}
+.dd strong{color:var(--ink)}
+
+/* Narrative block — the long copy */
+.narr{margin:1.6rem 0;padding:1.6rem 1.7rem;background:var(--surface);border-left:3px solid var(--accent);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:0 5px 5px 0;
+  max-width:var(--measure);box-shadow:var(--shadow)}
+.narr p{font-family:var(--f-display);font-size:1.03rem;line-height:1.62;color:var(--ink-2);
+  margin:0 0 .9rem;max-width:none}
+.narr p:last-child{margin-bottom:0}
+.narr strong{color:var(--ink);font-weight:600}
+.narr .close{font-weight:600;color:var(--ink);font-size:1.15rem}
+
+/* Copy line — a headline shown as work */
+.cline{margin:1.1rem 0;padding:1.1rem 1.3rem;background:var(--surface-2);border:1px solid var(--rule);
+  border-radius:5px;max-width:var(--measure)}
+.cline .ch1{font-family:var(--f-display);font-weight:600;font-size:1.28rem;line-height:1.22;
+  color:var(--ink);margin:0;letter-spacing:-.012em}
+.cline .ch2{font-family:var(--f-display);font-weight:400;font-size:1.28rem;line-height:1.22;
+  color:var(--ink-2);margin:.2rem 0 0}
+.cline .cmeta{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.6rem}
+
+/* Swatches */
+.pal{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}
+.pw{flex:1 1 8rem;border:1px solid var(--rule);border-radius:4px;overflow:hidden;min-width:8rem}
+.pw .chip{height:3.2rem}
+.pw .pn{padding:.5rem .6rem;font-family:var(--f-mono);font-size:.63rem;line-height:1.4;color:var(--ink-2);
+  background:var(--surface)}
+.pw .pn b{display:block;color:var(--ink);font-size:.68rem}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">Phase 10 of 10<strong>Creative Strategy</strong></div>
+  <div class="toc">
+    <a href="#s0"><span class="n">§0</span><span>What it has to carry</span></a>
+    <a href="#s1"><span class="n">§1</span><span>The master idea</span></a>
+    <a href="#s2"><span class="n">§2</span><span>Territory &amp; narrative</span></a>
+    <a href="#s3"><span class="n">§3</span><span>Four communities</span></a>
+    <a href="#s4"><span class="n">§4</span><span>Hierarchy &amp; pillars</span></a>
+    <a href="#s5"><span class="n">§5</span><span>Visual direction</span></a>
+    <a href="#s6"><span class="n">§6</span><span>Film</span></a>
+    <a href="#s7"><span class="n">§7</span><span>Digital &amp; performance</span></a>
+    <a href="#s8"><span class="n">§8</span><span>Outdoor</span></a>
+    <a href="#s9"><span class="n">§9</span><span>The campaign</span></a>
+    <a href="#s10"><span class="n">§10</span><span>Site &amp; collateral</span></a>
+    <a href="#s11"><span class="n">§11</span><span>NRI</span></a>
+    <a href="#s12"><span class="n">§12</span><span>The cliché register</span></a>
+    <a href="#s13"><span class="n">§13</span><span>Risks</span></a>
+  </div>
+  <div>
+    <h4>The production rule</h4>
+    <p style="font-size:.79rem;line-height:1.5;color:var(--ink-3);margin:0;max-width:none">
+      Every claim must survive the question <strong style="color:var(--ink-2)">"what is the number?"</strong>
+      If a line cannot answer it, the line does not run.
+    </p>
+  </div>
+  <div>
+    <h4>The brief's constraint</h4>
+    <p style="font-size:.76rem;line-height:1.5;color:var(--ink-3);margin:0;max-width:none">
+      <em>Avoid generic real-estate clichés unless research proves they work.</em>
+      <strong style="color:var(--ink-2)">Eight cut, four kept</strong> — §12 gives the evidence for each.
+    </p>
+  </div>
+</nav>
+
+<main class="main">
+<header class="masthead">
+  <p class="eyebrow">Creative platform · narrative system · execution direction</p>
+  <h1>The idea is a number, and no competitor on this corridor can say it</h1>
+  <p class="sub">Twenty-five acres would hold 874 homes at the lowest density observed anywhere nearby. This scheme builds 376. That gap is the product, the price and the campaign.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 10 of 10</span>
+    <span><strong>Brand budget</strong> ₹6.30 Cr of ₹25.68 Cr</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> Creative strategy for a hypothetical 25-acre, ₹500 crore corridor development. Nothing here describes an actual KMV Spaces project or campaign. All creative directions derive from findings in Phases 1–9; where a decision is taste rather than evidence, it is stated as such.
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head">
+    <div class="sec-num">§0</div>
+    <div>
+      <h2>What the creative work has to carry</h2>
+      <p class="dek">Nine phases produced a set of facts. Three of them are the whole brief.</p>
+    </div>
+  </div>
+  <div class="body">
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">Fact 1 · the product is defined by what is not on the land</span>
+        <h5>498 homes were not built — measured against the corridor's own lowest density</h5>
+      </div>
+      <div class="dens">
+        <div class="dens-row"><div class="dens-lab"><b>Manjeera Monarch</b>113.4 to the acre</div><div class="dens-track"><div class="dens-fill ghost" style="width:100%"></div><span class="dens-val">1,781 <i>· 384 sq ft site per home</i></span></div></div>
+        <div class="dens-row"><div class="dens-lab"><b>Aparna Amaravati One</b>65.9 to the acre</div><div class="dens-track"><div class="dens-fill ghost" style="width:60.0%"></div><span class="dens-val">1,068 <i>· 661 sq ft</i></span></div></div>
+        <div class="dens-row"><div class="dens-lab"><b>Jayabheri The Capital</b>52.9 — the corridor's lowest</div><div class="dens-track"><div class="dens-fill ghost" style="width:49.1%"></div><span class="dens-val">874 <i>· 823 sq ft</i></span></div></div>
+        <div class="dens-row"><div class="dens-lab"><b>This scheme</b>15.0 to the acre</div><div class="dens-track"><div class="dens-fill real" style="width:21.1%"></div><span class="dens-val">376 <i>· 2,904 sq ft — 7.6× Manjeera</i></span></div></div>
+      </div>
+      <div class="figure-foot">
+        All four figures are computed on the same 25 acres, using densities observed in the Phase 2 project set. Phase 6 §2.3 priced the restraint: roughly <strong>₹344–500 crore of forgone gross development value.</strong> The premium is not a markup — it is the visible cost of what was left out.
+      </div>
+    </figure>
+
+    <div class="cards">
+      <div class="card">
+        <h6>Fact 2 · the developer built the hospital</h6>
+        <ul><li>KMV Projects built <strong>AIIMS Mangalagiri</strong>, three kilometres from the site.</li>
+        <li>Phase 5 found <strong>delivery anxiety is the one concern shared by all eight segments.</strong></li>
+        <li>It is the only proof point in the exercise that answers it without asking for trust.</li></ul>
+      </div>
+      <div class="card">
+        <h6>Fact 3 · the site visit is where the money is</h6>
+        <ul><li>Phase 8: a point of visit-to-booking conversion is worth <strong>₹39.4 crore</strong> — 2.3× a point at the lead stage.</li>
+        <li>Phase 9 put <strong>₹4.10 crore</strong> on the experience centre, the largest single line in the plan.</li></ul>
+      </div>
+      <div class="card">
+        <h6>The brief that follows</h6>
+        <ul><li>The work is not there to make people feel something about a home.</li>
+        <li><strong>It is there to get people onto 25 acres and let the land do the arguing.</strong></li></ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>The cliché test.</strong> Published guidance on Indian real-estate advertising names the failures precisely: <strong>superlatives without evidence</strong> — <em>"India's most luxurious project"</em> — and <strong>general lifestyle statements</strong> — <em>"live your dream."</em> The working test for a line is that it should be <strong>hard to swap onto a competitor without losing meaning.</strong> That is the test this phase is built to pass.
+    </div>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">§1</div>
+    <div>
+      <h2>The master idea</h2>
+      <p class="dek">Every developer in this corridor sells how much they built. This one sells how much it didn't.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="idea">
+      <span class="eyeb">Master brand idea</span>
+      <p class="big-idea">The most valuable thing on these twenty-five acres is what isn't on them.</p>
+      <p class="sub-idea">Three properties make it usable rather than merely clever. <strong>It is true and computable</strong> — 376 homes where 874 would fit; a buyer can verify it from a public FAR calculation or by standing at the gate and counting. <strong>It is unownable by anyone else</strong> — every competitor in the Phase 3 set is denser, so attacking the claim means stating their own number, which is the argument this brand wants them to have. <strong>And it generates work across four communities and eight segments</strong>, because arithmetic scales.</p>
+    </div>
+
+    <div class="sig">
+      <p class="l1">Fifteen to the acre.</p>
+      <p class="l2">Everything else is open.</p>
+      <p class="te">ఎకరాకు పదిహేను · Ekaraaku padihenu</p>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Why a number, and not a warmer line</span>
+      <p>It cannot be exaggerated, cannot be matched, and cannot be swapped onto a competitor. It states the product's defining fact in four words. <strong>And it is strange enough for real estate to be remembered</strong> — the category does not use numbers as headlines, which is precisely why one works.</p>
+      <p>The second line does the emotional work the first refuses to do. <em>Everything else is open</em> is literally true — 25 acres minus 376 building footprints — and it is what the buyer is actually purchasing.</p>
+    </div>
+
+    <div class="dodont">
+      <div class="dd no">
+        <h6>What the idea is not</h6>
+        <ul>
+          <li><strong>Not minimalism</strong> — a design style, and it would read as cold to S1's trade families.</li>
+          <li><strong>Not exclusivity</strong> — Phase 5 established ₹2.74 Cr is an upper-affluent ticket, not a high-net-worth one. The word would promise a tier the price sheet does not deliver.</li>
+          <li><strong>Not sustainability</strong> — the open space is a commercial choice, not an environmental one. Dressing it as green is exactly the unevidenced claim the cliché test rules out.</li>
+        </ul>
+      </div>
+      <div class="dd yes">
+        <h6>What it is</h6>
+        <ul>
+          <li><strong>Restraint, presented as arithmetic.</strong></li>
+          <li>A price premium reframed: not a markup, but the visible cost of 498 homes that were not built.</li>
+          <li>An invitation to check rather than a request to believe.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">§2</div>
+    <div>
+      <h2>Campaign territory and brand narrative</h2>
+      <p class="dek">Where the category asks to be believed, this brand asks to be checked.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:16rem">The category does</th><th>This brand does</th></tr></thead>
+        <tbody>
+          <tr><td>"Spacious living"</td><td><strong>2,904 sq ft of site per home</strong></td></tr>
+          <tr><td>"Trusted developer"</td><td><strong>The people who built AIIMS Mangalagiri</strong></td></tr>
+          <tr><td>"Premium location"</td><td><strong>12 minutes to AIIMS. Timed, not estimated.</strong></td></tr>
+          <tr><td>"Attractive pricing"</td><td><strong>The full price sheet, published, ungated</strong></td></tr>
+          <tr><td>"Limited units"</td><td><strong>Sixty villas. There is no phase two on this land.</strong></td></tr>
+          <tr><td>"Ready to move in 2029"</td><td><strong>RERA number, and a construction feed updated monthly</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Why verification, and not aspiration</span>
+      <p>Phase 5 found the buyers who carry <strong>53% of revenue</strong> — S1 trade families, S2 doctors, S3 diaspora — are all, in different ways, <strong>verifiers</strong>. S2 <em>"will check RERA; most of the catchment will not."</em> S3's stated primary concern is fraud. S1's opening question is <em>"who else has bought?"</em></p>
+      <p class="big">Aspirational creative asks all three of them to do the one thing they are least willing to do: <strong>take a developer's word for it.</strong></p>
+    </div>
+
+    <h3>The brand narrative</h3>
+    <p style="font-size:.85rem;color:var(--ink-3)">Used at the experience centre, on the About page, as the launch film's script, and as the internal north star.</p>
+    <div class="narr">
+      <p><strong>Twenty-five acres on the Mangalagiri corridor.</strong></p>
+      <p>The rules would have let us put eight hundred and seventy-four homes here. The developer down the road managed a hundred and thirteen to the acre, and nobody stopped him.</p>
+      <p><strong>We built three hundred and seventy-six.</strong></p>
+      <p>That is fifteen homes to an acre. It means two thousand nine hundred square feet of this land belongs to each home — nearly eight times what you get in the tallest tower on this road. It means the distance between your window and the next one is a distance, not a gap. It means the children's play area is a field. It means your car is parked where you left it, not behind three others.</p>
+      <p>It also means four hundred and ninety-eight homes that could have been sold, were not.</p>
+      <p><strong>We know what that cost.</strong> It is the reason this address is priced where it is. Not a markup — the visible price of what we left out.</p>
+      <p>The people who built this are the people who built AIIMS Mangalagiri, three kilometres from here. You can drive past it on the way in. <strong>We would rather you did.</strong></p>
+      <p class="close">Come and count.</p>
+    </div>
+    <p><strong>Why this narrative works on this audience.</strong> It is written the way this catchment actually talks about property: in numbers, land measures and named landmarks. <strong>It contains no adjective that cannot be checked.</strong> And its closing instruction is an invitation to the site visit — the stage worth ₹39.4 crore a point.</p>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">§3</div>
+    <div>
+      <h2>The four communities</h2>
+      <p class="dek">Each owns its own number. The master number is their average — and the system fell out of Phase 6's land model rather than being invented for the campaign.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="nums">
+      <div class="numcard">
+        <div class="nc-top"><span class="nc-n">26</span><span class="nc-u">A · to the acre</span></div>
+        <div class="nc-b"><b>The Apartments</b>1,675 sq ft of site per home. Half the density of the least dense apartment block on this road.</div>
+      </div>
+      <div class="numcard">
+        <div class="nc-top"><span class="nc-n">24</span><span class="nc-u">B · to the acre</span></div>
+        <div class="nc-b"><b>The Managed Residences</b>1,815 sq ft per home. A home built to be empty.</div>
+      </div>
+      <div class="numcard">
+        <div class="nc-top"><span class="nc-n">10</span><span class="nc-u">C · to the acre</span></div>
+        <div class="nc-b"><b>The Compact Villas</b>4,356 sq ft per home. A villa inside a masterplan, not a villa on a plot.</div>
+      </div>
+      <div class="numcard">
+        <div class="nc-top"><span class="nc-n">7</span><span class="nc-u">D · to the acre</span></div>
+        <div class="nc-b"><b>The Estate Villas</b>6,223 sq ft per home. You are not buying a bigger house — you are buying more ground.</div>
+      </div>
+      <div class="numcard master">
+        <div class="nc-top"><span class="nc-n">15</span><span class="nc-u">The whole · to the acre</span></div>
+        <div class="nc-b"><b>Twenty-five acres</b>2,904 sq ft per home. Everything else is open.</div>
+      </div>
+    </div>
+
+    <h3>A · The Apartments <span style="font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);font-weight:400">S5 government · ₹59–90 L</span></h3>
+    <div class="cline">
+      <span class="cmeta">Community line</span>
+      <p class="ch1">Twenty-six to the acre.</p>
+      <p class="ch2">The lowest number on this road.</p>
+    </div>
+    <p><strong>The narrative.</strong> <em>The corridor builds apartments at fifty-three to a hundred and thirteen homes an acre. This is twenty-six. It is the least expensive address on these twenty-five acres, and it is on the same twenty-five acres. The clubhouse you can walk to is the same clubhouse. The open space is the same open space. You are not buying the cheap corner of a good place — you are buying into it, at the point where it starts.</em></p>
+    <p><strong>The emotional truth being served.</strong> Phase 5, S5: <em>ending a long rental period</em>, and <em>respectability of address</em>. The insight is that this buyer's fear is not price — <strong>it is being the poor relation inside a premium scheme.</strong> The narrative's whole job is to say the shared spine is genuinely shared.</p>
+    <p><strong>Trigger creative.</strong> The pay-revision arrears window is this segment's purchase trigger. A distinct flight: <em>"Your arrears are the down payment. Here is the arithmetic."</em> — with the actual working shown.</p>
+
+    <h3>B · The Managed Residences <span style="font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);font-weight:400">S3 US diaspora · ₹1.23–1.45 Cr</span></h3>
+    <div class="cline">
+      <span class="cmeta">Community line</span>
+      <p class="ch1">Built to be empty eleven months a year.</p>
+      <p class="ch2">That is not a flaw. It is the specification.</p>
+    </div>
+    <p><strong>The narrative.</strong> <em>Most homes punish you for leaving. Dust, damp, a garden that dies, a lock nobody checks. This one is built the other way round — single level, lift-served, managed maintenance on a schedule, security designed for homes with nobody in them, and a rental desk if you want one. You can buy it from New Jersey under a registered Power of Attorney without boarding a plane. You can hand the keys to your parents in the same week. And when you come in December, it will be exactly as you left it.</em></p>
+    <p><strong>The emotional truth.</strong> Phase 5, S3: <em>guilt and duty toward parents</em>, and the stated primary concern, <strong>fraud</strong>. The narrative answers the second with process, not reassurance: PoA, RERA, published documents, a named person.</p>
+    <p><strong>And the objection it must not pretend away.</strong> <em>"Why Amaravati and not Hyderabad?"</em> The competitor is a city, not a project. The honest answer is roots and price, and it should be said plainly rather than dodged.</p>
+
+    <h3>C · The Compact Villas <span style="font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);font-weight:400">S1 trade families · S2 medical · ₹1.69–1.95 Cr</span></h3>
+    <div class="cline">
+      <span class="cmeta">Community line</span>
+      <p class="ch1">Ten to the acre.</p>
+      <p class="ch2">The villa down the road is twelve.</p>
+    </div>
+    <p><strong>The narrative.</strong> <em>There is a good villa community ten minutes from here, on ten acres, at roughly twelve homes an acre, for about four hundred rupees a foot less. It is a real choice and you should look at it. Then look at what twenty-five acres buys that ten cannot: a central open space large enough to be a place rather than a gap, a clubhouse that serves three hundred and seventy-six homes instead of a hundred and nineteen, a retail row, a school site. You are not paying twenty per cent more for a villa. You are paying it for what surrounds the villa.</em></p>
+    <div class="finding">
+      <span class="lbl">Why naming the competitor works here</span>
+      <p>Phase 5 found S1's information source is peers and brokers who <strong>will name Prime Grandeur in the conversation anyway.</strong> A brand that pretends the alternative does not exist loses credibility with the exact segment whose first instinct is to verify.</p>
+      <p><strong>Naming it, fairly, and then answering it is the stronger position</strong> — and it is only available to the project that wins the comparison on masterplan.</p>
+    </div>
+
+    <h3>D · The Estate Villas <span style="font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);font-weight:400">S1 trade families · ₹2.30–2.74 Cr</span></h3>
+    <div class="cline">
+      <span class="cmeta">Community line</span>
+      <p class="ch1">Seven to the acre.</p>
+      <p class="ch2">Six thousand two hundred square feet of this land is yours.</p>
+    </div>
+    <p><strong>The narrative.</strong> <em>The house is about six hundred square feet bigger than the one in Community C. The ground under it is a hundred and twenty-five square yards bigger. Two-thirds of what you are paying is land, not construction — which is the calculation you were going to do anyway. Sixty-three homes on nine acres. There is no phase two on this land, because there is no more land.</em></p>
+    <p><strong>This is the sharpest audience-message fit in the document.</strong> Phase 5 found S1's default alternative is <em>"why not just buy land?"</em> — Community D answers that objection <strong>inside</strong> the project rather than losing to it outside, and it does so by speaking the segment's own unit of account. A segment that thinks in square yards is being sold square yards, in the one form that also comes with a house on it.</p>
+
+    <div class="warn">
+      <span class="wl">The launch rule that overrides all creative</span>
+      <p>Phase 6: <strong>D's first tranche is seeded, not advertised.</strong> Phase 5: S1 <em>"does not buy a project; it buys the other buyers."</em></p>
+      <p class="big">No paid media runs against Community D until fifteen named local households have bought. <strong>The creative for D in year one is not a campaign — it is a list of names.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">§4</div>
+    <div>
+      <h2>Messaging hierarchy and creative pillars</h2>
+      <p class="dek">Four levels, five pillars, and one production rule that governs both.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:8rem">Level</th><th style="width:10rem">What it is</th><th>Content</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1 · Master claim</strong></td><td>One thing, everywhere, unchanged</td><td><strong>Twenty-five acres. Fifteen homes to the acre. Everything else is open.</strong></td></tr>
+          <tr><td><strong>2 · Master proof</strong></td><td>The three things that make level 1 credible</td><td><strong>The builders of AIIMS Mangalagiri</strong> · <strong>RERA-registered, number published</strong> · <strong>498 homes we did not build</strong></td></tr>
+          <tr><td><strong>3 · Community claim</strong></td><td>One per community, number first</td><td><strong>26 · 24 · 10 · 7 to the acre</strong>, each with its proposition</td></tr>
+          <tr><td><strong>4 · Segment proof</strong></td><td>Swapped by audience, never by channel</td><td>Commute times, timed · payment plans and the arrears arithmetic · PoA and FEMA process · the exchange term sheet · Vaastu orientation as spec · possession date</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The rule that keeps it honest</span>
+      <p class="big">Every claim must survive the question <strong>"what is the number?"</strong></p>
+      <p>If a line cannot answer it, the line does not run. <em>Spacious</em> fails. <em>2,904 square feet of site per home</em> passes. <em>Trusted builder</em> fails. <em>Built AIIMS Mangalagiri</em> passes. <em>Prime location</em> fails. <em>Twelve minutes to AIIMS, timed at 8am on a Tuesday</em> passes.</p>
+      <p><strong>This is a production rule, not a philosophy.</strong> It sits at the top of every creative brief and every agency scope.</p>
+    </div>
+
+    <h3>The five pillars</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:9rem">Pillar</th><th>What it does</th><th style="width:8rem">Serves</th><th>Typical output</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1 · The Number</strong></td><td>Carries the master claim. The arithmetic of density in every form</td><td>All eight</td><td>Outdoor, launch film, the two-model comparison</td></tr>
+          <tr><td><strong>2 · The Builder</strong></td><td>Delivery credibility, unclaimed by any competitor</td><td>S1, S2, S3, S7</td><td>The AIIMS film, PR, the construction feed</td></tr>
+          <tr><td><strong>3 · The Open</strong></td><td>What the density actually buys, at human scale</td><td>S6, S5, S1</td><td>Photography of the space between buildings; the monsoon-and-summer series</td></tr>
+          <tr><td><strong>4 · The Neighbours</strong></td><td>Answers <em>"who else has bought?"</em> structurally</td><td>S1, S4, S7</td><td>Owner films, milestone events, the buyer wall</td></tr>
+          <tr><td><strong>5 · The Document</strong></td><td>Publishes what competitors gate</td><td>S2, S3, S5, S4</td><td>The ungated price sheet, RERA file, PoA explainer, exchange term sheet</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Pillar 5 is the unusual one, and the cheapest.</strong> Phase 3 found no competitor in the screened set publishes a unit-wise price sheet. Phase 5 found S5 <em>"will ask for the all-in number including registration, and should be given it"</em> and S2 <em>"builds a spreadsheet."</em> <strong>Publishing the price sheet costs nothing, cannot be copied without conceding the argument, and converts the project's least glamorous asset — a table of numbers — into its most persuasive.</strong>
+    </div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">§5</div>
+    <div>
+      <h2>Visual direction</h2>
+      <p class="dek">One decision determines everything else.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="finding">
+      <span class="lbl">The decision</span>
+      <p class="big">The hero image is a <strong>plan view</strong>, not a facade.</p>
+      <p>Density is only legible from above. A photograph of a building elevation tells a buyer nothing about how many <em>other</em> buildings there are — which is the entire proposition.</p>
+      <p><strong>A vertical aerial of 25 acres, with 376 roofs visible against everything that is not a roof, is the single most persuasive image this project can produce</strong> — and no competitor on 5–11 acres can shoot its equivalent.</p>
+    </div>
+
+    <h3>Palette — drawn from the site, not a mood board</h3>
+    <div class="pal">
+      <div class="pw"><div class="chip" style="background:#241C15"></div><div class="pn"><b>Black cotton soil</b>The Guntur belt's ground, before anything is built</div></div>
+      <div class="pw"><div class="chip" style="background:#C8C2B4"></div><div class="pn"><b>Krishna silt</b>The river four kilometres north</div></div>
+      <div class="pw"><div class="chip" style="background:#6E7B58"></div><div class="pn"><b>November green</b>This district after the monsoon — not CGI emerald</div></div>
+      <div class="pw"><div class="chip" style="background:#7A7975"></div><div class="pn"><b>Granite grey</b>The Mangalagiri hill temple stone</div></div>
+      <div class="pw"><div class="chip" style="background:#A97425"></div><div class="pn"><b>Burnt ochre</b>Mangalagiri handloom. Used only on the numbers</div></div>
+    </div>
+    <p><strong>Why a district palette.</strong> It reads as belonging here — which matters for segments (S1, S4, S5) whose scepticism is partly about outsiders arriving to sell them their own land back. And it rules out the category default of navy-and-gold, which signals a luxury tier the price sheet does not support.</p>
+
+    <h3>Typography</h3>
+    <p><strong>The numbers are the typography.</strong> Set large, set alone, in a face with genuine authority in figures. Body copy in a Telugu-and-Latin pair that sets both scripts at <strong>equal weight</strong> — not Telugu as a translated afterthought at 80% size, which is what most of the corridor's advertising does and which reads exactly as it is.</p>
+    <p style="font-family:var(--f-mono);font-size:.85rem;color:var(--accent)"><strong>Production rule: the number is never smaller than the words around it.</strong></p>
+
+    <h3>Photography</h3>
+    <div class="dodont">
+      <div class="dd yes">
+        <h6>Do</h6>
+        <ul>
+          <li><strong>Photograph the space between buildings</strong> — that is the product</li>
+          <li>Shoot in real seasons, including a hot April and a wet August</li>
+          <li>Real families from Vijayawada, Guntur and Mangalagiri, cast locally</li>
+          <li>Wide frames that include ground and sky</li>
+          <li>Show the scheme in use — untidy, mid-life, with people in it</li>
+          <li>Photograph the AIIMS building, factually</li>
+        </ul>
+      </div>
+      <div class="dd no">
+        <h6>Do not</h6>
+        <ul>
+          <li>Photograph the buildings as objects</li>
+          <li>Shoot one permanent golden hour</li>
+          <li>Aspirational-looking models, or families of exactly four</li>
+          <li>Tight lifestyle vignettes that could be anywhere</li>
+          <li>Empty perfection</li>
+          <li>Imply an association that isn't stated</li>
+        </ul>
+      </div>
+    </div>
+    <p>Phase 5 found S1 visits with three to six family members and S6 with children — the audience is families in motion, and the imagery should look like the site on a Sunday, because that is when they will see it. <strong>Empty, perfect, golden-hour photography sets up a disappointment the site visit then has to survive.</strong></p>
+
+    <div class="warn">
+      <span class="wl">CGI — three rules</span>
+      <p>Unavoidable pre-construction, and the place where the category's credibility collapses fastest.</p>
+      <p><strong>1 ·</strong> Every CGI carries a visible label and a date. <em>Artist's impression, March 2027. Trees shown at eight years.</em></p>
+      <p><strong>2 ·</strong> Skies are photographed from the site, not generated.</p>
+      <p><strong>3 ·</strong> Every CGI has a <strong>real-photograph counterpart published beside it</strong> as construction proceeds — same frame, same angle, month by month. The comparison becomes pillar 2's proof asset, <strong>and the discipline of knowing the real photograph is coming keeps the CGI honest.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">§6</div>
+    <div>
+      <h2>Film</h2>
+      <p class="dek">The launch film is the master idea executed literally rather than symbolically.</p>
+    </div>
+  </div>
+  <div class="body">
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">The launch film · one shot · 90 seconds · no music</span>
+        <h5>The Count</h5>
+      </div>
+      <div class="narr" style="margin:.4rem 0;border-left-width:3px">
+        <p>Open tight on a single window in Community A, at the height of a person standing at it. The camera begins to rise and pull back. In the top-left corner, a counter reads <strong>1</strong>.</p>
+        <p>As the frame widens, the counter climbs — 12, 40, 96 — and the roofs accumulate. At <strong>169</strong> it pauses on <em>Community A · twenty-six to the acre</em>. It resumes. At <strong>253</strong>, <em>B · twenty-four</em>. At <strong>313</strong>, <em>C · ten</em>. At <strong>376</strong>, the frame finally holds all twenty-five acres, and the counter stops.</p>
+        <p>Then, after a beat, a second number fades up beside it: <strong>874</strong>.</p>
+        <p>Cut to black. Two lines:</p>
+        <p class="close">We could have built eight hundred and seventy-four.<br>Fifteen to the acre. Everything else is open.</p>
+      </div>
+      <div class="figure-foot">
+        <strong>Sound design: ambient only.</strong> Birds, distance, a scooter somewhere. No orchestral swell — the film's whole argument is that the project does not need to persuade you, and a score would contradict it. <strong>It is also impossible for a competitor to remake, because remaking it requires their counter to reach a number that defeats them.</strong>
+      </div>
+    </figure>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:9rem">Film</th><th style="width:6rem">Length</th><th>Job</th><th style="width:7rem">Segment</th></tr></thead>
+        <tbody>
+          <tr><td><strong>The Hospital</strong></td><td>3 min</td><td>KMV Projects built AIIMS Mangalagiri. Shot at the building, with the people who built it. No claim beyond the fact</td><td>S1, S2, S3, S7</td></tr>
+          <tr><td><strong>Twelve Minutes</strong></td><td>90 sec</td><td>A single unbroken drive from the AIIMS gate to the site, in real time, timestamped, at 8am on a working Tuesday</td><td><strong>S2</strong> — they want the commute <em>measured</em></td></tr>
+          <tr><td><strong>The Walkthrough</strong></td><td>6–8 min</td><td>Room by room, specification by specification, one take, a person talking. Per community</td><td><strong>S3, S8</strong> — the partial substitute for a visit</td></tr>
+          <tr><td><strong>The Month</strong></td><td>60 sec, monthly</td><td>Construction progress from three fixed camera positions, unedited</td><td>All — delivery anxiety</td></tr>
+          <tr><td><strong>The Neighbours</strong></td><td>2–4 min</td><td>Owners, in their own words, in Telugu, unscripted</td><td><strong>S1</strong> — <em>"who else has bought?"</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Production discipline:</strong> the walkthrough and progress films are <strong>operational assets, not campaigns.</strong> They must be produced on a schedule by a small permanent crew, not commissioned as a shoot.</p>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">§7</div>
+    <div>
+      <h2>Digital and performance systems</h2>
+      <p class="dek">Four communities × two languages × six formats is 48 permutations before a single message changes. A system is the only way to produce that without it degrading.</p>
+    </div>
+  </div>
+  <div class="body">
+    <p><strong>The constant across every asset:</strong> the number, top-left, at a fixed size relative to the frame. <strong>It is the brand's recognition device, the way a logo usually is.</strong></p>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:8rem">Layer</th><th>Rule</th></tr></thead>
+        <tbody>
+          <tr><td><strong>The number</strong></td><td>Community or master density. Fixed position, fixed relative scale, ochre</td></tr>
+          <tr><td><strong>The claim</strong></td><td>One line, ≤ 8 words, Telugu and English set at equal weight</td></tr>
+          <tr><td><strong>The proof</strong></td><td>One countable fact, small, bottom-left. <strong>Never an adjective</strong></td></tr>
+          <tr><td><strong>The image</strong></td><td>Plan view, the space between buildings, or documentary people. <strong>Never a facade hero</strong></td></tr>
+          <tr><td><strong>The mark</strong></td><td>Bottom-right. RERA number always adjacent to it</td></tr>
+          <tr><td><strong>The CTA</strong></td><td>Verb + object. <em>See the price sheet. Time the drive. Count the homes.</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>The website is the verification surface.</strong> Its structure follows pillar 5: the price sheet is a page, not a download form. The RERA file is a page. The construction feed is a page. <strong>Nothing a buyer would use to check the project is gated behind a lead form</strong> — Phase 9 established that gating price sends a buyer to a competitor who publishes it. <strong>Landing pages: one per community, never one per campaign.</strong></p>
+
+    <h3>The performance matrix — 4 communities × 3 hooks × 2 languages = 24 live variants</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:9rem">Hook type</th><th style="width:11rem">Construction</th><th>Example — Community C</th></tr></thead>
+        <tbody>
+          <tr><td><strong>The number hook</strong></td><td>Lead with the count</td><td><em>"Ten homes to the acre. The corridor average is sixty-one."</em></td></tr>
+          <tr><td><strong>The objection hook</strong></td><td>State the buyer's own doubt first</td><td><em>"There is a cheaper villa ten minutes from here. Here is what it doesn't have."</em></td></tr>
+          <tr><td><strong>The proof hook</strong></td><td>Lead with the credential or document</td><td><em>"Built by the people who built AIIMS Mangalagiri. Here is the price sheet."</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">One creative rule specific to this plan</span>
+      <p>Phase 7 found Community B consumes <strong>65% of the lead-generation budget</strong>, and its binding constraint is the <strong>site-visit stage, not lead cost.</strong></p>
+      <p class="big">So B's performance creative should not optimise for leads at all — <strong>it should optimise for booked video walkthroughs.</strong></p>
+      <p>A different conversion event, a different creative, and a different call to action: <em>"Walk it with us on Saturday morning, Eastern Time."</em></p>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-head">
+    <div class="sec-num">§8</div>
+    <div>
+      <h2>Outdoor</h2>
+      <p class="dek">₹2.10 crore — the largest brand line — on a corridor where the target audience drives the same road every day. A hoarding at 80 km/h is read in about two seconds: one number, four words.</p>
+    </div>
+  </div>
+  <div class="body">
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">The sequence · Vijayawada–Guntur corridor and the Mangalagiri bypass</span>
+        <h5>Six boards, read in order by anyone driving toward the site</h5>
+      </div>
+      <div class="hoard">
+        <div class="hb"><span class="hn">113</span><span class="hs">board 1</span></div>
+        <span class="harrow">→</span>
+        <div class="hb"><span class="hn">78</span><span class="hs">board 2</span></div>
+        <span class="harrow">→</span>
+        <div class="hb"><span class="hn">66</span><span class="hs">board 3</span></div>
+        <span class="harrow">→</span>
+        <div class="hb"><span class="hn">53</span><span class="hs">board 4</span></div>
+        <span class="harrow">→</span>
+        <div class="hb ours"><span class="hn">15</span><span class="hs">board 5 · ours</span></div>
+        <span class="harrow">→</span>
+        <div class="hb gate"><span class="hn">Homes to the acre.<br>You just drove past<br>the difference.</span><span class="hs">at the gate</span></div>
+      </div>
+      <div class="figure-foot">
+        The first four are the observed densities of real corridor projects (Phase 2 §5), <strong>unattributed</strong> — which makes the competitive argument without naming anyone and keeps it legally clean. <strong>The risk is that an unexplained number reads as noise on first sight.</strong> The mitigation is frequency: a two-year buy on a route the target audience drives daily, with the payoff board at the destination.
+      </div>
+    </figure>
+
+    <h3>The standing boards — rotated quarterly</h3>
+    <div class="cards">
+      <div class="card"><h6>Board</h6><ul><li><strong>376 homes. 874 would have fit.</strong></li></ul></div>
+      <div class="card"><h6>Board</h6><ul><li><strong>Fifteen to the acre. Everything else is open.</strong></li></ul></div>
+      <div class="card"><h6>Board</h6><ul><li><strong>The people who built AIIMS built this.</strong></li></ul></div>
+      <div class="card"><h6>Board</h6><ul><li><strong>The price sheet is on the website. All of it.</strong></li></ul></div>
+      <div class="card"><h6>Board</h6><ul><li><strong>2,904 sq ft of this land belongs to each home.</strong></li></ul></div>
+    </div>
+    <p><strong>None of them contains an adjective.</strong> That is the point, and it is what will make them look unlike every other board on the road.</p>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="sec-head">
+    <div class="sec-num">§9</div>
+    <div>
+      <h2>The campaign in three phases</h2>
+      <p class="dek">Timing is set by three dated facts, not by convention: the pay-revision arrears window, the December–January and summer diaspora windows, and the fact that referral cannot exist in year one.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Pre-launch · months −6 to 0 <span style="font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);font-weight:400">— exist, verifiably, before anyone is asked to buy</span></h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:11rem">Workstream</th><th>What runs</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Seed Community D</strong></td><td>No media. Fifteen named local households approached directly, through introductions</td><td><strong>The single most important pre-launch activity, and it involves no advertising at all</strong></td></tr>
+          <tr><td><strong>Land the credential</strong></td><td>PR placing the AIIMS build and the group's airport work in traceable third-party coverage</td><td>Phase 4 found search visibility thin. <strong>When Journey 2's referred buyer searches the name, the results must already exist</strong></td></tr>
+          <tr><td><strong>Build the site</strong></td><td>Experience centre, two show homes, the two-model comparison, the counted walk</td><td>₹4.10 Cr — and it must be <em>finished</em> before launch, not during</td></tr>
+          <tr><td><strong>Publish</strong></td><td>Website live with the full price sheet, RERA file and specification, ungated</td><td>Pillar 5. It also builds the organic authority SEO cannot produce quickly</td></tr>
+          <tr><td><strong>Recruit partners</strong></td><td>Channel-partner network stood up and briefed</td><td>Phase 9: year one over-weights partners, saving ₹1.41 Cr against media</td></tr>
+          <tr><td><strong>Land-owner relations</strong></td><td>Village-level work in Telugu; exchange term sheet drafted</td><td>6–24 month cycle — <strong>it must start now to deliver in year three</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Launch · months 0 to 6 <span style="font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);font-weight:400">— make fifteen to the acre a known number in this catchment</span></h3>
+    <div class="cards">
+      <div class="card">
+        <h6>What goes live</h6>
+        <ul>
+          <li><strong>The Count</strong> across YouTube, OTT and cinema in Vijayawada and Guntur</li>
+          <li><strong>The hoarding sequence</strong> — all six boards simultaneously, because the sequence only works whole</li>
+          <li><strong>Print</strong> takes the launch moment: a full page carrying the brand narrative in Telugu, entire, <strong>with no image</strong></li>
+          <li><strong>Performance</strong> opens on A and C — A for velocity and cash flow, C as the earliest test of the premium thesis</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>What holds</h6>
+        <ul>
+          <li><strong>Community B holds.</strong> Its first flight waits for the December window</li>
+          <li><strong>Community D still runs no media.</strong> The fifteen names do not exist yet</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>Why a page of text</h6>
+        <ul>
+          <li><strong>A page of text in a category of pictures is the most conspicuous thing available</strong></li>
+          <li>And it is the only format that can carry the argument at length to S1's household influencers — the father, the eldest brother</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Post-launch · months 6 to 45 <span style="font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);font-weight:400">— convert proof into velocity, and buyers into the next campaign</span></h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:10rem">Flight</th><th style="width:8rem">When</th><th>What</th></tr></thead>
+        <tbody>
+          <tr><td><strong>The Arrears window</strong></td><td>On the pay-revision timeline</td><td>Community A only. <em>"Your arrears are the down payment."</em> The working shown, not asserted</td></tr>
+          <tr><td><strong>The December window</strong></td><td>Dec–Jan, annually</td><td>B and D to S3 and S7. <strong>Concentrated, not spread</strong> — spending evenly across twelve months on an audience that can transact in four is the most avoidable waste in the plan</td></tr>
+          <tr><td><strong>The Summer window</strong></td><td>May–June</td><td>The second diaspora flight, plus S8's annual-leave window</td></tr>
+          <tr><td><strong>The Month films</strong></td><td>Monthly, permanently</td><td>Construction progress. Delivery anxiety is the one concern shared by all eight segments</td></tr>
+          <tr><td><strong>The Neighbours</strong></td><td>From month 12</td><td>Owner films and milestone events. <strong>This is when Community D's media finally starts</strong> — by then the fifteen names exist</td></tr>
+          <tr><td><strong>The Comparison</strong></td><td>From month 18</td><td>The CGI-versus-photograph pairs, published as construction reaches each frame</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The shape of it</span>
+      <p class="big">The campaign gets <strong>quieter</strong> and more evidential over time, not louder.</p>
+      <p>Year one argues from arithmetic because that is all it has. Year three argues from a built place and the people in it, which is stronger. <strong>A plan that front-loads emotion and back-loads proof has it exactly the wrong way round for a market whose defining anxiety is delivery.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="sec-head">
+    <div class="sec-num">§10</div>
+    <div>
+      <h2>Site experience and collateral</h2>
+      <p class="dek">₹4.10 crore serving the stage worth ₹39.4 crore a point. This is where creative strategy stops being communication and becomes staging.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cards">
+      <div class="card">
+        <h6>1 · The drive in</h6>
+        <ul><li>The approach road is the first execution. A single marker at the turn-off with the drive time to AIIMS on it.</li>
+        <li><strong>The host times the drive with the visitor on the way in</strong> — S2 wants it measured.</li></ul>
+      </div>
+      <div class="card">
+        <h6>2 · The two models</h6>
+        <ul><li>Two physical masterplan models, same scale, side by side. This scheme at <strong>15 to the acre</strong>; a corridor-typical block at <strong>113</strong>.</li>
+        <li>No commentary needed — the models are the argument.</li>
+        <li><strong>The cheapest high-impact element in the whole ₹4.10 crore line</strong>, and one a competitor cannot answer without building a model that defeats them.</li></ul>
+      </div>
+      <div class="card">
+        <h6>3 · The counted walk</h6>
+        <ul><li>A marked route with numbered posts. A visitor can walk it and count the homes.</li>
+        <li><strong>The brand's central claim is the only one in the corridor that survives being checked on foot</strong> — so the site invites exactly that.</li></ul>
+      </div>
+      <div class="card">
+        <h6>4 · The show homes</h6>
+        <ul><li>One in C, one in D — the two communities carrying 53% of revenue.</li>
+        <li>Furnished, lived-in, <strong>not staged empty.</strong> A Telugu-speaking host, always.</li></ul>
+      </div>
+      <div class="card">
+        <h6>5 · The wall</h6>
+        <ul><li>A permanent wall listing every household that has bought, by name, with permission.</li>
+        <li>S1's first question is <em>"who else has bought?"</em> — <strong>the wall answers it before it is asked</strong>, and costs almost nothing.</li></ul>
+      </div>
+      <div class="card">
+        <h6>The capacity rule</h6>
+        <ul><li>S1, S5 and S6 all visit on Sundays; S1 arrives unannounced with 3–6 people. Roughly <strong>35–45 people on a peak Sunday.</strong></li>
+        <li><strong>Size for peak Sunday, not the monthly average</strong>, and route S2 and S3 to weekday evenings and video to keep Sunday free for families who arrive without warning.</li></ul>
+      </div>
+    </div>
+
+    <h3>Sales collateral — governed by pillar 5: publish what competitors gate</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:11rem">Piece</th><th>Content</th><th style="width:8rem">Segment</th></tr></thead>
+        <tbody>
+          <tr><td><strong>The price sheet</strong></td><td>Every unit, every rate, every all-in figure including registration. <strong>Ungated</strong>, on the website and in the hand</td><td>S5, S6, S2</td></tr>
+          <tr><td><strong>The arithmetic sheet</strong></td><td>One page. 25 acres → 376 homes → 15/acre → 2,904 sq ft per home → 874 that would have fit</td><td>All</td></tr>
+          <tr><td><strong>The specification</strong></td><td>Materials, brands, tolerances. Written as a schedule, not as prose</td><td>S2, S1</td></tr>
+          <tr><td><strong>The payment structures</strong></td><td>Construction-linked and possession-linked plans side by side, with EMI working</td><td><strong>S2</strong> — clears the EMI, struggles with the cash. <strong>A plan is worth more than a discount</strong></td></tr>
+          <tr><td><strong>The remote-purchase file</strong></td><td>PoA, FEMA, NRE/NRO, the step-by-step of buying without flying</td><td><strong>S3</strong></td></tr>
+          <tr><td><strong>The exchange term sheet</strong></td><td>Land-for-home structures, legally drafted</td><td><strong>S4</strong> — <em>"responds to a document, not to advertising"</em></td></tr>
+          <tr><td><strong>The comparison sheet</strong></td><td>This project against three named corridor projects on density, land per home, parcel size and price. <strong>Accurate, including where we lose</strong></td><td>S6, S2</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The comparison sheet is the risky one, and the most valuable</span>
+      <p>Publishing a comparison that admits Prime Grandeur is cheaper per square foot costs a small credibility loss on price and buys a large one on honesty — with an audience Phase 5 characterised as verifiers.</p>
+      <p class="big"><strong>Every one of these buyers is going to make this comparison. The only question is whether they make it with our numbers or someone else's.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s11">
+  <div class="sec-head">
+    <div class="sec-num">§11</div>
+    <div>
+      <h2>NRI communication</h2>
+      <p class="dek">Two segments, not one — which is why Phase 9 reclassified "NRI marketing" as an audience discipline rather than a channel.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:9rem"></th><th>S3 · US and developed markets</th><th>S8 · Gulf</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Buys</strong></td><td>Communities C and D — ₹1.7–2.7 Cr</td><td>Communities A and B — ₹59 L–1.45 Cr</td></tr>
+          <tr><td><strong>Language</strong></td><td>English</td><td><strong>Telugu</strong></td></tr>
+          <tr><td><strong>Format</strong></td><td>Long video, documents, LinkedIn, email</td><td><strong>WhatsApp, vertical video, voice notes</strong></td></tr>
+          <tr><td><strong>The message</strong></td><td><em>A home that doesn't need you.</em> Lock-and-leave, managed, remote purchase</td><td><em>A home she can manage while you're away.</em> Security, school access, possession certainty</td></tr>
+          <tr><td><strong>Who is actually addressed</strong></td><td>The buyer, <strong>and the relative in India who will inspect it</strong> — who holds effective veto and is almost never who the media targets</td><td><strong>The spouse in India</strong>, who will live there and who decides</td></tr>
+          <tr><td><strong>The window</strong></td><td>December–January, and summer</td><td><strong>Annual leave</strong></td></tr>
+          <tr><td><strong>The objection</strong></td><td><em>"How do I know this is real?"</em> — answered with the document file, not reassurance</td><td><em>"Can my wife handle this alone?"</em> — answered with security specification and a named contact</td></tr>
+          <tr><td><strong>The competitor</strong></td><td><strong>Hyderabad</strong>, not another project</td><td>Rented accommodation, and time</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The single most actionable NRI insight in this exercise</span>
+      <p>Phase 5 found the inspecting relative in India holds veto and is <em>"almost never the person the marketing is aimed at."</em></p>
+      <p class="big"><strong>Marketing to that relative is local media, at local CPL, against a lead that behaves like a resident.</strong></p>
+      <p>It is the cheapest available fix for Community B's economics — the community consuming 65% of the lead-generation budget — and it requires a creative asset nobody in the corridor produces: <strong>a proxy-visit pack, written for the cousin who has been asked to go and look.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-head">
+    <div class="sec-num">§12</div>
+    <div>
+      <h2>The cliché register</h2>
+      <p class="dek">The brief said to avoid generic real-estate clichés <em>unless research proves they work.</em> Both halves, answered.</p>
+    </div>
+  </div>
+  <div class="body">
+    <h3>Cut — eight devices, each with the finding that rules it out</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:14rem">Device</th><th>Why it is cut</th></tr></thead>
+        <tbody>
+          <tr><td><strong>"Luxury redefined" and every superlative</strong></td><td>Established: <em>superlatives without evidence</em> is the named failure mode of Indian real-estate advertising. And Phase 5: ₹2.74 Cr is an upper-affluent ticket, not high-net-worth — <strong>the word promises a tier the price sheet does not deliver</strong></td></tr>
+          <tr><td><strong>"Live your dream" and lifestyle abstraction</strong></td><td>The same source names <em>general lifestyle statements</em> as the second failure. It also fails the swap test: it fits any project in India</td></tr>
+          <tr><td><strong>The amenity icon grid</strong></td><td>Phase 5 found amenity lists rank <strong>low</strong> for S1 and near-irrelevant for S3, who will not use them. A page of claims with no numbers</td></tr>
+          <tr><td><strong>Sunset silhouettes, slow-motion children, the family of exactly four</strong></td><td>Fails the swap test completely. And it sets an expectation the site visit must then survive</td></tr>
+          <tr><td><strong>Orchestral CGI flythroughs</strong></td><td>The category's least credible format, in a market whose defining anxiety is delivery. <strong>Replaced by CGI that is labelled, dated and paired with the real photograph</strong></td></tr>
+          <tr><td><strong>"Nestled in the heart of…"</strong></td><td>There is a measured distance available. Use it</td></tr>
+          <tr><td><strong>Manufactured urgency — countdown timers, "3 units left!"</strong></td><td>Phase 5: S1 takes 3–9 months, S3 takes 6–18. <strong>Urgency theatre aimed at buyers on that timeline reads as desperation</strong>, and it is the tell of a project that is not selling</td></tr>
+          <tr><td><strong>A festive-season launch calendar</strong></td><td>Phase 8: <strong>₹155.4 crore of demand buys in the December–January and summer travel windows</strong>, not Dasara–Diwali</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Kept — four devices the research supports</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:14rem">Device</th><th>The evidence</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vaastu compliance, stated as specification</strong></td><td>Phase 5, S1: <em>"Vaastu compliance is close to non-negotiable."</em> <strong>Kept as a spec line</strong> — orientation, entrance, kitchen placement — <strong>not as a mystical claim.</strong> The device is supported; the mysticism is not</td></tr>
+          <tr><td><strong>Scarcity</strong></td><td>Phase 2 found <strong>no villa community above ~70 units</strong> in the corridor; Phase 6 made villa scarcity the deliberate pricing mechanism. <strong>The scarcity here is a fact, not a technique</strong> — so it is stated as a number (<em>sixty villas; there is no phase two on this land</em>) rather than as a countdown</td></tr>
+          <tr><td><strong>Family imagery</strong></td><td>Phase 5: S6's driver is <em>doing better for the children</em>; S1's is legacy. <strong>Supported — but documentary and locally cast</strong>, which is what separates it from the cliché</td></tr>
+          <tr><td><strong>Print at launch</strong></td><td>Phase 5 found print retains real credibility with S5 and S1, and reaches the household influencers no digital channel reaches. <strong>Kept, and used unconventionally: a full page of text with no image</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The distinction running through the whole register</span>
+      <p class="big">A cliché is not a device that is common. <strong>It is a device used without evidence.</strong></p>
+      <p>Vaastu, scarcity, family imagery and print are all category conventions — and all four have specific support in this catchment's research. Superlatives, lifestyle abstraction and amenity grids do not, in this market, for these buyers.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s13">
+  <div class="sec-head">
+    <div class="sec-num">§13</div>
+    <div>
+      <h2>Risks, and what carries forward</h2>
+      <p class="dek">Seven. One is worth testing before production; one is not a creative question at all.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:2.5rem">#</th><th style="width:13rem">Risk</th><th>Why it matters</th><th style="width:14rem">Test</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>The number is too cold for S1 and S7</strong></td><td>30% and 11% of revenue, both driven by standing, roots and legacy rather than arithmetic</td><td>Test the launch film and two print routes with 20–30 S1 respondents <strong>before production</strong>. The brand narrative is the warm route; if arithmetic alone under-performs, it leads instead</td></tr>
+          <tr><td class="n">2</td><td><strong>The hoarding sequence reads as noise</strong></td><td>₹2.10 Cr, the largest brand line, on an idea requiring boards to be seen in order</td><td>The payoff board is at the gate, and it is a two-year buy on a daily commute. <strong>Prompted recall of "fifteen" at three months is the test</strong></td></tr>
+          <tr><td class="n">3</td><td><strong>The comparison sheet is used against us</strong></td><td>Naming Prime Grandeur invites a competitor response</td><td>It is already in the conversation. <strong>The comparison must be scrupulously accurate, including where we lose on rate</strong> — a single unfair line destroys the pillar</td></tr>
+          <tr><td class="n">4</td><td><strong>CGI-versus-photograph pairing backfires</strong></td><td>If the built result is worse than the render, the brand has published the evidence against itself</td><td><strong>That is the point, and it is the discipline.</strong> Publishing the pair from month one is what forces the render to be honest. Do not start the series unless you intend to finish it</td></tr>
+          <tr><td class="n">5</td><td><strong>Telugu treated as translation</strong></td><td>Half the audience, and the segment least served by the corridor's existing advertising</td><td>Telugu is <strong>written first</strong> for S1, S4, S5 and S8 material — not translated from English. Equal type weight is a production rule, checked at approval</td></tr>
+          <tr><td class="n">6</td><td><strong>The site is not ready at launch</strong></td><td>The whole strategy routes to a site visit worth ₹39.4 Cr a point</td><td>The experience centre, two show homes and the two models are <strong>pre-launch deliverables.</strong> If they slip, the launch slips</td></tr>
+          <tr><td class="n">7</td><td><strong>Phase 6's prices do not hold</strong></td><td>Unchanged since Phase 6: <strong>31% of revenue sits in a band nobody has proven is occupied</strong></td><td>Not a creative question. <strong>No idea, however well made, sells a price the market refuses</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="idea">
+      <span class="eyeb">Carry-forward · the idea</span>
+      <p class="big-idea">The most valuable thing on these twenty-five acres is what isn't on them.</p>
+      <p class="sub-idea"><strong>Why it holds.</strong> 376 homes where 874 would fit at the corridor's own lowest density. <strong>2,904 sq ft of site per home against 384 at Manjeera Monarch — 7.6×.</strong> ₹344–500 crore of gross development value deliberately forgone. Every figure computable from public data, and <strong>no competitor in the corridor can say the line without stating a number that defeats them.</strong></p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h6>Four decisions a conventional plan would not make</h6>
+        <ul>
+          <li><strong>The hero image is a plan view, not a facade.</strong> Density is only legible from above, and it is the entire proposition.</li>
+          <li><strong>Community D runs no paid media in year one.</strong> Its creative is a list of fifteen names.</li>
+          <li><strong>The price sheet is published ungated</strong>, with a comparison against three named competitors — including where this project loses on rate.</li>
+          <li><strong>The campaign gets quieter and more evidential over time</strong>, because year three has a built place and real neighbours.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>The system</h6>
+        <ul>
+          <li>Four communities, four numbers — <strong>26 · 24 · 10 · 7</strong>, averaging the master <strong>15</strong>.</li>
+          <li>It was not invented for the campaign; it fell out of Phase 6's land model.</li>
+          <li>Five pillars: <strong>The Number · The Builder · The Open · The Neighbours · The Document.</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>The production rule</h6>
+        <ul>
+          <li><strong>Every claim must survive the question "what is the number?"</strong></li>
+          <li>If a line cannot answer it, the line does not run.</li>
+          <li>It sits at the top of every creative brief and every agency scope.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="font-size:.8rem;color:var(--ink-3);margin-top:2.5rem;border-top:1px solid var(--rule);padding-top:1.2rem;max-width:none">
+      Phase 10 of a sequential research and strategy exercise. Hypothetical project; not represented as an actual KMV Spaces development or campaign. Phases 1–9 precede this document. All creative directions derive from findings in those phases; where a decision is taste rather than evidence it is stated as such. Segment behaviour throughout comes from Phase 5, which was reconstructed without primary buyer research — every audience claim remains a testable hypothesis, and risk 1 is the test that should run first.
+    </p>
+  </div>
+</section>
+
+</main>
+</div>
