@@ -40,7 +40,7 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 | 7 | [`07-business-model.md`](07-business-model.md) — funnel model, three scenarios, unit economics (also [`.html`](07-business-model.html)) | **Complete** |
 | 8 | [`08-marketing-funnel.md`](08-marketing-funnel.md) — twelve-stage journey, four layers, four journeys (also [`.html`](08-marketing-funnel.html)) | **Complete** |
 | 9 | [`09-channel-strategy.md`](09-channel-strategy.md) — twenty-two channels tiered, five cut, ₹25.68 Cr allocated (also [`.html`](09-channel-strategy.html)) | **Complete** |
-| 10 | Positioning, messaging and creative strategy | Not started |
+| 10 | [`10-creative-strategy.md`](10-creative-strategy.md) — master idea, narratives, creative system, campaign (also [`.html`](10-creative-strategy.html)) | **Complete** |
 
 ## Method notes
 
@@ -73,6 +73,14 @@ relationship**, which is the one in-project rate lever the evidence supports.
 silently assumed an apartment density 2.9–6.2× below anything in the corridor. At the lowest observed
 local density the same 25 acres would yield ~₹851 crore. The project is therefore forgoing roughly
 ₹350–500 crore of gross development value to buy the low-density differentiator the price premium rests on.
+
+**The idea is a number.** Phase 10 builds the creative platform on the one fact no competitor in this
+corridor can state: **fifteen homes to the acre**, where the local range is 53 to 113. At the corridor's own
+lowest observed density, 25 acres would hold 874 homes; the scheme builds 376. That is 498 homes not built
+and roughly ₹344–500 crore of gross development value deliberately forgone — which reframes the price
+premium as the visible cost of what was left out rather than as a markup. Each community carries its own
+number (26 · 24 · 10 · 7, averaging 15), and the governing production rule is that every claim must survive
+the question *"what is the number?"*
 
 **Not every channel is necessary.** Phase 9 tiers all twenty-two channels the brief lists and cuts or
 reclassifies five of them — four because the list as given contains category errors that would produce
