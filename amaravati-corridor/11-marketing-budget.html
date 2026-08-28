@@ -1,0 +1,1905 @@
+<title>The Bottom-Up Budget</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style>
+<style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style>
+<style>
+/* ---------- Phase 4: evidence labels ---------- */
+.lb{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .42rem;border-radius:3px;white-space:nowrap;display:inline-block;border:1px solid transparent;
+  line-height:1.55;vertical-align:.06em}
+.lb-f{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-o{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-i{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+.lb-r{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.lb-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+.stmt{margin:0 0 1rem;max-width:var(--measure)}
+.stmt .lb{margin-right:.5rem}
+.none{color:var(--ink-3);font-style:italic}
+
+.sev-h{color:var(--accent);font-weight:600;font-family:var(--f-mono);font-size:.72rem}
+.sev-m{color:var(--ink-2);font-family:var(--f-mono);font-size:.72rem}
+.sev-l{color:var(--ink-3);font-family:var(--f-mono);font-size:.72rem}
+
+/* ---------- diagram ---------- */
+figure.dia{margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);border-radius:5px;
+  padding:1.4rem 1.5rem 1.1rem;box-shadow:var(--shadow)}
+figure.dia svg{display:block;width:100%;max-width:100%;height:auto;color:var(--ink-2)}
+figure.dia figcaption{margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--rule);
+  font-size:.79rem;color:var(--ink-3);line-height:1.5}
+.dia-head{margin-bottom:1rem}
+.dia-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.dia-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.dia-scroll{overflow-x:auto}
+.dia-scroll > svg{min-width:34rem}
+
+/* ---------- rate bars ---------- */
+.rrow{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.rrow:hover{background:var(--surface-2)}
+.rname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.rname b{display:block;color:var(--ink);font-weight:600}
+.rtrack{height:1.4rem;display:flex;align-items:center;gap:.55rem}
+.rfill{height:.95rem;border-radius:0 4px 4px 0;background:var(--series);flex:none}
+.rfill.other{background:transparent;border:1.5px solid var(--series);border-left:0;box-sizing:border-box}
+.rfill.target{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.rval{font-family:var(--f-mono);font-size:.77rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+</style>
+<style>
+/* ---------- Phase 5 components ---------- */
+
+/* Evidence labels — form, not hue */
+.lb-est{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-app{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-rsn{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+
+/* Priority chips */
+.pri{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.14rem .48rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;border:1px solid transparent}
+.pri-h{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.pri-s{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.pri-l{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Segment profile card */
+.seg{margin:2rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.seg-head{display:grid;grid-template-columns:3.1rem minmax(0,1fr);gap:.9rem;align-items:start;
+  padding:1.05rem 1.3rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.seg-id{font-family:var(--f-mono);font-size:1.28rem;font-weight:600;color:var(--brand);
+  line-height:1;padding-top:.12rem;letter-spacing:-.02em}
+.seg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.08rem;line-height:1.28;
+  margin:0 0 .3rem;color:var(--ink);text-wrap:balance}
+.seg-head .seg-line{font-size:.85rem;color:var(--ink-2);margin:0 0 .6rem;font-style:italic}
+.seg-stats{display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.seg-stats b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.seg-size{padding:.8rem 1.3rem;border-bottom:1px solid var(--rule);font-size:.82rem;
+  line-height:1.55;color:var(--ink-2);background:var(--surface)}
+.seg-size strong{color:var(--ink)}
+
+/* 20-attribute grid */
+.attr{display:grid;grid-template-columns:minmax(8rem,10.5rem) minmax(0,1fr)}
+.attr > dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);padding:.6rem .8rem .6rem 1.3rem;border-top:1px solid var(--rule);
+  line-height:1.45;font-weight:500}
+.attr > dd{margin:0;padding:.6rem 1.3rem .6rem .3rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.attr > dd strong{color:var(--ink);font-weight:600}
+.attr > dt:first-of-type,.attr > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .attr{grid-template-columns:minmax(0,1fr)}
+  .attr > dt{padding:.6rem 1.1rem .1rem;border-top:1px solid var(--rule)}
+  .attr > dd{padding:.15rem 1.1rem .65rem;border-top:0}
+  .attr > dt:first-of-type + dd{border-top:0}
+}
+.seg-close{padding:.95rem 1.3rem;background:var(--surface-2);border-top:1px solid var(--rule);
+  font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.seg-close .lbl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.4rem;font-weight:600}
+.seg-close strong{color:var(--ink)}
+.seg-close p{margin:0 0 .55rem;max-width:none}
+.seg-close p:last-child{margin-bottom:0}
+
+/* Cash-gate escalation */
+.gate{display:flex;flex-direction:column;gap:.55rem}
+.gate-row{display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:.8rem;align-items:center}
+.gate-name{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-2);line-height:1.3}
+.gate-name b{display:block;color:var(--ink);font-weight:600;font-size:.82rem}
+.gate-track{display:flex;align-items:center;gap:.5rem;height:2rem}
+.gate-cash{height:1.3rem;background:var(--series);border-radius:0 3px 3px 0;flex:none}
+.gate-inc{height:1.3rem;border:1.5px dashed var(--emphasis);border-left:0;border-radius:0 3px 3px 0;
+  flex:none;box-sizing:border-box}
+.gate-val{font-family:var(--f-mono);font-size:.76rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap}
+.gate-val i{font-style:normal;color:var(--ink-3)}
+
+/* Hypothesis verdict list */
+.hyp{display:flex;flex-direction:column;gap:0;margin:1.5rem 0;border:1px solid var(--rule);
+  border-radius:5px;background:var(--surface);overflow:hidden}
+.hyp-row{display:grid;grid-template-columns:2.1rem minmax(7rem,11rem) minmax(0,1fr);gap:.75rem;
+  padding:.75rem 1.05rem;border-top:1px solid var(--rule);align-items:start}
+.hyp-row:first-child{border-top:0}
+.hyp-row .num{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;padding-top:.1rem}
+.hyp-name{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.4}
+.hyp-name .v{display:block;margin-top:.3rem}
+.hyp-why{font-size:.83rem;line-height:1.55;color:var(--ink-2)}
+.hyp-why strong{color:var(--ink)}
+.vd{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:.1rem .38rem;border-radius:3px;display:inline-block;line-height:1.5}
+.vd-y{background:var(--brand);color:var(--surface)}
+.vd-p{background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand)}
+.vd-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+@media (max-width:640px){
+  .hyp-row{grid-template-columns:2.1rem minmax(0,1fr);row-gap:.35rem}
+  .hyp-why{grid-column:2}
+}
+
+/* Revenue-by-segment bars, priority encoded by fill treatment */
+.rev-row{display:grid;grid-template-columns:minmax(8.5rem,13rem) minmax(0,1fr);gap:.7rem;
+  align-items:center;padding:3px 0}
+.rev-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.rev-label b{display:block;color:var(--ink);font-weight:600}
+.rev-track{position:relative;height:1.6rem;display:flex;align-items:center;gap:.55rem}
+.rev-fill{height:1.1rem;border-radius:0 4px 4px 0;flex:none;box-sizing:border-box}
+.rev-fill.p-h{background:var(--series)}
+.rev-fill.p-s{background:var(--brand-soft);border:1px solid var(--series);border-left:0}
+.rev-fill.p-l{background:transparent;border:1.5px dashed var(--rule-2);border-left:0}
+.rev-val{font-family:var(--f-mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:500}
+.rev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+td i{color:var(--ink-3);font-style:normal;font-size:.94em}
+
+/* Community mapping strip */
+.commap{display:grid;grid-template-columns:repeat(auto-fit,minmax(13.5rem,1fr));gap:.85rem;margin:1.5rem 0}
+.cm{background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden;
+  display:flex;flex-direction:column}
+.cm-top{padding:.75rem .95rem;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.cm-top h6{font-family:var(--f-display);font-size:1rem;font-weight:600;margin:0;color:var(--ink)}
+.cm-top .cm-t{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);display:block;margin-top:.22rem;
+  font-variant-numeric:tabular-nums}
+.cm-body{padding:.8rem .95rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.cm-body .cm-h{display:block;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 .28rem;font-weight:500}
+.cm-body p{margin:0 0 .7rem;max-width:none}
+.cm-body p:last-child{margin-bottom:0}
+.cm-body strong{color:var(--ink);font-weight:600}
+.cm-win{padding:.7rem .95rem;border-top:1px solid var(--rule);background:var(--accent-soft);
+  font-size:.8rem;line-height:1.45;color:var(--ink-2)}
+.cm-win b{color:var(--accent);font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;display:block;margin-bottom:.25rem;font-weight:600}
+</style>
+<style>
+/* ---------- Phase 7 components ---------- */
+/* Classification tags — form, not hue */
+.tg{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .4rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent;vertical-align:.06em}
+.tg-md{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.tg-bm{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.tg-as{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.tg-cv{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+
+/* Scenario columns */
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.85rem;margin:1.5rem 0}
+.sc{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);
+  display:flex;flex-direction:column}
+.sc.pick{border-color:var(--accent);box-shadow:var(--shadow)}
+.sc-top{padding:.8rem 1rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.sc.pick .sc-top{background:var(--accent-soft)}
+.sc-top h6{font-family:var(--f-display);font-size:1.05rem;font-weight:600;margin:0;color:var(--ink)}
+.sc-top span{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);display:block;margin-top:.24rem}
+.sc.pick .sc-top span{color:var(--accent)}
+.sc-body{padding:.35rem 0;flex:1}
+.sc-l{display:flex;justify-content:space-between;gap:.7rem;padding:.4rem 1rem;font-size:.82rem;
+  border-top:1px solid var(--rule);color:var(--ink-2);line-height:1.4}
+.sc-l:first-child{border-top:0}
+.sc-l b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:600}
+.sc-l.hi{background:var(--surface-2)}
+
+/* Funnel steps */
+.fn{display:flex;flex-direction:column;gap:.3rem;margin:.5rem 0}
+.fn-step{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem;align-items:center}
+.fn-name{font-size:.83rem;line-height:1.3;color:var(--ink-2);text-align:right}
+.fn-name b{display:block;color:var(--ink);font-weight:600}
+.fn-bar{height:2.15rem;display:flex;align-items:center;justify-content:flex-start;
+  background:var(--series);border-radius:3px;padding:0 .7rem;color:var(--surface);
+  font-family:var(--f-mono);font-size:.8rem;font-variant-numeric:tabular-nums;font-weight:600;
+  white-space:nowrap;min-width:5.5rem}
+.fn-bar.lite{background:var(--brand-soft);color:var(--brand);border:1px solid var(--series)}
+.fn-arrow{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem}
+.fn-rate{font-family:var(--f-mono);font-size:.68rem;color:var(--accent);letter-spacing:.04em;padding:.05rem 0 .05rem .7rem}
+.fn-rate::before{content:"↓ ";opacity:.7}
+
+/* Metric grid */
+.mx{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.7rem;margin:1.3rem 0}
+.mx > div{border:1px solid var(--rule);border-radius:5px;padding:.75rem .9rem;background:var(--surface)}
+.mx .k{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.35rem}
+.mx .v{font-family:var(--f-display);font-size:1.5rem;font-weight:600;color:var(--ink);line-height:1;
+  font-variant-numeric:tabular-nums}
+.mx .s{font-size:.75rem;color:var(--ink-3);margin-top:.3rem;line-height:1.4;display:block}
+.mx .v.acc{color:var(--accent)}
+
+/* Warning callout */
+.warn{margin:1.5rem 0;padding:1.1rem 1.3rem;background:var(--surface);border:1px solid var(--accent);
+  border-left:3px solid var(--accent);border-radius:4px;max-width:var(--measure)}
+.warn .wl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.5rem;font-weight:600}
+.warn p{margin:0 0 .65rem;max-width:none;font-size:.92rem;line-height:1.6}
+.warn p:last-child{margin-bottom:0}
+.warn strong{color:var(--ink)}
+</style>
+<style>
+/* ---------- Phase 8 components ---------- */
+/* Layer chips */
+.ly{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.13rem .45rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent}
+.ly-b{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ly-d{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.ly-s{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.ly-a{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* Counted vs estimated */
+.ct{font-family:var(--f-mono);font-size:.56rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:.1rem .36rem;border-radius:3px;display:inline-block;line-height:1.5;border:1px solid transparent}
+.ct-y{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ct-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Stage card */
+.stg{margin:1.5rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.stg-head{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:.85rem;align-items:start;
+  padding:.9rem 1.2rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.stg-n{font-family:var(--f-mono);font-size:1.2rem;font-weight:600;color:var(--brand);line-height:1;padding-top:.1rem}
+.stg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.05rem;line-height:1.25;margin:0 0 .35rem;color:var(--ink)}
+.stg-tags{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center}
+.stg-note{font-size:.82rem;color:var(--ink-2);font-style:italic;margin:.4rem 0 0;line-height:1.45}
+.sg{display:grid;grid-template-columns:minmax(7rem,9rem) minmax(0,1fr)}
+.sg > dt{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.55rem .7rem .55rem 1.2rem;border-top:1px solid var(--rule);line-height:1.45;font-weight:500}
+.sg > dd{margin:0;padding:.55rem 1.2rem .55rem .25rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.sg > dd strong{color:var(--ink);font-weight:600}
+.sg > dt:first-of-type,.sg > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .sg{grid-template-columns:minmax(0,1fr)}
+  .sg > dt{padding:.55rem 1.05rem .1rem;border-top:1px solid var(--rule)}
+  .sg > dd{padding:.1rem 1.05rem .6rem;border-top:0}
+  .sg > dt:first-of-type + dd{border-top:0}
+}
+
+/* Two-column compare */
+.cmp2{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.cmp2 > div{border:1px solid var(--rule);border-radius:5px;padding:.9rem 1.05rem;background:var(--surface)}
+.cmp2 h6{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 .55rem;font-weight:600}
+.cmp2 p{margin:0 0 .55rem;font-size:.86rem;line-height:1.55;max-width:none;color:var(--ink-2)}
+.cmp2 p:last-child{margin-bottom:0}
+.cmp2 strong{color:var(--ink)}
+
+/* Layer band header */
+.lyband{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:2.3rem 0 .3rem;
+  padding:.7rem 1rem;border-radius:5px;background:var(--surface-2);border:1px solid var(--rule)}
+.lyband h3{margin:0;font-family:var(--f-display);font-size:1.12rem;font-weight:600;color:var(--ink)}
+.lyband .lb-meta{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.lyband .lb-meta b{color:var(--ink)}
+
+/* Journey strip */
+.jr{margin:1.3rem 0;border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface)}
+.jr-top{padding:.8rem 1.05rem;border-bottom:1px solid var(--rule);background:var(--surface-2);
+  display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:baseline}
+.jr-top h5{margin:0;font-family:var(--f-display);font-size:1.02rem;font-weight:600;color:var(--ink)}
+.jr-top .jm{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3)}
+.jr-top .jm b{color:var(--ink)}
+.jr-flow{padding:.85rem 1.05rem;display:flex;flex-wrap:wrap;gap:.3rem;align-items:center;
+  border-bottom:1px solid var(--rule)}
+.jr-node{font-family:var(--f-mono);font-size:.66rem;padding:.22rem .5rem;border-radius:3px;
+  background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand);white-space:nowrap}
+.jr-node.skip{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2);text-decoration:line-through}
+.jr-node.key{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.jr-sep{color:var(--ink-3);font-size:.75rem}
+.jr-body{padding:.85rem 1.05rem;font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.jr-body strong{color:var(--ink)}
+.jr-body p{margin:0 0 .6rem;max-width:none}
+.jr-body p:last-child{margin-bottom:0}
+
+/* Leverage bars */
+.lev-row{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:4px 0}
+.lev-lab{font-size:.82rem;line-height:1.3;color:var(--ink-2)}
+.lev-lab b{display:block;color:var(--ink);font-weight:600}
+.lev-track{height:1.7rem;display:flex;align-items:center;gap:.55rem}
+.lev-fill{height:1.2rem;background:var(--brand-soft);border:1px solid var(--series);border-radius:0 4px 4px 0;flex:none}
+.lev-fill.top{background:var(--series);border-color:var(--series)}
+.lev-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.lev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+</style>
+<style>
+/* ---------- Phase 9 components ---------- */
+/* Tier chips — form, not hue */
+.tr{font-family:var(--f-mono);font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.13rem .45rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent}
+.tr-1{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.tr-2{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.tr-3{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.tr-4{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.tr-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2);text-decoration:line-through}
+
+/* Channel card */
+.ch{margin:1.4rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.ch-head{padding:.85rem 1.15rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.ch-head h4{font-family:var(--f-display);font-weight:600;font-size:1.04rem;line-height:1.25;margin:0 0 .4rem;color:var(--ink)}
+.ch-head h4 .sp{font-family:var(--f-mono);font-size:.78rem;font-weight:500;color:var(--accent);margin-left:.5rem;white-space:nowrap}
+.ch-tags{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center}
+.cg{display:grid;grid-template-columns:minmax(6.5rem,8.5rem) minmax(0,1fr)}
+.cg > dt{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.5rem .7rem .5rem 1.15rem;border-top:1px solid var(--rule);line-height:1.45;font-weight:500}
+.cg > dd{margin:0;padding:.5rem 1.15rem .5rem .25rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.cg > dd strong{color:var(--ink)}
+.cg > dt:first-of-type,.cg > dt:first-of-type + dd{border-top:0}
+.cg > dt.neg{color:var(--accent)}
+@media (max-width:640px){
+  .cg{grid-template-columns:minmax(0,1fr)}
+  .cg > dt{padding:.5rem 1rem .1rem;border-top:1px solid var(--rule)}
+  .cg > dd{padding:.1rem 1rem .55rem;border-top:0}
+  .cg > dt:first-of-type + dd{border-top:0}
+}
+
+/* Tier band */
+.trband{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:2.3rem 0 .3rem;
+  padding:.7rem 1rem;border-radius:5px;background:var(--surface-2);border:1px solid var(--rule)}
+.trband h3{margin:0;font-family:var(--f-display);font-size:1.1rem;font-weight:600;color:var(--ink)}
+.trband .tb-meta{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.trband .tb-meta b{color:var(--ink)}
+
+/* Budget treemap-ish strip */
+.bud{display:flex;flex-direction:column;gap:.5rem;margin:.4rem 0}
+.bud-lay{display:flex;height:2.6rem;border-radius:4px;overflow:hidden;border:1px solid var(--rule-2)}
+.bud-lay > div{display:flex;align-items:center;justify-content:center;min-width:0;padding:0 .3rem;
+  border-right:1px solid var(--rule-2);font-family:var(--f-mono);font-size:.63rem;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.bud-lay > div:last-child{border-right:0}
+.bud-name{display:flex;justify-content:space-between;align-items:baseline;gap:.7rem;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.bud-name b{color:var(--ink);font-size:.78rem}
+.bd-1{background:var(--brand-soft);color:var(--brand)}
+.bd-2{background:var(--series);color:var(--surface)}
+.bd-3{background:var(--accent-soft);color:var(--accent)}
+.bd-4{background:var(--accent);color:var(--surface)}
+.bd-5{background:var(--surface-2);color:var(--ink-2)}
+
+/* Trap callout */
+.trap{margin:1.5rem 0;padding:1.1rem 1.3rem;background:var(--accent-soft);border:1px solid var(--accent);
+  border-radius:4px;max-width:var(--measure)}
+.trap .tl2{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.5rem;font-weight:600}
+.trap p{margin:0 0 .65rem;max-width:none;font-size:.92rem;line-height:1.6;color:var(--ink-2)}
+.trap p:last-child{margin-bottom:0}
+.trap strong{color:var(--ink)}
+</style>
+<style>
+/* ---------- Phase 10 components ---------- */
+/* Master idea slab */
+.idea{margin:2rem 0;padding:2.2rem 2rem;background:var(--surface);border:1px solid var(--rule-2);
+  border-radius:6px;box-shadow:var(--shadow)}
+.idea .eyeb{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:1rem}
+.idea .big-idea{font-family:var(--f-display);font-weight:600;font-size:clamp(1.35rem,3.6vw,2.1rem);
+  line-height:1.24;letter-spacing:-.015em;color:var(--ink);margin:0;text-wrap:balance;max-width:22ch}
+.idea .sub-idea{font-size:.95rem;line-height:1.6;color:var(--ink-2);margin:1.1rem 0 0;max-width:var(--measure)}
+.idea .sub-idea strong{color:var(--ink)}
+
+/* The signature line */
+.sig{margin:1.6rem 0;padding:2rem 1.9rem;border-radius:6px;background:var(--ink);color:var(--ground);
+  text-align:left}
+.sig .l1{font-family:var(--f-display);font-weight:700;font-size:clamp(2rem,6.5vw,3.5rem);
+  line-height:1;letter-spacing:-.03em;margin:0;color:var(--ground)}
+.sig .l2{font-family:var(--f-display);font-weight:400;font-size:clamp(1.1rem,3.2vw,1.7rem);
+  line-height:1.2;margin:.5rem 0 0;color:var(--ground);opacity:.72}
+.sig .te{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.1em;margin:1.2rem 0 0;
+  color:var(--ground);opacity:.5;text-transform:uppercase}
+
+/* Density comparison — the 874 vs 376 */
+.dens{display:flex;flex-direction:column;gap:.55rem;margin:.4rem 0}
+.dens-row{display:grid;grid-template-columns:minmax(8rem,13rem) minmax(0,1fr);gap:.8rem;align-items:center}
+.dens-lab{font-size:.82rem;line-height:1.3;color:var(--ink-2)}
+.dens-lab b{display:block;color:var(--ink);font-weight:600}
+.dens-track{display:flex;align-items:center;gap:.6rem;height:2rem}
+.dens-fill{height:1.35rem;border-radius:0 3px 3px 0;flex:none}
+.dens-fill.ghost{background:transparent;border:1.5px dashed var(--rule-2);border-left:0;box-sizing:border-box}
+.dens-fill.real{background:var(--accent)}
+.dens-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:600}
+.dens-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+/* Four community numbers */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.8rem;margin:1.5rem 0}
+.numcard{border:1px solid var(--rule);border-radius:5px;background:var(--surface);overflow:hidden;
+  display:flex;flex-direction:column}
+.numcard .nc-top{padding:1.1rem 1rem .7rem;text-align:center;background:var(--surface-2);
+  border-bottom:1px solid var(--rule)}
+.numcard .nc-n{font-family:var(--f-display);font-weight:700;font-size:2.6rem;line-height:.9;
+  color:var(--accent);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.numcard .nc-u{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-top:.45rem}
+.numcard .nc-b{padding:.8rem 1rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.numcard .nc-b b{display:block;color:var(--ink);font-family:var(--f-display);font-size:.95rem;
+  font-weight:600;margin-bottom:.35rem}
+.numcard.master{border-color:var(--accent)}
+.numcard.master .nc-top{background:var(--accent-soft)}
+
+/* Hoarding sequence */
+.hoard{display:flex;gap:.4rem;align-items:stretch;overflow-x:auto;padding:.3rem 0 .6rem;margin:.5rem 0}
+.hb{flex:0 0 auto;min-width:5.2rem;border:1px solid var(--rule-2);border-radius:4px;
+  background:var(--surface-2);padding:1.1rem .6rem;text-align:center}
+.hb .hn{font-family:var(--f-display);font-weight:700;font-size:1.85rem;line-height:1;
+  color:var(--ink-2);font-variant-numeric:tabular-nums}
+.hb .hs{font-family:var(--f-mono);font-size:.55rem;letter-spacing:.08em;color:var(--ink-3);
+  display:block;margin-top:.4rem;text-transform:uppercase}
+.hb.ours{background:var(--accent);border-color:var(--accent)}
+.hb.ours .hn{color:var(--surface)}
+.hb.ours .hs{color:var(--surface);opacity:.8}
+.hb.gate{background:var(--ink);border-color:var(--ink);display:flex;flex-direction:column;
+  justify-content:center;min-width:8.5rem}
+.hb.gate .hn{font-size:.9rem;font-family:var(--f-display);font-weight:600;color:var(--ground);line-height:1.25}
+.hb.gate .hs{color:var(--ground);opacity:.55}
+.harrow{display:flex;align-items:center;color:var(--ink-3);font-size:.8rem;flex:0 0 auto}
+
+/* Do / don't */
+.dodont{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.dd{border:1px solid var(--rule);border-radius:5px;padding:.9rem 1.05rem;background:var(--surface)}
+.dd h6{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;
+  margin:0 0 .6rem;font-weight:600}
+.dd.yes h6{color:var(--brand)}
+.dd.no h6{color:var(--ink-3)}
+.dd ul{margin:0;padding-left:1.05rem;font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.dd li{margin-bottom:.4rem}
+.dd li:last-child{margin-bottom:0}
+.dd.no ul{color:var(--ink-3)}
+.dd strong{color:var(--ink)}
+
+/* Narrative block — the long copy */
+.narr{margin:1.6rem 0;padding:1.6rem 1.7rem;background:var(--surface);border-left:3px solid var(--accent);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:0 5px 5px 0;
+  max-width:var(--measure);box-shadow:var(--shadow)}
+.narr p{font-family:var(--f-display);font-size:1.03rem;line-height:1.62;color:var(--ink-2);
+  margin:0 0 .9rem;max-width:none}
+.narr p:last-child{margin-bottom:0}
+.narr strong{color:var(--ink);font-weight:600}
+.narr .close{font-weight:600;color:var(--ink);font-size:1.15rem}
+
+/* Copy line — a headline shown as work */
+.cline{margin:1.1rem 0;padding:1.1rem 1.3rem;background:var(--surface-2);border:1px solid var(--rule);
+  border-radius:5px;max-width:var(--measure)}
+.cline .ch1{font-family:var(--f-display);font-weight:600;font-size:1.28rem;line-height:1.22;
+  color:var(--ink);margin:0;letter-spacing:-.012em}
+.cline .ch2{font-family:var(--f-display);font-weight:400;font-size:1.28rem;line-height:1.22;
+  color:var(--ink-2);margin:.2rem 0 0}
+.cline .cmeta{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.6rem}
+
+/* Swatches */
+.pal{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}
+.pw{flex:1 1 8rem;border:1px solid var(--rule);border-radius:4px;overflow:hidden;min-width:8rem}
+.pw .chip{height:3.2rem}
+.pw .pn{padding:.5rem .6rem;font-family:var(--f-mono);font-size:.63rem;line-height:1.4;color:var(--ink-2);
+  background:var(--surface)}
+.pw .pn b{display:block;color:var(--ink);font-size:.68rem}
+</style><style>
+/* ---------- Phase 11 components ---------- */
+/* Line-item card */
+.li{margin:1.2rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden}
+.li-head{display:grid;grid-template-columns:2.3rem minmax(0,1fr) auto;gap:.8rem;align-items:baseline;
+  padding:.75rem 1.05rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.li-n{font-family:var(--f-mono);font-size:.95rem;font-weight:600;color:var(--brand)}
+.li-head h4{font-family:var(--f-display);font-weight:600;font-size:1rem;margin:0;color:var(--ink);line-height:1.25}
+.li-amt{font-family:var(--f-mono);font-size:1.02rem;font-weight:600;color:var(--accent);white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.li-note{padding:.7rem 1.05rem;font-size:.84rem;line-height:1.55;color:var(--ink-2);
+  border-top:1px solid var(--rule);background:var(--surface-2)}
+.li-note strong{color:var(--ink)}
+
+/* Structure bar */
+.strc{display:flex;height:3.2rem;border-radius:5px;overflow:hidden;border:1px solid var(--rule-2);margin:.5rem 0}
+.strc > div{display:flex;flex-direction:column;justify-content:center;padding:0 .7rem;min-width:0;
+  border-right:1px solid var(--rule-2);overflow:hidden}
+.strc > div:last-child{border-right:0}
+.strc b{font-family:var(--f-mono);font-size:.78rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.strc span{font-family:var(--f-mono);font-size:.6rem;margin-top:.2rem;opacity:.75;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.st-cap{background:var(--accent);color:var(--surface)}
+.st-pop{background:var(--brand-soft);color:var(--brand)}
+.st-var{background:var(--series);color:var(--surface)}
+.st-semi{background:var(--surface-2);color:var(--ink-2)}
+.strc-key{display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3)}
+
+/* Case columns */
+.cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.85rem;margin:1.4rem 0}
+.cs{border:1px solid var(--rule);border-radius:5px;background:var(--surface);overflow:hidden;
+  display:flex;flex-direction:column}
+.cs.pick{border-color:var(--accent);box-shadow:var(--shadow)}
+.cs.warn2{border-color:var(--rule-2)}
+.cs-top{padding:.8rem 1rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.cs.pick .cs-top{background:var(--accent-soft)}
+.cs-top h6{font-family:var(--f-display);font-size:1.02rem;font-weight:600;margin:0;color:var(--ink)}
+.cs-top .amt{font-family:var(--f-mono);font-size:1.5rem;font-weight:600;color:var(--ink);display:block;
+  margin-top:.35rem;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.cs.pick .cs-top .amt{color:var(--accent)}
+.cs-top .pct{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);display:block;margin-top:.2rem}
+.cs-l{display:flex;justify-content:space-between;gap:.6rem;padding:.4rem 1rem;font-size:.81rem;
+  border-top:1px solid var(--rule);color:var(--ink-2);line-height:1.4}
+.cs-l:first-child{border-top:0}
+.cs-l b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:600}
+.cs-l.hi{background:var(--surface-2)}
+.cs-l.bad b{color:var(--accent)}
+
+/* Phase burn */
+.burn{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1.2rem 0;align-items:end}
+.bn{border:1px solid var(--rule);border-radius:5px;background:var(--surface);padding:.9rem 1rem;text-align:center}
+.bn .bh{background:var(--accent);border-radius:3px 3px 0 0;margin:0 auto .6rem}
+.bn .bv{font-family:var(--f-mono);font-size:1.15rem;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.bn .bl{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-top:.35rem}
+.bn .bs{font-size:.78rem;color:var(--ink-2);display:block;margin-top:.45rem;line-height:1.4}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">Phase 11 of 11<strong>Marketing Budget</strong></div>
+  <div class="toc">
+    <a href="#s0"><span class="n">§0</span><span>Method</span></a>
+    <a href="#s1"><span class="n">§1</span><span>The thirteen line items</span></a>
+    <a href="#s2"><span class="n">§2</span><span>Total &amp; reconciliation</span></a>
+    <a href="#s3"><span class="n">§3</span><span>Structure</span></a>
+    <a href="#s4"><span class="n">§4</span><span>What a cut costs</span></a>
+    <a href="#s5"><span class="n">§5</span><span>Three funding cases</span></a>
+    <a href="#s6"><span class="n">§6</span><span>Phase &amp; monthly</span></a>
+    <a href="#s7"><span class="n">§7</span><span>Channel allocation</span></a>
+    <a href="#s8"><span class="n">§8</span><span>Community allocation</span></a>
+    <a href="#s9"><span class="n">§9</span><span>Funnel outputs</span></a>
+    <a href="#s10"><span class="n">§10</span><span>CAC, revenue, ROI</span></a>
+    <a href="#s11"><span class="n">§11</span><span>Assumption register</span></a>
+    <a href="#s12"><span class="n">§12</span><span>Risks</span></a>
+    <a href="#s13"><span class="n">§13</span><span>Carry-forward</span></a>
+  </div>
+  <div>
+    <h4>Classification</h4>
+    <div class="legend-stack">
+      <span class="tg tg-md">Market data</span>
+      <span class="tg tg-bm">Benchmark</span>
+      <span class="tg tg-as">Assumption</span>
+      <span class="tg tg-cv">Calculated</span>
+    </div>
+    <p style="font-size:.74rem;line-height:1.5;color:var(--ink-3);margin:.7rem 0 0;max-width:none">
+      <strong style="color:var(--ink-2)">Seven of thirteen lines are reasoned assumptions.</strong>
+      §11 is the full register.
+    </p>
+  </div>
+  <div>
+    <h4>The brief's constraint</h4>
+    <p style="font-size:.76rem;line-height:1.5;color:var(--ink-3);margin:0;max-width:none">
+      <em>Do not simply say "spend 10% of revenue."</em>
+      So this does the opposite — <strong style="color:var(--ink-2)">quantity × unit cost, thirteen times</strong> — and only then compares.
+    </p>
+  </div>
+</nav>
+
+<main class="main">
+<header class="masthead">
+  <p class="eyebrow">Investment model · bottom-up build · allocation and returns</p>
+  <h1>Built from thirteen line items upward, not from a percentage downward — and the two answers disagree by 28%</h1>
+  <p class="sub">Pricing each item from quantity × unit cost gives ₹32.99 crore. Phase 9's top-down allocation gave ₹25.68 crore. The ₹7.31 crore gap sits almost entirely in things that do not look like media — and forcing it to reconcile is what caught a line the first build had dropped.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 11 of 11</span>
+    <span><strong>Recommended</strong> ₹31.75 Cr · 6.27% of GDV</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> A marketing investment model for a hypothetical 25-acre, ₹500 crore corridor development. Nothing here describes an actual KMV Spaces project or budget. Rupee figures are a planning model, not a quotation — three of thirteen lines are anchored to published Indian rate benchmarks, one to a benchmark-derived funnel model, one to a published commission band, one is carried unchanged from Phase 9, and seven are reasoned assumptions itemised in §11.
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head">
+    <div class="sec-num">§0</div>
+    <div>
+      <h2>Method</h2>
+      <p class="dek">Phases 7 and 9 produced this budget top-down. This one builds it from the other end and lets the two disagree.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="warn">
+      <span class="wl">The headline result</span>
+      <p><strong>₹32.99 crore bottom-up against ₹25.68 crore top-down. A 28% gap.</strong></p>
+      <p>That gap is not a rounding error. It sits almost entirely in <strong>the things that do not look like media</strong> — launch, production, technology, NRI infrastructure, events, and the agency fee nobody was paying. <strong>§2 maps every Phase 9 rupee onto the thirteen cost lines</strong>, so the two columns reconcile rather than merely differ.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h6>What top-down did</h6>
+        <ul>
+          <li>Phase 7 assumed a brand line and a sales-infrastructure line — <strong>both tagged ASSUMPTION</strong> — and derived lead generation from CPL × leads.</li>
+          <li>Phase 9 distributed the resulting total across 22 channels.</li>
+          <li>Internally consistent. <strong>It just never priced anything.</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>What this phase does</h6>
+        <ul>
+          <li>Every line is <strong>quantity × unit cost</strong>.</li>
+          <li>Sourced where a published Indian rate exists; labelled where it does not.</li>
+          <li>Summed first, <strong>compared second</strong> — so the comparison is a finding, not a target.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h6>The four classifications, carried from Phase 7</h6>
+        <ul>
+          <li><span class="tg tg-md">Market data</span> observed in this catchment during Phases 1–6.</li>
+          <li><span class="tg tg-bm">Benchmark</span> a published Indian rate. <strong>Most come from agencies and vendors — interested parties</strong> — and are treated as directional.</li>
+          <li><span class="tg tg-as">Assumption</span> set here, reasoning shown. Observed nowhere.</li>
+          <li><span class="tg tg-cv">Calculated</span> derived arithmetically from the above.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <span class="lbl">§0.3 · a taxonomy note the brief's list requires</span>
+      <p>The brief's twelve items are a <strong>cost taxonomy.</strong> Phase 9's four layers are an <strong>accountability taxonomy.</strong> Both are valid; they are different cuts of the same money, and they overlap. Five collisions are resolved explicitly rather than left to happen:</p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Overlap</th><th>How it is resolved here</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Outdoor</strong> sits inside <strong>brand building</strong></td><td>Outdoor is broken out as its own line because it is 6.9% of the budget and has its own published rate card. Brand building excludes it.</td></tr>
+          <tr><td><strong>Events</strong> overlap <strong>sales enablement</strong></td><td>On-site owner events sit in Events. The experience centre and show homes sit in Sales enablement.</td></tr>
+          <tr><td><strong>NRI acquisition</strong> is an audience, not a channel — Phase 9 said so</td><td><strong>It survives as a budget line, and should.</strong> The <em>media</em> for S3 and S8 sits inside Performance marketing; this line holds only the <strong>incremental infrastructure</strong> that audience needs and no other does. §1.11 states the exclusion explicitly, because double-counting here is the obvious trap.</td></tr>
+          <tr><td><strong>CRM</strong> and <strong>Technology</strong> are adjacent</td><td>CRM holds licences, integration and telephony. Technology holds the website, martech, analytics and the walkthrough platform.</td></tr>
+          <tr><td><strong>The referral programme has no slot in the brief's twelve</strong></td><td>Phase 9 funded referral rewards and administration at <strong>₹0.70 Cr</strong> and modelled 70 bookings from them. Referral is neither a channel line nor a cost type the twelve names cover, so it is carried as an explicit <strong>thirteenth line</strong> rather than hidden inside Events. §2 shows what happens when it is dropped: <strong>the reconciliation stops closing.</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">§1</div>
+    <div>
+      <h2>The thirteen line items</h2>
+      <p class="dek">The brief's twelve, plus the referral programme §0 explains. Every line is quantity × unit cost.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">1</span>
+        <h4>Launch requirements</h4>
+        <span class="li-amt">&#8377;2.20 Cr</span>
+      </div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>Brand identity, naming and design system</td><td class="n">1</td><td class="n">&#8377;30.0 L</td><td class="n">&#8377;0.30 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Launch film <em>The Count</em> &mdash; aerial, one-shot, grade</td><td class="n">1</td><td class="n">&#8377;45.0 L</td><td class="n">&#8377;0.45 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Launch event on site, ~300 guests</td><td class="n">1</td><td class="n">&#8377;35.0 L</td><td class="n">&#8377;0.35 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Launch print burst &mdash; 6 full pages across 3 Telugu dailies</td><td class="n">6</td><td class="n">&#8377;9.0 L</td><td class="n">&#8377;0.54 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Launch digital burst, incremental over run-rate</td><td class="n">1</td><td class="n">&#8377;40.0 L</td><td class="n">&#8377;0.40 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>First collateral print run</td><td class="n">1</td><td class="n">&#8377;16.0 L</td><td class="n">&#8377;0.16 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="li-note"><strong>Phase 9 had no launch line at all</strong> &mdash; launch costs were implicitly spread inside brand and demand generation. Surfacing them as a discrete &#8377;2.20 crore is the first of several things a top-down split conceals.</div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">2</span>
+        <h4>Brand building</h4>
+        <span class="li-amt">&#8377;3.00 Cr</span>
+      </div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>Telugu OTT + YouTube brand reach</td><td class="n">24 months</td><td class="n">&#8377;5.5 L</td><td class="n">&#8377;1.32 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Telugu press, sustained &mdash; half and quarter pages</td><td class="n">18 insertions</td><td class="n">&#8377;3.5 L</td><td class="n">&#8377;0.63 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Regional cinema, Vijayawada and Guntur</td><td class="n">12 months</td><td class="n">&#8377;2.0 L</td><td class="n">&#8377;0.24 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Brand agency retainer</td><td class="n">45 months</td><td class="n">&#8377;1.8 L</td><td class="n">&#8377;0.81 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="li-note">Outdoor is excluded here and priced separately in line 5, because it carries its own published rate card.</div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">3</span>
+        <h4>Performance marketing</h4>
+        <span class="li-amt">&#8377;11.02 Cr</span>
+      </div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>Paid media &mdash; the Phase 7 lead-generation model</td><td class="n">1</td><td class="n">&#8377;984.0 L</td><td class="n">&#8377;9.84 Cr</td><td><span class="tg tg-cv">Calculated</span></td></tr>
+            <tr><td><strong>Performance agency fee at 12% of media</strong></td><td class="n">1</td><td class="n">&#8377;118.1 L</td><td class="n"><strong>&#8377;1.18 Cr</strong></td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="li-note"><strong>Phase 7 modelled media cost only.</strong> It computed CPL &times; leads and stopped there. <strong>Someone has to plan, build, traffic and optimise 24 live creative variants across five platforms for 45 months, and that is not free.</strong> At a 12% management fee &mdash; conservative for Indian performance retainers &mdash; it is &#8377;1.18 crore that no earlier phase carried.</div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">4</span>
+        <h4>Content production</h4>
+        <span class="li-amt">&#8377;2.16 Cr</span>
+      </div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>Photography &mdash; 4 seasonal shoots</td><td class="n">4</td><td class="n">&#8377;6.0 L</td><td class="n">&#8377;0.24 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>CGI package &mdash; 4 communities, exteriors and interiors</td><td class="n">1</td><td class="n">&#8377;55.0 L</td><td class="n">&#8377;0.55 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Walkthrough films &mdash; one per community</td><td class="n">4</td><td class="n">&#8377;6.0 L</td><td class="n">&#8377;0.24 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td><em>The Hospital</em> &mdash; the AIIMS credential film</td><td class="n">1</td><td class="n">&#8377;12.0 L</td><td class="n">&#8377;0.12 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td><em>Twelve Minutes</em> &mdash; the timed drive</td><td class="n">1</td><td class="n">&#8377;5.0 L</td><td class="n">&#8377;0.05 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td><em>The Month</em> &mdash; construction progress films</td><td class="n">45</td><td class="n">&#8377;0.6 L</td><td class="n">&#8377;0.27 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td><em>The Neighbours</em> &mdash; owner films</td><td class="n">12</td><td class="n">&#8377;2.0 L</td><td class="n">&#8377;0.24 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Performance creative production and refresh</td><td class="n">1</td><td class="n">&#8377;45.0 L</td><td class="n">&#8377;0.45 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="li-note"><strong>Phase 9 allocated &#8377;1.25 crore to brand content.</strong> Phase 10 then specified five film formats, a monthly construction series, four seasonal shoots and a 24-variant performance matrix. Priced, that specification costs &#8377;2.16 crore. <strong>The strategy wrote a cheque the budget had not seen.</strong></div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">5</span>
+        <h4>Outdoor</h4>
+        <span class="li-amt">&#8377;2.52 Cr</span>
+      </div>
+      <div class="li-note"><span class="tg tg-bm">Benchmark</span> Published Indian outdoor rates: hoardings in Guntur run <strong>&#8377;8,000&ndash;&#8377;1,50,000 per month</strong> depending on size, location and visibility; Tier-3 towns and highway sites run <strong>&#8377;15,000&ndash;&#8377;60,000</strong>; premium locations and sole-partner packages carry a <strong>20&ndash;40% premium</strong>; and <strong>all rates exclude GST, printing and mounting unless bundled.</strong></div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>The sequence &mdash; 6 prime corridor boards</td><td class="n">144 board-months</td><td class="n">&#8377;0.95 L</td><td class="n">&#8377;1.37 Cr</td><td><span class="tg tg-as">Assumption in band</span></td></tr>
+            <tr><td>Standing boards &mdash; 4 sites</td><td class="n">120 board-months</td><td class="n">&#8377;0.65 L</td><td class="n">&#8377;0.78 Cr</td><td><span class="tg tg-as">Assumption in band</span></td></tr>
+            <tr><td>Printing and mounting &mdash; <strong>excluded from media rates</strong></td><td class="n">1</td><td class="n">&#8377;18.0 L</td><td class="n">&#8377;0.18 Cr</td><td><span class="tg tg-bm">Benchmark</span></td></tr>
+            <tr><td>Hyderabad OOH for S7 &mdash; 2 sites, 6 months</td><td class="n">12 site-months</td><td class="n">&#8377;1.6 L</td><td class="n">&#8377;0.19 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="li-note"><strong>&#8377;95,000/month for a prime NH-16 site</strong> sits in the upper half of the published Guntur band and reflects the 20&ndash;40% premium the same source attaches to premium locations. <strong>Phase 9 allocated &#8377;2.10 crore. At published rates the same specification costs &#8377;2.52 crore</strong> &mdash; and &#8377;0.18 crore of the difference is simply the printing the rate cards exclude.</div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">6</span>
+        <h4>Events</h4>
+        <span class="li-amt">&#8377;0.90 Cr</span>
+      </div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>On-site owner and milestone events</td><td class="n">12</td><td class="n">&#8377;2.5 L</td><td class="n">&#8377;0.30 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Channel partner meets</td><td class="n">8</td><td class="n">&#8377;3.0 L</td><td class="n">&#8377;0.24 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Diaspora events, December&ndash;January, years 2&ndash;4</td><td class="n">3</td><td class="n">&#8377;8.0 L</td><td class="n">&#8377;0.24 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Land-owner village meetings</td><td class="n">20</td><td class="n">&#8377;0.6 L</td><td class="n">&#8377;0.12 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">7</span>
+        <h4>PR</h4>
+        <span class="li-amt">&#8377;0.90 Cr</span>
+      </div>
+      <div class="li-note"><span class="tg tg-bm">Benchmark</span> Published Indian PR retainers run <strong>&#8377;40,000 to &#8377;5,00,000+ per month</strong>, with a <strong>mid-range of &#8377;2&ndash;3 lakh</strong> covering media relations.</div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>Retainer at the published mid-range</td><td class="n">30 months</td><td class="n">&#8377;2.5 L</td><td class="n">&#8377;0.75 Cr</td><td><span class="tg tg-bm">Benchmark</span></td></tr>
+            <tr><td>Launch push, incremental</td><td class="n">1</td><td class="n">&#8377;15.0 L</td><td class="n">&#8377;0.15 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="li-note"><strong>Phase 9 allocated &#8377;0.45 crore &mdash; roughly &#8377;1.5 lakh a month over 30 months, below the published floor for meaningful media relations.</strong> Priced at the mid-range, the line doubles.</div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">8</span>
+        <h4>CRM</h4>
+        <span class="li-amt">&#8377;0.51 Cr</span>
+      </div>
+      <div class="li-note"><span class="tg tg-bm">Benchmark</span> Indian real-estate CRMs run <strong>&#8377;400&ndash;&#8377;1,500 per user per month</strong>; Sell.Do specifically &#8377;1,500&ndash;&#8377;3,000.</div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>Licences &mdash; 18 seats over 51 months</td><td class="n">918 seat-months</td><td class="n">&#8377;1,200</td><td class="n">&#8377;0.11 Cr</td><td><span class="tg tg-bm">Benchmark</span></td></tr>
+            <tr><td>Implementation, WhatsApp API and telephony integration</td><td class="n">1</td><td class="n">&#8377;18.0 L</td><td class="n">&#8377;0.18 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>WhatsApp Business API messaging</td><td class="n">51 months</td><td class="n">&#8377;0.25 L</td><td class="n">&#8377;0.13 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Cloud telephony</td><td class="n">51 months</td><td class="n">&#8377;0.18 L</td><td class="n">&#8377;0.09 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="li-note"><strong>&#8377;1,200 per seat sits mid-band deliberately.</strong> Phase 9 established that the CRM owns the lead-to-qualified rate &mdash; <strong>worth &#8377;17.2 crore per percentage point.</strong> Buying the cheapest option to save &#8377;5 lakh across the programme, against a metric of that leverage, is a false economy.</div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">9</span>
+        <h4>Technology</h4>
+        <span class="li-amt">&#8377;0.91 Cr</span>
+      </div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>Website build &mdash; 4 community sections, ungated price sheet, RERA file, construction feed</td><td class="n">1</td><td class="n">&#8377;32.0 L</td><td class="n">&#8377;0.32 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Website maintenance and iteration</td><td class="n">45 months</td><td class="n">&#8377;0.6 L</td><td class="n">&#8377;0.27 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Analytics, martech stack, tag management</td><td class="n">1</td><td class="n">&#8377;12.0 L</td><td class="n">&#8377;0.12 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Virtual walkthrough / 360 platform</td><td class="n">1</td><td class="n">&#8377;14.0 L</td><td class="n">&#8377;0.14 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Hosting, security, compliance</td><td class="n">1</td><td class="n">&#8377;6.0 L</td><td class="n">&#8377;0.06 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">10</span>
+        <h4>Sales enablement</h4>
+        <span class="li-amt">&#8377;3.62 Cr</span>
+      </div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>Experience centre build, ~4,000 sq ft</td><td class="n">1</td><td class="n">&#8377;135.0 L</td><td class="n">&#8377;1.35 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Two masterplan models &mdash; ours at 15/acre and the corridor comparison at 113</td><td class="n">1</td><td class="n">&#8377;22.0 L</td><td class="n">&#8377;0.22 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Show home C &mdash; <strong>interiors and styling only</strong></td><td class="n">1</td><td class="n">&#8377;58.0 L</td><td class="n">&#8377;0.58 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Show home D &mdash; <strong>interiors and styling only</strong></td><td class="n">1</td><td class="n">&#8377;72.0 L</td><td class="n">&#8377;0.72 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>The counted walk &mdash; landscaping, numbered posts, signage</td><td class="n">1</td><td class="n">&#8377;28.0 L</td><td class="n">&#8377;0.28 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Collateral, price sheets, spec books, ongoing</td><td class="n">1</td><td class="n">&#8377;35.0 L</td><td class="n">&#8377;0.35 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Sales training and scripts</td><td class="n">1</td><td class="n">&#8377;12.0 L</td><td class="n">&#8377;0.12 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="li-note"><strong>The accounting point that matters here.</strong> The show homes' <strong>shell construction is not a marketing cost.</strong> Those are two of the 376 units; they are built anyway and sold at handover. <strong>Only the interiors, the styling and the carrying cost are marketing spend</strong> &mdash; which is why this line is &#8377;3.62 crore rather than the &#8377;6+ crore a na&iuml;ve build produces by counting two finished villas at full value. This is the one line where bottom-up comes in <em>under</em> the top-down allocation.</div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">11</span>
+        <h4>NRI acquisition</h4>
+        <span class="li-amt">&#8377;1.05 Cr</span>
+      </div>
+      <div class="li-note"><strong>Read the exclusion first.</strong> The <strong>media</strong> for S3 and S8 &mdash; their share of Meta, YouTube, LinkedIn and search &mdash; is inside line 3 and is <strong>not repeated here.</strong> This line holds only the <strong>incremental infrastructure</strong> overseas buyers require and no domestic segment does. Counting the media twice is the obvious trap in a budget with an &ldquo;NRI&rdquo; line, and Phase 9 flagged exactly this.</div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>US-timezone sales resource &mdash; 2 part-time, 36 months</td><td class="n">36 months</td><td class="n">&#8377;1.5 L</td><td class="n">&#8377;0.54 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Video walkthrough studio and scheduling platform</td><td class="n">1</td><td class="n">&#8377;9.0 L</td><td class="n">&#8377;0.09 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Diaspora associations and APNRTS partnerships</td><td class="n">1</td><td class="n">&#8377;12.0 L</td><td class="n">&#8377;0.12 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Telugu production for S8 &mdash; vertical video, WhatsApp assets</td><td class="n">1</td><td class="n">&#8377;18.0 L</td><td class="n">&#8377;0.18 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Remote-purchase legal file &mdash; PoA and FEMA drafting</td><td class="n">1</td><td class="n">&#8377;8.0 L</td><td class="n">&#8377;0.08 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+            <tr><td>Proxy-visit pack production</td><td class="n">1</td><td class="n">&#8377;4.0 L</td><td class="n">&#8377;0.04 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="li-note"><strong>Phase 9 funded this at zero.</strong> It correctly reclassified NRI as an audience rather than a channel and put the media inside the channel lines &mdash; but <strong>the infrastructure that audience needs had no home</strong>, and it is the fix for the community consuming 65% of the lead-generation budget.</div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">12</span>
+        <h4>Channel partners</h4>
+        <span class="li-amt">&#8377;3.50 Cr</span>
+      </div>
+      <div class="li-note"><span class="tg tg-bm">Benchmark</span> Published Indian channel-partner commission runs <strong>1&ndash;3% of agreement value</strong>, and <strong>2&ndash;3% for luxury residential and plotted development.</strong></div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>Commission at 2.5% on channel-partner-sourced sales</td><td class="n">1</td><td class="n">&#8377;334.0 L</td><td class="n">&#8377;3.34 Cr</td><td><span class="tg tg-bm">Benchmark</span></td></tr>
+            <tr><td>Partner portal, collateral and training</td><td class="n">1</td><td class="n">&#8377;16.0 L</td><td class="n">&#8377;0.16 Cr</td><td><span class="tg tg-as">Assumption</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="li-note"><strong>&#8377;3.34 crore of this costs nothing until a unit sells.</strong> It is the only line in the budget with that property, and §3 treats it as its own structural class for exactly that reason.</div>
+    </div>
+    <div class="li">
+      <div class="li-head">
+        <span class="li-n">13</span>
+        <h4>Referral programme</h4>
+        <span class="li-amt">&#8377;0.70 Cr</span>
+      </div>
+      <div class="li-note"><strong>The line the brief's twelve categories do not name.</strong> Phase 9 funded it at &#8377;0.70 crore and modelled <strong>70 bookings</strong> from it &mdash; 18.6% of the scheme. It is carried at Phase 9's figure unchanged.</div>
+      <div class="tw" style="margin:0;border:0;border-radius:0">
+        <table>
+          <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr><td>Referral rewards and programme administration</td><td class="n">1</td><td class="n">&#8377;70.0 L</td><td class="n">&#8377;0.70 Cr</td><td><span class="tg tg-md">Phase 9, carried</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="li-note"><strong>Why it is stated separately rather than folded into Events or Channel partners.</strong> It is the cheapest acquisition route in the model at <strong>&#8377;1.00 lakh per booking</strong>, and §10 charges it against referral bookings. A budget that omits it while still crediting its 70 bookings is not a budget &mdash; it is 70 free sales. <strong>A first draft of this document did exactly that</strong>, and §2 is where the omission surfaced.</div>
+    </div>
+    <div class="finding">
+      <span class="lbl">Three lines carry two-thirds of the money</span>
+      <p><strong>Performance ₹11.02 Cr, sales enablement ₹3.62 Cr, channel partners ₹3.50 Cr</strong> — 55% of the total between them, and the three behave completely differently. One scales with ambition, one must be built before revenue exists, and one costs nothing until a unit sells. <strong>§3 is about that difference, and it matters more than the total.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">§2</div>
+    <div>
+      <h2>The total, and the reconciliation</h2>
+      <p class="dek">Every Phase 9 rupee mapped onto the thirteen cost lines — so the two columns reconcile rather than merely differ.</p>
+    </div>
+  </div>
+  <div class="body">
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">§2.1 · the bottom-up total, priced line by line</span>
+        <h5>₹32.99 crore — and the three largest lines behave nothing like each other</h5>
+      </div>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-label"><b>3 · Performance marketing</b>33.4% of total</div><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:var(--accent)"></div><span class="bar-val">₹11.02 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>10 · Sales enablement</b>11.0% of total</div><div class="bar-track"><div class="bar-fill" style="width:32.8%;background:var(--accent)"></div><span class="bar-val">₹3.62 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>12 · Channel partners</b>10.6% of total</div><div class="bar-track"><div class="bar-fill" style="width:31.8%;background:var(--accent)"></div><span class="bar-val">₹3.50 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>2 · Brand building</b>9.1% of total</div><div class="bar-track"><div class="bar-fill" style="width:27.2%"></div><span class="bar-val">₹3.00 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>5 · Outdoor</b>7.6% of total</div><div class="bar-track"><div class="bar-fill" style="width:22.9%"></div><span class="bar-val">₹2.52 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>1 · Launch requirements</b>6.7% of total</div><div class="bar-track"><div class="bar-fill" style="width:20.0%"></div><span class="bar-val">₹2.20 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>4 · Content production</b>6.5% of total</div><div class="bar-track"><div class="bar-fill" style="width:19.6%"></div><span class="bar-val">₹2.16 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>11 · NRI acquisition</b>3.2% of total</div><div class="bar-track"><div class="bar-fill" style="width:9.5%"></div><span class="bar-val">₹1.05 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>9 · Technology</b>2.8% of total</div><div class="bar-track"><div class="bar-fill" style="width:8.3%"></div><span class="bar-val">₹0.91 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>6 · Events</b>2.7% of total</div><div class="bar-track"><div class="bar-fill" style="width:8.2%"></div><span class="bar-val">₹0.90 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>7 · PR</b>2.7% of total</div><div class="bar-track"><div class="bar-fill" style="width:8.2%"></div><span class="bar-val">₹0.90 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>13 · Referral programme</b>2.1% of total</div><div class="bar-track"><div class="bar-fill" style="width:6.4%"></div><span class="bar-val">₹0.70 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>8 · CRM</b>1.5% of total</div><div class="bar-track"><div class="bar-fill" style="width:4.6%"></div><span class="bar-val">₹0.51 Cr</span></div></div>
+      </div>
+      <div class="figure-foot">Total <strong>₹32.99 Cr = 6.51% of the ₹506.7 Cr target.</strong> Three lines carry 55% of the money and behave completely differently: performance scales with ambition, sales enablement must exist before revenue does, and channel partner commission costs nothing until a unit sells.</div>
+    </figure>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Line</th><th class="n">Phase 9</th><th class="n">Phase 11</th><th class="n">Δ</th><th>What happened</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Launch requirements</td><td class="n">—</td><td class="n">₹2.20</td><td class="n"><strong>+2.20</strong></td><td><strong>Phase 9 had no launch line at all.</strong> The costs existed; they were spread invisibly through brand and demand generation</td></tr>
+          <tr><td>3 · Performance marketing</td><td class="n">₹9.84</td><td class="n">₹11.02</td><td class="n"><strong>+1.18</strong></td><td>Phase 7 modelled media cost and stopped. <strong>Nobody was paid to run it</strong></td></tr>
+          <tr><td>11 · NRI acquisition</td><td class="n">—</td><td class="n">₹1.05</td><td class="n"><strong>+1.05</strong></td><td>Phase 9 reclassified NRI as an audience — correctly — and then never funded the infrastructure</td></tr>
+          <tr><td>9 · Technology</td><td class="n">—</td><td class="n">₹0.91</td><td class="n"><strong>+0.91</strong></td><td>Website build, walkthrough platform, analytics, hosting. Phase 9 carried a ₹0.60 Cr <em>media</em> line for the website and no build cost</td></tr>
+          <tr><td>4 · Content production</td><td class="n">₹1.45</td><td class="n">₹2.16</td><td class="n">+0.71</td><td>Phase 10 specified five film formats, a monthly series and a 24-variant matrix</td></tr>
+          <tr><td>6 · Events</td><td class="n">₹0.30</td><td class="n">₹0.90</td><td class="n">+0.60</td><td>Phase 9 had on-site owner events only — no partner meets, no diaspora events, no village meetings</td></tr>
+          <tr><td>2 · Brand building</td><td class="n">₹2.50</td><td class="n">₹3.00</td><td class="n">+0.50</td><td>Sustained OTT and the agency retainer, priced rather than assumed</td></tr>
+          <tr><td>7 · PR</td><td class="n">₹0.45</td><td class="n">₹0.90</td><td class="n">+0.45</td><td>Phase 9's ₹0.45 Cr implies ₹1.5 L/month — below the published floor</td></tr>
+          <tr><td>5 · Outdoor</td><td class="n">₹2.10</td><td class="n">₹2.52</td><td class="n">+0.42</td><td>Published rates, including the printing and mounting the rate cards exclude</td></tr>
+          <tr><td>12 · Channel partners</td><td class="n">₹3.34</td><td class="n">₹3.50</td><td class="n">+0.16</td><td>The commission was funded; the partner portal and training were not</td></tr>
+          <tr><td>8 · CRM</td><td class="n">₹0.55</td><td class="n">₹0.51</td><td class="n">-0.04</td><td>Effectively unchanged</td></tr>
+          <tr><td>13 · Referral programme</td><td class="n">₹0.70</td><td class="n">₹0.70</td><td class="n">+0.00</td><td>Carried at Phase 9's figure — <strong>but see below</strong></td></tr>
+          <tr><td>10 · Sales enablement</td><td class="n">₹4.45</td><td class="n">₹3.62</td><td class="n"><strong>-0.83</strong></td><td>Bottom-up is <strong>cheaper</strong>, because the show-home shells are inventory, not marketing</td></tr>
+          <tr class="tot"><td><strong>Total</strong></td><td class="n"><strong>₹25.68</strong></td><td class="n"><strong>₹32.99</strong></td><td class="n"><strong>+₹7.31</strong></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn">
+      <span class="wl">The pattern, stated plainly</span>
+      <p><strong>A top-down percentage systematically under-funds everything that is not media</strong> — the production that fills the media, the technology that captures its output, the people who run it, and the infrastructure a specific audience needs.</p>
+      <p>It over-funds the one thing that looks expensive and is partly recoverable. <strong>That is the case against "spend 10% of revenue" in a single table.</strong></p>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">And one finding that came out of building the table rather than reading it</span>
+      <p>A first version of this reconciliation <strong>summed to ₹4.61 crore against a ₹6.61 crore gap</strong> — ₹2.00 crore adrift. Two lines had been eyeballed against Phase 9 rather than mapped to it, and <strong>the referral programme had been dropped from the bottom-up build entirely</strong> while the CAC table continued to charge its ₹0.70 crore against 70 referral bookings.</p>
+      <p class="big">Forcing the reconciliation to close is what found it. A decomposition that does not sum to the difference it claims to explain is not a decomposition.</p>
+      <p><strong>This is the argument for building the table both ways round</strong> — and a reason to distrust any budget variance analysis whose rows do not add to the variance.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">§3</div>
+    <div>
+      <h2>The structure matters more than the total</h2>
+      <p class="dek">Not all of this money behaves the same way — and a finance conversation that treats it as one pool is negotiating over the wrong number.</p>
+    </div>
+  </div>
+  <div class="body">
+    <p class="stmt">Shown on the <strong>RECOMMENDED ₹31.75 crore</strong> of §5, so it ties to every later table.</p>
+    <div class="strc">
+      <div class="st-cap" style="flex:7.2400"><b>₹7.24 Cr</b><span>Committed capital · 22.8%</span></div>
+      <div class="st-pop" style="flex:3.3400"><b>₹3.34 Cr</b><span>Pay-on-performance · 10.5%</span></div>
+      <div class="st-var" style="flex:15.7000"><b>₹15.70 Cr</b><span>Variable media · 49.4%</span></div>
+      <div class="st-semi" style="flex:5.4700"><b>₹5.47 Cr</b><span>Semi-fixed programme · 17.2%</span></div>
+    </div>
+    <div class="strc-key"><span>Committed capital 22.8%</span><span>Pay-on-performance 10.5%</span><span>Variable media 49.4%</span><span>Semi-fixed 17.2%</span></div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Class</th><th class="n">Amount</th><th class="n">Share</th><th>Behaviour</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Committed capital</strong><br><i>launch, sales enablement, technology, CRM</i></td><td class="n"><strong>₹7.24 Cr</strong></td><td class="n">22.8%</td><td><strong>Must exist before a single rupee of revenue arrives.</strong> Not scalable, not deferrable, and the funnel does not function without it</td></tr>
+          <tr><td><strong>Pay-on-performance</strong><br><i>channel partner commission</i></td><td class="n"><strong>₹3.34 Cr</strong></td><td class="n">10.5%</td><td><strong>Costs nothing until a unit sells.</strong> No working capital, no risk</td></tr>
+          <tr><td><strong>Variable media</strong><br><i>performance, brand, outdoor</i></td><td class="n"><strong>₹15.70 Cr</strong></td><td class="n">49.4%</td><td>Scales with ambition. <strong>This is where a cut actually lands</strong></td></tr>
+          <tr><td><strong>Semi-fixed programme</strong><br><i>content, NRI, events, PR, referral, partner enablement</i></td><td class="n"><strong>₹5.47 Cr</strong></td><td class="n">17.2%</td><td>Reducible, but each cut removes a specific capability</td></tr>
+          <tr class="tot"><td><strong>Total</strong></td><td class="n"><strong>₹31.75 Cr</strong></td><td class="n"><strong>100%</strong></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <span class="wl">What is actually on the table</span>
+      <p><strong>The genuinely flexible pool is ₹21.17 crore, not ₹31.75 crore.</strong> A finance conversation that treats the whole budget as discretionary is negotiating over money that is either already committed or costs nothing until it earns.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">§4</div>
+    <div>
+      <h2>What a cut actually costs</h2>
+      <p class="dek">The question is never "what percentage?" It is "which cut, and what does it cost?"</p>
+    </div>
+  </div>
+  <div class="body">
+    <p class="stmt"><span class="tg tg-cv">Calculated</span> Holding the Phase 7 CPLs and conversion rates constant, and scaling marketing-sourced bookings with performance media.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">Performance media</th><th class="n">Marketing-sourced bookings</th><th class="n">Bookings lost</th><th class="n">Revenue at risk</th><th class="n">Per ₹1 cut</th></tr></thead>
+        <tbody>
+          <tr><td class="n">₹11.02 Cr — full</td><td class="n">201</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+          <tr><td class="n">₹9.84 Cr</td><td class="n">179</td><td class="n">21.5</td><td class="n">₹29.0 Cr</td><td class="n">₹24.58</td></tr>
+          <tr class="tot"><td class="n"><strong>₹8.00 Cr</strong></td><td class="n"><strong>146</strong></td><td class="n"><strong>55.1</strong></td><td class="n"><strong>₹74.2 Cr</strong></td><td class="n"><strong>₹24.58</strong></td></tr>
+          <tr><td class="n">₹6.50 Cr</td><td class="n">119</td><td class="n">82.4</td><td class="n">₹111.1 Cr</td><td class="n">₹24.58</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The one ratio to carry out of this phase</span>
+      <p class="big">Every ₹1 cut from performance media puts roughly ₹24.60 of revenue at risk.</p>
+      <p>The ratio is <strong>identical at all three cut depths</strong>, because bookings scale linearly with media in this model — which is also the model's main limitation. It holds only while CPLs and conversion rates hold. <strong>But it is the right frame for the conversation, and it is not available from a percentage-of-revenue rule.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">§5</div>
+    <div>
+      <h2>Three funding cases</h2>
+      <p class="dek">One of them saves money and loses nothing. One of them saves money and costs ₹74.2 crore.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cases">
+      <div class="cs warn2">
+        <div class="cs-top">
+          <h6>Constrained</h6>
+          <span class="amt">₹26.49 Cr</span>
+          <span class="pct">5.23% of GDV target</span>
+        </div>
+        <div class="cs-l"><span>Performance media</span><b>₹8.00 Cr</b></div>
+        <div class="cs-l"><span>Marketing-sourced bookings</span><b>146</b></div>
+        <div class="cs-l"><span>Channel partner + referral</span><b>175</b></div>
+        <div class="cs-l hi"><span>Total bookings</span><b>321</b></div>
+        <div class="cs-l bad"><span>Revenue achieved</span><b>₹433.4 Cr</b></div>
+        <div class="cs-l"><span>CAC per booking</span><b>₹8.25 L</b></div>
+        <div class="cs-l"><span>% of <i>achieved</i> revenue</span><b>6.11%</b></div>
+      </div>
+      <div class="cs pick">
+        <div class="cs-top">
+          <h6>Recommended</h6>
+          <span class="amt">₹31.75 Cr</span>
+          <span class="pct">6.27% of GDV target</span>
+        </div>
+        <div class="cs-l"><span>Performance media</span><b>₹11.02 Cr</b></div>
+        <div class="cs-l"><span>Marketing-sourced bookings</span><b>201</b></div>
+        <div class="cs-l"><span>Channel partner + referral</span><b>175</b></div>
+        <div class="cs-l hi"><span>Total bookings</span><b>376</b></div>
+        <div class="cs-l"><span>Revenue achieved</span><b>₹506.7 Cr</b></div>
+        <div class="cs-l"><span>CAC per booking</span><b>₹8.44 L</b></div>
+        <div class="cs-l"><span>% of <i>achieved</i> revenue</span><b>6.27%</b></div>
+      </div>
+      <div class="cs">
+        <div class="cs-top">
+          <h6>Full</h6>
+          <span class="amt">₹32.99 Cr</span>
+          <span class="pct">6.51% of GDV target</span>
+        </div>
+        <div class="cs-l"><span>Performance media</span><b>₹11.02 Cr</b></div>
+        <div class="cs-l"><span>Marketing-sourced bookings</span><b>201</b></div>
+        <div class="cs-l"><span>Channel partner + referral</span><b>175</b></div>
+        <div class="cs-l hi"><span>Total bookings</span><b>376</b></div>
+        <div class="cs-l"><span>Revenue achieved</span><b>₹506.7 Cr</b></div>
+        <div class="cs-l"><span>CAC per booking</span><b>₹8.77 L</b></div>
+        <div class="cs-l"><span>% of <i>achieved</i> revenue</span><b>6.51%</b></div>
+      </div>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Case</th><th class="n">vs FULL, spend</th><th class="n">vs FULL, revenue</th><th>The trade</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CONSTRAINED</strong></td><td class="n">−₹6.50 Cr</td><td class="n"><strong>−₹74.2 Cr</strong></td><td><strong>Every ₹1 saved costs ₹11.40 of revenue</strong></td></tr>
+          <tr><td><strong>RECOMMENDED</strong></td><td class="n">−₹1.24 Cr</td><td class="n"><strong>₹0.0 Cr</strong></td><td><strong>Saves ₹1.24 Cr and loses nothing</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <span class="lbl">§5.1 · what the ₹1.24 crore trim actually removes</span>
+      <p><strong>RECOMMENDED trims ₹1.24 crore from things that do not touch performance media</strong> — Telugu OTT from 24 to 18 months, cinema from 12 to 6, the hoarding sequence from 24 to 20 months, standing boards from 30 to 24, one diaspora event deferred, four owner films fewer, and the PR retainer from 30 to 24 months.</p>
+      <p><strong>It delivers the same 376 bookings for ₹1.24 crore less, because none of those cuts touches the funnel.</strong> CONSTRAINED does touch it, and §4 is what that costs.</p>
+    </div>
+
+    <h3 style="font-family:var(--f-display);font-size:1.15rem;font-weight:600;margin:2rem 0 .3rem;color:var(--ink)">§5.2 · On being above the 4–5% industry norm</h3>
+    <p class="stmt">Phase 7 anchored against an industry-normal marketing spend of <strong>4–5% of GDV.</strong> The recommendation here is <strong>6.27%.</strong> That difference deserves an answer rather than a footnote.</p>
+
+    <div class="cards">
+      <div class="card">
+        <h6>1 · No existing brand to spend against</h6>
+        <ul><li>Phase 4 found <strong>thin search visibility and sparse reviews.</strong></li>
+        <li>The 4–5% norm largely describes developers with established recall and a working referral base.</li></ul>
+      </div>
+      <div class="card">
+        <h6>2 · No referral base in year one</h6>
+        <ul><li>18.5% of bookings are modelled as referral-sourced, and <strong>referral requires prior buyers.</strong></li>
+        <li>In year one there are none, so paid channels carry more than the steady-state average implies.</li></ul>
+      </div>
+      <div class="card">
+        <h6>3 · Deliberate over-investment in sales enablement</h6>
+        <ul><li><strong>₹3.78 crore</strong> on the experience centre, show homes and collateral.</li>
+        <li>Because Phase 8 valued that stage at <strong>₹39.4 crore per conversion point.</strong> A considered allocation, not overspend.</li></ul>
+      </div>
+      <div class="card">
+        <h6>4 · Two of eight segments are overseas</h6>
+        <ul><li>Community B alone consumes <strong>65% of the lead-generation budget.</strong></li>
+        <li>Overseas acquisition is structurally more expensive than domestic, and this project has more of it than a typical corridor scheme.</li></ul>
+      </div>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Reasoned</span>
+      <p><strong>6.27% is defensible <em>for a first project, by a developer without established consumer recall, selling 31% of its revenue in an unproven price band.</em></strong></p>
+      <p>It should fall toward the norm from year three onward, as referral compounds and brand recall accumulates — and <strong>the model should be re-based annually rather than fixed at launch.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">§6</div>
+    <div>
+      <h2>Phase and monthly allocation</h2>
+      <p class="dek">6 months pre-launch, 6 months launch, 33 months post-launch — on the recommended ₹31.75 crore.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Line</th><th class="n">Pre-launch<br><i>6 mo</i></th><th class="n">Launch<br><i>6 mo</i></th><th class="n">Post-launch<br><i>33 mo</i></th><th class="n">Total</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Launch requirements</td><td class="n">₹1.21</td><td class="n">₹0.99</td><td class="n">—</td><td class="n"><strong>₹2.20</strong></td></tr>
+          <tr><td>2 · Brand building</td><td class="n">₹0.13</td><td class="n">₹0.76</td><td class="n">₹1.66</td><td class="n"><strong>₹2.55</strong></td></tr>
+          <tr><td>3 · Performance marketing</td><td class="n">₹0.44</td><td class="n">₹2.20</td><td class="n">₹8.38</td><td class="n"><strong>₹11.02</strong></td></tr>
+          <tr><td>4 · Content production</td><td class="n">₹0.70</td><td class="n">₹0.50</td><td class="n">₹0.79</td><td class="n"><strong>₹1.99</strong></td></tr>
+          <tr><td>5 · Outdoor</td><td class="n">₹0.17</td><td class="n">₹0.47</td><td class="n">₹1.49</td><td class="n"><strong>₹2.13</strong></td></tr>
+          <tr><td>6 · Events</td><td class="n">₹0.08</td><td class="n">₹0.12</td><td class="n">₹0.62</td><td class="n"><strong>₹0.82</strong></td></tr>
+          <tr><td>7 · PR</td><td class="n">₹0.22</td><td class="n">₹0.19</td><td class="n">₹0.34</td><td class="n"><strong>₹0.75</strong></td></tr>
+          <tr><td>8 · CRM</td><td class="n">₹0.15</td><td class="n">₹0.05</td><td class="n">₹0.31</td><td class="n"><strong>₹0.51</strong></td></tr>
+          <tr><td>9 · Technology</td><td class="n">₹0.50</td><td class="n">₹0.09</td><td class="n">₹0.32</td><td class="n"><strong>₹0.91</strong></td></tr>
+          <tr><td>10 · Sales enablement</td><td class="n" style="background:var(--accent-soft)">₹2.90</td><td class="n">₹0.29</td><td class="n">₹0.43</td><td class="n"><strong>₹3.62</strong></td></tr>
+          <tr><td>11 · NRI acquisition</td><td class="n">₹0.21</td><td class="n">₹0.16</td><td class="n">₹0.68</td><td class="n"><strong>₹1.05</strong></td></tr>
+          <tr><td>12 · Channel partners</td><td class="n">₹0.18</td><td class="n">₹0.53</td><td class="n">₹2.79</td><td class="n"><strong>₹3.50</strong></td></tr>
+          <tr><td>13 · Referral programme</td><td class="n">—</td><td class="n">₹0.05</td><td class="n">₹0.65</td><td class="n"><strong>₹0.70</strong></td></tr>
+          <tr class="tot"><td><strong>Total</strong></td><td class="n"><strong>₹6.89 Cr</strong></td><td class="n"><strong>₹6.40 Cr</strong></td><td class="n"><strong>₹18.46 Cr</strong></td><td class="n"><strong>₹31.75 Cr</strong></td></tr>
+          <tr><td>Share</td><td class="n">21.7%</td><td class="n">20.2%</td><td class="n">58.1%</td><td class="n">100%</td></tr>
+          <tr><td><strong>Per month</strong></td><td class="n"><strong>₹1.15 Cr</strong></td><td class="n"><strong>₹1.07 Cr</strong></td><td class="n"><strong>₹0.56 Cr</strong></td><td class="n"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="burn">
+      <div class="bn"><div class="bh" style="height:118px;width:62%"></div><div class="bv">₹1.15 Cr</div><span class="bl">per month</span><span class="bs"><strong>₹6.89 Cr</strong> over 6 months<br>Revenue: <strong>zero.</strong> ₹3.55 Cr of it is sales enablement, technology and CRM</span></div>
+      <div class="bn"><div class="bh" style="height:110px;width:62%"></div><div class="bv">₹1.07 Cr</div><span class="bl">per month</span><span class="bs"><strong>₹6.40 Cr</strong> over 6 months<br>First bookings arrive part-way through</span></div>
+      <div class="bn"><div class="bh" style="height:57px;width:62%"></div><div class="bv">₹0.56 Cr</div><span class="bl">per month</span><span class="bs"><strong>₹18.46 Cr</strong> over 33 months<br>Steady state, funded by revenue</span></div>
+    </div>
+    <div class="warn">
+      <span class="wl">§6.1 · the working-capital finding</span>
+      <p><strong>Peak monthly burn is pre-launch, at ₹1.15 crore a month — 2.05× the post-launch run-rate — and it lands when revenue is exactly zero.</strong></p>
+      <p><strong>₹6.89 crore is committed before the first booking.</strong> Of that, <strong>₹3.55 crore is sales enablement, technology and CRM</strong>: capital that must exist for the funnel to function at all. The experience centre cannot be half-built and the CRM cannot be half-integrated.</p>
+      <p><strong>Reasoned — the operational consequence.</strong> This is a cash-flow item, not a marketing item, and it belongs in the project's funding plan rather than in a monthly marketing report. <strong>A marketing budget presented as a flat monthly average conceals it entirely</strong> — which is another argument against the percentage-of-revenue approach, since a percentage of zero revenue is zero.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">§7</div>
+    <div>
+      <h2>Channel allocation</h2>
+      <p class="dek">The same ₹31.75 crore, cut by channel rather than by cost type. The launch line is decomposed into its channel components so nothing is hidden.</p>
+    </div>
+  </div>
+  <div class="body">
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">27 lines · solid = paid media · outlined = everything else</span>
+        <h5>The largest single line is the experience centre, not Meta</h5>
+      </div>
+    <div class="bars">
+        <div class="bar-row"><div class="bar-label"><b>Experience centre, show homes and collateral</b>11.9% · cum 11.9%</div><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:var(--accent)"></div><span class="bar-val">₹3.78 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Performance media — Meta</b>10.9% · cum 22.8%</div><div class="bar-track"><div class="bar-fill" style="width:91.3%;background:var(--accent)"></div><span class="bar-val">₹3.45 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Channel partner commission</b>10.5% · cum 33.3%</div><div class="bar-track"><div class="bar-fill" style="width:88.4%;background:var(--accent)"></div><span class="bar-val">₹3.34 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Content production, incl. launch film</b>7.7% · cum 41.0%</div><div class="bar-track"><div class="bar-fill" style="width:64.6%;background:var(--accent)"></div><span class="bar-val">₹2.44 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Performance media — Google Search</b>7.2% · cum 48.2%</div><div class="bar-track"><div class="bar-fill" style="width:60.8%;background:var(--accent)"></div><span class="bar-val">₹2.30 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Outdoor</b>6.7% · cum 54.9%</div><div class="bar-track"><div class="bar-fill" style="width:56.3%"></div><span class="bar-val">₹2.13 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Performance agency fee</b>3.7% · cum 58.6%</div><div class="bar-track"><div class="bar-fill" style="width:31.2%;background:var(--brand-soft);border:1px solid var(--series)"></div><span class="bar-val">₹1.18 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Print, incl. launch pages</b>3.7% · cum 62.3%</div><div class="bar-track"><div class="bar-fill" style="width:31.0%"></div><span class="bar-val">₹1.17 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Events, incl. launch event</b>3.7% · cum 66.0%</div><div class="bar-track"><div class="bar-fill" style="width:31.0%;background:var(--brand-soft);border:1px solid var(--series)"></div><span class="bar-val">₹1.17 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Performance media — YouTube</b>3.5% · cum 69.5%</div><div class="bar-track"><div class="bar-fill" style="width:29.1%"></div><span class="bar-val">₹1.10 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>NRI infrastructure</b>3.3% · cum 72.8%</div><div class="bar-track"><div class="bar-fill" style="width:27.8%;background:var(--brand-soft);border:1px solid var(--series)"></div><span class="bar-val">₹1.05 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Performance media — portals</b>3.1% · cum 75.9%</div><div class="bar-track"><div class="bar-fill" style="width:26.5%"></div><span class="bar-val">₹1.00 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Telugu OTT / YouTube brand</b>3.1% · cum 79.1%</div><div class="bar-track"><div class="bar-fill" style="width:26.2%"></div><span class="bar-val">₹0.99 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Technology</b>2.9% · cum 81.9%</div><div class="bar-track"><div class="bar-fill" style="width:24.1%;background:var(--brand-soft);border:1px solid var(--series)"></div><span class="bar-val">₹0.91 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Brand agency retainer</b>2.6% · cum 84.5%</div><div class="bar-track"><div class="bar-fill" style="width:21.4%;background:var(--brand-soft);border:1px solid var(--series)"></div><span class="bar-val">₹0.81 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>PR</b>2.4% · cum 86.8%</div><div class="bar-track"><div class="bar-fill" style="width:19.8%;background:var(--brand-soft);border:1px solid var(--series)"></div><span class="bar-val">₹0.75 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Referral programme</b>2.2% · cum 89.0%</div><div class="bar-track"><div class="bar-fill" style="width:18.5%;background:var(--brand-soft);border:1px solid var(--series)"></div><span class="bar-val">₹0.70 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Performance media — website and landing pages</b>1.9% · cum 90.9%</div><div class="bar-track"><div class="bar-fill" style="width:15.9%"></div><span class="bar-val">₹0.60 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>CRM and telephony</b>1.6% · cum 92.5%</div><div class="bar-track"><div class="bar-fill" style="width:13.5%;background:var(--brand-soft);border:1px solid var(--series)"></div><span class="bar-val">₹0.51 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Performance media — LinkedIn</b>1.6% · cum 94.1%</div><div class="bar-track"><div class="bar-fill" style="width:13.2%"></div><span class="bar-val">₹0.50 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Launch digital burst</b>1.3% · cum 95.4%</div><div class="bar-track"><div class="bar-fill" style="width:10.6%"></div><span class="bar-val">₹0.40 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Performance media — SEO</b>1.3% · cum 96.6%</div><div class="bar-track"><div class="bar-fill" style="width:10.6%"></div><span class="bar-val">₹0.40 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Brand identity and design system</b>0.9% · cum 97.6%</div><div class="bar-track"><div class="bar-fill" style="width:7.9%;background:var(--brand-soft);border:1px solid var(--series)"></div><span class="bar-val">₹0.30 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Performance media — Display retargeting</b>0.9% · cum 98.5%</div><div class="bar-track"><div class="bar-fill" style="width:7.9%"></div><span class="bar-val">₹0.30 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Performance media — email and automation</b>0.6% · cum 99.1%</div><div class="bar-track"><div class="bar-fill" style="width:5.0%"></div><span class="bar-val">₹0.19 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Partner enablement</b>0.5% · cum 99.6%</div><div class="bar-track"><div class="bar-fill" style="width:4.2%;background:var(--brand-soft);border:1px solid var(--series)"></div><span class="bar-val">₹0.16 Cr</span></div></div>
+        <div class="bar-row"><div class="bar-label"><b>Cinema</b>0.4% · cum 100.0%</div><div class="bar-track"><div class="bar-fill" style="width:3.2%"></div><span class="bar-val">₹0.12 Cr</span></div></div>
+      </div>
+      <div class="figure-foot">Consistent with Phase 9, and with Phase 8's finding that a point of visit-to-booking conversion is worth ₹39.4 crore. <strong>The top five lines are 48% of the budget, and only two of them are media.</strong></div>
+    </figure>
+
+    <div class="dodont">
+      <div class="dd yes">
+        <h6>1 · Paid media is 46% of the budget</h6>
+        <ul>
+          <li><strong>₹14.65 crore of media</strong> against <strong>₹17.10 crore</strong> of production, capital, technology, people and commission.</li>
+          <li><strong>A budget conversation conducted entirely in media terms is discussing less than half the money.</strong></li>
+        </ul>
+      </div>
+      <div class="dd no">
+        <h6>2 · What that means for the review cadence</h6>
+        <ul>
+          <li>A weekly performance review covers <strong>46%</strong> of the spend and produces most of the reporting.</li>
+          <li>The other <strong>54%</strong> is reviewed quarterly at best, and it contains every line that must be right <em>before</em> the media runs.</li>
+          <li>Phase 9's rule stands: <strong>compare within a layer, never across.</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-head">
+    <div class="sec-num">§8</div>
+    <div>
+      <h2>Community allocation</h2>
+      <p class="dek">Directly attributable costs traced; everything shared allocated by revenue share — a choice, and stated as one.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="note">
+      <span class="lbl">Method, stated because it is a choice</span>
+      <p>Costs split into <strong>directly attributable</strong> — performance media by community from Phase 7, the agency fee pro-rata, and the NRI infrastructure which serves Community B alone — and <strong>shared</strong>, which is everything else and is allocated <strong>by revenue share.</strong></p>
+      <p><strong>Reasoned.</strong> Revenue share is the defensible basis here because the brand, the site, the technology and the launch serve all four communities and cannot be traced to any one. <strong>Allocating by unit count instead would load Community A with 45% of the shared cost for 25% of the revenue</strong>, which would misrepresent it.</p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Community</th><th class="n">Direct</th><th class="n">Shared</th><th class="n">Total</th><th class="n">Units</th><th class="n">Revenue</th><th class="n">CAC per unit</th><th class="n">% of its own revenue</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A</strong> Apartments</td><td class="n">₹0.80 Cr</td><td class="n">₹4.90 Cr</td><td class="n"><strong>₹5.70 Cr</strong></td><td class="n">169</td><td class="n">₹126.2 Cr</td><td class="n"><strong>₹3.37 L</strong></td><td class="n"><strong>4.52%</strong></td></tr>
+          <tr style="background:var(--accent-soft)"><td><strong>B</strong> Managed residences</td><td class="n"><strong>₹8.26 Cr</strong></td><td class="n">₹4.37 Cr</td><td class="n"><strong>₹12.63 Cr</strong></td><td class="n">84</td><td class="n">₹112.5 Cr</td><td class="n"><strong>₹15.04 L</strong></td><td class="n"><strong>11.23%</strong></td></tr>
+          <tr><td><strong>C</strong> Compact villas</td><td class="n">₹0.80 Cr</td><td class="n">₹4.24 Cr</td><td class="n"><strong>₹5.04 Cr</strong></td><td class="n">60</td><td class="n">₹109.2 Cr</td><td class="n"><strong>₹8.40 L</strong></td><td class="n"><strong>4.62%</strong></td></tr>
+          <tr><td><strong>D</strong> Estate villas</td><td class="n">₹2.22 Cr</td><td class="n">₹6.16 Cr</td><td class="n"><strong>₹8.38 Cr</strong></td><td class="n">63</td><td class="n">₹158.8 Cr</td><td class="n"><strong>₹13.30 L</strong></td><td class="n"><strong>5.28%</strong></td></tr>
+          <tr class="tot"><td><strong>All</strong></td><td class="n">₹12.08 Cr</td><td class="n">₹19.67 Cr</td><td class="n"><strong>₹31.75 Cr</strong></td><td class="n">376</td><td class="n">₹506.7 Cr</td><td class="n"><strong>₹8.44 L</strong></td><td class="n"><strong>6.27%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <span class="wl">The finding this restates at full-budget scale</span>
+      <p><strong>Community B consumes 40% of the total budget for 22% of the units and 22% of the revenue</strong> — and its acquisition cost is <strong>11.23% of its own revenue, against 4.5–4.6% for A and C.</strong></p>
+      <p>This restates Phase 7's finding at full-budget scale rather than at lead-generation scale, and <strong>it is worse here</strong>, because the ₹1.05 crore of NRI infrastructure lands entirely on B.</p>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">Reasoned — what to do about it, unchanged from Phases 7 and 10</span>
+      <p>B's binding constraint is the <strong>site-visit stage</strong> (18.2% qualified-to-visit, 30% below project average), <strong>not lead cost.</strong> The fix is the proxy-visit protocol, the video walkthrough capability and the institutional diaspora channels — <strong>which is what ₹1.05 crore of the ₹12.63 crore is actually buying.</strong></p>
+      <p><strong>It is expensive because it is building a capability that does not exist, not because the media is being wasted.</strong> The two call for opposite responses, and telling them apart is the whole point of splitting direct from shared.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="sec-head">
+    <div class="sec-num">§9</div>
+    <div>
+      <h2>Funnel outputs</h2>
+      <p class="dek">The recommended case over a 45-month sell window. Reconciles exactly to Phase 8 §5.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Stage</th><th class="n">Total</th><th class="n">Per month</th><th class="n">Conversion from prior</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Leads</strong></td><td class="n"><strong>78,880</strong></td><td class="n">1,753</td><td class="n">—</td></tr>
+          <tr><td><strong>Qualified leads</strong></td><td class="n"><strong>12,474</strong></td><td class="n">277</td><td class="n">15.8%</td></tr>
+          <tr><td>Consultations</td><td class="n">5,313</td><td class="n">118</td><td class="n">42.6%</td></tr>
+          <tr><td><strong>Site visits</strong></td><td class="n"><strong>2,922</strong></td><td class="n">64.9</td><td class="n">55.0%</td></tr>
+          <tr><td>Negotiations</td><td class="n">574</td><td class="n">12.8</td><td class="n">19.6%</td></tr>
+          <tr><td><strong>Bookings — marketing-sourced</strong></td><td class="n"><strong>201</strong></td><td class="n">4.5</td><td class="n">35.0%</td></tr>
+          <tr><td>Bookings — channel partner</td><td class="n">105</td><td class="n">2.3</td><td class="n">—</td></tr>
+          <tr><td>Bookings — referral</td><td class="n">70</td><td class="n">1.6</td><td class="n">—</td></tr>
+          <tr class="tot"><td><strong>Total bookings</strong></td><td class="n"><strong>376</strong></td><td class="n"><strong>8.4</strong></td><td class="n">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt" style="font-size:.86rem;color:var(--ink-3)">Consultation and negotiation are derived to sit inside Phase 7's measured gates, and remain the two stages recommended for promotion to counted CRM events.</p>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="sec-head">
+    <div class="sec-num">§10</div>
+    <div>
+      <h2>CAC, revenue contribution and ROI</h2>
+      <p class="dek">Computed against gross margin, not turnover — because dividing GDV by marketing spend produces a large number that is not a return.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="nums">
+      <div class="numcard master">
+        <div class="nc-top"><span class="nc-n">8.44</span><span class="nc-u">₹ lakh</span></div>
+        <div class="nc-b"><b>Blended CAC</b>All-in, per booking, across all 376 units and all thirteen lines.</div>
+      </div>
+      <div class="numcard">
+        <div class="nc-top"><span class="nc-n">6.27</span><span class="nc-u">per cent</span></div>
+        <div class="nc-b"><b>Of revenue</b>₹31.75 Cr against the ₹506.7 Cr target.</div>
+      </div>
+      <div class="numcard">
+        <div class="nc-top"><span class="nc-n">3.5</span><span class="nc-u">times</span></div>
+        <div class="nc-b"><b>Marketing ROI</b>On a 28% gross margin. <strong>Assumption, not data.</strong></div>
+      </div>
+      <div class="numcard">
+        <div class="nc-top"><span class="nc-n">84</span><span class="nc-u">bookings</span></div>
+        <div class="nc-b"><b>Break-even</b>Of 376. <strong>Margin of safety 4.5×.</strong></div>
+      </div>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Metric</th><th class="n">Media only</th><th class="n">All-in, whole budget</th></tr></thead>
+        <tbody>
+          <tr><td>Cost per lead</td><td class="n">₹1,298</td><td class="n">₹4,025</td></tr>
+          <tr><td>Cost per qualified lead</td><td class="n">₹8,209</td><td class="n">₹25,453</td></tr>
+          <tr><td>Cost per site visit</td><td class="n">₹35,044</td><td class="n">₹1,08,658</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt" style="font-size:.86rem;color:var(--ink-3)"><strong>The two are different questions and both get asked.</strong> <em>Media-only</em> is the number to optimise campaigns against — it is what Phase 9's "compare within a layer" rule requires. <em>All-in</em> is the number that belongs in a board pack, because it is what the project actually spends per lead.</p>
+
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">§10.1 · CAC by source — the ratio that should drive year-two reallocation</span>
+        <h5>Marketing-sourced costs 13.7× what referral costs, and carries everything the other two routes use for free</h5>
+      </div>
+      <div class="tw" style="margin:.6rem 0 0;border:0">
+        <table>
+          <thead><tr><th>Source</th><th class="n">Bookings</th><th class="n">Cost</th><th class="n">Cost per booking</th></tr></thead>
+          <tbody>
+            <tr><td>Referral</td><td class="n">70</td><td class="n">₹0.70 Cr <i>(programme)</i></td><td class="n"><strong>₹1.00 L</strong></td></tr>
+            <tr><td>Channel partner</td><td class="n">105</td><td class="n">₹3.50 Cr</td><td class="n"><strong>₹3.33 L</strong></td></tr>
+            <tr><td>Marketing-sourced</td><td class="n">201</td><td class="n">₹27.55 Cr</td><td class="n"><strong>₹13.71 L</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="figure-foot">Marketing-sourced cost is the whole budget less the referral programme and the channel-partner lines — <strong>i.e. it carries all the shared brand, site, technology and launch investment, which the other two routes benefit from without being charged for.</strong> That is why it is 13.7× referral rather than the 6.1× Phase 9 reported on lead-generation alone. <strong>The ratio is an argument for growing the cheap routes, not for defunding the expensive one that builds them.</strong></div>
+    </figure>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>§10.2 · Revenue contribution</th><th class="n">Bookings</th><th class="n">Revenue</th><th class="n">Share</th></tr></thead>
+        <tbody>
+          <tr><td>Marketing-sourced</td><td class="n">201</td><td class="n"><strong>₹270.9 Cr</strong></td><td class="n">53.5%</td></tr>
+          <tr><td>Channel partner</td><td class="n">105</td><td class="n">₹141.5 Cr</td><td class="n">27.9%</td></tr>
+          <tr><td>Referral</td><td class="n">70</td><td class="n">₹94.3 Cr</td><td class="n">18.6%</td></tr>
+          <tr class="tot"><td><strong>Total</strong></td><td class="n"><strong>376</strong></td><td class="n"><strong>₹506.7 Cr</strong></td><td class="n"><strong>100%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt" style="font-size:.86rem;color:var(--ink-3)">At the exact average ticket of <strong>₹1.3476 Cr</strong> — ₹506.7 Cr ÷ 376 — rather than the rounded ₹1.35 Cr used elsewhere for readability.</p>
+
+    <p class="stmt"><span class="tg tg-as">Assumption</span> <strong>Development gross margin of 25% / 28% / 31% of GDV, before land finance.</strong> This is a placeholder; no phase of this exercise has cost data for the project.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>§10.3 · ROI</th><th class="n">Conservative 25%</th><th class="n">Base 28%</th><th class="n">Aggressive 31%</th></tr></thead>
+        <tbody>
+          <tr><td>Gross margin</td><td class="n">₹126.7 Cr</td><td class="n">₹141.9 Cr</td><td class="n">₹157.1 Cr</td></tr>
+          <tr><td>Marketing investment</td><td class="n">₹31.75 Cr</td><td class="n">₹31.75 Cr</td><td class="n">₹31.75 Cr</td></tr>
+          <tr class="tot"><td><strong>Marketing ROI</strong></td><td class="n"><strong>3.0×</strong></td><td class="n"><strong>3.5×</strong></td><td class="n"><strong>3.9×</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The more robust statement, which does not depend on the margin assumption being right in absolute terms</span>
+      <p class="big">Marketing pays for itself at 84 of 376 bookings — 22% of the scheme. It is modelled to source 201 directly and to enable all 376.</p>
+      <p><strong>Margin of safety: 4.5×.</strong> And <strong>ROAS on gross development value is 16.0×</strong> — stated here once, with the same caveat Phase 7 attached: <strong>that is turnover per rupee of marketing, not return.</strong> Most of it is spent building what was sold.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s11">
+  <div class="sec-head">
+    <div class="sec-num">§11</div>
+    <div>
+      <h2>The assumption register</h2>
+      <p class="dek">The brief asked for assumptions to be clearly labelled. This is that label, in one place.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th><span class="tg tg-md">Market data</span> observed in this catchment</th><th class="n">Value</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>Revenue target and product mix</td><td class="n">₹506.7 Cr, 376 units</td><td>Phase 6, from the land model</td></tr>
+          <tr><td>Community revenue split</td><td class="n">A ₹126.2 · B ₹112.5 · C ₹109.2 · D ₹158.8 Cr</td><td>Phase 6 §4</td></tr>
+          <tr><td>Corridor densities used in creative</td><td class="n">52.9–113.4 units/acre</td><td>Phase 2 §5, named projects</td></tr>
+          <tr><td>The AIIMS credential</td><td class="n">—</td><td>KMV Projects built AIIMS Mangalagiri (Phase 4)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th><span class="tg tg-bm">Benchmark</span> published Indian rates, mostly from interested parties</th><th class="n">Published range</th><th class="n">Used here</th></tr></thead>
+        <tbody>
+          <tr><td>Hoardings, Guntur</td><td class="n">₹8,000 – ₹1,50,000 / month</td><td class="n">₹95,000 prime, ₹65,000 standing</td></tr>
+          <tr><td>Highway / Tier-3 outdoor</td><td class="n">₹15,000 – ₹60,000 / month</td><td class="n">—</td></tr>
+          <tr><td>Outdoor premium for prime sites</td><td class="n">+20–40%</td><td class="n">Reflected in the ₹95,000</td></tr>
+          <tr><td>Outdoor rates exclude GST, printing, mounting</td><td class="n">—</td><td class="n">₹18 L added separately</td></tr>
+          <tr><td>Real-estate CRM, India</td><td class="n">₹400 – ₹1,500 / user / month</td><td class="n"><strong>₹1,200</strong>, mid-band, deliberately</td></tr>
+          <tr><td>PR retainer, India</td><td class="n">₹40,000 – ₹5,00,000+, mid ₹2–3 L</td><td class="n"><strong>₹2.5 L / month</strong></td></tr>
+          <tr><td>Channel partner commission</td><td class="n">1–3%, luxury 2–3%</td><td class="n"><strong>2.5%</strong></td></tr>
+          <tr><td>Cost per lead by community</td><td class="n">A ₹350 · B ₹1,600 · C ₹900 · D ₹1,900</td><td class="n">Phase 7, agency-sourced</td></tr>
+          <tr><td>Site-visit-to-booking</td><td class="n">3–8% for the ₹50 L–₹3 Cr band</td><td class="n">6.9% blended</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th><span class="tg tg-as">Assumption</span> set here, with reasoning</th><th class="n">Value</th><th>Reasoning</th></tr></thead>
+        <tbody>
+          <tr><td>Performance agency fee</td><td class="n"><strong>12% of media</strong></td><td>Conservative for Indian performance retainers. <strong>No earlier phase carried it</strong></td></tr>
+          <tr><td>Brand agency retainer</td><td class="n">₹1.8 L / month</td><td>Reasoned for a single-project scope</td></tr>
+          <tr><td>Full page, Telugu daily, regional edition</td><td class="n">₹9.0 L</td><td>Reasoned; a rate card would replace it</td></tr>
+          <tr><td>Launch film production</td><td class="n">₹45 L</td><td>Aerial, single-take, colour grade</td></tr>
+          <tr><td>CGI package, 4 communities</td><td class="n">₹55 L</td><td>Exteriors and interiors</td></tr>
+          <tr><td>Experience centre, ~4,000 sq ft</td><td class="n">₹1.35 Cr</td><td>Build, AV, fit-out</td></tr>
+          <tr><td>Show home interiors</td><td class="n">₹58 L (C), ₹72 L (D)</td><td><strong>Interiors only — the shells are inventory</strong></td></tr>
+          <tr><td>Website build</td><td class="n">₹32 L</td><td>Four community sections, price sheet, RERA file, construction feed</td></tr>
+          <tr><td>US-timezone sales resource</td><td class="n">₹1.5 L / month</td><td>Two part-time people, 36 months</td></tr>
+          <tr><td>Phase split of each line</td><td class="n">See §6</td><td>Reasoned from the Phase 10 campaign shape</td></tr>
+          <tr><td>Shared-cost allocation basis</td><td class="n"><strong>Revenue share</strong></td><td>§8 states why, and what unit-count allocation would distort</td></tr>
+          <tr><td>Development gross margin</td><td class="n">25 / 28 / 31%</td><td><strong>Placeholder.</strong> No cost data exists in this exercise</td></tr>
+          <tr><td>Sell window</td><td class="n">45 months + 6 pre-launch</td><td>Phase 7 base case</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="stmt"><span class="tg tg-cv">Calculated</span> Bottom-up total · the ₹7.31 Cr gap decomposition · the four structural classes · revenue-at-risk per rupee cut · all three funding cases · phase and monthly allocation · channel and community allocation · every funnel stage · CAC · revenue contribution · ROI and break-even.</p>
+
+    <div class="warn">
+      <span class="wl">The honest weighting</span>
+      <p>Of the thirteen line items, <strong>three are anchored to published rates</strong> (outdoor, CRM, PR), <strong>one to a benchmark-derived model</strong> (performance media), <strong>one to a published commission band</strong> (channel partners), <strong>one is carried unchanged from Phase 9</strong> (the referral programme), and <strong>seven are reasoned assumptions.</strong></p>
+      <p><strong>A rate card, three vendor quotes and one agency proposal would move this budget more than any further analysis will.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-head">
+    <div class="sec-num">§12</div>
+    <div>
+      <h2>Risks</h2>
+      <p class="dek">Seven, each with the test that would settle it.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Risk</th><th>Why it matters</th><th>Test</th></tr></thead>
+        <tbody>
+          <tr><td class="n"><strong>1</strong></td><td><strong>Seven of thirteen lines are reasoned, not sourced</strong></td><td>₹13.9 Cr of the ₹31.75 Cr rests on judgement</td><td><strong>Three vendor quotes and one agency proposal</strong>, before commitment. Cheapest correction available</td></tr>
+          <tr><td class="n"><strong>2</strong></td><td><strong>The ₹24.60-per-rupee ratio holds only while CPLs hold</strong></td><td>It is the central argument against cutting</td><td>Phase 9's <strong>₹15–20 lakh pre-launch media test</strong> settles the CPLs in six weeks</td></tr>
+          <tr><td class="n"><strong>3</strong></td><td><strong>₹6.89 Cr is committed before any revenue</strong></td><td>Peak burn is 2.05× steady state, at zero income</td><td>A cash-flow item for the project funding plan, not a marketing report line</td></tr>
+          <tr><td class="n"><strong>4</strong></td><td><strong>Community B at 11.23% of its own revenue</strong></td><td>40% of the budget for 22% of the units</td><td>If B's qualified-to-visit rate does not improve toward 25% within two quarters, <strong>reduce B's inventory release rather than raise its budget</strong></td></tr>
+          <tr><td class="n"><strong>5</strong></td><td><strong>6.27% is above the 4–5% norm</strong></td><td>It will be challenged, and should be</td><td>§5.2 gives four traceable reasons. <strong>Re-base annually</strong> — it should fall from year three as referral compounds</td></tr>
+          <tr><td class="n"><strong>6</strong></td><td><strong>Show-home shells treated as inventory</strong></td><td>Understates the budget by ~₹5 Cr if the accounting view differs</td><td>Agree the treatment with finance <strong>before</strong> the budget is signed, not after</td></tr>
+          <tr><td class="n"><strong>7</strong></td><td><strong>Phase 6's prices do not hold</strong></td><td>Unchanged through Phases 6–11: <strong>31% of revenue sits in a band nobody has proven is occupied</strong></td><td>Not a budget question. <strong>No budget buys a price the market refuses</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s13">
+  <div class="sec-head">
+    <div class="sec-num">§13</div>
+    <div>
+      <h2>Carry-forward</h2>
+      <p class="dek">₹31.75 crore — 6.27% of the ₹506.7 crore target, ₹8.44 lakh per booking.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Cut</th><th>Headline</th></tr></thead>
+        <tbody>
+          <tr><td><strong>By line item</strong></td><td>Performance ₹11.02 Cr · Sales enablement ₹3.62 Cr · Channel partners ₹3.50 Cr · Brand ₹2.55 Cr · Launch ₹2.20 Cr · Outdoor ₹2.13 Cr · Content ₹1.99 Cr · NRI ₹1.05 Cr · Technology ₹0.91 Cr · Events ₹0.82 Cr · PR ₹0.75 Cr · Referral ₹0.70 Cr · CRM ₹0.51 Cr</td></tr>
+          <tr><td><strong>By structure</strong></td><td>Committed capital ₹7.24 Cr · pay-on-performance ₹3.34 Cr · variable media ₹15.70 Cr · semi-fixed ₹5.47 Cr</td></tr>
+          <tr><td><strong>By phase</strong></td><td>Pre-launch ₹6.89 Cr (22%) · launch ₹6.40 Cr (20%) · post-launch ₹18.46 Cr (58%)</td></tr>
+          <tr><td><strong>By community</strong></td><td>A ₹5.70 Cr · B ₹12.63 Cr · C ₹5.04 Cr · D ₹8.38 Cr</td></tr>
+          <tr><td><strong>Media vs not</strong></td><td><strong>Paid media 46% · everything else 54%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">What it delivers</span>
+      <p class="big">78,880 leads → 12,474 qualified → 2,922 site visits → 376 bookings → ₹506.7 crore.</p>
+      <p>CAC ₹8.44 L. <strong>ROI 3.5× on a 28% gross margin, break-even at 84 of 376 bookings, margin of safety 4.5×.</strong></p>
+    </div>
+
+    <h3 style="font-family:var(--f-display);font-size:1.15rem;font-weight:600;margin:2rem 0 .3rem;color:var(--ink)">Five findings a percentage-of-revenue rule would have concealed</h3>
+    <div class="cards">
+      <div class="card">
+        <h6>1 · Bottom-up exceeds top-down by 28%</h6>
+        <ul><li>And the gap sits entirely in things that are not media: <strong>the launch spread invisibly, the agency fee nobody budgeted, the NRI infrastructure with no home, the technology build with no line, the production that fills the media.</strong></li></ul>
+      </div>
+      <div class="card">
+        <h6>2 · 54% of the budget is not media</h6>
+        <ul><li>A budget conversation held in media terms is <strong>discussing less than half the money</strong> — and the half it skips contains every line that must be right before the media runs.</li></ul>
+      </div>
+      <div class="card">
+        <h6>3 · Only ₹21.17 crore is genuinely flexible</h6>
+        <ul><li>₹7.24 crore is <strong>committed before revenue exists.</strong></li>
+        <li>₹3.34 crore <strong>costs nothing until a unit sells.</strong></li>
+        <li>Negotiating over ₹31.75 crore is negotiating over the wrong number.</li></ul>
+      </div>
+      <div class="card">
+        <h6>4 · Every ₹1 cut from performance media risks ₹24.60</h6>
+        <ul><li>Cutting to Phase 9's ₹25.68 crore saves ₹6.50 crore and risks ₹74.2 crore.</li>
+        <li><strong>That is the answer to "why not less?"</strong></li></ul>
+      </div>
+      <div class="card">
+        <h6>5 · Peak burn is pre-launch, at 2.05× the steady state</h6>
+        <ul><li>And it lands when revenue is <strong>zero.</strong></li>
+        <li>A flat monthly average conceals it entirely — <strong>and a percentage of zero revenue is zero.</strong></li></ul>
+      </div>
+      <div class="card">
+        <h6>And one the method caught on itself</h6>
+        <ul><li>The first reconciliation <strong>did not sum to the gap it claimed to explain</strong>, which is how the dropped referral programme surfaced.</li>
+        <li><strong>A variance analysis whose rows do not add to the variance is not evidence.</strong></li></ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <span class="wl">Open</span>
+      <p>The seven risks in §12 — of which <strong>risk 1 is the cheapest and most valuable correction available</strong>: three vendor quotes and one agency proposal would move this budget more than any further analysis will.</p>
+      <p>And risk 7 remains what it has been since Phase 6: <strong>31% of revenue sits in a ₹2.2–2.8 crore band nobody has proven is occupied.</strong> Not a budget question, and larger than all of them.</p>
+    </div>
+
+    <p style="font-size:.8rem;color:var(--ink-3);margin-top:2.5rem;border-top:1px solid var(--rule);padding-top:1.2rem;max-width:none">
+      Phase 11 of a sequential research and strategy exercise. Hypothetical project; not represented as an actual KMV Spaces development or budget. Phases 1–10 precede this document. Rupee figures are a planning model, not a quotation: three of thirteen line items are anchored to published Indian rate benchmarks, one to a benchmark-derived funnel model, one to a published commission band, one is carried unchanged from Phase 9, and seven are reasoned assumptions itemised in §11. Segment behaviour throughout comes from Phase 5, which was reconstructed without primary buyer research.
+    </p>
+  </div>
+</section>
+
+</main>
+</div>

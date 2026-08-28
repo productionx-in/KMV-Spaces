@@ -41,7 +41,7 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 | 8 | [`08-marketing-funnel.md`](08-marketing-funnel.md) — twelve-stage journey, four layers, four journeys (also [`.html`](08-marketing-funnel.html)) | **Complete** |
 | 9 | [`09-channel-strategy.md`](09-channel-strategy.md) — twenty-two channels tiered, five cut, ₹25.68 Cr allocated (also [`.html`](09-channel-strategy.html)) | **Complete** |
 | 10 | [`10-creative-strategy.md`](10-creative-strategy.md) — master idea, narratives, creative system, campaign (also [`.html`](10-creative-strategy.html)) | **Complete** |
-| 11 | [`11-marketing-budget.md`](11-marketing-budget.md) — bottom-up investment model, twelve line items, funnel and ROI (also [`.html`](11-marketing-budget.html)) | **Complete** |
+| 11 | [`11-marketing-budget.md`](11-marketing-budget.md) — bottom-up investment model, thirteen line items, funnel and ROI (also [`.html`](11-marketing-budget.html)) | **Complete** |
 
 ## Method notes
 
@@ -49,6 +49,14 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 RECOMMENDATION, and records unverifiable items as "Insufficient public evidence" rather than
 inferring weakness from absence. A private LLP is not obliged to publish financials, headcount or
 spend, and their absence is not a finding.
+
+**Bottom-up budgeting, and forcing it to reconcile.** Phase 11 prices each budget line as
+*quantity × unit cost* and only then compares the total to Phase 9's top-down allocation. The two
+disagree by 28% (₹32.99 Cr against ₹25.68 Cr), and the gap sits almost entirely in things that are
+not media. Requiring the variance table to sum to the variance is what caught a dropped line: the
+₹0.70 Cr referral programme had fallen out of the build while the CAC table still charged it against
+70 referral bookings. A decomposition that does not add up to the difference it explains is not a
+decomposition — see Phase 11 §2.2.
 
 **Bottom-up pricing.** Phase 2 derives every ₹/sq ft figure as *published ticket price ÷ published unit size*
 for named, RERA-registered projects, rather than quoting locality averages — because published
