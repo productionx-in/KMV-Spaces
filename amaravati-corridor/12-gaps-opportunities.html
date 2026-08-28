@@ -1,0 +1,1837 @@
+<title>Thirty-Six Gaps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F3F4F1;
+  --surface:#FBFCFA;
+  --surface-2:#EDEFEA;
+  --ink:#12211F;
+  --ink-2:#3D4B48;
+  --ink-3:#6B7876;
+  --rule:#D6DAD3;
+  --rule-2:#C2C8BF;
+  --brand:#0B4F55;
+  --brand-soft:#E2EEEE;
+  --accent:#A97425;
+  --accent-soft:#F4EADA;
+  --series:#00929E;
+  --emphasis:#A97425;
+  --chart-surface:#FBFCFA;
+  --good:#1B6B4A;
+  --shadow:0 1px 2px rgba(18,33,31,.05), 0 8px 24px -16px rgba(18,33,31,.22);
+
+  --f-display:"Spectral", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure:68ch;
+  --rail:16rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#0E1614;
+    --surface:#151F1D;
+    --surface-2:#1C2725;
+    --ink:#E8EDEA;
+    --ink-2:#B6C1BD;
+    --ink-3:#8A9793;
+    --rule:#2A3634;
+    --rule-2:#3A4744;
+    --brand:#5FBEC5;
+    --brand-soft:#16302F;
+    --accent:#D2A247;
+    --accent-soft:#2C2418;
+    --series:#1FA8B2;
+    --emphasis:#C08329;
+    --chart-surface:#151F1D;
+    --good:#4FA97F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#0E1614;
+  --surface:#151F1D;
+  --surface-2:#1C2725;
+  --ink:#E8EDEA;
+  --ink-2:#B6C1BD;
+  --ink-3:#8A9793;
+  --rule:#2A3634;
+  --rule-2:#3A4744;
+  --brand:#5FBEC5;
+  --brand-soft:#16302F;
+  --accent:#D2A247;
+  --accent-soft:#2C2418;
+  --series:#1FA8B2;
+  --emphasis:#C08329;
+  --chart-surface:#151F1D;
+  --good:#4FA97F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.rail{
+  grid-column:1;
+  position:sticky;top:0;align-self:start;
+  height:100vh;overflow-y:auto;
+  padding:2.5rem 1.25rem 3rem 1.75rem;
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main{grid-column:2;min-width:0;padding:0 clamp(1.25rem,4vw,4rem) 6rem}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;height:auto;grid-column:1;border-right:0;border-bottom:1px solid var(--rule);padding:1.75rem 1.25rem}
+  .main{grid-column:1;padding:0 1.25rem 4rem}
+}
+
+/* ---------- rail contents ---------- */
+.rail-mark{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.rail-mark strong{display:block;color:var(--brand);font-weight:600;letter-spacing:.1em;margin-top:.3rem}
+.toc{display:flex;flex-direction:column;gap:.1rem}
+.toc a{
+  display:grid;grid-template-columns:2.1rem 1fr;gap:.4rem;
+  text-decoration:none;color:var(--ink-2);
+  font-size:.83rem;line-height:1.35;padding:.34rem .4rem .34rem 0;border-radius:4px;
+}
+.toc a:hover{color:var(--brand)}
+.toc a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);padding-top:.08rem}
+.toc a:hover .n{color:var(--accent)}
+.rail h4{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 .6rem;font-weight:500}
+.legend-stack{display:flex;flex-direction:column;gap:.38rem;align-items:flex-start}
+
+/* ---------- grade chips ---------- */
+.g{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:.16rem .46rem;border-radius:3px;white-space:nowrap;
+  display:inline-block;border:1px solid transparent;line-height:1.5;
+}
+.g-1{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.g-2{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.g-3{background:transparent;color:var(--brand);border-color:var(--brand)}
+.g-4{background:transparent;color:var(--ink-3);border-color:var(--rule-2)}
+.g-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.g-6{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{padding:3.5rem 0 2rem;border-bottom:2px solid var(--brand);margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem;font-weight:500}
+.masthead h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.06;letter-spacing:-.018em;
+  margin:0 0 .5rem;text-wrap:balance;color:var(--ink);
+}
+.masthead .sub{
+  font-family:var(--f-display);font-weight:400;font-style:italic;
+  font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:1.35;color:var(--ink-2);
+  margin:0 0 1.75rem;max-width:34ch;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:0 2.5rem;font-family:var(--f-mono);font-size:.73rem;color:var(--ink-3);letter-spacing:.02em}
+.meta-row span strong{color:var(--ink-2);font-weight:500}
+
+.disclaimer{
+  margin:1.75rem 0 0;padding:.9rem 1.1rem;
+  border:1px dashed var(--accent);border-radius:4px;background:var(--accent-soft);
+  font-size:.86rem;line-height:1.55;color:var(--ink-2);max-width:var(--measure);
+}
+.disclaimer strong{color:var(--accent);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule);scroll-margin-top:1rem}
+section:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.5rem;margin-bottom:1.4rem;align-items:start}
+.sec-num{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;padding-top:.55rem;letter-spacing:.04em}
+.sec-head h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.1vw,2.05rem);
+  line-height:1.16;letter-spacing:-.012em;margin:0;text-wrap:balance;color:var(--ink);
+}
+.sec-head .dek{margin:.5rem 0 0;color:var(--ink-2);font-size:.95rem;max-width:var(--measure)}
+h3{
+  font-family:var(--f-body);font-weight:600;font-size:1.02rem;letter-spacing:.005em;
+  margin:2.2rem 0 .7rem;color:var(--brand);max-width:var(--measure);text-wrap:balance;
+}
+h3:first-child{margin-top:0}
+h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:1.6rem 0 .6rem;font-weight:500}
+p{margin:0 0 1rem;max-width:var(--measure)}
+.body{display:flex;flex-direction:column;gap:0}
+ul,ol{max-width:var(--measure);margin:0 0 1rem;padding-left:1.2rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- callouts ---------- */
+.finding{
+  margin:1.6rem 0;padding:1.25rem 1.4rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;
+  box-shadow:var(--shadow);max-width:var(--measure);
+}
+.finding .lbl{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem;font-weight:500}
+.finding p{margin:0 0 .7rem;max-width:none}
+.finding p:last-child{margin-bottom:0}
+.finding .big{font-family:var(--f-display);font-size:1.16rem;line-height:1.42;color:var(--ink);font-weight:500}
+
+.note{
+  margin:1.4rem 0;padding:.95rem 1.15rem;background:var(--surface-2);
+  border-radius:4px;font-size:.9rem;line-height:1.58;color:var(--ink-2);max-width:var(--measure);
+}
+.note p{margin:0 0 .6rem;max-width:none;font-size:inherit}
+.note p:last-child{margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.48;min-width:min(100%,34rem)}
+th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.col-win{background:var(--brand-soft)}
+tbody tr:hover .col-win{background:var(--brand-soft);filter:brightness(.97)}
+.tot td{border-top:2px solid var(--rule-2);font-weight:600;background:var(--surface-2)}
+.mk{font-family:var(--f-mono);font-weight:600}
+.mk-y{color:var(--good)}
+.mk-n{color:var(--accent)}
+caption{caption-side:bottom;text-align:left;padding:.6rem .8rem;font-size:.76rem;color:var(--ink-3);border-top:1px solid var(--rule);font-family:var(--f-mono);line-height:1.5}
+</style><style>
+/* ---------- chart ---------- */
+.figure{
+  margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);
+  border-radius:5px;padding:1.4rem 1.5rem 1.15rem;box-shadow:var(--shadow);
+}
+.figure-head{margin-bottom:.35rem}
+.figure-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.figure-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.figure-head .sub{font-size:.83rem;color:var(--ink-2);margin:.35rem 0 0}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin:.9rem 0 1.15rem;font-size:.76rem;color:var(--ink-2);font-family:var(--f-mono)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:.42rem}
+.swatch{width:.85rem;height:.72rem;border-radius:2px;flex:none}
+.swatch.obs{background:var(--series)}
+.swatch.req{background:transparent;border:1.5px dashed var(--emphasis)}
+.bars{display:flex;flex-direction:column;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.bar-label b{display:block;color:var(--ink);font-weight:600}
+.bar-track{position:relative;height:1.55rem;display:flex;align-items:center;gap:.55rem}
+.bar-fill{height:1.05rem;border-radius:0 4px 4px 0;background:var(--series);flex:none;transition:filter .15s ease}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+.bar-fill.req{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.bar-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.bar-val .d{color:var(--ink-3);font-weight:400}
+.axis{
+  display:grid;grid-template-columns:minmax(7.5rem,12.5rem) minmax(0,1fr);gap:.7rem;
+  margin-top:.55rem;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.axis .scale{
+  display:flex;justify-content:space-between;
+  padding-top:.45rem;border-top:1px solid var(--rule);
+}
+.figure-foot{margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.76rem;color:var(--ink-3);line-height:1.5;font-family:var(--f-mono)}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s ease, transform .12s ease;
+  background:var(--ink);color:var(--ground);border-radius:4px;padding:.42rem .6rem;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.45;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+.tip.on{opacity:1;transform:translateY(0)}
+.tip .t2{display:block;color:var(--ink-3)}
+
+/* ---------- score bars in matrix ---------- */
+.scorebar{display:flex;align-items:center;gap:.5rem;justify-content:flex-end}
+.scorebar .track{width:3.6rem;height:.42rem;background:var(--surface-2);border-radius:3px;overflow:hidden;flex:none;border:1px solid var(--rule)}
+.scorebar .fill{height:100%;background:var(--series);border-radius:0 3px 3px 0}
+.scorebar .fill.top{background:var(--brand)}
+
+/* ---------- params / gaps grid ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem}
+.card h6{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;font-weight:500}
+.card ul{margin:0;padding-left:1.05rem;font-size:.86rem;line-height:1.55}
+.card li{margin-bottom:.42rem}
+.card li:last-child{margin-bottom:0}
+
+/* ---------- fact ledger ---------- */
+
+/* ---------- closing ---------- */
+.close{padding:2.75rem 0 0;border-top:2px solid var(--brand)}
+.close p{font-family:var(--f-display);font-style:italic;color:var(--ink-2);font-size:.95rem}
+</style><style>
+/* ---------- Phase 4: evidence labels ---------- */
+.lb{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .42rem;border-radius:3px;white-space:nowrap;display:inline-block;border:1px solid transparent;
+  line-height:1.55;vertical-align:.06em}
+.lb-f{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-o{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-i{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+.lb-r{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.lb-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+.stmt{margin:0 0 1rem;max-width:var(--measure)}
+.stmt .lb{margin-right:.5rem}
+.none{color:var(--ink-3);font-style:italic}
+
+.sev-h{color:var(--accent);font-weight:600;font-family:var(--f-mono);font-size:.72rem}
+.sev-m{color:var(--ink-2);font-family:var(--f-mono);font-size:.72rem}
+.sev-l{color:var(--ink-3);font-family:var(--f-mono);font-size:.72rem}
+
+/* ---------- diagram ---------- */
+figure.dia{margin:1.9rem 0;background:var(--chart-surface);border:1px solid var(--rule);border-radius:5px;
+  padding:1.4rem 1.5rem 1.1rem;box-shadow:var(--shadow)}
+figure.dia svg{display:block;width:100%;max-width:100%;height:auto;color:var(--ink-2)}
+figure.dia figcaption{margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--rule);
+  font-size:.79rem;color:var(--ink-3);line-height:1.5}
+.dia-head{margin-bottom:1rem}
+.dia-head .kicker{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.4rem}
+.dia-head h5{font-family:var(--f-display);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;color:var(--ink);text-wrap:balance}
+.dia-scroll{overflow-x:auto}
+.dia-scroll > svg{min-width:34rem}
+
+/* ---------- rate bars ---------- */
+.rrow{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:3px 0;border-radius:3px}
+.rrow:hover{background:var(--surface-2)}
+.rname{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.rname b{display:block;color:var(--ink);font-weight:600}
+.rtrack{height:1.4rem;display:flex;align-items:center;gap:.55rem}
+.rfill{height:.95rem;border-radius:0 4px 4px 0;background:var(--series);flex:none}
+.rfill.other{background:transparent;border:1.5px solid var(--series);border-left:0;box-sizing:border-box}
+.rfill.target{background:transparent;border:1.5px dashed var(--emphasis);border-left:0;box-sizing:border-box}
+.rval{font-family:var(--f-mono);font-size:.77rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+</style><style>
+/* ---------- Phase 5 components ---------- */
+
+/* Evidence labels — form, not hue */
+.lb-est{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.lb-app{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.lb-rsn{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+
+/* Priority chips */
+.pri{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.14rem .48rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;border:1px solid transparent}
+.pri-h{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.pri-s{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.pri-l{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Segment profile card */
+.seg{margin:2rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.seg-head{display:grid;grid-template-columns:3.1rem minmax(0,1fr);gap:.9rem;align-items:start;
+  padding:1.05rem 1.3rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.seg-id{font-family:var(--f-mono);font-size:1.28rem;font-weight:600;color:var(--brand);
+  line-height:1;padding-top:.12rem;letter-spacing:-.02em}
+.seg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.08rem;line-height:1.28;
+  margin:0 0 .3rem;color:var(--ink);text-wrap:balance}
+.seg-head .seg-line{font-size:.85rem;color:var(--ink-2);margin:0 0 .6rem;font-style:italic}
+.seg-stats{display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.seg-stats b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.seg-size{padding:.8rem 1.3rem;border-bottom:1px solid var(--rule);font-size:.82rem;
+  line-height:1.55;color:var(--ink-2);background:var(--surface)}
+.seg-size strong{color:var(--ink)}
+
+/* 20-attribute grid */
+.attr{display:grid;grid-template-columns:minmax(8rem,10.5rem) minmax(0,1fr)}
+.attr > dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);padding:.6rem .8rem .6rem 1.3rem;border-top:1px solid var(--rule);
+  line-height:1.45;font-weight:500}
+.attr > dd{margin:0;padding:.6rem 1.3rem .6rem .3rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.attr > dd strong{color:var(--ink);font-weight:600}
+.attr > dt:first-of-type,.attr > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .attr{grid-template-columns:minmax(0,1fr)}
+  .attr > dt{padding:.6rem 1.1rem .1rem;border-top:1px solid var(--rule)}
+  .attr > dd{padding:.15rem 1.1rem .65rem;border-top:0}
+  .attr > dt:first-of-type + dd{border-top:0}
+}
+.seg-close{padding:.95rem 1.3rem;background:var(--surface-2);border-top:1px solid var(--rule);
+  font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.seg-close .lbl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.4rem;font-weight:600}
+.seg-close strong{color:var(--ink)}
+.seg-close p{margin:0 0 .55rem;max-width:none}
+.seg-close p:last-child{margin-bottom:0}
+
+/* Cash-gate escalation */
+.gate{display:flex;flex-direction:column;gap:.55rem}
+.gate-row{display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:.8rem;align-items:center}
+.gate-name{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-2);line-height:1.3}
+.gate-name b{display:block;color:var(--ink);font-weight:600;font-size:.82rem}
+.gate-track{display:flex;align-items:center;gap:.5rem;height:2rem}
+.gate-cash{height:1.3rem;background:var(--series);border-radius:0 3px 3px 0;flex:none}
+.gate-inc{height:1.3rem;border:1.5px dashed var(--emphasis);border-left:0;border-radius:0 3px 3px 0;
+  flex:none;box-sizing:border-box}
+.gate-val{font-family:var(--f-mono);font-size:.76rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap}
+.gate-val i{font-style:normal;color:var(--ink-3)}
+
+/* Hypothesis verdict list */
+.hyp{display:flex;flex-direction:column;gap:0;margin:1.5rem 0;border:1px solid var(--rule);
+  border-radius:5px;background:var(--surface);overflow:hidden}
+.hyp-row{display:grid;grid-template-columns:2.1rem minmax(7rem,11rem) minmax(0,1fr);gap:.75rem;
+  padding:.75rem 1.05rem;border-top:1px solid var(--rule);align-items:start}
+.hyp-row:first-child{border-top:0}
+.hyp-row .num{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;padding-top:.1rem}
+.hyp-name{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.4}
+.hyp-name .v{display:block;margin-top:.3rem}
+.hyp-why{font-size:.83rem;line-height:1.55;color:var(--ink-2)}
+.hyp-why strong{color:var(--ink)}
+.vd{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:.1rem .38rem;border-radius:3px;display:inline-block;line-height:1.5}
+.vd-y{background:var(--brand);color:var(--surface)}
+.vd-p{background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand)}
+.vd-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+@media (max-width:640px){
+  .hyp-row{grid-template-columns:2.1rem minmax(0,1fr);row-gap:.35rem}
+  .hyp-why{grid-column:2}
+}
+
+/* Revenue-by-segment bars, priority encoded by fill treatment */
+.rev-row{display:grid;grid-template-columns:minmax(8.5rem,13rem) minmax(0,1fr);gap:.7rem;
+  align-items:center;padding:3px 0}
+.rev-label{font-size:.8rem;line-height:1.28;color:var(--ink-2)}
+.rev-label b{display:block;color:var(--ink);font-weight:600}
+.rev-track{position:relative;height:1.6rem;display:flex;align-items:center;gap:.55rem}
+.rev-fill{height:1.1rem;border-radius:0 4px 4px 0;flex:none;box-sizing:border-box}
+.rev-fill.p-h{background:var(--series)}
+.rev-fill.p-s{background:var(--brand-soft);border:1px solid var(--series);border-left:0}
+.rev-fill.p-l{background:transparent;border:1.5px dashed var(--rule-2);border-left:0}
+.rev-val{font-family:var(--f-mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:500}
+.rev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+td i{color:var(--ink-3);font-style:normal;font-size:.94em}
+
+/* Community mapping strip */
+.commap{display:grid;grid-template-columns:repeat(auto-fit,minmax(13.5rem,1fr));gap:.85rem;margin:1.5rem 0}
+.cm{background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden;
+  display:flex;flex-direction:column}
+.cm-top{padding:.75rem .95rem;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.cm-top h6{font-family:var(--f-display);font-size:1rem;font-weight:600;margin:0;color:var(--ink)}
+.cm-top .cm-t{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3);display:block;margin-top:.22rem;
+  font-variant-numeric:tabular-nums}
+.cm-body{padding:.8rem .95rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.cm-body .cm-h{display:block;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 .28rem;font-weight:500}
+.cm-body p{margin:0 0 .7rem;max-width:none}
+.cm-body p:last-child{margin-bottom:0}
+.cm-body strong{color:var(--ink);font-weight:600}
+.cm-win{padding:.7rem .95rem;border-top:1px solid var(--rule);background:var(--accent-soft);
+  font-size:.8rem;line-height:1.45;color:var(--ink-2)}
+.cm-win b{color:var(--accent);font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;display:block;margin-bottom:.25rem;font-weight:600}
+</style><style>
+/* ---------- Phase 7 components ---------- */
+/* Classification tags — form, not hue */
+.tg{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .4rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent;vertical-align:.06em}
+.tg-md{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.tg-bm{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.tg-as{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+.tg-cv{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+
+/* Scenario columns */
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.85rem;margin:1.5rem 0}
+.sc{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);
+  display:flex;flex-direction:column}
+.sc.pick{border-color:var(--accent);box-shadow:var(--shadow)}
+.sc-top{padding:.8rem 1rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.sc.pick .sc-top{background:var(--accent-soft)}
+.sc-top h6{font-family:var(--f-display);font-size:1.05rem;font-weight:600;margin:0;color:var(--ink)}
+.sc-top span{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);display:block;margin-top:.24rem}
+.sc.pick .sc-top span{color:var(--accent)}
+.sc-body{padding:.35rem 0;flex:1}
+.sc-l{display:flex;justify-content:space-between;gap:.7rem;padding:.4rem 1rem;font-size:.82rem;
+  border-top:1px solid var(--rule);color:var(--ink-2);line-height:1.4}
+.sc-l:first-child{border-top:0}
+.sc-l b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:600}
+.sc-l.hi{background:var(--surface-2)}
+
+/* Funnel steps */
+.fn{display:flex;flex-direction:column;gap:.3rem;margin:.5rem 0}
+.fn-step{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem;align-items:center}
+.fn-name{font-size:.83rem;line-height:1.3;color:var(--ink-2);text-align:right}
+.fn-name b{display:block;color:var(--ink);font-weight:600}
+.fn-bar{height:2.15rem;display:flex;align-items:center;justify-content:flex-start;
+  background:var(--series);border-radius:3px;padding:0 .7rem;color:var(--surface);
+  font-family:var(--f-mono);font-size:.8rem;font-variant-numeric:tabular-nums;font-weight:600;
+  white-space:nowrap;min-width:5.5rem}
+.fn-bar.lite{background:var(--brand-soft);color:var(--brand);border:1px solid var(--series)}
+.fn-arrow{display:grid;grid-template-columns:minmax(7rem,9.5rem) minmax(0,1fr);gap:.8rem}
+.fn-rate{font-family:var(--f-mono);font-size:.68rem;color:var(--accent);letter-spacing:.04em;padding:.05rem 0 .05rem .7rem}
+.fn-rate::before{content:"↓ ";opacity:.7}
+
+/* Metric grid */
+.mx{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.7rem;margin:1.3rem 0}
+.mx > div{border:1px solid var(--rule);border-radius:5px;padding:.75rem .9rem;background:var(--surface)}
+.mx .k{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.35rem}
+.mx .v{font-family:var(--f-display);font-size:1.5rem;font-weight:600;color:var(--ink);line-height:1;
+  font-variant-numeric:tabular-nums}
+.mx .s{font-size:.75rem;color:var(--ink-3);margin-top:.3rem;line-height:1.4;display:block}
+.mx .v.acc{color:var(--accent)}
+
+/* Warning callout */
+.warn{margin:1.5rem 0;padding:1.1rem 1.3rem;background:var(--surface);border:1px solid var(--accent);
+  border-left:3px solid var(--accent);border-radius:4px;max-width:var(--measure)}
+.warn .wl{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.5rem;font-weight:600}
+.warn p{margin:0 0 .65rem;max-width:none;font-size:.92rem;line-height:1.6}
+.warn p:last-child{margin-bottom:0}
+.warn strong{color:var(--ink)}
+</style><style>
+/* ---------- Phase 8 components ---------- */
+/* Layer chips */
+.ly{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.13rem .45rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent}
+.ly-b{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ly-d{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.ly-s{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.ly-a{background:transparent;color:var(--accent);border:1px dashed var(--accent)}
+
+/* Counted vs estimated */
+.ct{font-family:var(--f-mono);font-size:.56rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:.1rem .36rem;border-radius:3px;display:inline-block;line-height:1.5;border:1px solid transparent}
+.ct-y{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.ct-n{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2)}
+
+/* Stage card */
+.stg{margin:1.5rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.stg-head{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:.85rem;align-items:start;
+  padding:.9rem 1.2rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.stg-n{font-family:var(--f-mono);font-size:1.2rem;font-weight:600;color:var(--brand);line-height:1;padding-top:.1rem}
+.stg-head h4{font-family:var(--f-display);font-weight:600;font-size:1.05rem;line-height:1.25;margin:0 0 .35rem;color:var(--ink)}
+.stg-tags{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center}
+.stg-note{font-size:.82rem;color:var(--ink-2);font-style:italic;margin:.4rem 0 0;line-height:1.45}
+.sg{display:grid;grid-template-columns:minmax(7rem,9rem) minmax(0,1fr)}
+.sg > dt{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.55rem .7rem .55rem 1.2rem;border-top:1px solid var(--rule);line-height:1.45;font-weight:500}
+.sg > dd{margin:0;padding:.55rem 1.2rem .55rem .25rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.sg > dd strong{color:var(--ink);font-weight:600}
+.sg > dt:first-of-type,.sg > dt:first-of-type + dd{border-top:0}
+@media (max-width:640px){
+  .sg{grid-template-columns:minmax(0,1fr)}
+  .sg > dt{padding:.55rem 1.05rem .1rem;border-top:1px solid var(--rule)}
+  .sg > dd{padding:.1rem 1.05rem .6rem;border-top:0}
+  .sg > dt:first-of-type + dd{border-top:0}
+}
+
+/* Two-column compare */
+.cmp2{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.cmp2 > div{border:1px solid var(--rule);border-radius:5px;padding:.9rem 1.05rem;background:var(--surface)}
+.cmp2 h6{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 .55rem;font-weight:600}
+.cmp2 p{margin:0 0 .55rem;font-size:.86rem;line-height:1.55;max-width:none;color:var(--ink-2)}
+.cmp2 p:last-child{margin-bottom:0}
+.cmp2 strong{color:var(--ink)}
+
+/* Layer band header */
+.lyband{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:2.3rem 0 .3rem;
+  padding:.7rem 1rem;border-radius:5px;background:var(--surface-2);border:1px solid var(--rule)}
+.lyband h3{margin:0;font-family:var(--f-display);font-size:1.12rem;font-weight:600;color:var(--ink)}
+.lyband .lb-meta{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.03em}
+.lyband .lb-meta b{color:var(--ink)}
+
+/* Journey strip */
+.jr{margin:1.3rem 0;border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface)}
+.jr-top{padding:.8rem 1.05rem;border-bottom:1px solid var(--rule);background:var(--surface-2);
+  display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:baseline}
+.jr-top h5{margin:0;font-family:var(--f-display);font-size:1.02rem;font-weight:600;color:var(--ink)}
+.jr-top .jm{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3)}
+.jr-top .jm b{color:var(--ink)}
+.jr-flow{padding:.85rem 1.05rem;display:flex;flex-wrap:wrap;gap:.3rem;align-items:center;
+  border-bottom:1px solid var(--rule)}
+.jr-node{font-family:var(--f-mono);font-size:.66rem;padding:.22rem .5rem;border-radius:3px;
+  background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand);white-space:nowrap}
+.jr-node.skip{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2);text-decoration:line-through}
+.jr-node.key{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.jr-sep{color:var(--ink-3);font-size:.75rem}
+.jr-body{padding:.85rem 1.05rem;font-size:.86rem;line-height:1.58;color:var(--ink-2)}
+.jr-body strong{color:var(--ink)}
+.jr-body p{margin:0 0 .6rem;max-width:none}
+.jr-body p:last-child{margin-bottom:0}
+
+/* Leverage bars */
+.lev-row{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:.7rem;align-items:center;padding:4px 0}
+.lev-lab{font-size:.82rem;line-height:1.3;color:var(--ink-2)}
+.lev-lab b{display:block;color:var(--ink);font-weight:600}
+.lev-track{height:1.7rem;display:flex;align-items:center;gap:.55rem}
+.lev-fill{height:1.2rem;background:var(--brand-soft);border:1px solid var(--series);border-radius:0 4px 4px 0;flex:none}
+.lev-fill.top{background:var(--series);border-color:var(--series)}
+.lev-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:500}
+.lev-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+</style><style>
+/* ---------- Phase 9 components ---------- */
+/* Tier chips — form, not hue */
+.tr{font-family:var(--f-mono);font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.13rem .45rem;border-radius:3px;white-space:nowrap;display:inline-block;line-height:1.5;
+  border:1px solid transparent}
+.tr-1{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.tr-2{background:var(--brand);color:var(--surface);border-color:var(--brand)}
+.tr-3{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.tr-4{background:transparent;color:var(--ink-2);border:1px solid var(--rule-2)}
+.tr-5{background:transparent;color:var(--ink-3);border:1px dashed var(--rule-2);text-decoration:line-through}
+
+/* Channel card */
+.ch{margin:1.4rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  box-shadow:var(--shadow);overflow:hidden}
+.ch-head{padding:.85rem 1.15rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.ch-head h4{font-family:var(--f-display);font-weight:600;font-size:1.04rem;line-height:1.25;margin:0 0 .4rem;color:var(--ink)}
+.ch-head h4 .sp{font-family:var(--f-mono);font-size:.78rem;font-weight:500;color:var(--accent);margin-left:.5rem;white-space:nowrap}
+.ch-tags{display:flex;flex-wrap:wrap;gap:.35rem .5rem;align-items:center}
+.cg{display:grid;grid-template-columns:minmax(6.5rem,8.5rem) minmax(0,1fr)}
+.cg > dt{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);padding:.5rem .7rem .5rem 1.15rem;border-top:1px solid var(--rule);line-height:1.45;font-weight:500}
+.cg > dd{margin:0;padding:.5rem 1.15rem .5rem .25rem;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.cg > dd strong{color:var(--ink)}
+.cg > dt:first-of-type,.cg > dt:first-of-type + dd{border-top:0}
+.cg > dt.neg{color:var(--accent)}
+@media (max-width:640px){
+  .cg{grid-template-columns:minmax(0,1fr)}
+  .cg > dt{padding:.5rem 1rem .1rem;border-top:1px solid var(--rule)}
+  .cg > dd{padding:.1rem 1rem .55rem;border-top:0}
+  .cg > dt:first-of-type + dd{border-top:0}
+}
+
+/* Tier band */
+.trband{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:2.3rem 0 .3rem;
+  padding:.7rem 1rem;border-radius:5px;background:var(--surface-2);border:1px solid var(--rule)}
+.trband h3{margin:0;font-family:var(--f-display);font-size:1.1rem;font-weight:600;color:var(--ink)}
+.trband .tb-meta{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.trband .tb-meta b{color:var(--ink)}
+
+/* Budget treemap-ish strip */
+.bud{display:flex;flex-direction:column;gap:.5rem;margin:.4rem 0}
+.bud-lay{display:flex;height:2.6rem;border-radius:4px;overflow:hidden;border:1px solid var(--rule-2)}
+.bud-lay > div{display:flex;align-items:center;justify-content:center;min-width:0;padding:0 .3rem;
+  border-right:1px solid var(--rule-2);font-family:var(--f-mono);font-size:.63rem;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.bud-lay > div:last-child{border-right:0}
+.bud-name{display:flex;justify-content:space-between;align-items:baseline;gap:.7rem;
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.bud-name b{color:var(--ink);font-size:.78rem}
+.bd-1{background:var(--brand-soft);color:var(--brand)}
+.bd-2{background:var(--series);color:var(--surface)}
+.bd-3{background:var(--accent-soft);color:var(--accent)}
+.bd-4{background:var(--accent);color:var(--surface)}
+.bd-5{background:var(--surface-2);color:var(--ink-2)}
+
+/* Trap callout */
+.trap{margin:1.5rem 0;padding:1.1rem 1.3rem;background:var(--accent-soft);border:1px solid var(--accent);
+  border-radius:4px;max-width:var(--measure)}
+.trap .tl2{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.5rem;font-weight:600}
+.trap p{margin:0 0 .65rem;max-width:none;font-size:.92rem;line-height:1.6;color:var(--ink-2)}
+.trap p:last-child{margin-bottom:0}
+.trap strong{color:var(--ink)}
+</style><style>
+/* ---------- Phase 10 components ---------- */
+/* Master idea slab */
+.idea{margin:2rem 0;padding:2.2rem 2rem;background:var(--surface);border:1px solid var(--rule-2);
+  border-radius:6px;box-shadow:var(--shadow)}
+.idea .eyeb{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:1rem}
+.idea .big-idea{font-family:var(--f-display);font-weight:600;font-size:clamp(1.35rem,3.6vw,2.1rem);
+  line-height:1.24;letter-spacing:-.015em;color:var(--ink);margin:0;text-wrap:balance;max-width:22ch}
+.idea .sub-idea{font-size:.95rem;line-height:1.6;color:var(--ink-2);margin:1.1rem 0 0;max-width:var(--measure)}
+.idea .sub-idea strong{color:var(--ink)}
+
+/* The signature line */
+.sig{margin:1.6rem 0;padding:2rem 1.9rem;border-radius:6px;background:var(--ink);color:var(--ground);
+  text-align:left}
+.sig .l1{font-family:var(--f-display);font-weight:700;font-size:clamp(2rem,6.5vw,3.5rem);
+  line-height:1;letter-spacing:-.03em;margin:0;color:var(--ground)}
+.sig .l2{font-family:var(--f-display);font-weight:400;font-size:clamp(1.1rem,3.2vw,1.7rem);
+  line-height:1.2;margin:.5rem 0 0;color:var(--ground);opacity:.72}
+.sig .te{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.1em;margin:1.2rem 0 0;
+  color:var(--ground);opacity:.5;text-transform:uppercase}
+
+/* Density comparison — the 874 vs 376 */
+.dens{display:flex;flex-direction:column;gap:.55rem;margin:.4rem 0}
+.dens-row{display:grid;grid-template-columns:minmax(8rem,13rem) minmax(0,1fr);gap:.8rem;align-items:center}
+.dens-lab{font-size:.82rem;line-height:1.3;color:var(--ink-2)}
+.dens-lab b{display:block;color:var(--ink);font-weight:600}
+.dens-track{display:flex;align-items:center;gap:.6rem;height:2rem}
+.dens-fill{height:1.35rem;border-radius:0 3px 3px 0;flex:none}
+.dens-fill.ghost{background:transparent;border:1.5px dashed var(--rule-2);border-left:0;box-sizing:border-box}
+.dens-fill.real{background:var(--accent)}
+.dens-val{font-family:var(--f-mono);font-size:.79rem;font-variant-numeric:tabular-nums;
+  color:var(--ink);white-space:nowrap;font-weight:600}
+.dens-val i{font-style:normal;color:var(--ink-3);font-weight:400}
+
+/* Four community numbers */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.8rem;margin:1.5rem 0}
+.numcard{border:1px solid var(--rule);border-radius:5px;background:var(--surface);overflow:hidden;
+  display:flex;flex-direction:column}
+.numcard .nc-top{padding:1.1rem 1rem .7rem;text-align:center;background:var(--surface-2);
+  border-bottom:1px solid var(--rule)}
+.numcard .nc-n{font-family:var(--f-display);font-weight:700;font-size:2.6rem;line-height:.9;
+  color:var(--accent);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.numcard .nc-u{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-top:.45rem}
+.numcard .nc-b{padding:.8rem 1rem;font-size:.82rem;line-height:1.5;color:var(--ink-2);flex:1}
+.numcard .nc-b b{display:block;color:var(--ink);font-family:var(--f-display);font-size:.95rem;
+  font-weight:600;margin-bottom:.35rem}
+.numcard.master{border-color:var(--accent)}
+.numcard.master .nc-top{background:var(--accent-soft)}
+
+/* Hoarding sequence */
+.hoard{display:flex;gap:.4rem;align-items:stretch;overflow-x:auto;padding:.3rem 0 .6rem;margin:.5rem 0}
+.hb{flex:0 0 auto;min-width:5.2rem;border:1px solid var(--rule-2);border-radius:4px;
+  background:var(--surface-2);padding:1.1rem .6rem;text-align:center}
+.hb .hn{font-family:var(--f-display);font-weight:700;font-size:1.85rem;line-height:1;
+  color:var(--ink-2);font-variant-numeric:tabular-nums}
+.hb .hs{font-family:var(--f-mono);font-size:.55rem;letter-spacing:.08em;color:var(--ink-3);
+  display:block;margin-top:.4rem;text-transform:uppercase}
+.hb.ours{background:var(--accent);border-color:var(--accent)}
+.hb.ours .hn{color:var(--surface)}
+.hb.ours .hs{color:var(--surface);opacity:.8}
+.hb.gate{background:var(--ink);border-color:var(--ink);display:flex;flex-direction:column;
+  justify-content:center;min-width:8.5rem}
+.hb.gate .hn{font-size:.9rem;font-family:var(--f-display);font-weight:600;color:var(--ground);line-height:1.25}
+.hb.gate .hs{color:var(--ground);opacity:.55}
+.harrow{display:flex;align-items:center;color:var(--ink-3);font-size:.8rem;flex:0 0 auto}
+
+/* Do / don't */
+.dodont{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.85rem;margin:1.4rem 0}
+.dd{border:1px solid var(--rule);border-radius:5px;padding:.9rem 1.05rem;background:var(--surface)}
+.dd h6{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;
+  margin:0 0 .6rem;font-weight:600}
+.dd.yes h6{color:var(--brand)}
+.dd.no h6{color:var(--ink-3)}
+.dd ul{margin:0;padding-left:1.05rem;font-size:.85rem;line-height:1.55;color:var(--ink-2)}
+.dd li{margin-bottom:.4rem}
+.dd li:last-child{margin-bottom:0}
+.dd.no ul{color:var(--ink-3)}
+.dd strong{color:var(--ink)}
+
+/* Narrative block — the long copy */
+.narr{margin:1.6rem 0;padding:1.6rem 1.7rem;background:var(--surface);border-left:3px solid var(--accent);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:0 5px 5px 0;
+  max-width:var(--measure);box-shadow:var(--shadow)}
+.narr p{font-family:var(--f-display);font-size:1.03rem;line-height:1.62;color:var(--ink-2);
+  margin:0 0 .9rem;max-width:none}
+.narr p:last-child{margin-bottom:0}
+.narr strong{color:var(--ink);font-weight:600}
+.narr .close{font-weight:600;color:var(--ink);font-size:1.15rem}
+
+/* Copy line — a headline shown as work */
+.cline{margin:1.1rem 0;padding:1.1rem 1.3rem;background:var(--surface-2);border:1px solid var(--rule);
+  border-radius:5px;max-width:var(--measure)}
+.cline .ch1{font-family:var(--f-display);font-weight:600;font-size:1.28rem;line-height:1.22;
+  color:var(--ink);margin:0;letter-spacing:-.012em}
+.cline .ch2{font-family:var(--f-display);font-weight:400;font-size:1.28rem;line-height:1.22;
+  color:var(--ink-2);margin:.2rem 0 0}
+.cline .cmeta{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.6rem}
+
+/* Swatches */
+.pal{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}
+.pw{flex:1 1 8rem;border:1px solid var(--rule);border-radius:4px;overflow:hidden;min-width:8rem}
+.pw .chip{height:3.2rem}
+.pw .pn{padding:.5rem .6rem;font-family:var(--f-mono);font-size:.63rem;line-height:1.4;color:var(--ink-2);
+  background:var(--surface)}
+.pw .pn b{display:block;color:var(--ink);font-size:.68rem}
+</style><style>
+/* ---------- Phase 11 components ---------- */
+/* Line-item card */
+.li{margin:1.2rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden}
+.li-head{display:grid;grid-template-columns:2.3rem minmax(0,1fr) auto;gap:.8rem;align-items:baseline;
+  padding:.75rem 1.05rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.li-n{font-family:var(--f-mono);font-size:.95rem;font-weight:600;color:var(--brand)}
+.li-head h4{font-family:var(--f-display);font-weight:600;font-size:1rem;margin:0;color:var(--ink);line-height:1.25}
+.li-amt{font-family:var(--f-mono);font-size:1.02rem;font-weight:600;color:var(--accent);white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.li-note{padding:.7rem 1.05rem;font-size:.84rem;line-height:1.55;color:var(--ink-2);
+  border-top:1px solid var(--rule);background:var(--surface-2)}
+.li-note strong{color:var(--ink)}
+
+/* Structure bar */
+.strc{display:flex;height:3.2rem;border-radius:5px;overflow:hidden;border:1px solid var(--rule-2);margin:.5rem 0}
+.strc > div{display:flex;flex-direction:column;justify-content:center;padding:0 .7rem;min-width:0;
+  border-right:1px solid var(--rule-2);overflow:hidden}
+.strc > div:last-child{border-right:0}
+.strc b{font-family:var(--f-mono);font-size:.78rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.strc span{font-family:var(--f-mono);font-size:.6rem;margin-top:.2rem;opacity:.75;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.st-cap{background:var(--accent);color:var(--surface)}
+.st-pop{background:var(--brand-soft);color:var(--brand)}
+.st-var{background:var(--series);color:var(--surface)}
+.st-semi{background:var(--surface-2);color:var(--ink-2)}
+.strc-key{display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3)}
+
+/* Case columns */
+.cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.85rem;margin:1.4rem 0}
+.cs{border:1px solid var(--rule);border-radius:5px;background:var(--surface);overflow:hidden;
+  display:flex;flex-direction:column}
+.cs.pick{border-color:var(--accent);box-shadow:var(--shadow)}
+.cs.warn2{border-color:var(--rule-2)}
+.cs-top{padding:.8rem 1rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.cs.pick .cs-top{background:var(--accent-soft)}
+.cs-top h6{font-family:var(--f-display);font-size:1.02rem;font-weight:600;margin:0;color:var(--ink)}
+.cs-top .amt{font-family:var(--f-mono);font-size:1.5rem;font-weight:600;color:var(--ink);display:block;
+  margin-top:.35rem;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.cs.pick .cs-top .amt{color:var(--accent)}
+.cs-top .pct{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);display:block;margin-top:.2rem}
+.cs-l{display:flex;justify-content:space-between;gap:.6rem;padding:.4rem 1rem;font-size:.81rem;
+  border-top:1px solid var(--rule);color:var(--ink-2);line-height:1.4}
+.cs-l:first-child{border-top:0}
+.cs-l b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-weight:600}
+.cs-l.hi{background:var(--surface-2)}
+.cs-l.bad b{color:var(--accent)}
+
+/* Phase burn */
+.burn{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1.2rem 0;align-items:end}
+.bn{border:1px solid var(--rule);border-radius:5px;background:var(--surface);padding:.9rem 1rem;text-align:center}
+.bn .bh{background:var(--accent);border-radius:3px 3px 0 0;margin:0 auto .6rem}
+.bn .bv{font-family:var(--f-mono);font-size:1.15rem;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.bn .bl{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-top:.35rem}
+.bn .bs{font-size:.78rem;color:var(--ink-2);display:block;margin-top:.45rem;line-height:1.4}
+</style>
+<style>
+/* ---------- Phase 12 components ---------- */
+/* Gap type badge */
+.gt{font-family:var(--f-mono);font-size:.58rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:.12rem .42rem;border-radius:3px;display:inline-block;line-height:1.5;border:1px solid transparent;white-space:nowrap}
+.gt-e{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.gt-o{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.gt-b{background:var(--surface-2);color:var(--ink-2);border-color:var(--rule-2)}
+.ev{font-family:var(--f-mono);font-size:.6rem;color:var(--ink-3);font-style:italic}
+
+/* Gap card */
+.gap{margin:1.15rem 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden}
+.gap.exp{border-left:3px solid var(--accent)}
+.gap.opp{border-left:3px solid var(--series)}
+.gap.bth{border-left:3px solid var(--brand)}
+.gap-head{padding:.8rem 1.1rem;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.gap-id{display:flex;flex-wrap:wrap;gap:.4rem .6rem;align-items:center;margin-bottom:.45rem}
+.gap-n{font-family:var(--f-mono);font-size:.78rem;font-weight:600;color:var(--brand);letter-spacing:.04em}
+.gap-head h4{font-family:var(--f-display);font-weight:600;font-size:1.02rem;margin:0;color:var(--ink);
+  line-height:1.32;text-wrap:balance}
+.gap-body{padding:.2rem 1.1rem .3rem}
+.fld{display:grid;grid-template-columns:8.4rem minmax(0,1fr);gap:.85rem;padding:.62rem 0;
+  border-bottom:1px solid var(--rule)}
+.fld:last-child{border-bottom:0}
+.fld-k{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);padding-top:.14rem;line-height:1.5}
+.fld.act .fld-k{color:var(--accent)}
+.fld.kpi .fld-k{color:var(--brand)}
+.fld-v{font-size:.875rem;line-height:1.58;color:var(--ink-2)}
+.fld-v strong{color:var(--ink)}
+.fld.kpi .fld-v{background:var(--surface-2);margin:-.2rem -.5rem;padding:.36rem .5rem;border-radius:3px}
+
+/* Cost buckets */
+.bkt{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.75rem;margin:1.4rem 0}
+.bk{border:1px solid var(--rule);border-radius:5px;background:var(--surface);padding:.9rem 1rem}
+.bk.free{border-color:var(--brand)}
+.bk .bkn{font-family:var(--f-display);font-weight:700;font-size:2.1rem;line-height:1;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.bk.free .bkn{color:var(--brand)}
+.bk .bkl{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-top:.4rem}
+.bk .bkd{font-size:.8rem;line-height:1.5;color:var(--ink-2);margin-top:.5rem;
+  padding-top:.5rem;border-top:1px solid var(--rule)}
+.bk .bkd b{color:var(--ink)}
+
+/* Category index strip */
+.idx{display:grid;grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr));gap:.5rem;margin:1.3rem 0}
+.ix{border:1px solid var(--rule);border-radius:4px;background:var(--surface);padding:.55rem .7rem;
+  display:block;text-decoration:none;color:inherit;transition:border-color .12s ease,background .12s ease}
+.ix:hover{border-color:var(--rule-2);background:var(--surface-2)}
+.ix .ixn{font-family:var(--f-mono);font-size:.6rem;color:var(--ink-3);letter-spacing:.08em}
+.ix .ixt{font-size:.82rem;color:var(--ink);font-weight:500;display:block;margin-top:.15rem;line-height:1.3}
+.ix .ixg{font-family:var(--f-mono);font-size:.62rem;color:var(--ink-3);display:block;margin-top:.28rem}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="rail-mark">Phase 12 of 12<strong>Gaps &amp; Opportunities</strong></div>
+  <div class="toc">
+    <a href="#s0"><span class="n">§0</span><span>Method</span></a>
+    <a href="#s1"><span class="n">§1</span><span>Market</span></a>
+    <a href="#s2"><span class="n">§2</span><span>Product</span></a>
+    <a href="#s3"><span class="n">§3</span><span>Positioning</span></a>
+    <a href="#s4"><span class="n">§4</span><span>Audience</span></a>
+    <a href="#s5"><span class="n">§5</span><span>Brand</span></a>
+    <a href="#s6"><span class="n">§6</span><span>Content</span></a>
+    <a href="#s7"><span class="n">§7</span><span>Digital</span></a>
+    <a href="#s8"><span class="n">§8</span><span>Performance</span></a>
+    <a href="#s9"><span class="n">§9</span><span>Sales funnel</span></a>
+    <a href="#s10"><span class="n">§10</span><span>Customer experience</span></a>
+    <a href="#s11"><span class="n">§11</span><span>CRM</span></a>
+    <a href="#s12"><span class="n">§12</span><span>Retention &amp; referral</span></a>
+    <a href="#s13"><span class="n">§13</span><span>What to do, in order</span></a>
+    <a href="#s14"><span class="n">§14</span><span>What went unanswered</span></a>
+    <a href="#s15"><span class="n">§15</span><span>Carry-forward</span></a>
+  </div>
+  <div>
+    <h4>Two kinds of gap</h4>
+    <div class="legend-stack">
+      <span class="gt gt-e">Exposure</span>
+      <span class="gt gt-o">Opportunity</span>
+      <span class="gt gt-b">Exposure + Opportunity</span>
+    </div>
+    <p style="font-size:.74rem;line-height:1.5;color:var(--ink-3);margin:.7rem 0 0;max-width:none">
+      <strong style="color:var(--ink-2)">Exposure</strong> is missing from this plan — close it.
+      <strong style="color:var(--ink-2)">Opportunity</strong> is missing from the market — occupy it.
+      They read the same and demand opposite responses.
+    </p>
+  </div>
+  <div>
+    <h4>The headline</h4>
+    <p style="font-size:.76rem;line-height:1.5;color:var(--ink-3);margin:0;max-width:none">
+      <strong style="color:var(--ink-2)">Eighteen of thirty-six gaps close for ₹41.5 lakh</strong> — 1.3% of the budget — and they include every one of the five largest exposures.
+    </p>
+  </div>
+</nav>
+
+<main class="main">
+<header class="masthead">
+  <p class="eyebrow">Final gap analysis · twelve domains · thirty-six gaps</p>
+  <h1>Thirty-six gaps across twelve domains — and the ₹41.5 lakh that tests every assumption the other 98.7% depends on</h1>
+  <p class="sub">A gap analysis written at the end of a sequence has an obligation the earlier phases did not: it must audit the sequence itself. Roughly half of what follows is missing from the market. The rest is missing from this plan.</p>
+  <div class="meta-row">
+    <span><strong>Prepared</strong> August 2026</span>
+    <span><strong>Phase</strong> 12 of 12 — final</span>
+    <span><strong>Sources</strong> every gap traced to Phases 1–11</span>
+  </div>
+  <div class="disclaimer">
+    <strong>Hypothetical exercise.</strong> Final gap analysis for a hypothetical 25-acre, ₹500 crore corridor development. Nothing here describes an actual KMV Spaces project, brand or campaign. Every gap in §1–12 is traceable to a numbered finding in Phases 1–11; where a gap is inferred rather than observed, it is labelled. Costs in §13 are assumptions and would be replaced by quotation.
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head">
+    <div class="sec-num">§0</div>
+    <div>
+      <h2>Method</h2>
+      <p class="dek">Two kinds of gap, five fields, and one honest limit stated before the contents.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="dodont">
+      <div class="dd yes">
+        <h6><span class="gt gt-o">Opportunity</span> &nbsp;missing from the market</h6>
+        <ul>
+          <li>Something absent from the market that this project could occupy.</li>
+          <li><strong>Exploit it.</strong> Costs money, earns revenue, and is defensible only while it stays unoccupied.</li>
+          <li><strong>Twelve pure opportunities, plus four that are both.</strong></li>
+        </ul>
+      </div>
+      <div class="dd no">
+        <h6><span class="gt gt-e">Exposure</span> &nbsp;missing from this plan</h6>
+        <ul>
+          <li>An assumption never tested, a capability funded but never scoped, a number never verified.</li>
+          <li><strong>Close it.</strong> Costs little, earns nothing directly, and stops the plan failing on something it never examined.</li>
+          <li><strong>Twenty pure exposures, plus the same four.</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <span class="wl">The finding that comes out of the classification</span>
+      <p>Of the thirty-six gaps, <strong>twenty are pure exposure, twelve are pure opportunity, and four are both</strong> — so <strong>twenty-four of thirty-six carry an exposure, and twelve of those twenty-four cost nothing new to close.</strong></p>
+      <p><strong>This plan's weakness is not that it lacks ambition. It is that it repeatedly funds a tool and leaves the discipline that operates it unspecified.</strong> §13 traces that pattern through seven separate lines.</p>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Field</th><th>What it must do</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Observation</strong></td><td>Traceable to a numbered finding in Phases 1–11. <strong>No gap in this document is asserted</strong> — each names the phase and section it comes from.</td></tr>
+          <tr><td><strong>Business implication</strong></td><td>Sized in rupees wherever prior arithmetic allows it. Where it cannot be sized, that is stated rather than dressed.</td></tr>
+          <tr><td><strong>Opportunity</strong></td><td>What becomes possible if the gap closes. Not a restatement of the observation.</td></tr>
+          <tr><td><strong>Recommended action</strong></td><td>One thing, with a date or a trigger. <strong>An action without a "before what" is a wish.</strong></td></tr>
+          <tr><td><strong>KPI</strong></td><td>A number someone can be held to. Where the right KPI is a governance test rather than a metric, it says so.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <span class="lbl">The limits of this document, stated before its contents</span>
+      <p><strong>It inherits every limitation of the eleven phases beneath it.</strong> No primary buyer research exists (Phase 5 §7.1). No transaction data was retrieved (Phase 1 §12.1, Phase 2 §15.2). Direct HTTP retrieval was unavailable throughout; findings rest on search-surfaced reporting, graded accordingly.</p>
+      <p><strong>A gap analysis cannot fix that, and this one does not pretend to.</strong> What it can do is say precisely which decisions are exposed and what each would cost to settle — which is §13.</p>
+    </div>
+
+    <div class="idx">
+    <a class="ix" href="#s1"><span class="ixn">&sect;1</span><span class="ixt">Market gaps</span><span class="ixg">G1&ndash;G3</span></a>
+    <a class="ix" href="#s2"><span class="ixn">&sect;2</span><span class="ixt">Product gaps</span><span class="ixg">G4&ndash;G6</span></a>
+    <a class="ix" href="#s3"><span class="ixn">&sect;3</span><span class="ixt">Positioning gaps</span><span class="ixg">G7&ndash;G9</span></a>
+    <a class="ix" href="#s4"><span class="ixn">&sect;4</span><span class="ixt">Audience gaps</span><span class="ixg">G10&ndash;G12</span></a>
+    <a class="ix" href="#s5"><span class="ixn">&sect;5</span><span class="ixt">Brand gaps</span><span class="ixg">G13&ndash;G15</span></a>
+    <a class="ix" href="#s6"><span class="ixn">&sect;6</span><span class="ixt">Content gaps</span><span class="ixg">G16&ndash;G18</span></a>
+    <a class="ix" href="#s7"><span class="ixn">&sect;7</span><span class="ixt">Digital gaps</span><span class="ixg">G19&ndash;G21</span></a>
+    <a class="ix" href="#s8"><span class="ixn">&sect;8</span><span class="ixt">Performance marketing gaps</span><span class="ixg">G22&ndash;G24</span></a>
+    <a class="ix" href="#s9"><span class="ixn">&sect;9</span><span class="ixt">Sales funnel gaps</span><span class="ixg">G25&ndash;G27</span></a>
+    <a class="ix" href="#s10"><span class="ixn">&sect;10</span><span class="ixt">Customer experience gaps</span><span class="ixg">G28&ndash;G30</span></a>
+    <a class="ix" href="#s11"><span class="ixn">&sect;11</span><span class="ixt">CRM gaps</span><span class="ixg">G31&ndash;G33</span></a>
+    <a class="ix" href="#s12"><span class="ixn">&sect;12</span><span class="ixt">Retention and referral gaps</span><span class="ixg">G34&ndash;G36</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head">
+    <div class="sec-num">&sect;1</div>
+    <div>
+      <h2>Market gaps</h2>
+      <p class="dek">Three questions the corridor has never answered about itself.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap exp" id="g1">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G1</span><span class="gt gt-e">Exposure</span><span class="ev">Observed</span></div>
+        <h4>No corridor-specific transaction data exists — every price in eleven phases is an asking price</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 1 §12 and Phase 2 §15 <strong>independently</strong> name IGRS AP registration data as the single highest-value missing source. Every &#8377;/sq ft figure in the exercise is listing-derived and therefore an upper bound. Phase 2's bottom-up derivation &mdash; published ticket &divide; published unit size &mdash; was the most rigorous method available, and it still measures what sellers ask, not what buyers pay.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The &#8377;506.7 Cr target rests on a ladder that may sit above achieved prices. <strong>At a 10% overstatement that is &#8377;50.7 crore</strong> &mdash; 1.6&times; the entire marketing budget, lost before a rupee of media runs.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">The data is public, cheap and unused. Eleven competitors are pricing against each other's listings. <strong>Whoever prices against registrations prices against reality.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Commission a <strong>24-month IGRS registration series for Mangalagiri and Thullur mandals</strong>, cut by ticket band and unit size. Before the price sheet is printed &mdash; not after the first quarter's velocity disappoints.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Achieved-to-asking ratio by band. <strong>Set the published sheet within 5% of the observed 75th percentile</strong>; treat any band where achieved sits &gt;12% below asking as a re-cut candidate.</div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g2">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G2</span><span class="gt gt-e">Exposure</span><span class="ev">Observed</span></div>
+        <h4>The &#8377;2.2&ndash;2.8 crore villa band is unproven, and 31% of revenue sits in it</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 2 §15 asked whether the band is opportunity or resistance. <strong>Phases 5, 6, 7, 8, 9, 10 and 11 each carried it forward unresolved</strong> &mdash; seven consecutive phases naming the same unanswered question.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v"><strong>&#8377;158.8 crore of Community D revenue.</strong> Phase 11 stated the consequence plainly: no budget buys a price the market refuses.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Two competitors &mdash; <strong>TAG AIRA and Prime Grandeur</strong> &mdash; are selling into this band now. Their velocity is the answer, and it is observable without their cooperation.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Mystery-shop both for eight weeks</strong>: units released, units sold, discount offered, time on market. Combine with IGRS second-sale analysis in the band.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Absorption in the &#8377;2.2&ndash;2.8 Cr band, units/month across both projects. <strong>Gate: below 1.5/month combined, re-cut D's mix toward C before launch rather than after.</strong></div></div>
+      </div>
+    </div>
+    <div class="gap opp" id="g3">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G3</span><span class="gt gt-o">Opportunity</span><span class="ev">Observed, appetite untested</span></div>
+        <h4>Nobody is selling to landowners, and ~25,000 of them are land-rich and cash-thin</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 5 §3: approximately <strong>25,000 land-pooling households hold &#8377;2.3&ndash;7.0 crore of land each against annuity income under &#8377;2 lakh</strong> &mdash; unreachable by any conventional sales structure, and scored 4.05 on segment priority, second-highest of eight. Phase 4 noted KMV already publishes a land-owners page and few competitors do.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">A segment with real assets, a genuine need, and <strong>no competitor contesting it</strong> &mdash; because the product that serves it does not exist.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">A <strong>land-for-unit exchange</strong> converts an illiquid asset into a booking without either side finding cash. Defensible in Phase 3's sense: it needs a structure, a legal file and a village relationship, none assemblable in a quarter.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>20&ndash;30 village conversations in Telugu before designing anything</strong> &mdash; Phase 5 §7 is explicit that landowner appetite for exchange structures is entirely untested, and the white space may be empty for a reason. Then one pilot structure with legal and tax opinion attached.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Leading: village meetings held and families engaged. Lagging: <strong>signed exchange term sheets &mdash; target 8&ndash;12 units in year one.</strong> Not leads; term sheets.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="sec-num">&sect;2</div>
+    <div>
+      <h2>Product gaps</h2>
+      <p class="dek">The strongest differentiator is a claim, and the largest revenue line depends on a capability nobody scoped.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap opp" id="g4">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G4</span><span class="gt gt-o">Opportunity</span><span class="ev">Inferred from Phase 3 §5.2 and Phase 6</span></div>
+        <h4>The ladder exists on the masterplan and nowhere else</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 3 identified <strong>&ldquo;the ladder in one address&rdquo;</strong> as the strongest of four white spaces, defensible because it needs 25+ contiguous acres committed from day one. Phase 6 built the four communities. <strong>Nothing in Phases 6&ndash;11 creates a mechanism by which an owner of A actually moves to C.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The strongest differentiator in the exercise is a claim rather than a product feature. A buyer cannot verify it, because there is nothing to verify &mdash; no covenant, no valuation basis, no right of first refusal.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">A <strong>published upgrade covenant</strong> &mdash; a documented right of first refusal on the next tier and a defined trade-in valuation basis &mdash; converts a masterplan into a contractual promise. The difference between &ldquo;you could move up here&rdquo; and &ldquo;here is the clause.&rdquo;</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Draft the upgrade covenant alongside the legal file, <strong>before launch</strong>, and publish it on the ungated price sheet Phase 10 already committed to.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v"><strong>Upgrade covenants signed at booking as a share of A and B bookings &mdash; target 25% attach in year one.</strong> It also gives the cleanest read on whether the ladder is a real motivation or a strategist's idea.</div></div>
+      </div>
+    </div>
+    <div class="gap bth" id="g5">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G5</span><span class="gt gt-b">Exposure + Opportunity</span><span class="ev">Observed</span></div>
+        <h4>45% of Community D's revenue comes from buyers who will not live there, and no phase specifies the product that serves them</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 5 carry-forward: <strong>45% of Community D revenue comes from buyers who will not live there full time</strong>, which &ldquo;makes managed maintenance and absentee ownership a product requirement, not an amenity.&rdquo; Phase 6 then named <em>Community B</em> the managed residences &mdash; and gave D, where the finding actually lands, no equivalent.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v"><strong>&#8377;71.5 crore of D revenue</strong> (45% of &#8377;158.8 Cr) depends on a capability nobody has scoped, costed or priced.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">A <strong>published absentee-owner service level</strong> &mdash; security, maintenance, tenant placement, remote inspection with dated evidence &mdash; is unoccupied corridor-wide and defensible because it is operational rather than architectural. A competitor cannot retrofit an operations team into a finished project.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Specify and cost the absentee package <strong>as part of D's spec, priced into the ticket</strong> &mdash; not as a post-handover service to be figured out later.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Attach rate among D bookings; and from first handover, <strong>the quarterly upkeep audit score on absent-owner units</strong> &mdash; the number that decides whether the promise survives contact with reality.</div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g6">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G6</span><span class="gt gt-e">Exposure</span><span class="ev">Observed</span></div>
+        <h4>Community B has been treated as a marketing problem through five consecutive phases</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phases 7, 9 and 11 each flagged B as the outlier: <strong>40% of the budget for 22% of the units, at 11.23% of its own revenue against 4.5&ndash;4.6% for A and C.</strong> Phase 11 set the response &mdash; if B's qualified-to-visit rate does not reach 25% within two quarters, reduce inventory rather than raise budget.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Every phase has proposed spending more precisely against B. <strong>None has proposed selling less of it.</strong> B's binding constraint is that its buyer is 12,000 km away and cannot casually visit &mdash; a product and release-schedule problem, not a media one.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Re-cutting B's release schedule rather than its budget protects both the &#8377;112.5 Cr and the pricing architecture, because <strong>unsold B inventory at handover is what breaks Phase 6's &ldquo;B never above &#8377;1.50 Cr&rdquo; rule.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Pre-agree the gate with the project side now</strong> &mdash; two quarters, 25% qualified-to-visit &mdash; <strong>including who signs the inventory decision.</strong> A threshold with no named decision-maker is a threshold that gets renegotiated.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">B's qualified-lead-to-site-visit rate, monthly. <strong>Gate at 25%.</strong></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="sec-num">&sect;3</div>
+    <div>
+      <h2>Positioning gaps</h2>
+      <p class="dek">The campaign's central claim is checkable — and against two named competitors, currently wrong.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap exp" id="g7">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G7</span><span class="gt gt-e">Exposure</span><span class="ev">Observed — the cheapest fix in the document</span></div>
+        <h4>The master idea is unowned by any competitor and unverified against half of them</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 10's signature &mdash; <strong>&ldquo;Fifteen to the acre&rdquo;</strong> &mdash; rests on the Phase 2 density set of 52.9&ndash;113.4 units/acre. But <strong>Phase 3 §5.1 explicitly corrected Phase 1 on exactly this point</strong>: IJM Villas 64 runs 1.9 units/acre and Prime Grandeur 11.9. Both are <em>lower</em> than fifteen.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The campaign's central claim compares against apartment densities. Stated without its boundary it is <strong>checkable and wrong against two named competitors</strong> &mdash; in a campaign whose entire production rule is <em>&ldquo;what is the number?&rdquo;</em></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">The bounded claim is still unmatched and now defensible: <strong>fifteen to the acre across all 25 acres, apartments included.</strong> No competitor mixes tiers at that density, because no competitor mixes tiers at all &mdash; which is white space 1 restated as arithmetic.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Write the exact wording and its substantiation footnote into the creative rulebook <strong>before any media runs</strong>, and publish the comparison table including the two villa projects that beat it.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Zero substantiation challenges; and the comparison table &mdash; <strong>including where this project loses</strong> &mdash; live on the price sheet at launch. Phase 10 committed to publishing losses; this is where that commitment is tested.</div></div>
+      </div>
+    </div>
+    <div class="gap opp" id="g8">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G8</span><span class="gt gt-o">Opportunity</span><span class="ev">Observed</span></div>
+        <h4>The developer's evidenced position and its stated position are different things</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 4 §12.3: KMV's evidenced assets map onto <strong>three of Phase 3's four white spaces more closely than any competitor profiled</strong> &mdash; the ladder already run once at Vivaan, the strongest delivery proof in the set, and a 6.6 units/acre density precedent. <strong>The message actually led with is luxury, tallest, largest</strong> &mdash; the corridor's most crowded territory.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Phase 4 stated it exactly: <em>the gap is not capability, it is articulation.</em> The assets that would occupy the white space are held and not led with.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Leading with construction lineage and audited certification costs nothing and cannot be answered &mdash; <strong>a competitor cannot acquire a hundred-year EPC record or a net-zero audit inside 24 months.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Retire the superlative claims from all new material at launch.</strong> One positioning line, one territory. Phase 4 named the choice: the sustainability-and-engineering territory, which is owned, audited and unoccupied.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Share of owned-channel copy carrying a claim a buyer can independently verify. <strong>Target 100% by launch</strong> &mdash; which is simply the production rule, audited.</div></div>
+      </div>
+    </div>
+    <div class="gap opp" id="g9">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G9</span><span class="gt gt-o">Opportunity</span><span class="ev">Observed</span></div>
+        <h4>Nobody has replaced the rental-yield argument, and neither has this plan</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 3 §6.3: yields run 2.2&ndash;3.2% and are correctly never mentioned by anyone &mdash; <strong>but nobody has substituted a better investor argument, leaving that conversation to plot brokers.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Phase 5 deprioritised investors and Phase 6 capped them, correctly. But <strong>S4 landowners and S7 Hyderabad both buy partly on asset logic</strong>, and the plan has nothing to say to either about value over time.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">A <strong>land-share argument</strong> &mdash; the square feet of site each ticket buys, by community &mdash; is computable, checkable, unusual and true. It is the master idea applied to the buyer's own purchase rather than to the developer's restraint.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Publish <strong>per-unit land share alongside price</strong> on the same sheet. 2,904 sq ft of site per home at project level; the per-community figures fall straight out of Phase 6's land model.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Enquiries citing land share in the CRM's interest taxonomy; and <strong>S4 + S7 bookings as a share of C and D.</strong></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="sec-num">&sect;4</div>
+    <div>
+      <h2>Audience gaps</h2>
+      <p class="dek">Eight segments, twenty attributes each. Nobody has spoken to a buyer.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap exp" id="g10">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G10</span><span class="gt gt-e">Exposure</span><span class="ev">Observed — the single largest exposure</span></div>
+        <h4>Nobody has spoken to a buyer</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 5 §7, stated without hedging: no surveys, no interviews, no focus groups, no CRM data, no walk-in analysis. <strong>Attributes 8 through 20 of all eight segments &mdash; motivations, objections, timelines, channels, influencers &mdash; are hypothesis.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Every message, channel, journey and creative decision in Phases 8&ndash;11 sits on this foundation. <strong>&#8377;31.75 crore is allocated against behaviour nobody has observed.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Phase 5 costed the fix at two weeks of fieldwork. Against the budget it validates it is a rounding error &mdash; and it is <strong>the difference between a segmentation and a set of personas.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Field it before the media test, not after</strong>: 30&ndash;40 depth interviews across S1, S2, S3 and S6, plus 8&ndash;10 landowner families in Telugu, in the villages.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Interviews completed; and &mdash; the KPI that matters &mdash; <strong>the count of Phase 5 behavioural attributes moved from Reasoned to Established. Target 60%.</strong></div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g11">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G11</span><span class="gt gt-e">Exposure</span><span class="ev">Observed — the cheapest high-value correction available</span></div>
+        <h4>Six of eight segments have no verified size</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 5 §7 gaps 2, 3, 4, 5, 14 and 15: <strong>S1 is a bounding exercise from ITR-filer counts, S2 is unverified, S5 has no relocation headcount, and S7 has no published size at all.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The revenue allocation &mdash; and therefore the community mix, and therefore the &#8377;506.7 Cr &mdash; rests on unsized segments. <strong>S1 alone is &#8377;121.5 crore; being wrong by 2&times; changes the whole plan.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Phase 5 established that <strong>six of its fifteen gaps close from registration and institutional data alone</strong> &mdash; no fieldwork, no fees, no waiting.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Sub-registrar transaction analysis by buyer occupation and ticket size, 24 months, NTR and Guntur districts. AIIMS staff directories for S2. <strong>APNRTS &mdash; headquartered in Guntur &mdash; for S3 origin districts.</strong></div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v"><strong>Segments carrying an Established size: target 6 of 8 before budget commitment.</strong></div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g12">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G12</span><span class="gt gt-e">Exposure</span><span class="ev">Inferred from Phase 5 and Phase 11 §1.11</span></div>
+        <h4>&ldquo;NRI&rdquo; was correctly split into two segments and then funded as one</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 5 established that <strong>US/developed-market households buy C and D while Gulf households buy A and B &mdash; &ldquo;one campaign cannot serve both.&rdquo;</strong> Phase 11 funds &#8377;1.05 Cr of NRI infrastructure, of which &#8377;0.18 Cr is Telugu vertical-video for S8. S3 scored 4.20 on priority; S8 scored 2.45, lowest of eight.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The split is directionally sensible and <strong>has never been tested against a single actual enquiry.</strong> Phase 5 §7 notes no origin-district breakdown of the US Telugu diaspora was found at all.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Enquiry origin is free from day one &mdash; <strong>it is a CRM field, not a research project.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Make <strong>country and origin district a required, non-free-text field at lead capture.</strong> Re-cut the NRI line at quarter two on observed data.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">NRI enquiries by country and origin district; <strong>bookings per rupee, S3 versus S8.</strong> Reallocate on that ratio, not on the priority score.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">&sect;5</div>
+    <div>
+      <h2>Brand gaps</h2>
+      <p class="dek">One promise missing, and two own goals that cost nothing to fix.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap opp" id="g13">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G13</span><span class="gt gt-o">Opportunity</span><span class="ev">Observed — Phase 3 called it the cheapest white space to occupy</span></div>
+        <h4>There is no brand promise about delivery, in a corridor whose live complaint is delivery</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 4 §11.1: the certifications describe <strong>what is built</strong>; nothing describes <strong>how the buyer will be treated.</strong> Phase 3 §5.3 found the same complaint across the entire competitive set and &mdash; the operative finding &mdash; <strong>not one competitor markets against it.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Phase 5 established that <strong>delivery anxiety is the one concern shared by all eight segments.</strong> The brand currently answers the universal objection with an inference (KMV built AIIMS) rather than a commitment.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">A <strong>published handover commitment with a stated remedy</strong> is hard to copy precisely because copying it requires publishing your own record. Aparna's December-2021 handover still incomplete in December 2022 is the category's cautionary tale, and it is public.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Draft the delivery charter &mdash; <strong>date, remedy, escalation path</strong> &mdash; with legal before launch. Publish delivery-date performance from day one, <strong>including the months it slips.</strong></div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Handover dates met against committed; and <strong>the complaint-category mix in third-party reviews at 12 and 24 months.</strong> If delivery is not the top complaint category at 24 months, the charter worked.</div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g14">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G14</span><span class="gt gt-e">Exposure</span><span class="ev">Observed — costs nothing</span></div>
+        <h4>Two websites and six-plus social handles split the equity a launch depends on</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 4 §11.2: <strong>kmvspaces.com and kmvvivaan.com compete for the same searches</strong>, and 6+ social handles run across two brand names.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Phase 4's sharper version: <strong>the corporate brand is weaker than the project brand, and the corporate brand is what a new development must launch under.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Consolidation costs nothing and compounds from the first day of media. <strong>Every month it is deferred is a month of split authority paid for at full price.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>One domain, one social identity, 301 redirects mapped &mdash; before any launch spend.</strong> A two-week task that should already be finished.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Branded search impression share; and organic sessions to the consolidated domain versus the pre-consolidation sum. <strong>The consolidated figure should exceed the sum within two quarters.</strong></div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g15">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G15</span><span class="gt gt-e">Exposure</span><span class="ev">Observed — costs an afternoon</span></div>
+        <h4>Published internal inconsistencies, in a category whose top complaint is misrepresentation</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 4 §12.2: <strong>G+20 versus 16 floors, three different villa entry prices, conflicting unit counts</strong> &mdash; all currently published.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Phase 4's own verdict: in a category whose top complaint is misrepresentation, published inconsistency is an own goal. <strong>A transparency position cannot be launched over contradictory numbers</strong>, and a diligent buyer finds both.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Fixing it is trivial. <strong>Not fixing it silently undermines every proof claim the strategy is built on.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>One person owns a single source of truth for every published project figure</strong>, with a pre-launch reconciliation sweep across all owned and third-party listings.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Zero contradictory figures across owned channels and portal listings, <strong>audited quarterly.</strong></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">&sect;6</div>
+    <div>
+      <h2>Content gaps</h2>
+      <p class="dek">An audited claim spent as a superlative, and an education vacuum brokers are filling.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap opp" id="g16">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G16</span><span class="gt gt-o">Opportunity</span><span class="ev">Observed</span></div>
+        <h4>The audited claim is never evidenced</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 4 §11.3: <em>&ldquo;India's first net-zero-energy residential villa community&rdquo;</em> is a headline with <strong>no supporting content &mdash; no energy data, no resident bills, no design explanation.</strong> Phase 4's verdict: <strong>an audited claim that is never evidenced performs like an unaudited one.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The strongest verifiable asset the brand holds is being spent as a superlative &mdash; <strong>in the one territory where superlatives are worthless.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v"><strong>Actual electricity bills from net-zero villas</strong> convert an audited claim into a lived one, and no competitor can respond, because none has the certification.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Publish one resident-bills piece with the raw numbers before launch. Phase 11 funds the film at &#8377;0.12 Cr; <strong>this is the data the film needs and does not yet have.</strong></div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Scroll depth and time on the evidence page; and &mdash; better &mdash; <strong>the share of site visits where the sales team records that the buyer raised the certification unprompted.</strong></div></div>
+      </div>
+    </div>
+    <div class="gap opp" id="g17">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G17</span><span class="gt gt-o">Opportunity</span><span class="ev">Observed</span></div>
+        <h4>No buyer-education content, on precisely the topics that generate the corridor's complaints</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 4 §11.3: nothing on carpet versus super-built-up, RERA reading, handover expectations or maintenance economics. Phase 3 §6.3: <strong>nobody in the corridor addresses carpet versus super-built-up, despite it being the most specific complaint found anywhere in the resident reviews.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The category leaves buyers to learn from brokers &mdash; <strong>who are ranking on developers' own project names.</strong> The education vacuum and the branded-search leak are the same problem seen twice.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Phase 4 put it precisely: <strong>declaring the standard first claims the territory.</strong> KMV carries no such complaint on record, which makes it the credible party to set it.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Publish carpet area alongside super-built-up, unprompted, from the first price sheet</strong>, with a short explainer of the difference. Phase 11's &#8377;0.35 Cr collateral line already carries it.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Organic entrances to education pages; and <strong>assisted bookings where an education page appears in the path</strong> &mdash; which requires G33's attribution field to exist.</div></div>
+      </div>
+    </div>
+    <div class="gap opp" id="g18">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G18</span><span class="gt gt-o">Opportunity</span><span class="ev">Observed — already funded</span></div>
+        <h4>The founder is not a content asset, in a corridor where founder presence is nearly unoccupied</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 4 §11.3: a fourth-generation builder with an NYU construction-management degree and Skanska experience. Phase 3 §6.1: <strong>only Undavalli is visible as a founder brand across the entire competitive set.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Phase 10's proof pillars &mdash; The Builder, The Document &mdash; need a human voice and currently have none. <strong>A certification cannot explain itself.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Founder-led construction content <strong>carries the lineage credential without asserting it</strong> &mdash; the difference between &ldquo;we are a hundred-year builder&rdquo; and a person explaining why a slab is poured a particular way.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Fixed monthly cadence, tied to the construction-progress films <strong>Phase 11 already funds at &#8377;0.27 Cr.</strong> No new budget; a scheduling and scripting decision.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Engaged views on LinkedIn and YouTube; and <strong>first-touch attribution to founder content in the booking record.</strong></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">&sect;7</div>
+    <div>
+      <h2>Digital gaps</h2>
+      <p class="dek">Brokers own the category's branded search, and nobody publishes proof.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap bth" id="g19">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G19</span><span class="gt gt-b">Exposure + Opportunity</span><span class="ev">Observed</span></div>
+        <h4>Brokers own branded search across the whole category, and nothing in the plan reclaims it</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 3 §6.1: broker sites run dedicated pages for <strong>Jayabheri The Capital, Vertex Siris Signa, Golden Villas, IJM Villas 64 and Manjeera Monarch</strong> &mdash; a category-wide vulnerability. Phase 4 noted the same tactic is available in reverse, legally.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Demand generated by &#8377;31.75 crore of marketing will be intercepted on the project's own name <strong>unless the defence is built before the demand exists.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Branded defence is the cheapest CPL in any account. <strong>Competitor-project-name prospecting is unoccupied here</strong> and captures buyers already in market for exactly this product.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Own branded search from <strong>six weeks pre-launch</strong>, misspellings included; run competitor-name campaigns from launch day.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v"><strong>Branded impression share &ge;90%</strong>; and cost per booking on competitor-name campaigns against the blended figure.</div></div>
+      </div>
+    </div>
+    <div class="gap opp" id="g20">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G20</span><span class="gt gt-o">Opportunity</span><span class="ev">Observed</span></div>
+        <h4>No published proof layer anywhere in the corridor — which is exactly why it is available</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 4 §11.2 and Phase 3 §6.3 agree: <strong>no construction progress feeds, no handover performance, no occupancy figures, no maintenance service levels &mdash; from anyone.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Phase 8 valued a point of site-visit-to-booking conversion at <strong>&#8377;39.4 crore.</strong> A proof layer is what moves a qualified lead from interested to willing to travel &mdash; and travelling is the expensive, valuable step.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Phase 11 funds the website at &#8377;0.32 Cr and progress films at &#8377;0.27 Cr. <strong>The feed is a page, not a project.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">A live construction feed with dated photography from foundation, on a <strong>fixed cadence published whether or not the month went well.</strong> The cadence is the proof; the photographs are the evidence.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Return visits to the progress page per booking; and <strong>qualified-to-visit rate for sessions that included it versus those that did not.</strong></div></div>
+      </div>
+    </div>
+    <div class="gap opp" id="g21">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G21</span><span class="gt gt-o">Opportunity</span><span class="ev">Observed</span></div>
+        <h4>The ungated price sheet is decided; the technical hygiene it depends on is not</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 4 §11.2 flags a malformed flagship URL slug. Phase 10 committed to publishing the price sheet <strong>ungated, with a named-competitor comparison including where this project loses.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The boldest transparency decision in eleven phases will be indexed, quoted, screenshotted and cited. <strong>If it is technically sloppy it will be misquoted</strong>, and the correction never travels as far as the error.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Structured data on the price sheet is what gets it surfaced in AI-generated comparisons and third-party round-ups &mdash; <strong>a surface where the entire category is currently invisible.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Clean URL structure, product and offer schema on every unit type, and a <strong>dated version history on the price page</strong> so a superseded screenshot can be dated by anyone.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Rich-result coverage; and <strong>citations of the price page in third-party and AI-generated comparisons.</strong></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-head">
+    <div class="sec-num">&sect;8</div>
+    <div>
+      <h2>Performance marketing gaps</h2>
+      <p class="dek">&#8377;11.02 crore allocated on numbers measured somewhere else.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap exp" id="g22">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G22</span><span class="gt gt-e">Exposure</span><span class="ev">Observed — the highest-leverage single action in the document</span></div>
+        <h4>No cost-per-lead benchmark exists for this catchment, and &#8377;11.02 crore is allocated on borrowed numbers</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 5 §7 and Phase 9 risk 3: <strong>CPLs are agency benchmarks from other markets, adjusted by judgement.</strong> Phase 11 named the consequence: the &#8377;24.60-per-rupee ratio &mdash; the plan's central argument against being cut &mdash; holds only while those CPLs hold.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v"><strong>The number that defends the budget was not measured in the market the budget will be spent in.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Phase 9 costed the test at <strong>&#8377;15&ndash;20 lakh across all four community audiences, six weeks.</strong> That is 0.6% of the budget it validates, and it repositions the whole allocation if the assumption is wrong.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Run it <strong>before the main budget commits</strong> &mdash; as a measurement exercise with pre-registered success criteria, not as a soft launch that quietly becomes the launch.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Observed CPL by community against the Phase 7 assumption. <strong>Commit in advance to re-basing the model on the observed figure whatever it says</strong> &mdash; a test whose result can be overruled is not a test.</div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g23">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G23</span><span class="gt gt-e">Exposure</span><span class="ev">Inferred from Phase 10 and Phase 11 §1.3</span></div>
+        <h4>Creative volume is specified; creative decay is not</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 11 funds <strong>24 live variants across five platforms for 45 months</strong> at &#8377;0.45 Cr production plus a 12% agency fee. <strong>No phase specifies a refresh trigger, a fatigue threshold or a retirement rule.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">A 45-month campaign on a fixed creative set decays. Frequency rises, CPL rises, <strong>and the &#8377;24.60 ratio erodes silently</strong> &mdash; showing up as a media problem when it is a creative problem.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">A refresh rule tied to a measured threshold turns a production budget into a <strong>performance control</strong>, and gives the agency scope something to be held to.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Set the fatigue trigger &mdash; <strong>frequency ceiling and CPL drift threshold</strong> &mdash; and pre-commit the refresh cadence in the agency scope before signing it.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Frequency by audience; <strong>CPL drift against a rolling 30-day baseline</strong>; refreshes shipped per quarter against the committed cadence.</div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g24">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G24</span><span class="gt gt-e">Exposure</span><span class="ev">Observed</span></div>
+        <h4>Cost per booking by channel will be produced, and it will be read naively</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 9 risk 2, without qualification: <strong>the naive reading defunds &#8377;10.25 crore of the highest-value spend.</strong> The experience centre, brand, outdoor and print are the four lines most likely to be cut for looking unproductive &mdash; and Phase 8 located most of the value in exactly those.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v"><strong>The plan's structure survives or fails on how its own reporting is read</strong>, by people who did not write it.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Agreeing the reading rules before the first quarterly review costs nothing and is <strong>impossible afterwards</strong>, when the numbers are on the table and someone is defending a line.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Write the three rules &mdash; <strong>compare within a layer; judge demand generation on cost per qualified lead; judge brand, site and CRM on holdouts and first-touch</strong> &mdash; into the reporting template itself, not into a memo about it.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v"><strong>A governance test, not a metric: the reporting template contains the rules before the first review runs.</strong> Pass or fail, once.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="sec-head">
+    <div class="sec-num">&sect;9</div>
+    <div>
+      <h2>Sales funnel gaps</h2>
+      <p class="dek">The &#8377;39.4-crore stage is the least instrumented one.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap bth" id="g25">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G25</span><span class="gt gt-b">Exposure + Opportunity</span><span class="ev">Observed</span></div>
+        <h4>The most valuable stage in the funnel is the least instrumented</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 8: a point of site-visit-to-booking conversion is worth <strong>&#8377;39.4 crore &mdash; 2.3&times; a point at the lead stage</strong> &mdash; and <strong>2,348 people will stand on the land and not proceed.</strong> Phase 8's own conclusion: the 66,406 leads lost at the top are the least valuable losses in the funnel.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The plan measures leads precisely and the visit barely. <strong>Optimisation effort follows the data, and the data points at the cheapest stage.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Instrumenting the visit &mdash; arrival, route walked, time on site, objections logged against a fixed taxonomy, follow-up latency &mdash; is the <strong>highest-return measurement investment available</strong>, and it costs a CRM form.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">A <strong>structured visit debrief as a mandatory CRM step from day one</strong>, with a closed objection taxonomy rather than a free-text box.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v"><strong>Site-visit-to-booking rate, weekly, by community and by consultant.</strong> If the plan is read on one number, it should be this one.</div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g26">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G26</span><span class="gt gt-e">Exposure</span><span class="ev">Observed</span></div>
+        <h4>Two of the twelve journey stages are modelled but not counted</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 8 and Phase 11 §9 both note that <strong>consultation and negotiation are derived</strong> to sit inside Phase 7's measured gates, and both recommend promoting them to counted CRM events. <strong>Neither phase specifies the trigger that would create one.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v"><strong>5,313 consultations and 574 negotiations are planning fictions</strong> until someone defines the event. Without them, a drop between qualified lead and site visit has no diagnosable cause.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Defining them is one sentence each, and it makes the funnel <strong>diagnosable rather than merely reportable.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Write the CRM trigger for each &mdash; <strong>one sentence, agreed with the sales team, before go-live.</strong></div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v"><strong>Share of bookings carrying a complete stage history. Target 95%.</strong></div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g27">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G27</span><span class="gt gt-e">Exposure</span><span class="ev">Observed</span></div>
+        <h4>Community B's fix is funded and has never been piloted</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">B runs <strong>18.2% qualified-to-visit, 30% below project average.</strong> Phase 11 funds &#8377;1.05 Cr of NRI infrastructure &mdash; proxy-visit protocol, video walkthrough capability, diaspora channels &mdash; explicitly as the fix.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v"><strong>&#8377;12.63 crore of budget depends on a capability that does not exist and has never been tried once.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Phase 4 established KMV already has video capability, and there is a live project to test on. <strong>The pilot can run before the new project launches</strong>, at essentially no cost.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Twenty proxy visits against the existing project during the pre-launch window.</strong> Measure conversion, not satisfaction &mdash; a delighted prospect who does not book has taught you nothing.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v"><strong>Proxy-visit-to-booking rate against physical-visit-to-booking rate. Gate B's budget release on it.</strong></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="sec-head">
+    <div class="sec-num">&sect;10</div>
+    <div>
+      <h2>Customer experience gaps</h2>
+      <p class="dek">The largest single line is sized for the average day.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap exp" id="g28">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G28</span><span class="gt gt-e">Exposure</span><span class="ev">Observed</span></div>
+        <h4>The experience centre is sized for average and will be judged on peak</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 9 risk 4: <strong>&#8377;4.10 crore &mdash; the largest single line, serving the &#8377;39.4 crore-per-point stage &mdash; sized for average rather than peak.</strong> Phase 8 estimated 35&ndash;45 people on site on a peak Sunday.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The stage that carries the most value <strong>degrades exactly when the most people are watching it</strong> &mdash; and a family that waits forty minutes on a Sunday has already formed its view of how it will be treated after handover.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">An appointment system for S2 and S3 &mdash; the two segments that <em>can</em> be scheduled &mdash; <strong>keeps Sunday free for walk-in families.</strong> A scheduling fix, not a capital one.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Size for peak; appointment-gate the two schedulable segments from launch.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Consultant-to-visitor ratio on Sundays; and <strong>visit-to-booking rate on Sunday versus weekday. If Sunday underperforms, the centre is undersized</strong> &mdash; a measurable conclusion, not a debatable one.</div></div>
+      </div>
+    </div>
+    <div class="gap opp" id="g29">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G29</span><span class="gt gt-o">Opportunity</span><span class="ev">Observed — costs nothing</span></div>
+        <h4>A live review complaint contradicts the entire strategic position</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 4 §12.2: a <strong>sample-home photography restriction</strong>, on the record in reviews, directly contradicting the transparency position the whole strategy rests on.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The first thing a diligent buyer finds when searching the brand is a transparency complaint &mdash; <strong>against a brand about to launch on transparency.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Reversing it and saying so <strong>demonstrates the promise instead of asserting it</strong>, which is the only form of proof this strategy accepts.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Reverse before launch. State it publicly in one line</strong>, without defensiveness or explanation.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Review sentiment on the transparency theme at 6 and 12 months.</div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g30">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G30</span><span class="gt gt-e">Exposure</span><span class="ev">Inferred from Phase 5 and Phase 11 §1.10</span></div>
+        <h4>The counted walk is designed as a sales device and not as an accessible one</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 11 funds <strong>&#8377;0.28 crore</strong> for landscaping, numbered posts and signage &mdash; the physical expression of the master idea. Phase 5 established <strong>multi-generational purchase</strong> as a core pattern: parents in one community, children in another, one address.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">A walk that works only for a fit adult <strong>excludes the person who frequently makes the decision</strong> &mdash; the oldest family member present &mdash; from the single experience the entire creative strategy is built around.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">A seated route, shade every 150 metres and a driven alternative make the site's central argument available to the person who often signs the cheque. <strong>A specification detail, not a redesign.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Specify the accessible route in the same brief as the walk itself.</strong> Not an accommodation added later; it is the version most extended families will actually take.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v"><strong>Completion rate of the full route among visits including a family member over 60.</strong></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s11">
+  <div class="sec-head">
+    <div class="sec-num">&sect;11</div>
+    <div>
+      <h2>CRM gaps</h2>
+      <p class="dek">The tool is funded to the right standard. Nobody owns it.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap exp" id="g31">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G31</span><span class="gt gt-e">Exposure</span><span class="ev">Observed</span></div>
+        <h4>WhatsApp is the primary channel for three segments and lives on personal phones</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 9 risk 5, in its own words: <strong>&ldquo;Un-integrated, it is not a channel &mdash; it is a liability.&rdquo;</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The conversations carrying the real objections and the real commitments are <strong>invisible to the CRM, unauditable, and they leave when the consultant leaves.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Phase 11 funds the API and integration at &#8377;0.31 Cr. <strong>The money exists. The sequencing does not.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>WhatsApp Business API integrated on day one, before the first lead is captured</strong> &mdash; not as a phase-two improvement, because retro-fitting conversation history is impossible.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Share of buyer conversations captured in CRM &mdash; <strong>target 90%</strong> &mdash; and, as a hard check, <strong>zero bookings whose conversation history cannot be produced.</strong></div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g32">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G32</span><span class="gt gt-e">Exposure</span><span class="ev">Inferred from Phase 9 and Phase 11 §1.8</span></div>
+        <h4>The CRM owns a metric worth &#8377;17.2 crore per point, and nobody owns the CRM</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 9 established that the CRM owns the lead-to-qualified rate, <strong>worth &#8377;17.2 crore per percentage point.</strong> Phase 11 funds 18 seats at a deliberately mid-band &#8377;1,200, calling the cheapest option a false economy. <strong>Across eleven phases, no document names an owner, a qualification definition, or a data-quality routine.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The tool is funded to the right standard and the discipline that makes it work is unspecified. <strong>A CRM without a written qualification criterion is a contact list with a subscription.</strong></div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Naming an owner and writing the criteria costs a morning and converts the most leveraged metric in the funnel <strong>from accidental to managed.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Name the owner, write the qualification criteria, and schedule the weekly data-quality review &mdash; all before go-live.</strong></div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Lead-to-qualified rate, weekly; and <strong>completeness on required fields &ge;95%</strong>, reviewed by the named owner.</div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g33">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G33</span><span class="gt gt-e">Exposure</span><span class="ev">Observed</span></div>
+        <h4>First-touch attribution is the check on &#8377;9.84 crore, and it is one unspecified field</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 9 risk 1: <strong>the per-channel booking split is Reasoned, not observed</strong>, and the booking-stage first-touch field settles it in two quarters.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Without it, <strong>year two's reallocation repeats year one's assumptions</strong> &mdash; and the plan spends a second year defending numbers it could have replaced.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">One required field, captured at booking, <strong>retires the largest Reasoned assumption in the channel plan.</strong></div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Mandatory, non-free-text, fixed picklist agreed against the channel plan</strong> so the values reconcile to the budget lines.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v"><strong>Booking records with first-touch populated: 100%.</strong> It is a required field; anything less is a configuration failure.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-head">
+    <div class="sec-num">&sect;12</div>
+    <div>
+      <h2>Retention and referral gaps</h2>
+      <p class="dek">The cheapest route in the model, and the period nobody owns.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="gap opp" id="g34">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G34</span><span class="gt gt-o">Opportunity</span><span class="ev">Observed</span></div>
+        <h4>The cheapest route in the model was nearly left out of the budget</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 11 §2: the referral programme &mdash; <strong>&#8377;0.70 Cr, 70 bookings, &#8377;1.00 lakh each</strong> &mdash; had been dropped from the bottom-up build entirely, while the CAC table continued to charge it against 70 referral bookings. The reconciliation caught it.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">The route producing bookings at <strong>13.7&times; less than marketing-sourced</strong> is the one the plan treated as an afterthought. <strong>&#8377;94.3 crore of revenue for &#8377;0.70 crore of cost</strong>, and it nearly went unfunded.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">70 bookings is <strong>18.6% of the scheme for 2.2% of the budget.</strong> Raising its share is the highest-return reallocation available anywhere in the plan.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v">Design the mechanic &mdash; <strong>reward, timing, attribution</strong> &mdash; before launch, and adopt Phase 9's position that <strong>year one's job is manufacturing advocates, not harvesting referrals.</strong></div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Referral-sourced bookings as a share of total, by quarter; and <strong>referrals per owner. Target: exceed 70 by year three.</strong></div></div>
+      </div>
+    </div>
+    <div class="gap exp" id="g35">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G35</span><span class="gt gt-e">Exposure</span><span class="ev">Observed</span></div>
+        <h4>There is no referral base in year one, and the plan assumes 18.5% across the whole period</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 11 §5.2: <strong>referral requires prior buyers, and in year one there are none.</strong> The 18.5% is a period average presented as a rate.</div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v">Referral is back-loaded, so <strong>paid channels carry more than the average implies in exactly the period when cash is tightest</strong> &mdash; the same period Phase 11 identified as peak burn at 2.05&times; steady state against zero revenue.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">Phase 9 already computed the answer: routing year one's referral gap to channel partners rather than paid media <strong>saves &#8377;1.41 crore for the same units.</strong> It is in the plan but not in the phasing.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Model referral by year rather than as a period average</strong>, and re-phase the channel-partner budget to absorb the year-one gap.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Referral share by year against the re-phased plan; and <strong>channel-partner bookings in year one against the revised target.</strong></div></div>
+      </div>
+    </div>
+    <div class="gap bth" id="g36">
+      <div class="gap-head">
+        <div class="gap-id"><span class="gap-n">G36</span><span class="gt gt-b">Exposure + Opportunity</span><span class="ev">Inferred from Phases 4, 5 and 11</span></div>
+        <h4>Nobody owns the period after handover — and 45% of D's buyers will be absent</h4>
+      </div>
+      <div class="gap-body">
+        <div class="fld"><div class="fld-k">Observation</div><div class="fld-v">Phase 4 §11.3: <strong>no resale or ownership-experience content</strong>, despite an active resale market in KMV's own project. Phase 5: 45% of D revenue is non-resident. <strong>No phase of eleven names anyone responsible for the owner relationship after handover.</strong></div></div>
+        <div class="fld"><div class="fld-k">Business implication</div><div class="fld-v"><strong>Three separate strategies depend on engaged owners</strong> &mdash; the upgrade path (G4), the referral engine (G34) and the resale narrative (G9) &mdash; and none has an owner, a budget line or a metric.</div></div>
+        <div class="fld"><div class="fld-k">Opportunity</div><div class="fld-v">The owner community is <strong>the referral engine, the upgrade pipeline and the proof layer at once.</strong> It is the only asset in the plan that compounds rather than depreciating.</div></div>
+        <div class="fld act"><div class="fld-k">Recommended action</div><div class="fld-v"><strong>Name post-handover ownership as a role and a budget line before launch</strong>, not after the first handover reveals the vacuum.</div></div>
+        <div class="fld kpi"><div class="fld-k">KPI</div><div class="fld-v">Owner engagement &mdash; event participation and annual survey response &mdash; and <strong>referrals per owner-year</strong>, the number that says whether the community is an asset or an address.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s13">
+  <div class="sec-head">
+    <div class="sec-num">§13</div>
+    <div>
+      <h2>What to do, in order</h2>
+      <p class="dek">Sorted by cost to close rather than by category — which is where the finding is.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="bkt">
+      <div class="bk free">
+        <div class="bkn">11</div><span class="bkl">Free</span>
+        <div class="bkd"><b>A decision, a document, a configuration.</b> Costs nothing but attention.</div>
+      </div>
+      <div class="bk">
+        <div class="bkn">7</div><span class="bkl">Cheap</span>
+        <div class="bkd"><b>₹41.5 lakh in total.</b> Public data, a short field exercise, one bounded test.</div>
+      </div>
+      <div class="bk">
+        <div class="bkn">6</div><span class="bkl">Already funded</span>
+        <div class="bkd"><b>Money allocated, discipline unspecified.</b> Nothing new to spend.</div>
+      </div>
+      <div class="bk">
+        <div class="bkn">12</div><span class="bkl">Needs investment</span>
+        <div class="bkd"><b>Or a product decision.</b> Several are revenue-positive.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <span class="lbl">The whole of §13 in one line</span>
+      <p class="big">Eighteen of thirty-six gaps close for ₹41.5 lakh or less — and they include every one of the five largest exposures in the exercise.</p>
+    </div>
+
+    <h3 style="font-family:var(--f-display);font-size:1.15rem;font-weight:600;margin:2.2rem 0 .3rem;color:var(--ink)">§13.2 · The pattern worth naming</h3>
+    <p class="stmt"><strong>The plan repeatedly funds a tool and leaves the discipline that operates it unspecified.</strong> It is not a coincidence and it is not a criticism of any single phase — it is what happens when a budget is built line by line and nobody audits the seams between lines.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Funded</th><th>Unspecified</th></tr></thead>
+        <tbody>
+          <tr><td>CRM at ₹0.51 Cr, deliberately mid-band</td><td>Owner, qualification criteria, data-quality routine <i>(G32)</i></td></tr>
+          <tr><td>WhatsApp API at ₹0.31 Cr</td><td>Day-one sequencing <i>(G31)</i></td></tr>
+          <tr><td>24 creative variants at ₹0.45 Cr</td><td>Refresh trigger, fatigue threshold <i>(G23)</i></td></tr>
+          <tr><td>Experience centre at ₹4.10 Cr</td><td>Peak sizing, appointment gating <i>(G28)</i></td></tr>
+          <tr><td>NRI infrastructure at ₹1.05 Cr</td><td>Any pilot at all <i>(G27)</i></td></tr>
+          <tr><td>The counted walk at ₹0.28 Cr</td><td>The accessible route <i>(G30)</i></td></tr>
+          <tr><td>Twelve journey stages</td><td>The CRM trigger for two of them <i>(G26)</i></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stmt"><strong>Every row is cheap to fix and expensive to discover late.</strong></p>
+
+    <h3 style="font-family:var(--f-display);font-size:1.15rem;font-weight:600;margin:2.2rem 0 .3rem;color:var(--ink)">§13.3 · Tier 1 — before any money commits</h3>
+    <p class="stmt"><span class="tg tg-as">Assumption</span> Each cost is a reasoned estimate; a quote would replace it.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Action</th><th>Gap</th><th class="n">Cost</th><th>What it settles</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td>Consolidate domain and social identity</td><td>G14</td><td class="n"><strong>₹0</strong></td><td>Splits authority every day it waits</td></tr>
+          <tr><td class="n">2</td><td>Reconcile all published project figures</td><td>G15</td><td class="n"><strong>₹0</strong></td><td>A transparency launch over contradictory numbers</td></tr>
+          <tr><td class="n">3</td><td>Reverse the photography restriction, publicly</td><td>G29</td><td class="n"><strong>₹0</strong></td><td>A live complaint contradicting the position</td></tr>
+          <tr><td class="n">4</td><td>Bound the density claim and write the footnote</td><td>G7</td><td class="n"><strong>₹0</strong></td><td>The campaign's central claim</td></tr>
+          <tr><td class="n">5</td><td>Specify first-touch, consultation and negotiation as CRM events</td><td>G26, G33</td><td class="n"><strong>₹0</strong></td><td>₹9.84 Cr of allocation, and a diagnosable funnel</td></tr>
+          <tr><td class="n">6</td><td>Name the CRM owner; write the qualification criteria</td><td>G32</td><td class="n"><strong>₹0</strong></td><td>₹17.2 Cr per point</td></tr>
+          <tr><td class="n">7</td><td>Put the three reading rules in the reporting template</td><td>G24</td><td class="n"><strong>₹0</strong></td><td>₹10.25 Cr of defensible spend</td></tr>
+          <tr><td class="n">8</td><td>IGRS registration series, 24 months, two mandals</td><td>G1</td><td class="n">₹2.5 L</td><td>Up to <strong>₹50.7 Cr</strong> of price risk</td></tr>
+          <tr><td class="n">9</td><td>Segment sizing from registration and institutional data</td><td>G11</td><td class="n">₹4.0 L</td><td>Six of eight segments; <strong>₹121.5 Cr</strong> on S1 alone</td></tr>
+          <tr><td class="n">10</td><td>Competitor velocity in the ₹2.2–2.8 Cr band, 8 weeks</td><td>G2</td><td class="n">₹3.5 L</td><td><strong>₹158.8 Cr</strong> — the exercise's largest open question</td></tr>
+          <tr><td class="n">11</td><td>30–40 depth interviews + 8–10 landowner families</td><td>G3, G10</td><td class="n">₹12.0 L</td><td>Attributes 8–20 of all eight segments</td></tr>
+          <tr><td class="n">12</td><td>Paid media test across four community audiences</td><td>G22</td><td class="n">₹17.5 L</td><td>The CPLs underwriting <strong>₹11.02 Cr</strong> and the ₹24.60 ratio</td></tr>
+          <tr><td class="n">13</td><td>Twenty proxy visits on the existing project</td><td>G27</td><td class="n">₹2.0 L</td><td><strong>₹12.63 Cr</strong> of Community B budget</td></tr>
+          <tr class="tot"><td class="n"></td><td><strong>Total</strong></td><td></td><td class="n"><strong>₹41.5 L</strong></td><td><strong>= 1.3% of the ₹31.75 Cr budget</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <span class="wl">Stated carefully, because the overclaim is tempting</span>
+      <p><strong>₹41.5 lakh — 1.3% of the marketing budget — tests the assumptions the other 98.7% rests on.</strong></p>
+      <p>It does <em>not</em> de-risk ₹158.8 crore. <strong>It tells you whether ₹158.8 crore is real before you spend ₹31.75 crore finding out.</strong> Those are different claims and only the second one is honest.</p>
+    </div>
+
+    <h3 style="font-family:var(--f-display);font-size:1.15rem;font-weight:600;margin:2.2rem 0 .3rem;color:var(--ink)">§13.4 · Tier 2 — before launch</h3>
+    <p class="stmt">Things that must exist on day one because they cannot be retrofitted.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Action</th><th>Gap</th><th>Why it cannot wait</th></tr></thead>
+        <tbody>
+          <tr><td>WhatsApp API integrated</td><td>G31</td><td>Conversation history cannot be reconstructed</td></tr>
+          <tr><td>Structured visit debrief live in CRM</td><td>G25</td><td>The ₹39.4 Cr-per-point stage, unmeasured from day one, stays unmeasured</td></tr>
+          <tr><td>Delivery charter drafted and published</td><td>G13</td><td>The cheapest white space — and it expires the moment a competitor publishes first</td></tr>
+          <tr><td>Upgrade covenant drafted and published</td><td>G4</td><td>Without it the ladder is a claim, not a product</td></tr>
+          <tr><td>Branded search defended</td><td>G19</td><td>The interception starts with the first media impression</td></tr>
+          <tr><td>Construction feed live from foundation</td><td>G20</td><td>A feed that starts at month twelve has no month one</td></tr>
+          <tr><td>Carpet area published alongside super-built-up</td><td>G17</td><td>The first price sheet sets the standard or concedes it</td></tr>
+          <tr><td>Absentee package specified and priced into D</td><td>G5</td><td>₹71.5 Cr; a spec item, not a service to add later</td></tr>
+          <tr><td>Accessible route specified with the walk</td><td>G30</td><td>Landscaping is poured once</td></tr>
+          <tr><td>Post-handover ownership named as a role</td><td>G36</td><td>The vacuum is invisible until the first handover, and then permanent</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family:var(--f-display);font-size:1.15rem;font-weight:600;margin:2.2rem 0 .3rem;color:var(--ink)">§13.5 · Tier 3 — standing gates</h3>
+    <p class="stmt">Thresholds agreed <strong>now</strong>, with a named decision-maker, so they are not renegotiated when they trigger.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Gate</th><th>Threshold</th><th>Response if breached</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Community B viability</strong></td><td>Qualified-to-visit below 25% for two quarters</td><td><strong>Reduce B's inventory release. Do not raise B's budget</strong> <i>(G6)</i></td></tr>
+          <tr><td><strong>D price band</strong></td><td>Competitor absorption below 1.5 units/month combined</td><td><strong>Re-cut D's mix toward C before launch</strong> <i>(G2)</i></td></tr>
+          <tr><td><strong>CPL realism</strong></td><td>Observed CPL &gt;30% above the Phase 7 assumption</td><td><strong>Re-base the model; re-run the funnel; re-issue the budget</strong> <i>(G22)</i></td></tr>
+          <tr><td><strong>Creative fatigue</strong></td><td>CPL drift &gt;20% against rolling 30-day baseline</td><td><strong>Refresh cycle triggers automatically, not by request</strong> <i>(G23)</i></td></tr>
+          <tr><td><strong>Proxy visit</strong></td><td>Proxy-to-booking below half of physical-to-booking</td><td><strong>Hold B's ₹1.05 Cr NRI release pending redesign</strong> <i>(G27)</i></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s14">
+  <div class="sec-head">
+    <div class="sec-num">§14</div>
+    <div>
+      <h2>What eleven phases could not answer</h2>
+      <p class="dek">Stated last and without hedging, because a gap analysis that omits its own gaps is the failure it is meant to catch.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <thead><tr><th class="n">#</th><th>Unanswered</th><th>Why it matters</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td class="n"><strong>1</strong></td><td><strong>Construction cost, and therefore margin</strong></td><td>Phases 1, 2 and 11 each flag it. The 28% gross margin is a <strong>placeholder</strong>; the 3.5× ROI is arithmetic on a guess</td><td><strong>No data exists in this exercise.</strong> Contractor quotations are the only fix</td></tr>
+          <tr><td class="n"><strong>2</strong></td><td><strong>Whether anyone will actually move here</strong></td><td>Phase 1 §12: current evidence suggests <strong>commuting, not relocation.</strong> The entire demand thesis assumes in-migration</td><td>Unmeasured. Utility connections by mandal would indicate it</td></tr>
+          <tr><td class="n"><strong>3</strong></td><td><strong>Parcel-level title, zoning and flood contours</strong></td><td>Assigned land, unsettled pooling plots and the R5 zone are disqualifying and <strong>cannot be checked at desk level</strong></td><td>The micro-location recommendation is unvalidated</td></tr>
+          <tr><td class="n"><strong>4</strong></td><td><strong>The corridor's real supply pipeline</strong></td><td>The "2,500 units" figure is Tier 6 and uncorroborated — <strong>but would make this project 16–22% of two years' supply</strong></td><td>AP RERA registration register closes it</td></tr>
+          <tr><td class="n"><strong>5</strong></td><td><strong>Whether the ₹2.2–2.8 Cr band is occupied</strong></td><td>Unchanged since Phase 2. <strong>Seven phases carried it forward</strong></td><td>G2 is the test</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <span class="lbl">And the method limitation, restated</span>
+      <p>Outbound HTTP retrieval was unavailable throughout this exercise; findings rest on search-surfaced reporting, cross-checked and graded. <strong>Where a figure appears with a single interested-party source it is labelled as such and should not carry a capital decision.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s15">
+  <div class="sec-head">
+    <div class="sec-num">§15</div>
+    <div>
+      <h2>Carry-forward</h2>
+      <p class="dek">Thirty-six gaps. Twenty pure exposures, twelve pure opportunities, four both. Eighteen close for ₹41.5 lakh or less.</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="cards">
+      <div class="card">
+        <h6>1 · Two-thirds of the gaps are in the plan, not the market</h6>
+        <ul><li>A gap analysis that lists only opportunities is a sales document.</li>
+        <li><strong>Twenty-four of thirty-six carry an exposure</strong> — an assumption eleven phases made and never tested.</li>
+        <li><strong>Twelve of those twenty-four cost nothing new to close</strong>, because the money is already allocated or none is required.</li></ul>
+      </div>
+      <div class="card">
+        <h6>2 · The plan funds tools and leaves the discipline unspecified</h6>
+        <ul><li>Seven separate lines follow the pattern: CRM, WhatsApp, creative, the experience centre, NRI infrastructure, the counted walk, and two journey stages.</li>
+        <li><strong>Each is cheap now and expensive later.</strong></li></ul>
+      </div>
+      <div class="card">
+        <h6>3 · The four largest sizeable exposures test for ₹25.5 lakh</h6>
+        <ul><li>The price ladder (<strong>₹50.7 Cr</strong>), Community D's band (<strong>₹158.8 Cr</strong>), the CPL assumption (<strong>₹11.02 Cr</strong> and the ratio defending it), Community B's fix (<strong>₹12.63 Cr</strong>).</li>
+        <li>The fifth — that nobody has spoken to a buyer — costs ₹12.0 lakh and <strong>cannot be sized, only closed.</strong></li></ul>
+      </div>
+      <div class="card">
+        <h6>4 · The two best opportunities are funded and simply not sequenced</h6>
+        <ul><li>The <strong>delivery charter</strong> and the <strong>construction feed.</strong></li>
+        <li>Both are cheap. <strong>Both expire the moment a competitor publishes first.</strong></li></ul>
+      </div>
+      <div class="card">
+        <h6>5 · The compounding asset is unowned</h6>
+        <ul><li>The upgrade path, the referral engine and the resale narrative all depend on engaged owners after handover.</li>
+        <li><strong>No phase of eleven named anyone responsible for them.</strong></li></ul>
+      </div>
+    </div>
+
+    <figure class="figure">
+      <div class="figure-head">
+        <span class="kicker">Recorded because it is the method's only real evidence</span>
+        <h5>What the sequence corrected about itself</h5>
+      </div>
+      <div class="tw" style="margin:.6rem 0 0;border:0">
+        <table>
+          <thead><tr><th class="n">Phase</th><th>Correction</th></tr></thead>
+          <tbody>
+            <tr><td class="n"><strong>3</strong></td><td>Corrected Phase 1's density and scale claims — Villas 64 at 1.9/acre, Raintree Park at 120 acres. <strong>Three "advantages" were false.</strong></td></tr>
+            <tr><td class="n"><strong>5</strong></td><td>Corrected the sales task from ~600 units to <strong>~397</strong>, and allowable marketing cost per unit from ₹3.6–6.2 L to <strong>₹5.0–6.3 L</strong>.</td></tr>
+            <tr><td class="n"><strong>6</strong></td><td>Rebuilt the community architecture rather than accepting the assumed A/B/C/D tiering, and surfaced the <strong>18.2-units-per-acre implication</strong> the earlier area shares had hidden.</td></tr>
+            <tr><td class="n"><strong>9</strong></td><td>Corrected Phase 8's referral count from 71 to <strong>70</strong>, and the cost ratio from 6.2× to 6.1×.</td></tr>
+            <tr><td class="n"><strong>11</strong></td><td>Caught its own reconciliation failing to close, which surfaced a <strong>₹0.70 crore line dropped from the budget</strong> while still being charged against 70 bookings.</td></tr>
+            <tr><td class="n"><strong>12</strong></td><td>Found the density claim in Phase 10's signature line is <strong>false against two named villa competitors</strong> unless explicitly bounded <i>(G7)</i>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="figure-foot">Six corrections across twelve phases, five of them to the sequence's own earlier conclusions. <strong>A method that never contradicts itself is not being applied.</strong></div>
+    </figure>
+
+    <div class="warn">
+      <span class="wl">The open item, unchanged since Phase 6 and stated here for the last time</span>
+      <p><strong>31% of revenue sits in a price band nobody has proven is occupied.</strong> Six phases carried it forward as a risk.</p>
+      <p>G2 is the eight-week, ₹3.5 lakh test that would settle it. <strong>It should run before the ₹41.5 lakh, not alongside it</strong> — because if the band is empty, several of the other thirty-five gaps stop being worth closing.</p>
+    </div>
+
+    <p style="font-size:.8rem;color:var(--ink-3);margin-top:2.5rem;border-top:1px solid var(--rule);padding-top:1.2rem;max-width:none">
+      Phase 12 of a sequential research and strategy exercise, and the last. Hypothetical project; not represented as an actual KMV Spaces development. Phases 1–11 precede this document. Every gap in §1–12 is traceable to a numbered finding in those phases; where a gap is inferred rather than observed, it is labelled. Costs in §13.3 are assumptions and would be replaced by quotation. The exercise rests on search-surfaced evidence without primary buyer research or transaction data, and §14 states what that leaves unanswered.
+    </p>
+  </div>
+</section>
+
+</main>
+</div>

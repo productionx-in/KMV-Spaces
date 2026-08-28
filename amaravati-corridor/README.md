@@ -42,6 +42,7 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 | 9 | [`09-channel-strategy.md`](09-channel-strategy.md) — twenty-two channels tiered, five cut, ₹25.68 Cr allocated (also [`.html`](09-channel-strategy.html)) | **Complete** |
 | 10 | [`10-creative-strategy.md`](10-creative-strategy.md) — master idea, narratives, creative system, campaign (also [`.html`](10-creative-strategy.html)) | **Complete** |
 | 11 | [`11-marketing-budget.md`](11-marketing-budget.md) — bottom-up investment model, thirteen line items, funnel and ROI (also [`.html`](11-marketing-budget.html)) | **Complete** |
+| 12 | [`12-gaps-opportunities.md`](12-gaps-opportunities.md) — final gap analysis, twelve domains, thirty-six gaps (also [`.html`](12-gaps-opportunities.html)) | **Complete** |
 
 ## Method notes
 
@@ -49,6 +50,22 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 RECOMMENDATION, and records unverifiable items as "Insufficient public evidence" rather than
 inferring weakness from absence. A private LLP is not obliged to publish financials, headcount or
 spend, and their absence is not a finding.
+
+**Two kinds of gap.** Phase 12 separates gaps in the *market* — things nobody is doing that this
+project could do — from gaps in *this plan* — assumptions the eleven earlier phases made and never
+tested. They read alike and demand opposite responses: exploit the first, close the second. Of the
+thirty-six, twenty-four carry an exposure and twelve of those cost nothing new to close, because the
+money is already allocated or none is required. Sorting by cost rather than by category is what
+produces the finding: eighteen of thirty-six close for ₹41.5 lakh — 1.3% of the marketing budget —
+and they include every one of the five largest exposures.
+
+**Self-correction is the method's only real evidence.** Six phases corrected an earlier phase's
+conclusion: Phase 3 found three of Phase 1's claimed advantages false; Phase 5 cut the sales task
+from ~600 units to ~397; Phase 6 rebuilt the community architecture rather than accepting the
+assumed tiering; Phase 9 corrected Phase 8's referral count; Phase 11 caught its own reconciliation
+failing to close, which surfaced a ₹0.70 crore line dropped from the budget; and Phase 12 found the
+density claim in Phase 10's signature line is false against two named villa competitors unless
+explicitly bounded. A sequence that never contradicts itself is not being applied.
 
 **Bottom-up budgeting, and forcing it to reconcile.** Phase 11 prices each budget line as
 *quantity × unit cost* and only then compares the total to Phase 9's top-down allocation. The two
