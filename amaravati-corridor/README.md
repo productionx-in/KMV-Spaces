@@ -36,9 +36,10 @@ the premium-gap comparison as a chart, and the micro-location scoring as a weigh
 | 3 | [`03-competitor-landscape.md`](03-competitor-landscape.md) — competitor field, matrix & white space (also [`.html`](03-competitor-landscape.html)) | **Complete** |
 | 4 | [`04-kmv-brand-research.md`](04-kmv-brand-research.md) — independent developer brand research (also [`.html`](04-kmv-brand-research.html)) | **Complete** |
 | 5 | [`05-customer-research.md`](05-customer-research.md) — buyer universe, segment priority & derived audience mapping (also [`.html`](05-customer-research.html)) | **Complete** |
-| 6 | Positioning and messaging | Not started |
-| 7 | Pricing and commercial model | Not started |
-| 8 | Channel, performance and creative strategy | Not started |
+| 6 | [`06-community-architecture.md`](06-community-architecture.md) — product, land and price structure for Communities A–D (also [`.html`](06-community-architecture.html)) | **Complete** |
+| 7 | [`07-business-model.md`](07-business-model.md) — funnel model, three scenarios, unit economics (also [`.html`](07-business-model.html)) | **Complete** |
+| 8 | Positioning, messaging and creative strategy | Not started |
+| 9 | Channel and performance plan | Not started |
 
 ## Method notes
 
@@ -60,6 +61,22 @@ are used strictly — see §0.2 of the Phase 1 document.
 published by brokers and developers who profit from the numbers being high. Source classes
 and their treatment are set out in the Phase 1 appendix. Listing-portal rates are treated
 as an upper bound on realisable price throughout, never as market rates.
+
+**Structure tested, not assumed.** Phase 6 was required not to assign A = 2BHK, B = 3BHK, C = premium,
+D = villas unless the research supported it. It does not: Phase 2 established that configuration is not a
+pricing lever in this corridor, and that a premium apartment at ₹1.4–1.8 crore competes against a detached
+villa at ₹5,400/sq ft in the same micro-market. The architecture is rebuilt on **built form and ground
+relationship**, which is the one in-project rate lever the evidence supports.
+
+**₹500 crore is a density choice, not a capacity ceiling.** Phase 6 §2 found the earlier phases had
+silently assumed an apartment density 2.9–6.2× below anything in the corridor. At the lowest observed
+local density the same 25 acres would yield ~₹851 crore. The project is therefore forgoing roughly
+₹350–500 crore of gross development value to buy the low-density differentiator the price premium rests on.
+
+**Every number classified.** Phase 7 tags each input as MARKET DATA / BENCHMARK / ASSUMPTION / CALCULATED,
+and flags that essentially all Indian real-estate funnel benchmarks are published by agencies and CRM
+vendors with a commercial interest in them. Where sources conflict — site-visit-to-booking is published
+at both 3–8% and 8–20% — the conflict is stated rather than resolved by preference.
 
 **Segmentation by income source.** Phase 5 found the binding constraint on this project is
 **cash at purchase** (₹17.6 lakh for Community A rising to ₹74.1 lakh for Community D), not
