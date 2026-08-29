@@ -18,6 +18,7 @@
 
 ## Related
 
+- **The decision the audit led to** — [`14_Executive/marketing-investment-growth-strategy.md`](../14_Executive/marketing-investment-growth-strategy.md)
 - The journey the funnel describes — [`09_Marketing/08-marketing-funnel.md`](../09_Marketing/08-marketing-funnel.md)
 - Channel allocation — [`09_Marketing/09-channel-strategy.md`](../09_Marketing/09-channel-strategy.md)
 

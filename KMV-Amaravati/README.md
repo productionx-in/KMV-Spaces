@@ -29,6 +29,7 @@ and what is still assumed.
 | **[`11_Gaps/`](11_Gaps/)** | Thirty-six gaps across twelve domains | 12 |
 | **[`12_Strategy/`](12_Strategy/)** | The dossier, and the sixteen strategic answers drawn from it | 13 |
 | **[`13_Sources/`](13_Sources/)** | Forty URLs across six tiers, and the verification checklist | 13 |
+| **[`14_Executive/`](14_Executive/)** | The investment decision, the release gates, and the CEO/CFO decision sheet | — |
 
 **Each folder carries its own README** with the documents it holds, the one thing worth knowing, and links to
 related material elsewhere. **Every markdown document has a matching designed `.html` page.**
@@ -41,9 +42,10 @@ related material elsewhere. **Every markdown document has a matching designed `.
 | --- | --- |
 | **Structure** | 25 acres · **376 units** · 15.0/acre · **₹506.7 Cr** |
 | **Communities** | A 169 apartments · B 84 managed · C 60 compact villas · D 63 estate villas |
-| **Budget** | **₹31.75 Cr — 6.27% of GDV** · CAC ₹8.44 L · ROI 3.5× on an assumed 28% margin |
-| **Funnel** | 78,880 leads → 12,474 qualified → 2,922 site visits → **376 bookings** |
+| **Budget** | Headline **₹31.75 Cr**; reclassified marketing opex **₹23.80 Cr**, envelope **₹25.33–26.86 Cr** · CAC ₹8.44 L · ROMI 3.47× on an assumed 28% margin |
+| **Funnel** | 78,880 leads → 12,474 qualified → 2,922 site visits → **409 gross bookings → 376 net** |
 | **Position** | The corridor's only development you can move within, at a density you can count |
+| **Decision** | **Conditional.** Approve the envelope under governance; **release ₹25 lakh** — 1.0% of it |
 
 ---
 
@@ -82,6 +84,15 @@ figure lands at **₹6.33 lakh, within 0.5% of that ceiling**, so the overshoot 
 the same ₹8 crore. Sensitivity also reverses an earlier headline: **CPL is the biggest risk, but site-visit
 conversion is the biggest opportunity**, and media is the most expensive and least controllable place to buy
 a booking.
+
+**The decision document then raised the ask and lowered the revenue in the same breath.**
+[`14_Executive/marketing-investment-growth-strategy.md`](14_Executive/marketing-investment-growth-strategy.md)
+finds two further omissions the audit had not reached. The model carried **agency fees and no internal
+marketing headcount** — adding a labelled range for two people over 51 months takes the envelope *up* to
+**₹25.33–26.86 crore**. And the funnel carried **no cancellation allowance at all**: 376 bookings were treated
+as 376 units sold, so **409 gross bookings are needed to net 376**, and the base case delivers **346 net units
+and ₹466.2 crore — a ₹40.5 crore shortfall against the plan's own target.** The verdict is **conditional**:
+approve a governed envelope, **release ₹25 lakh**, and ratify the kill condition before the money moves.
 
 **Bottom-up budgeting, and forcing it to reconcile.** [`08_Funnel_Economics/`](08_Funnel_Economics/) prices each
 budget line as *quantity × unit cost* and only then compares to the top-down allocation. The two disagree by
@@ -130,5 +141,5 @@ book; a records agent on 24 months of IGRS registrations; a mystery shopper on t
 
 ---
 
-*Thirteen phases of a sequential research and strategy exercise. Hypothetical project; not represented as an
-actual KMV Spaces development.*
+*Thirteen phases of a sequential research and strategy exercise, an adversarial budget audit, and a final
+investment decision. Hypothetical project; not represented as an actual KMV Spaces development.*
