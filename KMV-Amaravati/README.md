@@ -72,6 +72,17 @@ opposite responses. **Twenty-four of thirty-six carry an exposure, and twelve of
 close.** Eighteen of thirty-six close for **₹41.5 lakh**, 1.3% of the marketing budget, and they include every
 one of the five largest exposures.
 
+**The budget was then audited adversarially, and it did not survive intact.**
+[`08_Funnel_Economics/investment-model-audit.md`](08_Funnel_Economics/investment-model-audit.md) finds the
+₹31.75 crore is **a taxonomy error, not a magnitude error**: it bundles marketing opex, cost of sale, sales
+capex and technology capex under one label. True marketing operating expense is **₹23.80 crore**, of which
+media is **₹14.65 crore — ₹32.6 lakh a month across 45 months**. Two further findings: the budget **breaches
+the ₹6.3 lakh per-unit allowable** that Phase 5 set and Phase 7 respected, by 34% — and the reclassified
+figure lands at **₹6.33 lakh, within 0.5% of that ceiling**, so the overshoot and the misclassified money are
+the same ₹8 crore. Sensitivity also reverses an earlier headline: **CPL is the biggest risk, but site-visit
+conversion is the biggest opportunity**, and media is the most expensive and least controllable place to buy
+a booking.
+
 **Bottom-up budgeting, and forcing it to reconcile.** [`08_Funnel_Economics/`](08_Funnel_Economics/) prices each
 budget line as *quantity × unit cost* and only then compares to the top-down allocation. The two disagree by
 **28%**, and the gap sits almost entirely in things that are not media. Requiring the variance table to sum to
