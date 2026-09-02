@@ -30,6 +30,9 @@ and what is still assumed.
 | **[`12_Strategy/`](12_Strategy/)** | The dossier, and the sixteen strategic answers drawn from it | 13 |
 | **[`13_Sources/`](13_Sources/)** | Forty URLs across six tiers, and the verification checklist | 13 |
 | **[`14_Executive/`](14_Executive/)** | The investment decision, the release gates, and the CEO/CFO decision sheet | — |
+| **[`15_Deck/`](15_Deck/)** | **The final submission deck** — 24 slides, 7 appendices, PDF, and its own source and assumptions registers | — |
+
+**Start with [`15_Deck/`](15_Deck/) for the submitted argument; everything else is the working paper behind it.**
 
 **Each folder carries its own README** with the documents it holds, the one thing worth knowing, and links to
 related material elsewhere. **Every markdown document has a matching designed `.html` page.**
@@ -141,5 +144,6 @@ book; a records agent on 24 months of IGRS registrations; a mystery shopper on t
 
 ---
 
-*Thirteen phases of a sequential research and strategy exercise, an adversarial budget audit, and a final
-investment decision. Hypothetical project; not represented as an actual KMV Spaces development.*
+*Thirteen phases of a sequential research and strategy exercise, an adversarial budget audit, a final
+investment decision, and the submitted strategy deck drawn from all of it. Hypothetical project; not
+represented as an actual KMV Spaces development.*

@@ -1,0 +1,3198 @@
+<title>Fifteen to the Acre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&display=swap">
+<style>
+/* ============ tokens : light is the base, complete ============ */
+:root{
+  --paper:#F5F5F1; --surface:#FFFFFF; --surface-2:#EFEFE9; --surface-3:#E7E8E0;
+  --ink:#16191B; --ink-2:#4C5459; --ink-3:#7C858A; --ink-4:#9BA3A7;
+  --rule:#E0E1DA; --rule-2:#CACCC2; --rule-3:#B4B7AB;
+  --evidence:#2C5164;      /* slate : researched, external, factual */
+  --evidence-soft:#E4EAEE;
+  --decision:#B06A18;      /* ochre : decision, gate, risk, the ask */
+  --decision-soft:#F6EADA;
+  --derived:#5E6A57;       /* olive : our own arithmetic */
+  --derived-soft:#E7EBE4;
+  --given:#5A4A6B;         /* plum : handed to me by the assignment */
+  --given-soft:#EDE8F1;
+  --band:#1B1F21;          /* dark divider slides */
+  --band-ink:#F5F5F1;
+  --shadow:0 1px 2px rgba(20,24,26,.05), 0 6px 18px -8px rgba(20,24,26,.10);
+  --f-d:"Newsreader",ui-serif,Georgia,"Times New Roman",serif;
+  --f-b:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-m:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --measure:74ch;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#101315; --surface:#191D1F; --surface-2:#1F2426; --surface-3:#262B2E;
+    --ink:#EDEEE9; --ink-2:#B6BCBE; --ink-3:#8B9396; --ink-4:#6C7478;
+    --rule:#2B3134; --rule-2:#3A4145; --rule-3:#4A5257;
+    --evidence:#7FB0CB; --evidence-soft:#1B2A33;
+    --decision:#DE9A46; --decision-soft:#33261492;
+    --derived:#9BAE92; --derived-soft:#1E2620;
+    --given:#B79FCB; --given-soft:#241E2B;
+    --band:#000000; --band-ink:#EDEEE9;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px -8px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#101315; --surface:#191D1F; --surface-2:#1F2426; --surface-3:#262B2E;
+  --ink:#EDEEE9; --ink-2:#B6BCBE; --ink-3:#8B9396; --ink-4:#6C7478;
+  --rule:#2B3134; --rule-2:#3A4145; --rule-3:#4A5257;
+  --evidence:#7FB0CB; --evidence-soft:#1B2A33;
+  --decision:#DE9A46; --decision-soft:#332614;
+  --derived:#9BAE92; --derived-soft:#1E2620;
+  --given:#B79FCB; --given-soft:#241E2B;
+  --band:#000000; --band-ink:#EDEEE9;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px -8px rgba(0,0,0,.6);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-b);
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  font-feature-settings:"kern" 1;margin:0}
+:focus-visible{outline:2px solid var(--decision);outline-offset:2px;border-radius:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* ============ deck frame ============ */
+.deck{max-width:1180px;margin:0 auto;padding:1.6rem 1.1rem 4rem}
+.slide{background:var(--surface);border:1px solid var(--rule);border-radius:3px;
+  box-shadow:var(--shadow);margin:0 0 1.15rem;padding:2.5rem 2.7rem 1.1rem;
+  position:relative;display:flex;flex-direction:column;min-height:33.5rem;scroll-margin-top:3.1rem}
+.slide.band{background:var(--band);border-color:var(--band);color:var(--band-ink);min-height:16rem;justify-content:center}
+.slide.cover{min-height:41rem;justify-content:center}
+.slide.tight{min-height:0}
+.sbody{flex:1;display:flex;flex-direction:column;min-width:0}
+
+/* slide chrome : the plot number, the eyebrow, the one idea */
+.snum{position:absolute;top:1.15rem;right:1.5rem;font-family:var(--f-m);font-size:.66rem;
+  letter-spacing:.14em;color:var(--ink-4);font-variant-numeric:tabular-nums}
+.slide.band .snum{color:var(--ink-3);opacity:.7}
+.seyebrow{font-family:var(--f-m);font-size:.63rem;letter-spacing:.19em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 .7rem}
+.slide.band .seyebrow{color:var(--decision)}
+h1.stitle{font-family:var(--f-d);font-weight:600;font-size:clamp(1.7rem,3.5vw,2.45rem);
+  line-height:1.12;letter-spacing:-.017em;margin:0 0 .35rem;text-wrap:balance;color:var(--ink)}
+.slide.band h1.stitle{color:var(--band-ink);font-size:clamp(1.9rem,4.4vw,3rem)}
+h2.stitle{font-family:var(--f-d);font-weight:600;font-size:clamp(1.45rem,2.9vw,2.05rem);
+  line-height:1.15;letter-spacing:-.015em;margin:0 0 .3rem;text-wrap:balance;color:var(--ink)}
+.sdek{font-size:.95rem;line-height:1.5;color:var(--ink-2);margin:0 0 1.35rem;max-width:64ch}
+.sdek strong{color:var(--ink);font-weight:600}
+.slide.band .sdek{color:var(--band-ink);opacity:.72;max-width:60ch}
+
+/* ============ the source strip : present on every content slide ============ */
+.strip{margin-top:auto;padding-top:.85rem;border-top:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:baseline;
+  font-family:var(--f-m);font-size:.63rem;line-height:1.6;color:var(--ink-3)}
+.strip b{font-weight:500;color:var(--ink-2)}
+.strip .sid{color:var(--evidence);font-weight:500}
+
+/* ============ evidence-label chips ============ */
+.lab{font-family:var(--f-m);font-size:.575rem;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;padding:.14rem .42rem;border-radius:2px;display:inline-block;
+  white-space:nowrap;vertical-align:.06em;border:1px solid transparent}
+.lab-g{background:var(--given-soft);color:var(--given);border-color:var(--given)}
+.lab-r{background:var(--evidence-soft);color:var(--evidence);border-color:var(--evidence)}
+.lab-d{background:var(--derived-soft);color:var(--derived);border-color:var(--derived)}
+.lab-w{background:var(--decision-soft);color:var(--decision);border-color:var(--decision)}
+
+/* ============ generic type ============ */
+.slide p{margin:0 0 .75rem;max-width:var(--measure)}
+.slide p:last-child{margin-bottom:0}
+.slide strong{font-weight:600;color:var(--ink)}
+.slide em{font-style:italic}
+h3.sh{font-family:var(--f-b);font-size:.7rem;font-weight:600;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--ink-3);margin:1.5rem 0 .6rem}
+h3.sh:first-child{margin-top:0}
+.lede{font-family:var(--f-d);font-size:1.22rem;line-height:1.42;color:var(--ink);
+  font-weight:400;margin:0 0 1.1rem;max-width:58ch;text-wrap:balance}
+.big{font-family:var(--f-d);font-size:clamp(1.35rem,2.7vw,1.85rem);line-height:1.28;
+  font-weight:500;letter-spacing:-.012em;color:var(--ink);margin:0;text-wrap:balance;max-width:30ch}
+.slide.band .big{color:var(--band-ink)}
+.fine{font-size:.8rem;line-height:1.5;color:var(--ink-3);max-width:70ch}
+.fine strong{color:var(--ink-2)}
+code,.mono{font-family:var(--f-m);font-size:.9em;color:var(--ink-2)}
+
+/* ============ tables ============ */
+.tw{overflow-x:auto;margin:0 0 1rem;border:1px solid var(--rule);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.8rem;line-height:1.42}
+thead th{background:var(--surface-2);font-family:var(--f-m);font-size:.6rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);text-align:left;
+  padding:.5rem .7rem;border-bottom:1px solid var(--rule-2);white-space:nowrap;vertical-align:bottom}
+tbody td{padding:.44rem .7rem;border-bottom:1px solid var(--rule);color:var(--ink-2);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-family:var(--f-m);font-variant-numeric:tabular-nums;white-space:nowrap}
+td strong{color:var(--ink)}
+tr.tot td{background:var(--surface-2);border-top:1px solid var(--rule-2);color:var(--ink)}
+tr.hl td{background:var(--decision-soft)}
+tr.hl2 td{background:var(--evidence-soft)}
+tr.dim td{color:var(--ink-3)}
+.tnote{font-family:var(--f-m);font-size:.63rem;line-height:1.55;color:var(--ink-3);margin:-.5rem 0 1rem}
+
+/* ============ column grids ============ */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));gap:1.1rem}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.85rem}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr));gap:.75rem}
+.gsplit{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:1.6rem;align-items:start}
+
+/* ============ card ============ */
+.card{border:1px solid var(--rule);border-radius:3px;background:var(--surface);padding:.85rem 1rem}
+.card.q{background:var(--surface-2)}
+.card h4{font-family:var(--f-m);font-size:.6rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--evidence);margin:0 0 .5rem}
+.card.warn{border-color:var(--decision)} .card.warn h4{color:var(--decision)}
+.card.calc{border-color:var(--rule-2)} .card.calc h4{color:var(--derived)}
+.card p{font-size:.83rem;line-height:1.5;margin:0 0 .5rem;max-width:none}
+.card ul{margin:0;padding-left:.95rem;font-size:.83rem;line-height:1.5;color:var(--ink-2)}
+.card li{margin:0 0 .34rem} .card li:last-child{margin-bottom:0}
+.card li::marker{color:var(--ink-4)}
+
+/* ============ the big number ============ */
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.75rem;margin:0 0 1.1rem}
+.fig{border:1px solid var(--rule);border-radius:3px;background:var(--surface);padding:.85rem .95rem}
+.fig.key{border-color:var(--decision);background:var(--decision-soft)}
+.fig.ev{border-color:var(--evidence)}
+.fig .fn{font-family:var(--f-d);font-weight:600;font-size:1.95rem;line-height:1;letter-spacing:-.028em;
+  color:var(--ink);font-variant-numeric:tabular-nums;display:block}
+.fig.key .fn{color:var(--decision)}
+.fig.ev .fn{color:var(--evidence)}
+.fig .fu{font-family:var(--f-m);font-size:.575rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin:.4rem 0 .35rem}
+.fig .fd{font-size:.775rem;line-height:1.42;color:var(--ink-2)}
+.fig .fd b{color:var(--ink);font-weight:600}
+
+/* ============ callout ============ */
+.co{border-left:2px solid var(--decision);background:var(--surface-2);padding:.8rem 1rem;
+  border-radius:0 3px 3px 0;margin:0 0 1rem}
+.co.ev{border-left-color:var(--evidence)}
+.co.calc{border-left-color:var(--derived)}
+.co .col{font-family:var(--f-m);font-size:.6rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--decision);display:block;margin-bottom:.35rem}
+.co.ev .col{color:var(--evidence)} .co.calc .col{color:var(--derived)}
+.co p{font-size:.86rem;line-height:1.52;margin:0 0 .45rem;max-width:none}
+.co p:last-child{margin-bottom:0}
+
+/* ============ funnel ============ */
+.fn-l{display:flex;flex-direction:column;gap:.16rem}
+.fn-r{display:grid;grid-template-columns:minmax(6.4rem,8.4rem) minmax(0,1fr) 4.6rem;gap:.6rem;align-items:center}
+.fn-k{font-size:.775rem;line-height:1.24;color:var(--ink-2);text-align:right}
+.fn-k b{display:block;color:var(--ink);font-weight:600}
+.fn-b{height:1.55rem;background:var(--evidence);border-radius:0 2px 2px 0;
+  display:flex;align-items:center;padding:0 .5rem;color:var(--surface);
+  font-family:var(--f-m);font-size:.7rem;font-variant-numeric:tabular-nums;min-width:2.6rem}
+.fn-b.warm{background:var(--decision)}
+.fn-b.pale{background:var(--evidence-soft);color:var(--evidence);border:1px solid var(--evidence)}
+.fn-c{font-family:var(--f-m);font-size:.66rem;color:var(--ink-3);font-variant-numeric:tabular-nums;text-align:right}
+.fn-c b{color:var(--decision);font-weight:500}
+
+/* ============ tranche ladder ============ */
+.tr{display:grid;grid-template-columns:minmax(7.5rem,10.5rem) minmax(0,1fr) 5.4rem;
+  gap:.65rem;align-items:center;padding:.32rem 0;border-bottom:1px solid var(--rule)}
+.tr:last-child{border-bottom:0}
+.tr-k{font-size:.79rem;line-height:1.26;color:var(--ink-2)}
+.tr-k b{display:block;color:var(--ink);font-weight:600}
+.tr-t{height:1.35rem;display:flex;align-items:center}
+.tr-f{height:1.05rem;background:var(--evidence);border-radius:0 2px 2px 0}
+.tr-f.now{background:var(--decision)}
+.tr-f.res{background:transparent;border:1.5px dashed var(--rule-3);box-sizing:border-box}
+.tr-v{font-family:var(--f-m);font-size:.76rem;font-variant-numeric:tabular-nums;text-align:right;color:var(--ink)}
+.tr-v i{font-style:normal;color:var(--ink-3)}
+
+/* ============ gate flow ============ */
+.gate{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.2rem,1fr));gap:.55rem}
+.gt{border:1px solid var(--rule);border-radius:3px;padding:.7rem .8rem;background:var(--surface);position:relative}
+.gt.now{border-color:var(--decision);background:var(--decision-soft)}
+.gt .gn{font-family:var(--f-m);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:block}
+.gt.now .gn{color:var(--decision)}
+.gt .gv{font-family:var(--f-m);font-size:1.02rem;font-weight:600;color:var(--ink);display:block;margin:.28rem 0 .3rem;font-variant-numeric:tabular-nums}
+.gt .gd{font-size:.73rem;line-height:1.38;color:var(--ink-2)}
+
+/* ============ diagnostic ladder (if/then) ============ */
+.dx{display:flex;flex-direction:column;gap:.4rem}
+.dxr{display:grid;grid-template-columns:minmax(0,1fr) 1.4rem minmax(0,1fr);gap:.5rem;align-items:center;
+  border:1px solid var(--rule);border-radius:3px;background:var(--surface);padding:.6rem .8rem}
+.dxr .if{font-size:.81rem;line-height:1.4;color:var(--ink-2)} .dxr .if b{color:var(--ink);font-weight:600}
+.dxr .ar{font-family:var(--f-m);color:var(--decision);text-align:center;font-size:.9rem}
+.dxr .th{font-size:.81rem;line-height:1.4;color:var(--ink-2)} .dxr .th b{color:var(--ink);font-weight:600}
+
+/* ============ operating-model chain ============ */
+.chain{display:flex;flex-wrap:wrap;gap:.3rem;align-items:stretch;margin:0 0 1rem}
+.ch{border:1px solid var(--rule);border-radius:2px;background:var(--surface);padding:.4rem .55rem;
+  font-family:var(--f-m);font-size:.66rem;color:var(--ink-2);display:flex;align-items:center;flex:1 1 auto;
+  justify-content:center;text-align:center;min-width:5rem}
+.ch.mk{border-color:var(--evidence);color:var(--evidence);background:var(--evidence-soft)}
+.ch.sa{border-color:var(--decision);color:var(--decision);background:var(--decision-soft)}
+
+/* ============ matrix ============ */
+.mx{overflow-x:auto;border:1px solid var(--rule);border-radius:3px}
+.mx table{font-size:.755rem}
+.mx thead th{background:var(--surface-2)}
+.mx td:first-child{font-weight:600;color:var(--ink);background:var(--surface-2);white-space:nowrap}
+
+/* ============ cover ============ */
+.cover-mark{font-family:var(--f-m);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 2.2rem}
+.cover h1{font-family:var(--f-d);font-weight:600;font-size:clamp(2.3rem,6.2vw,4.1rem);line-height:1.03;
+  letter-spacing:-.028em;margin:0 0 1rem;color:var(--ink);text-wrap:balance;max-width:19ch}
+.cover .csub{font-family:var(--f-d);font-size:clamp(1.05rem,2.4vw,1.4rem);line-height:1.4;color:var(--ink-2);
+  font-weight:400;margin:0 0 2.4rem;max-width:44ch}
+.cmeta{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1rem 1.6rem;
+  padding-top:1.4rem;border-top:1px solid var(--rule-2);max-width:52rem}
+.cmeta div{font-size:.85rem;line-height:1.45;color:var(--ink-2)}
+.cmeta .ck{font-family:var(--f-m);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:.28rem}
+.cmeta b{color:var(--ink);font-weight:600}
+.disc{margin-top:1.6rem;padding:.85rem 1rem;background:var(--surface-2);border-left:2px solid var(--rule-3);
+  font-size:.79rem;line-height:1.55;color:var(--ink-2);max-width:60rem;border-radius:0 3px 3px 0}
+.disc strong{color:var(--ink)}
+
+/* ============ nav rail ============ */
+.nav{position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:1px solid var(--rule);
+  margin:-1.6rem -1.1rem 1.15rem;padding:.5rem 1.1rem}
+.nav-in{max-width:1180px;margin:0 auto;display:flex;gap:.7rem;align-items:center;
+  overflow-x:auto;scrollbar-width:thin}
+.nav a{font-family:var(--f-m);font-size:.63rem;letter-spacing:.06em;color:var(--ink-3);
+  text-decoration:none;white-space:nowrap;padding:.22rem .1rem;border-bottom:1.5px solid transparent}
+.nav a:hover{color:var(--decision);border-bottom-color:var(--decision)}
+.nav .nb{color:var(--ink);font-weight:500}
+
+/* ============ appendix ============ */
+.apx{background:var(--surface);border:1px solid var(--rule);border-radius:3px;
+  padding:1.9rem 2.1rem;margin:0 0 1.15rem;scroll-margin-top:3.1rem}
+.apx h2{font-family:var(--f-d);font-size:1.5rem;font-weight:600;margin:0 0 .25rem;letter-spacing:-.012em;color:var(--ink)}
+.apx .ax{font-family:var(--f-m);font-size:.62rem;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--decision);margin:0 0 .55rem}
+.apx .sdek{margin-bottom:1.2rem}
+.srcrow td:first-child{font-family:var(--f-m);font-weight:500;color:var(--evidence);white-space:nowrap}
+.url{font-family:var(--f-m);font-size:.66rem;word-break:break-all;color:var(--ink-3);line-height:1.45}
+
+/* ============ close ============ */
+.close{padding:2.4rem 0 0;border-top:1px solid var(--rule);margin-top:.6rem;
+  font-size:.79rem;line-height:1.6;color:var(--ink-3);max-width:74ch}
+.close strong{color:var(--ink-2)}
+
+/* ============ responsive ============ */
+@media (max-width:820px){
+  .slide{padding:1.7rem 1.25rem .9rem;min-height:0}
+  .slide.cover{min-height:0;padding:2.2rem 1.25rem}
+  .apx{padding:1.4rem 1.25rem}
+  .gsplit{grid-template-columns:minmax(0,1fr);gap:1.1rem}
+  .fn-r{grid-template-columns:minmax(4.7rem,6rem) minmax(0,1fr) 3.5rem;gap:.4rem}
+  .fn-k{font-size:.7rem}
+  .tr{grid-template-columns:minmax(0,1fr) 5rem;row-gap:.2rem}
+  .tr-t{grid-column:1 / -1}
+  .dxr{grid-template-columns:minmax(0,1fr);row-gap:.3rem}
+  .dxr .ar{text-align:left}
+  .deck{padding:1.1rem .55rem 3rem}
+  .nav{margin:-1.1rem -.55rem 1.1rem;padding:.45rem .55rem}
+}
+
+/* ============ print / PDF : one slide per page, 16:9 ============ */
+@media print{
+  @page{size:338mm 190mm;margin:0}
+  body{background:#fff;color:#16191B}
+  .nav{display:none}
+  .deck{max-width:none;padding:0;margin:0}
+  .slide,.apx{break-after:page;page-break-after:always;break-inside:avoid;
+    margin:0;border:0;border-radius:0;box-shadow:none;min-height:190mm;
+    padding:10mm 13mm 7mm;background:#fff}
+  /* each slide is scaled at build time to land on exactly one page */
+  .slide{zoom:var(--pz,1)}
+  .slide.band{zoom:1}
+  .slide.band{background:#1B1F21;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .apx{break-inside:auto;page-break-inside:auto;min-height:0}
+  .close{break-after:auto;page-break-after:auto}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+
+<div class="deck">
+<nav class="nav" aria-label="Deck contents"><div class="nav-in">
+<a href="#s01" class="nb">Cover</a><a href="#s02">02 Summary</a><a href="#s03">03 Basis</a>
+<a href="#s04">04 Market</a><a href="#s05">05 Infrastructure</a><a href="#s06">06 Competitors</a>
+<a href="#s07">07 Audience</a><a href="#s08">08 Communities</a><a href="#s09">09 Positioning</a>
+<a href="#s10">10 GTM</a><a href="#s11">11 Funnel</a><a href="#s12">12 Channels</a>
+<a href="#s13">13 Creative</a><a href="#s14">14 CRM</a><a href="#s15">15 KPIs</a>
+<a href="#s16">16 ₹25L test</a><a href="#s17">17 Investment</a><a href="#s18">18 Governance</a>
+<a href="#s19">19 Attribution</a><a href="#s20">20 Gaps</a><a href="#s21">21 Risk</a>
+<a href="#s22">22 Roadmap</a><a href="#s23">23 Decisions</a><a href="#s24" class="nb">24 Recommendation</a>
+<a href="#apxA">App. A–G</a>
+</div></nav>
+
+<section class="slide cover" id="s01">
+  <span class="snum">01</span>
+  <div class="sbody">
+    <p class="cover-mark">Marketing strategy assignment · KMV Spaces</p>
+    <h1>Fifteen to the acre.</h1>
+    <p class="csub">A marketing and growth strategy for a 25-acre, four-community residential development on the Amaravati&ndash;Mangalagiri corridor &mdash; and a governed way to fund it.</p>
+    <div class="cmeta">
+      <div><span class="ck">Prepared by</span><b>Kiran Basa</b></div>
+      <div><span class="ck">Submitted to</span><b>Mr. Anudeep</b></div>
+      <div><span class="ck">Scope</span>~25 acres · ~₹500 Cr project context · four communities, 2BHK to villas</div>
+      <div><span class="ck">The ask</span><b>₹25 lakh</b> released against a governed envelope</div>
+    </div>
+    <div class="disc"><strong>How to read this deck.</strong> Every slide carries a source strip. Four labels are used throughout and never blurred: <span class="lab lab-g">Assignment assumption</span> what I was given &nbsp;·&nbsp; <span class="lab lab-r">Researched</span> with a source ID &nbsp;·&nbsp; <span class="lab lab-d">Derived calculation</span> my own arithmetic on stated inputs &nbsp;·&nbsp; <span class="lab lab-w">Working assumption</span> requires KMV validation. <strong>No figure here has been confirmed by KMV Spaces.</strong> The exact location, product mix, launch dates, approvals, pricing, inventory and commercial assumptions were not provided, and nothing in this deck should be read as a KMV fact.</div>
+  </div>
+</section>
+
+<section class="slide " id="s02" style="--pz:0.859">
+  <span class="snum">02</span>
+  <div class="sbody">
+    <p class="seyebrow">Executive summary</p>
+    <h2 class="stitle">The whole argument, before the evidence for it</h2>
+    <p class="sdek">Six positions. Each is defended in the slides that follow, and each names what would falsify it.</p>
+<div class="g3">
+  <div class="card ev"><h4>01 · The opportunity is real, and narrower than it looks</h4><p>Amaravati&rsquo;s capital status is now <strong>statutory</strong>, and capital works are funded and active <span class="sid">[S01][S02]</span>. But of 300+ listed corridor projects, <strong>eleven</strong> genuinely compete &mdash; and the corridor is <strong>crowded at the bottom, thin at the top</strong>.</p></div>
+  <div class="card ev"><h4>02 · Four communities are four businesses</h4><p>Differentiated by <strong>buyer constraint, not finish level.</strong> The binding constraint is <strong>cash at purchase</strong>, not income &mdash; ₹17.6 lakh for A rising to ₹74.1 lakh for D. One media plan across four communities would misprice all four.</p></div>
+  <div class="card ev"><h4>03 · The position must be provable, not aspirational</h4><p>&ldquo;Luxury&rdquo;, &ldquo;premium&rdquo; and &ldquo;close to the capital&rdquo; are universal in this corridor and therefore worthless. <strong>I would position on one computable fact and an invitation to check it.</strong></p></div>
+  <div class="card warn"><h4>04 · The headline budget is not a marketing budget</h4><p>₹31.75 Cr bundles four economically different things. <strong>True marketing operating expense is ₹23.80 Cr</strong>; media is ₹14.65 Cr &mdash; <strong>₹32.6 lakh a month</strong> across a 45-month sell window.</p></div>
+  <div class="card warn"><h4>05 · Site-visit conversion, not media price, is the lever</h4><p>The conversion rates are multiplicative and therefore equally sensitive &mdash; but they differ in cost to fix. <strong>One point of site-visit-to-booking is worth ₹39.4 Cr at zero additional media.</strong> No media buy returns that.</p></div>
+  <div class="card warn"><h4>06 · So I would not release the money on a forecast</h4><p><strong>I would ask for ₹25 lakh</strong> &mdash; about 1% of the envelope &mdash; to establish cost per lead, cost per qualified lead and cost per qualified site visit, <strong>with the stop condition agreed before the money moves.</strong></p></div>
+</div>
+<div class="co "><span class="col">The sentence this deck exists to earn</span><p><span class="big">Marketing investment should be earned by performance, not committed by forecast.</span></p></div>
+  </div>
+  <div class="strip"><span><b>Sources</b> <span class="sid">[S01]</span> <span class="sid">[S02]</span></span><span><b>Basis</b> Positions 1&ndash;3 rest on researched evidence; 4&ndash;6 on derived calculation over stated assumptions</span><span><b>Status</b> Recommendation &mdash; not a KMV decision</span></div>
+</section>
+
+<section class="slide " id="s03" style="--pz:0.989">
+  <span class="snum">03</span>
+  <div class="sbody">
+    <p class="seyebrow">Assignment basis &amp; research boundary</p>
+    <h2 class="stitle">What I was given, what I researched, and what I assumed</h2>
+    <p class="sdek">This slide exists so nothing later can be mistaken for a KMV-confirmed fact. <strong>The three columns never mix.</strong></p>
+<div class="g3">
+  <div class="card"><h4 style="color:var(--given)">1 · Given &mdash; the assignment</h4>
+  <ul><li><strong>~25-acre</strong> residential development</li>
+  <li><strong>~₹500 Cr</strong> project value / budget context</li>
+  <li><strong>Amaravati&ndash;Mangalagiri</strong> region</li>
+  <li><strong>Four communities</strong> &mdash; A, B, C, D</li>
+  <li>Product spectrum <strong>2BHK apartments &rarr; premium residences &rarr; villas</strong></li></ul>
+  <p style="margin-top:.55rem;color:var(--ink-3);font-size:.77rem"><strong>Not given:</strong> exact location, product mix, launch dates, approvals, final pricing, inventory, construction status, or any commercial assumption.</p></div>
+  <div class="card" style="border-color:var(--evidence)"><h4>2 · Researched &mdash; with sources</h4>
+  <ul><li>Regional market and capital status <span class="sid">[S01][S02][S18]</span></li>
+  <li>Infrastructure, graded asset by asset <span class="sid">[S03][S04][S09][S10]</span></li>
+  <li>Competitive field &mdash; 11 of 300+ projects clear the screen <span class="sid">[S12][S13][S15]</span></li>
+  <li>Pricing evidence, bottom-up <span class="sid">[S11][S12][S13][S15]</span></li>
+  <li>KMV public presence and the AIIMS credential <span class="sid">[S05][S16][S17]</span></li>
+  <li>Land pooling &mdash; the S4 audience signal <span class="sid">[S07][S08]</span></li></ul>
+  <p style="margin-top:.55rem;color:var(--ink-3);font-size:.77rem"><strong>The retrieval limit:</strong> search worked, page retrieval did not. Every URL resolves; <strong>none was opened.</strong> See Appendix G.</p></div>
+  <div class="card calc"><h4>3 · Derived or assumed &mdash; mine, not KMV&rsquo;s</h4>
+  <ul><li>Inventory <strong>376 units</strong> · density 15.0/acre</li>
+  <li>Unit mix A 169 · B 84 · C 60 · D 63</li>
+  <li>Price ladder ₹5,150&ndash;7,200/sq ft · blended <strong>₹6,098</strong></li>
+  <li>Revenue <strong>₹506.7 Cr</strong> · gross margin <strong>28%</strong> (a placeholder)</li>
+  <li>All conversion rates · all funnel volumes</li>
+  <li>Marketing investment, allocation, CAC, CPL, CPQL, CPSV</li>
+  <li>Site-visit and booking assumptions · cancellation 8% · ROMI</li></ul>
+  <p style="margin-top:.55rem;color:var(--decision);font-size:.77rem"><strong>Every item in this column requires KMV validation. None is a finding.</strong></p></div>
+</div>
+<div class="co "><span class="col">The one thing I would not let a deck hide</span><p><strong>No primary buyer research exists anywhere behind this work</strong> &mdash; no surveys, interviews, CRM data or walk-in analysis. Every behavioural attribute across eight segments is hypothesis. <strong>No transaction data was obtained either: every price I quote is an asking price.</strong></p><p>That is why the recommendation is a ₹25 lakh test rather than a media plan.</p></div>
+  </div>
+  <div class="strip"><span><b>Sources</b> <span class="sid">[S01]</span> <span class="sid">[S02]</span> <span class="sid">[S03]</span> <span class="sid">[S04]</span> <span class="sid">[S05]</span> <span class="sid">[S07]</span> <span class="sid">[S08]</span> <span class="sid">[S09]</span> <span class="sid">[S10]</span> <span class="sid">[S11]</span> <span class="sid">[S12]</span> <span class="sid">[S13]</span> <span class="sid">[S15]</span> <span class="sid">[S16]</span> <span class="sid">[S17]</span> <span class="sid">[S18]</span></span><span><b>Labels</b> Given · Researched · Derived — used on every slide that follows</span><span><b>Register</b> Appendix A assumptions · Appendix F sources · Appendix G limitations</span></div>
+</section>
+
+<section class="slide band">
+  <div class="sbody">
+    <p class="seyebrow">Part one</p>
+    <h1 class="stitle">The market, honestly graded</h1>
+    <p class="sdek">Everything in this section is researched and sourced. Where the evidence would not carry a claim, the claim is dropped rather than softened.</p>
+  </div>
+</section>
+
+<section class="slide " id="s04" style="--pz:0.992">
+  <span class="snum">04</span>
+  <div class="sbody">
+    <p class="seyebrow">Market opportunity</p>
+    <h2 class="stitle">The strongest fact available &mdash; and what it still does not prove</h2>
+    <p class="sdek">Amaravati&rsquo;s status changed in law in April 2026. That is a genuine change in the risk profile of this corridor. <strong>It is not, by itself, evidence of housing demand.</strong></p>
+<div class="gsplit">
+<div>
+<div class="tw "><table>
+  <thead><tr>
+    <th>What the evidence establishes</th>
+    <th>Grade</th>
+    <th>Source</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Amaravati is Andhra Pradesh&rsquo;s sole capital, by Act of Parliament</strong></td>
+      <td><strong>Confirmed</strong></td>
+      <td><span class="sid">[S01]</span></td>
+    </tr>
+    <tr>
+      <td>Capital works active and funded &mdash; ₹57,821 Cr in progress, ₹15,000 Cr in the 2025&ndash;26 budget</td>
+      <td><strong>Confirmed</strong></td>
+      <td><span class="sid">[S02]</span></td>
+    </tr>
+    <tr>
+      <td>AIIMS Mangalagiri operational, ~3 km from the corridor</td>
+      <td><strong>Confirmed</strong></td>
+      <td><span class="sid">[S03]</span><span class="sid">[S04]</span></td>
+    </tr>
+    <tr>
+      <td>Land pooling phase 2 authorised &mdash; 16,666.57 acres, 7 named villages</td>
+      <td>Confirmed <i>(authorised)</i></td>
+      <td><span class="sid">[S07]</span><span class="sid">[S08]</span></td>
+    </tr>
+    <tr>
+      <td><strong>No verified 2026 count of people working in Amaravati exists</strong></td>
+      <td><strong>Gap</strong></td>
+      <td>&mdash;</td>
+    </tr>
+  </tbody></table></div>
+</div>
+<div>
+<div class="co "><span class="col">Three cautions I would put in front of any investment committee</span><p><strong>1 · Statutory status is not population.</strong> No verified count exists of people living in the capital region as a result.</p><p><strong>2 · The relocation evidence is nine years stale.</strong> The only headcount figures found &mdash; ~2,000 secretariat staff against a 15,000 target &mdash; are 2016 reporting <span class="sid">[S19]</span>. I have de-weighted the government segment accordingly.</p><p><strong>3 · Construction spend is not consumer demand.</strong> ₹57,821 crore of works generates contractor and labour activity. It does not establish that anyone will buy a ₹2.5 crore villa.</p></div>
+<p class="fine"><strong>Why this matters for the budget.</strong> A capital-status narrative is the cheapest story in this corridor to tell and the easiest to over-fund. Three competitors already carry &ldquo;Amaravati&rdquo; or &ldquo;Capital&rdquo; in their project name. <strong>I would not build the position on it.</strong></p>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Sources</b> <span class="sid">[S01]</span> <span class="sid">[S02]</span> <span class="sid">[S03]</span> <span class="sid">[S04]</span> <span class="sid">[S07]</span> <span class="sid">[S08]</span> <span class="sid">[S19]</span></span><span><b>Basis</b> Researched. The three cautions are my inference from the evidence, not a source claim</span><span><b>Falsified by</b> A current, verified capital-region headcount showing material in-migration</span></div>
+</section>
+
+<section class="slide " id="s05" style="--pz:0.992">
+  <span class="snum">05</span>
+  <div class="sbody">
+    <p class="seyebrow">Location &amp; infrastructure reality</p>
+    <h2 class="stitle">I would grade every asset before any of it reaches a hoarding</h2>
+    <p class="sdek">Indian real-estate marketing overstates infrastructure more reliably than anything else. <strong>A brand positioned on being checkable cannot.</strong> This is the grading I would enforce.</p>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Asset</th>
+    <th>Grade</th>
+    <th>What may be said</th>
+    <th>Source</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl2">
+      <td><strong>Amaravati as sole capital</strong></td>
+      <td><strong>CONFIRMED</strong></td>
+      <td>State it plainly &mdash; the strongest fact available</td>
+      <td><span class="sid">[S01]</span></td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>AIIMS Mangalagiri, operational</strong></td>
+      <td><strong>CONFIRMED</strong></td>
+      <td>An operational hospital ~3 km away</td>
+      <td><span class="sid">[S03]</span><span class="sid">[S04]</span></td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>Capital works active and funded</strong></td>
+      <td><strong>CONFIRMED</strong></td>
+      <td>Works are active, with figures</td>
+      <td><span class="sid">[S02]</span></td>
+    </tr>
+    <tr>
+      <td>Bangalore&ndash;Vijayawada Expressway</td>
+      <td>UNDER CONSTRUCTION</td>
+      <td>&ldquo;Under construction&rdquo; &mdash; never &ldquo;complete&rdquo;</td>
+      <td><span class="sid">[S10]</span></td>
+    </tr>
+    <tr class="hl">
+      <td><strong>Amaravati Outer Ring Road</strong> &mdash; 189 km, ₹16,000 Cr</td>
+      <td><strong>APPROVED</strong></td>
+      <td><strong>&ldquo;Approved, land acquisition begun.&rdquo; Never &ldquo;coming&rdquo;</strong></td>
+      <td><span class="sid">[S09]</span></td>
+    </tr>
+    <tr class="hl">
+      <td><strong>Amaravati greenfield airport</strong></td>
+      <td><strong>SPECULATIVE</strong></td>
+      <td><strong>Do not mention at all.</strong> No DPR or notification found in two separate searches</td>
+      <td>&mdash;</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>Metro</strong></td>
+      <td><strong>NOT ESTABLISHED</strong></td>
+      <td><strong>Do not mention.</strong> No 2026 status found</td>
+      <td>&mdash;</td>
+    </tr>
+  </tbody></table></div>
+<div class="g2">
+<div class="co "><span class="col">The ORR is the discipline test, and it is the one most likely to be failed</span><p>It is <strong>genuinely approved</strong>, genuinely 189 km, genuinely ₹16,000 crore &mdash; and <strong>genuinely not built</strong>, with land acquisition only beginning.</p><p>The category routinely presents exactly this status as an existing amenity. <strong>The distinction is one word: approved, not coming.</strong> I would hold every asset to it.</p></div>
+<div class="co ev"><span class="col">What I would not do</span><p><strong>Assume future infrastructure creates demand.</strong> The corridor already contains projects marketing an unbuilt airport. Joining them costs the one asset this brand would have &mdash; that its claims can be checked.</p></div>
+</div>
+  </div>
+  <div class="strip"><span><b>Sources</b> <span class="sid">[S01]</span> <span class="sid">[S02]</span> <span class="sid">[S03]</span> <span class="sid">[S04]</span> <span class="sid">[S09]</span> <span class="sid">[S10]</span></span><span><b>Basis</b> Researched. Grades applied by me against a stated six-level rubric</span><span><b>Rule</b> Nothing graded PROPOSED, REPORTED or SPECULATIVE may appear in any published claim</span></div>
+</section>
+
+<section class="slide " id="s06" style="--pz:0.855">
+  <span class="snum">06</span>
+  <div class="sbody">
+    <p class="seyebrow">Competitive landscape</p>
+    <h2 class="stitle">Of 300+ listed projects, eleven actually compete</h2>
+    <p class="sdek">The screen is itself the finding: <strong>the corridor is crowded at the bottom and thin at the top.</strong> Four projects overlap on all six screening dimensions.</p>
+<div class="gsplit">
+<div>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Competitor</th>
+    <th>Scale &amp; density</th>
+    <th>Price evidence</th>
+    <th>Where it is weak</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>IJM Raintree Park</strong> <i>(Dwaraka Krishna)</i></td>
+      <td>120 ac · ~3,300 planned</td>
+      <td>Apartments ~₹3,900/sq ft; villas to ₹10,143</td>
+      <td><strong>Has the full ladder and has never marketed it as one</strong> &mdash; built over 18 years under five names</td>
+    </tr>
+    <tr>
+      <td><strong>IJM Villas 64</strong></td>
+      <td>33.69 ac · 64 villas · <strong>1.9/acre</strong></td>
+      <td>From <strong>₹3.75 Cr</strong></td>
+      <td>Owns the top outright. ₹3.75 Cr floor excludes almost the entire corridor buyer base</td>
+    </tr>
+    <tr>
+      <td><strong>Prime Grandeur</strong></td>
+      <td>10 ac · 119 villas · 11.9/acre</td>
+      <td>₹1.34&ndash;1.82 Cr · ₹5,394&ndash;5,403/sq ft</td>
+      <td><strong>The most direct competitor.</strong> Value-led, no proof layer</td>
+    </tr>
+    <tr>
+      <td><strong>Manjeera Monarch</strong></td>
+      <td>Apartments · 113/acre</td>
+      <td><strong>₹5,100/sq ft &mdash; delivered</strong></td>
+      <td>Documented carpet-area complaint: <i>&ldquo;the area advertised is not what residents actually get&rdquo;</i></td>
+    </tr>
+    <tr>
+      <td>Srivalli Pravas · Jayabheri · Grand Project Capitol · Aparna · TAG AIRA · KMV Vivaan · CRDA plots</td>
+      <td>&mdash;</td>
+      <td>&mdash;</td>
+      <td>Seven further entrants; none publishes delivery evidence</td>
+    </tr>
+  </tbody></table></div>
+<p class="tnote">Sources: <span class="sid">[S12]</span> <span class="sid">[S13]</span> <span class="sid">[S15]</span> &mdash; portal-published asking prices and project pages. Density figures are derived from published acreage &divide; published unit counts where both exist.</p>
+</div>
+<div>
+<div class="co "><span class="col">Where I judge KMV can win &mdash; and where it cannot</span><p><strong>Not on scale.</strong> Raintree Park is 120 acres. <strong>Not on lowest density</strong> &mdash; IJM Villas 64 runs 1.9/acre and Prime Grandeur 11.9. <strong>Not on luxury, premium, amenities or proximity to the capital</strong> &mdash; all four are universal here and therefore say nothing.</p><p><strong>Two spaces survive the test of being unoccupied, valuable and hard to copy inside 24 months:</strong></p></div>
+<div class="g2">
+  <div class="card ev"><h4>White space 1 &mdash; the ladder in one address</h4><p>Nobody in this corridor sells <strong>a community you can move within.</strong> It needs 25+ contiguous acres and a mixed masterplan committed from day one &mdash; it cannot be retrofitted onto a 5-acre tower cluster.</p></div>
+  <div class="card ev"><h4>White space 2 &mdash; delivery proof <i>(cheapest to occupy)</i></h4><p>The complaints across the set are consistent &mdash; carpet area, maintenance, unfulfilled amenity promises, late handover &mdash; and <strong>not one competitor markets against them.</strong> A competitor carrying those complaints cannot credibly follow.</p></div>
+</div>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Sources</b> <span class="sid">[S12]</span> <span class="sid">[S13]</span> <span class="sid">[S15]</span></span><span><b>Basis</b> Researched. The screen, the density arithmetic and the white-space test are mine</span><span><b>Caution</b> <strong>Jayabheri The Capital returned no search result at all</strong>, and unit counts for two density comparators are unpublished &mdash; see slide 13</span></div>
+</section>
+
+<section class="slide " id="s07" style="--pz:0.728">
+  <span class="snum">07</span>
+  <div class="sbody">
+    <p class="seyebrow">Customer &amp; audience architecture</p>
+    <h2 class="stitle">I would prioritise on cash at purchase, not on income</h2>
+    <p class="sdek">The binding constraint in this catchment is <strong>the down payment, not the EMI</strong> &mdash; ₹17.6 lakh for Community A rising to ₹74.1 lakh for D. Two households on identical incomes can have completely different ability to clear it.</p>
+<div class="tw "><table>
+  <thead><tr>
+    <th class="n"></th>
+    <th>Segment</th>
+    <th>Priority score</th>
+    <th>Horizon</th>
+    <th>Community fit</th>
+    <th>Why it ranks here</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl2">
+      <td class="n">1</td>
+      <td><strong>S3 &mdash; US / developed-market Telugu diaspora</strong></td>
+      <td><strong>4.20</strong></td>
+      <td>Mid</td>
+      <td>B and C</td>
+      <td>Highest revenue per unit; buys remotely; the visit is the constraint, not the money</td>
+    </tr>
+    <tr class="hl2">
+      <td class="n">2</td>
+      <td><strong>S4 &mdash; Amaravati land-pooling landowners</strong></td>
+      <td><strong>4.05</strong></td>
+      <td>Long</td>
+      <td>D and C, via exchange</td>
+      <td><strong>Best-evidenced population, no competitor contesting it</strong> <span class="sid">[S07][S08]</span>. Needs an exchange structure, not a price list</td>
+    </tr>
+    <tr class="hl2">
+      <td class="n">3</td>
+      <td><strong>S1 &mdash; Vijayawada / Guntur trade families</strong></td>
+      <td><strong>4.05</strong></td>
+      <td>Near</td>
+      <td>C and D</td>
+      <td>Deepest purchase-ready cash pool. Runs on referral, not advertising</td>
+    </tr>
+    <tr>
+      <td class="n">4</td>
+      <td>S7 &mdash; Hyderabad Telugu households with AP roots</td>
+      <td>3.90</td>
+      <td>Mid</td>
+      <td>B and C</td>
+      <td>Large, wealthy, four hours away, and unaddressed by the competitive set</td>
+    </tr>
+    <tr>
+      <td class="n">5</td>
+      <td>S2 &mdash; Senior institutional medical professionals</td>
+      <td>3.90</td>
+      <td>Near</td>
+      <td>A through C</td>
+      <td>Highest reachability; the only genuinely digital-first audience; dated purchase triggers</td>
+    </tr>
+    <tr>
+      <td class="n">6</td>
+      <td>S6 &mdash; Vijayawada salaried upgraders</td>
+      <td>3.20</td>
+      <td>Near</td>
+      <td>A and B</td>
+      <td><strong>Most contested and least valuable</strong> &mdash; 21% of units, 13.7% of revenue</td>
+    </tr>
+    <tr class="hl">
+      <td class="n">7</td>
+      <td><strong>S5 &mdash; Government / capital workforce</strong></td>
+      <td>2.95</td>
+      <td>Near</td>
+      <td>A</td>
+      <td><strong>De-weighted.</strong> Its sizing rests on 2016 reporting <span class="sid">[S19]</span> &mdash; nine years stale</td>
+    </tr>
+    <tr>
+      <td class="n">8</td>
+      <td>S8 &mdash; Gulf remittance households</td>
+      <td>2.45</td>
+      <td>Long</td>
+      <td>A and B</td>
+      <td>Different income, product fit, language and channel from S3. <strong>One campaign cannot serve both</strong></td>
+    </tr>
+  </tbody></table></div>
+<p class="tnote">Priority score is a weighted composite I built &mdash; cash-gate clearance 20%, reachability 15%, and four further criteria. <strong>Scores, segment sizes and every behavioural attribute are working assumptions: no primary buyer research exists.</strong></p>
+<div class="g2">
+<div class="co calc"><span class="col">The check I would run on any prioritisation</span><p><strong>Does the priority order reconcile to where the revenue is?</strong> Here it does: the three HIGH segments deliver <strong>53.8% of revenue from 43% of units.</strong></p><p>And the arithmetic settles a debate that otherwise becomes an opinion: <strong>every rupee spent winning a contested S6 sale buys less than half the revenue of an uncontested S3 sale</strong> &mdash; ₹0.83 Cr per unit against ₹1.96 Cr.</p></div>
+<div class="co "><span class="col">What I would not assume</span><p><strong>&ldquo;NRI&rdquo; is not a segment.</strong> It splits into S3 and S8, which differ in income, purpose, product, language and channel. <strong>Every competitor in the set collapses them into one.</strong></p><p><strong>&ldquo;HNI&rdquo; is not a segment here either</strong> &mdash; and the product is not an HNI product. Community D tops out at ₹2.74 Cr. Marketing to &ldquo;HNIs&rdquo; would promise a tier the price sheet does not deliver.</p></div>
+</div>
+  </div>
+  <div class="strip"><span><b>Sources</b> <span class="sid">[S07]</span> <span class="sid">[S08]</span> <span class="sid">[S19]</span></span><span><b>Basis</b> Segment definitions researched; <b>scoring, sizing and revenue split are derived</b></span><span><b>Requires validation</b> 24 months of CRM lead data by source, and a current capital-region headcount</span></div>
+</section>
+
+<section class="slide " id="s08" style="--pz:0.784">
+  <span class="snum">08</span>
+  <div class="sbody">
+    <p class="seyebrow">Project &amp; community architecture</p>
+    <h2 class="stitle">Proposed positioning architecture &mdash; four buyer constraints, not four finish levels</h2>
+    <p class="sdek"><strong>This is a proposal, not a product fact.</strong> Unit counts, sizes, prices and mix are my derivation from a 25-acre parcel and researched competitor pricing. <strong>All of it requires KMV validation.</strong></p>
+<div class="mx"><table>
+  <thead><tr>
+    <th></th>
+    <th>A</th>
+    <th>B</th>
+    <th>C</th>
+    <th>D</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Proposed product</strong></td>
+      <td>Low-rise garden apartments</td>
+      <td>Managed residences</td>
+      <td>Compact detached villas</td>
+      <td>Estate villas</td>
+    </tr>
+    <tr>
+      <td><strong>Units · revenue</strong></td>
+      <td>169 · ₹126.2 Cr</td>
+      <td>84 · ₹112.5 Cr</td>
+      <td>60 · ₹109.2 Cr</td>
+      <td>63 · ₹158.8 Cr</td>
+    </tr>
+    <tr>
+      <td><strong>Ticket</strong></td>
+      <td>₹59&ndash;90 L</td>
+      <td>₹1.23&ndash;1.45 Cr</td>
+      <td>₹1.69&ndash;1.95 Cr</td>
+      <td>₹2.30&ndash;2.74 Cr</td>
+    </tr>
+    <tr>
+      <td><strong>Cash at purchase</strong></td>
+      <td><strong>~₹17.6 L</strong></td>
+      <td>~₹31.5 L</td>
+      <td>~₹52.0 L</td>
+      <td><strong>~₹74.1 L</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Customer</strong></td>
+      <td>Junior medical, local upgraders, government</td>
+      <td><strong>US / developed-market diaspora</strong></td>
+      <td>Trade families, senior medical</td>
+      <td>Trade families, <strong>land-pooling landowners</strong></td>
+    </tr>
+    <tr>
+      <td><strong>The need it answers</strong></td>
+      <td><i>&ldquo;Can I own here at all?&rdquo;</i></td>
+      <td><i>&ldquo;Can I own this from 12,000 km away?&rdquo;</i></td>
+      <td><i>&ldquo;Can I have land without ₹2.5 crore?&rdquo;</i></td>
+      <td><i>&ldquo;Is this the last house I buy?&rdquo;</i></td>
+    </tr>
+    <tr>
+      <td><strong>Positioning</strong></td>
+      <td>Entry, rental logic, proximity</td>
+      <td><strong>Management and absence</strong></td>
+      <td>Land and privacy at a reachable ticket</td>
+      <td>Scale and permanence</td>
+    </tr>
+    <tr>
+      <td><strong>Message</strong></td>
+      <td>&ldquo;The address you were told you could not afford&rdquo;</td>
+      <td>&ldquo;Owned from anywhere. Looked after here&rdquo;</td>
+      <td>&ldquo;Your own ground, without the villa premium&rdquo;</td>
+      <td>&ldquo;Built to be inherited&rdquo;</td>
+    </tr>
+    <tr>
+      <td><strong>Channel mix</strong></td>
+      <td>Meta, portals, local outdoor</td>
+      <td><strong>LinkedIn, diaspora networks, video walkthrough</strong></td>
+      <td>Google Search, referral, site</td>
+      <td><strong>Referral, village relationships, private visits</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Conversion event</strong></td>
+      <td>Site visit &rarr; token</td>
+      <td><strong>Proxy visit &rarr; remote booking file</strong></td>
+      <td>Site visit &rarr; plot selection</td>
+      <td>Private visit &rarr; family consultation</td>
+    </tr>
+    <tr>
+      <td><strong>Sales cycle</strong></td>
+      <td>2&ndash;4 months</td>
+      <td><strong>6&ndash;12 months</strong></td>
+      <td>4&ndash;8 months</td>
+      <td>6&ndash;14 months</td>
+    </tr>
+  </tbody></table></div>
+<div class="g2" style="margin-top:1rem">
+<div class="co "><span class="col">Two structural rules, not promotional ones</span><p><strong>B never above ₹1.50 Cr. C never below ₹1.65 Cr.</strong> Without them B and C collapse into one product and the ladder becomes a price list.</p><p><strong>B is defined by service; C is defined by land.</strong> A buyer choosing between them is choosing between two different products, not two price points.</p></div>
+<div class="co ev"><span class="col">Why they cannot share a campaign</span><p>Different <strong>cash gate</strong> (4.2&times; from A to D), different <strong>cycle</strong> (2 months to 14), different <strong>objection</strong>, and different <strong>proof</strong>. A shared campaign optimises to the cheapest lead, which is Community A &mdash; the community with the least pricing headroom.</p></div>
+</div>
+  </div>
+  <div class="strip"><span><b>Sources</b> Ticket bands derived from researched competitor pricing <span class="sid">[S12]</span> <span class="sid">[S13]</span> <span class="sid">[S15]</span></span><span><b>Basis</b> <b>Derived and assumed throughout.</b> Not a KMV product specification</span><span><b>Requires validation</b> Masterplan, unit mix, approvals, and the price sheet</span></div>
+</section>
+
+<section class="slide " id="s09" style="--pz:0.883">
+  <span class="snum">09</span>
+  <div class="sbody">
+    <p class="seyebrow">Positioning strategy</p>
+    <h2 class="stitle">One computable fact, and an invitation to check it</h2>
+    <p class="sdek">The corridor&rsquo;s advertising is generic and proof-free. <strong>In a market where nobody publishes evidence, the strongest available position is to publish it.</strong></p>
+<div class="gsplit">
+<div>
+<p class="lede">Not &ldquo;luxury&rdquo;. Not &ldquo;premium&rdquo;. Not &ldquo;close to the capital&rdquo;. <strong>Fifteen homes to the acre, across twenty-five acres &mdash; and everything else is open to inspection.</strong></p>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Dimension</th>
+    <th>Fact</th>
+    <th>Marketing narrative</th>
+    <th>Future possibility</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Density</strong></td>
+      <td><strong>15.0 units/acre across 25 acres</strong> <span class="lab lab-d">Derived</span></td>
+      <td>&ldquo;A community you can count&rdquo;</td>
+      <td>&mdash;</td>
+    </tr>
+    <tr>
+      <td><strong>Capital</strong></td>
+      <td>Statutory sole capital <span class="sid">[S01]</span></td>
+      <td>&ldquo;The city is now certain; the question is where in it&rdquo;</td>
+      <td>Population growth &mdash; <strong>unevidenced</strong></td>
+    </tr>
+    <tr>
+      <td><strong>AIIMS</strong></td>
+      <td>Operational, ~3 km <span class="sid">[S03]</span></td>
+      <td>&ldquo;Your workplace is the anchor of the neighbourhood&rdquo;</td>
+      <td>&mdash;</td>
+    </tr>
+    <tr>
+      <td><strong>ORR</strong></td>
+      <td>Approved; land acquisition begun <span class="sid">[S09]</span></td>
+      <td>&ldquo;Approved &mdash; and we will say so until it is built&rdquo;</td>
+      <td>Travel-time change &mdash; <strong>do not model it</strong></td>
+    </tr>
+    <tr class="hl">
+      <td><strong>Airport / metro</strong></td>
+      <td><strong>Nothing found</strong></td>
+      <td><strong>Silence</strong></td>
+      <td><strong>Not ours to sell</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Delivery</strong></td>
+      <td>Category complaints documented <span class="sid">[S12]</span></td>
+      <td>&ldquo;We publish carpet area, handover dates and progress&rdquo;</td>
+      <td>&mdash;</td>
+    </tr>
+  </tbody></table></div>
+</div>
+<div>
+<div class="co "><span class="col">The credential I would not build on until it documents</span><p>The strongest brand asset available would be construction lineage &mdash; the group&rsquo;s own site presents an AIIMS Mangalagiri credential <span class="sid">[S17]</span>.</p><p><strong>But the Ministry&rsquo;s own tender document names HSCC as executing agency</strong> <span class="sid">[S05]</span>, and no source I found establishes the group&rsquo;s contractual scope.</p><p><strong>I would not publish it until a work order defines it &mdash; and then I would claim exactly that scope, in those words.</strong></p></div>
+<div class="co ev"><span class="col">And the fallback, which is not a retreat</span><p>If the credential does not document, the position falls back to two things that are <strong>provable without any credential at all</strong>: <strong>the density arithmetic</strong> and <strong>an ungated price sheet.</strong></p><p>That is a deliberate design choice. <strong>A position that collapses when one document is missing is not a position.</strong></p></div>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Sources</b> <span class="sid">[S01]</span> <span class="sid">[S03]</span> <span class="sid">[S05]</span> <span class="sid">[S09]</span> <span class="sid">[S12]</span> <span class="sid">[S17]</span></span><span><b>Basis</b> Researched facts; <b>the positioning and the fallback are my recommendation</b></span><span><b>Falsified by</b> The density comparators failing to source, or the locality refusing the price premium</span></div>
+</section>
+
+<section class="slide band">
+  <div class="sbody">
+    <p class="seyebrow">Part two</p>
+    <h1 class="stitle">The plan I would run</h1>
+    <p class="sdek">From here on the labels change. Almost everything is derived or assumed &mdash; and it is marked that way on every slide.</p>
+  </div>
+</section>
+
+<section class="slide " id="s10" style="--pz:0.869">
+  <span class="snum">10</span>
+  <div class="sbody">
+    <p class="seyebrow">Go-to-market strategy</p>
+    <h2 class="stitle">Six phases across 45 months &mdash; each one a gate, not a date</h2>
+    <p class="sdek">The sell window is a <strong>working assumption</strong> derived from 376 units at a modelled velocity. <strong>Every phase releases capital only when the previous phase&rsquo;s KPI gate is met.</strong></p>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Phase</th>
+    <th>Window</th>
+    <th>Objective</th>
+    <th>Primary channels</th>
+    <th>Gate to unlock the next release</th>
+    <th>Decides</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl">
+      <td><strong>0 · Intelligence &amp; validation</strong></td>
+      <td>Months 1&ndash;2</td>
+      <td><strong>Discover the economics. Not to generate sales</strong></td>
+      <td>Meta · Google Search · one portal · YouTube. <strong>Nothing else</strong></td>
+      <td>CPL ≤ <strong>₹1,550</strong> · cost per qualified site visit ≤ <strong>₹42,000</strong></td>
+      <td>Marketing lead sign-off; CFO notified</td>
+    </tr>
+    <tr>
+      <td><strong>1 · Launch preparation</strong></td>
+      <td>Months 3&ndash;6</td>
+      <td>Build what the funnel cannot work without</td>
+      <td><strong>Not a media phase.</strong> CRM, tracking, website, first show home, sales training</td>
+      <td>CRM live · first-touch attribution mandatory · WhatsApp API integrated · all figures reconciled. <strong>All four, binary</strong></td>
+      <td>CEO + CFO</td>
+    </tr>
+    <tr>
+      <td><strong>2 · Controlled market entry</strong></td>
+      <td>Months 7&ndash;15</td>
+      <td>Prove the funnel converts at viable cost, at real scale</td>
+      <td>Digital performance. Outdoor capped at <strong>2 boards.</strong> No large event</td>
+      <td>≥ <strong>55 bookings</strong> · CPL within +25% of Phase 0 · show rate ≥ 60%</td>
+      <td>CEO + CFO</td>
+    </tr>
+    <tr>
+      <td><strong>3 · Scale</strong></td>
+      <td>Months 16&ndash;30</td>
+      <td>Scale what proved, on validated economics</td>
+      <td>Full mix. <strong>Outdoor and print unlock only now</strong></td>
+      <td>Site-visit-to-booking ≥ <strong>5.5%</strong> over two quarters · CAC ≤ ₹9.5 L</td>
+      <td>CEO + CFO, quarterly</td>
+    </tr>
+    <tr>
+      <td><strong>4 · Optimisation</strong></td>
+      <td>Months 31&ndash;42</td>
+      <td>Shift the mix from paid to earned as referral compounds</td>
+      <td>Referral, owner community, channel partners; paid declining</td>
+      <td>Referral ≥ <strong>0.15 per owner-year</strong> · CAC falling quarter on quarter</td>
+      <td>Marketing lead; CFO notified</td>
+    </tr>
+    <tr>
+      <td><strong>5 · Inventory clearance</strong></td>
+      <td>Months 43&ndash;51</td>
+      <td>Final demand capture on residual inventory</td>
+      <td>Retargeting, channel partners, owner referral</td>
+      <td>Inventory &lt; 15% · referral ≥ 25% of bookings</td>
+      <td>Marketing lead</td>
+    </tr>
+  </tbody></table></div>
+<div class="g3">
+<div class="co "><span class="col">If Phase 0 fails</span><p><strong>Stop. Re-base the model before any launch commitment.</strong> I would not proceed at reduced scale on a failed cost per lead &mdash; <strong>a bad unit economic does not improve with volume.</strong></p></div>
+<div class="co "><span class="col">If a later gate fails</span><p><strong>Cut inventory release before raising budget.</strong> A community missing its gate has its release reduced, not its spend increased.</p></div>
+<div class="co "><span class="col">If a gate fails twice</span><p><strong>Nothing releases</strong>, regardless of explanation. Agreed now, because it will not be agreeable later.</p></div>
+</div>
+  </div>
+  <div class="strip"><span><b>Basis</b> <b>Derived.</b> Phase windows, gates and thresholds are my proposal on a modelled 45-month sell window</span><span><b>Requires validation</b> Construction and handover milestones, approvals status, and the launch date</span><span><b>Rule</b> Capital is released against evidence, not calendar</span></div>
+</section>
+
+<section class="slide " id="s11" style="--pz:0.959">
+  <span class="snum">11</span>
+  <div class="sbody">
+    <p class="seyebrow">The marketing funnel</p>
+    <h2 class="stitle">Eleven stages &mdash; and the two that were missing from my own first model</h2>
+    <p class="sdek">Raw leads are not success. <strong>66,406 leads are lost at the top of this funnel and they are the least valuable losses in it.</strong></p>
+<div class="gsplit">
+<div>
+<div class="fn-l">
+  <div class="fn-r"><span class="fn-k"><b>Reach</b><i>unique individuals</i></span><span class="fn-b pale" style="width:100%">6,573,000</span><span class="fn-c"></span></div>
+  <div class="fn-r"><span class="fn-k"><b>Engagement &amp; leads</b></span><span class="fn-b " style="width:58%">78,880</span><span class="fn-c"><b>1.20%</b></span></div>
+  <div class="fn-r"><span class="fn-k"><b>MQL</b><i>contactable + intent</i></span><span class="fn-b " style="width:43%">35,496</span><span class="fn-c"><b>45.0%</b></span></div>
+  <div class="fn-r"><span class="fn-k"><b>SQL</b><i>sales-accepted</i></span><span class="fn-b " style="width:34%">19,523</span><span class="fn-c"><b>55.0%</b></span></div>
+  <div class="fn-r"><span class="fn-k"><b>Qualified lead</b><i>cash gate verified</i></span><span class="fn-b " style="width:27%">12,474</span><span class="fn-c"><b>63.9%</b></span></div>
+  <div class="fn-r"><span class="fn-k"><b>Site visit booked</b></span><span class="fn-b " style="width:22%">4,870</span><span class="fn-c"><b>39.0%</b></span></div>
+  <div class="fn-r"><span class="fn-k"><b>Qualified site visit</b><i>held &amp; debriefed</i></span><span class="fn-b " style="width:17%">2,922</span><span class="fn-c"><b>60.0%</b></span></div>
+  <div class="fn-r"><span class="fn-k"><b>Negotiation</b></span><span class="fn-b " style="width:10%">574</span><span class="fn-c"><b>19.6%</b></span></div>
+  <div class="fn-r"><span class="fn-k"><b>Booking &mdash; all sources</b><i>gross</i></span><span class="fn-b warm" style="width:8%">409</span><span class="fn-c">&mdash;</span></div>
+  <div class="fn-r"><span class="fn-k"><b>Sale <i>(agreement)</i></b><i>net of 8% cancellation</i></span><span class="fn-b warm" style="width:7%">376</span><span class="fn-c"><b>92.0%</b></span></div>
+  <div class="fn-r"><span class="fn-k"><b>Referral</b><i>per owner-year</i></span><span class="fn-b pale" style="width:4%">0.15</span><span class="fn-c">&mdash;</span></div>
+</div>
+<p class="tnote">A 60% show rate converts 4,870 booked visits into <strong>2,922 held and debriefed</strong> &mdash; 23.4% of qualified leads, and 15.0 held visits a week across the modelled window. Bookings are shown gross of cancellation; 409 gross nets 376. Every rate is a working assumption.</p>
+</div>
+<div>
+<div class="co calc"><span class="col">Why I would judge the plan on CPQL, not CPL</span><p><strong>Cheap leads that fail the cash gate are a cost, not a result.</strong> CPL is a buying metric; CPQL is a business metric.</p><p>At the modelled rates, media buys a lead for <strong>₹1,247</strong> and a qualified lead for <strong>₹7,889</strong>. <strong>A campaign optimised to CPL will find the cheapest audience, which is the one that cannot clear ₹17.6 lakh in cash.</strong></p></div>
+<div class="co calc"><span class="col">And why the qualified site visit is the metric that matters most</span><p>The conversion rates are <strong>multiplicative</strong>, so a 25% move in any of them changes bookings by the same 25%. What separates them is <strong>cost to fix and who controls them.</strong></p><p><strong>Cost per lead is set by the auction and by competitors.</strong> Lead-to-qualified and qualified-to-visit are process, and cost almost nothing to move. And the last one is the largest opportunity:</p></div>
+<div class="figs">
+  <div class="fig key"><span class="fn">₹39.4</span><span class="fu">crore per point</span><span class="fd"><b>One point of site-visit-to-booking</b> &mdash; 6.9% to 7.9% &mdash; at zero additional media</span></div>
+</div>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Basis</b> <b>Derived calculation on stated assumptions.</b> Every conversion rate is a working assumption</span><span><b>Not evidenced</b> Reach is an <i>output</i> of the lead rate, not an input &mdash; the weakest number in the model</span><span><b>Requires validation</b> 24 months of historical lead, source and cost data</span></div>
+</section>
+
+<section class="slide " id="s12" style="--pz:0.693">
+  <span class="snum">12</span>
+  <div class="sbody">
+    <p class="seyebrow">Channel strategy</p>
+    <h2 class="stitle">Twenty-two channels evaluated; five cut, three capped</h2>
+    <p class="sdek">I would not recommend every channel equally. <strong>Each one earns a role, a funnel stage, a KPI and a stop condition &mdash; or it does not run.</strong></p>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Tier</th>
+    <th>Channel</th>
+    <th>Role</th>
+    <th>Funnel stage</th>
+    <th>KPI</th>
+    <th>Scale when</th>
+    <th>Stop when</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl2">
+      <td><strong>1</strong></td>
+      <td><strong>Site / experiential</strong></td>
+      <td>The product, not collateral</td>
+      <td>Visit &rarr; booking</td>
+      <td>Visit-to-booking</td>
+      <td><strong>Always &mdash; ₹39.4 Cr per point</strong></td>
+      <td>Never; fix it instead</td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>1</strong></td>
+      <td><strong>Referral</strong></td>
+      <td>The compounding asset</td>
+      <td>Advocacy</td>
+      <td>Referral per owner-year</td>
+      <td>Once owners exist</td>
+      <td>Never</td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>1</strong></td>
+      <td><strong>Channel partners</strong></td>
+      <td>28% of bookings, paid on performance</td>
+      <td>Lead &rarr; booking</td>
+      <td>CP bookings; discount discipline</td>
+      <td>Discount ≤ direct +1.0 pt</td>
+      <td>Discount discipline breaks</td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>1</strong></td>
+      <td><strong>WhatsApp</strong></td>
+      <td>Primary channel for three segments</td>
+      <td>Nurture &rarr; visit</td>
+      <td>Response latency</td>
+      <td>Day one</td>
+      <td>Never &mdash; but useless un-integrated</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>Meta</strong></td>
+      <td>Volume engine for A and B; affinity reach for S3, S7</td>
+      <td>Reach &rarr; lead</td>
+      <td>CPQL</td>
+      <td>CPQL ≤ ₹7,889</td>
+      <td>CPQL &gt; ₹10,576</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>Google Search</strong></td>
+      <td>Intent capture &mdash; the highest-quality lead</td>
+      <td>Lead &rarr; qualified</td>
+      <td>CPQL, branded share</td>
+      <td>Branded share &lt; 90%</td>
+      <td>&mdash;</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Website + landing pages</td>
+      <td>The verification surface</td>
+      <td>Lead</td>
+      <td>LP conversion ≥ 6%</td>
+      <td>Day one</td>
+      <td>&mdash;</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Outdoor</td>
+      <td>Local legitimacy at 25-acre scale</td>
+      <td>Reach</td>
+      <td>Recall, geo holdout</td>
+      <td><strong>Phase 3 only</strong></td>
+      <td>Cannot be held out</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>YouTube · SEO · Print · PR · Email</td>
+      <td>One specific job each, for one or two segments</td>
+      <td>Various</td>
+      <td>Assisted conversions</td>
+      <td>&mdash;</td>
+      <td>&mdash;</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>4</strong></td>
+      <td><strong>Property portals</strong></td>
+      <td><strong>Presence is mandatory; lead volume is not</strong></td>
+      <td>Lead</td>
+      <td>CPQL</td>
+      <td><strong>Capped ₹1.00 Cr</strong></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>4</strong></td>
+      <td><strong>LinkedIn</strong></td>
+      <td>S3 and S7 precisely, and nobody else</td>
+      <td>Reach</td>
+      <td>CPQL</td>
+      <td><strong>Capped ₹0.50 Cr</strong></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>5</strong></td>
+      <td><strong>Google Display prospecting</strong></td>
+      <td><strong>Cut.</strong> Inflates lead count, depresses lead-to-qualified</td>
+      <td>&mdash;</td>
+      <td>&mdash;</td>
+      <td><strong>Retargeting only, ₹0.30 Cr</strong></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>5</strong></td>
+      <td><strong>Influencers · off-site lead events · broad email acquisition</strong></td>
+      <td><strong>Cut or deferred.</strong> Unmeasurable before attribution exists</td>
+      <td>&mdash;</td>
+      <td>&mdash;</td>
+      <td><strong>Phase 3, tracked links only</strong></td>
+      <td>&mdash;</td>
+    </tr>
+  </tbody></table></div>
+<div class="co ev"><span class="col">The correction verification forced on my own channel plan</span><p>Portals are the corridor&rsquo;s dominant organic surface <strong>and they are rented.</strong> Capping portal spend only works <strong>if owned branded search is defended at the same time</strong> &mdash; otherwise capping the rented channel while leaving the owned one intercepted loses both.</p></div>
+  </div>
+  <div class="strip"><span><b>Sources</b> Channel roles derived; portal dominance observed via <span class="sid">[S11]</span> <span class="sid">[S12]</span> <span class="sid">[S13]</span></span><span><b>Basis</b> <b>Derived.</b> Caps and thresholds are my recommendation</span><span><b>Rule</b> Compare channels within a funnel layer, never across &mdash; see slide 19</span></div>
+</section>
+
+<section class="slide " id="s13" style="--pz:0.856">
+  <span class="snum">13</span>
+  <div class="sbody">
+    <p class="seyebrow">Creative as a growth system</p>
+    <h2 class="stitle">Creative is the only lever that improves every downstream metric at once</h2>
+    <p class="sdek">It is not decoration and it is not a taste argument. <strong>It is the one input that raises hook rate, lead quality, visit rate and close rate without buying more media.</strong></p>
+<div class="gsplit">
+<div>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Link in the chain</th>
+    <th>What creative does</th>
+    <th>Metric</th>
+    <th class="n">Target</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Attention</strong></td>
+      <td>Stops the scroll</td>
+      <td>Hook rate <i>(3-sec / impression)</i></td>
+      <td class="n">≥ 25%</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>CTR</td>
+      <td class="n">≥ 1.2%</td>
+    </tr>
+    <tr>
+      <td><strong>Qualified demand</strong></td>
+      <td>Attracts the right person, <strong>repels the wrong one</strong></td>
+      <td>Landing-page conversion</td>
+      <td class="n">≥ 6%</td>
+    </tr>
+    <tr class="hl2">
+      <td></td>
+      <td></td>
+      <td><strong>CPQL by variant</strong></td>
+      <td class="n"><strong>≤ ₹7,889</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Trust</strong></td>
+      <td>Makes the claim checkable</td>
+      <td>Lead quality &mdash; % passing the cash gate</td>
+      <td class="n">≥ 45%</td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>Site visit</strong></td>
+      <td>Converts interest into travel</td>
+      <td><strong>Qualified-to-visit by creative</strong></td>
+      <td class="n"><strong>≥ 23%</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Conversion</strong></td>
+      <td>Arms the sales conversation</td>
+      <td>Booking by first-touch creative</td>
+      <td class="n">Tracked</td>
+    </tr>
+  </tbody></table></div>
+</div>
+<div>
+<div class="g2">
+  <div class="card ev"><h4>Creative pillars &mdash; three territories, tested not chosen</h4><p><strong>Price-led</strong> &mdash; the ungated sheet. <strong>Proof-led</strong> &mdash; carpet area, handover dates, progress. <strong>Density-led</strong> &mdash; the arithmetic. <strong>Twelve variants, three per audience, in Phase 0. The market decides which territory is right, not the room.</strong></p></div>
+  <div class="card warn"><h4>The discipline that makes it commercial</h4><p>A variant is judged on <strong>cost per qualified site visit</strong>, never on whether it is liked. <strong>A variant above 2&times; the best variant&rsquo;s CPQL is cut, regardless of who made it.</strong> Fatigue is a trigger, not an opinion: frequency ceiling plus CPL drift &gt;20% forces an automatic refresh.</p></div>
+</div>
+<div class="co calc"><span class="col">Where I would spend creative effort first</span><p><strong>The landing page and the price sheet</strong>, because the boldest decision in the strategy is cheap to test: <strong>gated versus ungated pricing</strong>, two pages per audience, ₹2.5 lakh. If ungated wins on CPQL, the transparency position is validated commercially rather than argued.</p></div>
+<div class="co "><span class="col">One thing I would fix before any of it runs</span><p>The campaign&rsquo;s signature claim &mdash; <strong>fifteen to the acre</strong> &mdash; is <strong>false against two named villa competitors</strong> unless bounded to all 25 acres, apartments included <span class="sid">[S13]</span>. And the two density comparators I would cite <strong>have no published unit count.</strong></p><p><strong>I would bound the claim and write the footnote before the first impression, not after the first challenge.</strong></p></div>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Sources</b> <span class="sid">[S13]</span> &mdash; the competitor density evidence that bounds the claim</span><span><b>Basis</b> <b>Derived.</b> Targets are my proposal; the variant test is designed to replace them with observed values</span><span><b>Note</b> Creative supports the strategy here. It is not the strategy</span></div>
+</section>
+
+<section class="slide " id="s14" style="--pz:0.965">
+  <span class="snum">14</span>
+  <div class="sbody">
+    <p class="seyebrow">Lead qualification, CRM and the sales handover</p>
+    <h2 class="stitle">I would qualify on cash at purchase, and build the measurement before the media</h2>
+    <p class="sdek">Five of the six metrics I would read weekly <strong>require CRM discipline that does not exist yet.</strong> That makes the measurement system a pre-launch dependency, not a reporting task.</p>
+<div class="g2">
+<div class="g2">
+  <div class="card ev"><h4>The qualification gate</h4><p><strong>Cash at purchase, not income.</strong> ₹17.6 L for A rising to ₹74.1 L for D. Two households on identical incomes clear it differently.</p><ul><li><strong>Three required fields at capture:</strong> budget band, timeline, and <strong>country / origin district</strong></li><li>Criteria <strong>written down and owned by a named person</strong> &mdash; today neither exists</li><li>Origin district is free to collect and re-cuts the entire NRI budget at quarter two</li></ul></div>
+  <div class="card warn"><h4>Non-negotiable on day one</h4><ul><li><strong>WhatsApp Business API integrated.</strong> Un-integrated it is a liability, not a channel &mdash; conversation history cannot be reconstructed</li><li><strong>First-touch attribution as a mandatory picklist</strong>, with values that reconcile to the budget lines</li><li><strong>A named CRM owner.</strong> The CRM owns the lead-to-qualified rate, worth ₹17.2 Cr per point</li><li><strong>A structured visit debrief</strong> with a closed objection taxonomy &mdash; not a free-text box</li></ul></div>
+</div>
+</div>
+<h3 class="sh">Where marketing ends and sales begins &mdash; and the one number that spans both</h3>
+<div class="chain"><div class="ch mk">Reach</div><div class="ch mk">Lead</div><div class="ch mk">MQL</div><div class="ch mk">SQL</div><div class="ch mk">Qualified lead</div><div class="ch mk">Visit booked</div><div class="ch sa">Visit held</div><div class="ch sa">Consultation</div><div class="ch sa">Negotiation</div><div class="ch sa">Booking</div><div class="ch sa">Agreement</div><div class="ch">Referral</div></div>
+<div class="g2">
+<div class="co "><span class="col">The handover rule</span><p><strong>Marketing owns everything up to the booked visit. Sales owns the visit onward. Both are read on the same number</strong> &mdash; site-visit-to-booking rate, weekly, by community and by consultant &mdash; <strong>so neither can blame the other&rsquo;s stage.</strong></p></div>
+<div class="co calc"><span class="col">Two stages that are currently fictional</span><p><strong>Consultation and negotiation are modelled but have no defined trigger.</strong> They sit inside aggregates, which means <strong>the sales team&rsquo;s own contribution is invisible.</strong> I would promote both to counted CRM gates before go-live. It costs nothing and it decomposes the model&rsquo;s most sensitive variable.</p></div>
+</div>
+  </div>
+  <div class="strip"><span><b>Basis</b> <b>Derived and recommended.</b> Cash-gate figures are my calculation from the proposed ladder</span><span><b>Requires validation</b> What CRM exists today, who owns it, and whether WhatsApp is integrated</span><span><b>Determines</b> Whether Phase 1 is four weeks or four months</span></div>
+</section>
+
+<section class="slide " id="s15" style="--pz:0.686">
+  <span class="snum">15</span>
+  <div class="sbody">
+    <p class="seyebrow">KPI framework</p>
+    <h2 class="stitle">Leading indicators release money. Lagging indicators confirm it was right</h2>
+    <p class="sdek">Every metric below names the decision it triggers. <strong>A metric that cannot change a decision is not on this dashboard</strong> &mdash; which is why impressions, reach, followers and page views appear nowhere.</p>
+<div class="gsplit">
+<div>
+<h3 class="sh" style="margin-top:0;color:var(--decision)">Leading &mdash; read weekly, and these release the next tranche</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Metric</th>
+    <th>Formula</th>
+    <th class="n">Target</th>
+    <th>Triggers</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl">
+      <td><strong>CPQL</strong></td>
+      <td>Media &divide; qualified leads</td>
+      <td class="n"><strong>₹7,889</strong><br><i>max ₹10,576</i></td>
+      <td><strong>Campaign optimisation; tranche release</strong></td>
+    </tr>
+    <tr class="hl">
+      <td><strong>Cost per qualified site visit</strong></td>
+      <td>Media &divide; visits held</td>
+      <td class="n"><strong>₹33,676</strong><br><i>max ₹45,144</i></td>
+      <td><strong>The Phase 0 decision metric</strong></td>
+    </tr>
+    <tr class="hl">
+      <td><strong>Site-visit-to-booking</strong></td>
+      <td>Bookings &divide; visits held</td>
+      <td class="n"><strong>≥ 6.9%</strong></td>
+      <td><strong>The single most important number</strong></td>
+    </tr>
+    <tr>
+      <td>CPL</td>
+      <td>Media &divide; leads</td>
+      <td class="n">₹1,247<br><i>max ₹1,672</i></td>
+      <td>Channel reallocation</td>
+    </tr>
+    <tr>
+      <td>MQL rate · lead-to-visit</td>
+      <td>Stage &divide; prior stage</td>
+      <td class="n">45% · 23.4%</td>
+      <td>Qualification criteria</td>
+    </tr>
+    <tr>
+      <td>Site-visit velocity</td>
+      <td>Visits held per week</td>
+      <td class="n">≥ 15</td>
+      <td>Capacity and staffing</td>
+    </tr>
+    <tr>
+      <td>Show rate</td>
+      <td>Held &divide; booked</td>
+      <td class="n">≥ 60%</td>
+      <td>Confirmation process</td>
+    </tr>
+    <tr>
+      <td>Follow-up latency</td>
+      <td>Hours from visit to contact</td>
+      <td class="n">&lt; 24h</td>
+      <td>Coaching</td>
+    </tr>
+    <tr>
+      <td>CTR · CPC · hook rate</td>
+      <td>Platform</td>
+      <td class="n">≥1.2% · &mdash; · ≥25%</td>
+      <td>Creative refresh</td>
+    </tr>
+    <tr>
+      <td>Creative fatigue</td>
+      <td>CPL drift vs 30-day baseline</td>
+      <td class="n">&lt; 20%</td>
+      <td><strong>Automatic refresh</strong></td>
+    </tr>
+  </tbody></table></div>
+</div>
+<div>
+<h3 class="sh" style="margin-top:0;color:var(--evidence)">Lagging &mdash; read monthly or quarterly; these confirm, they do not steer</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Metric</th>
+    <th>Formula</th>
+    <th class="n">Target</th>
+    <th>Owner</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl2">
+      <td><strong>CAC</strong></td>
+      <td>Total acquisition &divide; net units</td>
+      <td class="n"><strong>₹8.44 L</strong><br><i>max ₹11.32 L</i></td>
+      <td>CFO</td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>ROMI</strong></td>
+      <td><strong>(Gross profit &minus; marketing) &divide; marketing</strong></td>
+      <td class="n"><strong>≥ 3.0&times;</strong></td>
+      <td>CFO</td>
+    </tr>
+    <tr>
+      <td>Cost per booking</td>
+      <td>Media &divide; bookings</td>
+      <td class="n">₹4.90 L</td>
+      <td>Marketing lead</td>
+    </tr>
+    <tr>
+      <td>Revenue recognised</td>
+      <td>Net units &times; achieved ticket</td>
+      <td class="n">₹506.7 Cr</td>
+      <td>CFO</td>
+    </tr>
+    <tr>
+      <td>Gross profit</td>
+      <td>Revenue &times; margin</td>
+      <td class="n">₹141.9 Cr <i>@28%</i></td>
+      <td>CFO</td>
+    </tr>
+    <tr>
+      <td>Marketing as % of GDV</td>
+      <td>Opex &divide; GDV</td>
+      <td class="n">4.70%</td>
+      <td>CFO</td>
+    </tr>
+    <tr>
+      <td>Achieved price vs list</td>
+      <td>Achieved &divide; list, by community</td>
+      <td class="n">≥ 95%</td>
+      <td>CEO</td>
+    </tr>
+    <tr>
+      <td>Cancellation rate</td>
+      <td>Cancelled &divide; gross bookings</td>
+      <td class="n">≤ 8%</td>
+      <td>Sales</td>
+    </tr>
+    <tr>
+      <td>Referral rate</td>
+      <td>Referrals per owner-year</td>
+      <td class="n">≥ 0.15</td>
+      <td>Marketing lead</td>
+    </tr>
+    <tr class="dim">
+      <td><strong>ROAS</strong> <i>(media only)</i></td>
+      <td>Revenue &divide; media</td>
+      <td class="n"><strong>Diagnostic only</strong></td>
+      <td><strong>Never a decision metric</strong></td>
+    </tr>
+  </tbody></table></div>
+<div class="co "><span class="col">Which metrics gate the money</span><p><strong>Only the leading column releases a tranche.</strong> By the time CAC and ROMI are readable, the money is spent. <strong>Phase 0 and Phase 2 gates are set on CPL, CPQL and cost per qualified site visit</strong>, because those are the numbers a quarter can actually produce.</p></div>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Basis</b> <b>Derived.</b> Targets are calculated from the modelled funnel; ceilings from a 30%-of-gross-profit policy</span><span><b>Requires validation</b> Historical CPL, CAC and cancellation rate &mdash; each would replace a target with an observation</span><span><b>Rule</b> Compare within a layer, never across</span></div>
+</section>
+
+<section class="slide " id="s16" style="--pz:0.737">
+  <span class="snum">16</span>
+  <div class="sbody">
+    <p class="seyebrow">The ₹25 lakh validation test</p>
+    <h2 class="stitle">A validation tranche &mdash; not a small version of the campaign</h2>
+    <p class="sdek">Eight weeks: two setup, six live. <strong>The distinction matters: a miniature campaign is judged on results; a validation tranche is judged on what it settles.</strong></p>
+<div class="gsplit">
+<div>
+<div class="tw "><table>
+  <thead><tr>
+    <th></th>
+    <th class="n">Amount</th>
+    <th>Channel / item</th>
+    <th>What it answers</th>
+  </tr></thead>
+  <tbody>
+    <tr class="tot">
+      <td><strong>Media</strong></td>
+      <td class="n"><strong>₹18.00 L</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="n">₹6.30 L</td>
+      <td><strong>Meta</strong> &mdash; 6 variants</td>
+      <td>Volume audiences; <strong>establishes the CPL floor</strong></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="n">₹5.40 L</td>
+      <td><strong>Google Search</strong> &mdash; 3 ad groups</td>
+      <td>Intent capture; <strong>tests branded defence</strong></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="n">₹3.60 L</td>
+      <td><strong>LinkedIn</strong> &mdash; S3 diaspora</td>
+      <td>The most expensive audience &mdash; <strong>is it viable at all?</strong></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="n">₹1.80 L</td>
+      <td>One portal</td>
+      <td>Rented vs owned demand</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="n">₹0.90 L</td>
+      <td>YouTube retargeting</td>
+      <td>Cheapest re-engagement</td>
+    </tr>
+    <tr class="tot">
+      <td><strong>Non-media</strong></td>
+      <td class="n"><strong>₹7.00 L</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="n">₹2.50 L</td>
+      <td>Landing pages, 2 per audience</td>
+      <td><strong>Gated vs ungated price sheet</strong></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="n">₹2.20 L</td>
+      <td>12 creative variants</td>
+      <td>Price / proof / density territory</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="n">₹1.50 L</td>
+      <td>Tracking + CRM setup</td>
+      <td><strong>Without this the test measures nothing</strong></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="n">₹0.80 L</td>
+      <td>Analyst time</td>
+      <td>Weekly readout</td>
+    </tr>
+  </tbody></table></div>
+</div>
+<div>
+<h3 class="sh" style="margin-top:0">What the sample can and cannot support</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Metric</th>
+    <th class="n">Events</th>
+    <th class="n">95% CI</th>
+    <th>Verdict</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl2">
+      <td><strong>CPL</strong></td>
+      <td class="n">1,443</td>
+      <td class="n"><strong>±5.2%</strong></td>
+      <td><strong>Measurable</strong></td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>Lead &rarr; qualified</strong></td>
+      <td class="n">1,443</td>
+      <td class="n"><strong>±12.3%</strong></td>
+      <td><strong>Measurable</strong></td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>CPQL</strong></td>
+      <td class="n">228</td>
+      <td class="n"><strong>±13.0%</strong></td>
+      <td><strong>Measurable</strong></td>
+    </tr>
+    <tr>
+      <td>Qualified &rarr; visit</td>
+      <td class="n">228</td>
+      <td class="n">±30.9%</td>
+      <td>Directional</td>
+    </tr>
+    <tr>
+      <td>Cost per qualified site visit</td>
+      <td class="n">53</td>
+      <td class="n">±26.8%</td>
+      <td>Directional</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>Cost per booking</strong></td>
+      <td class="n"><strong>3.7</strong></td>
+      <td class="n"><strong>±102%</strong></td>
+      <td><strong>NOT MEASURABLE</strong></td>
+    </tr>
+  </tbody></table></div>
+<div class="co "><span class="col">The measurement decision I would state in advance</span><p><strong>A ₹25 lakh test cannot establish a booking rate.</strong> Measuring site-visit-to-booking to ±25% would need <strong>~832 held site visits &mdash; roughly 22 months of continuous spend.</strong></p><p><strong>So the test is judged on cost per qualified site visit.</strong> Booking rate is carried as a stated assumption and monitored as a secondary indicator across the first two quarters of live trading.</p><p><strong>Saying that now is the difference between a measurement exercise and a soft launch that quietly becomes the launch.</strong></p></div>
+</div>
+</div>
+<h3 class="sh">Kill and scale criteria &mdash; agreed before the money moves, not after the result</h3>
+<div class="gate">
+  <div class="gt now"><span class="gn">Scale</span><span class="gv">CPL ≤ ₹1,550</span><span class="gd">and CPQSV ≤ ₹42,000 &rarr; <strong>release Phase 1 in full</strong></span></div>
+  <div class="gt "><span class="gn">Partial</span><span class="gv">CPL ₹1,550&ndash;1,900</span><span class="gd">&rarr; release Phase 1 at <strong>70%</strong>; re-test the two weakest audiences</span></div>
+  <div class="gt "><span class="gn">Kill</span><span class="gv">CPL &gt; ₹1,900</span><span class="gd">&rarr; <strong>stop and re-base.</strong> Do not proceed at reduced scale</span></div>
+  <div class="gt "><span class="gn">Kill</span><span class="gv">CPQSV &gt; ₹52,000</span><span class="gd">&rarr; <strong>stop.</strong> The funnel is broken, not the media</span></div>
+  <div class="gt "><span class="gn">Cut</span><span class="gv">Audience &gt; 2&times; best</span><span class="gd">&rarr; remove that audience from the launch plan</span></div>
+  <div class="gt "><span class="gn">Adopt</span><span class="gv">Ungated ≥ gated</span><span class="gd">&rarr; <strong>publish pricing ungated.</strong> The position is validated commercially</span></div>
+</div>
+  </div>
+  <div class="strip"><span><b>Basis</b> <b>Derived.</b> Volumes from the modelled funnel; confidence intervals calculated on those volumes</span><span><b>Method</b> Poisson relative CI for counts; normal approximation for proportions</span><span><b>Ask</b> <b>₹25 lakh &mdash; approximately 1% of the envelope, released against a written stop condition</b></span></div>
+</section>
+
+<section class="slide " id="s17" style="--pz:0.800">
+  <span class="snum">17</span>
+  <div class="sbody">
+    <p class="seyebrow">Marketing investment architecture</p>
+    <h2 class="stitle">₹31.75 crore is not a marketing budget &mdash; it is four kinds of money under one label</h2>
+    <p class="sdek">This is the single most important correction in the deck. <strong>Presented as one number it reads reckless; separated properly it is an ordinary regional budget with two capital items attached.</strong></p>
+<div class="gsplit">
+<div>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Category</th>
+    <th class="n">Amount</th>
+    <th class="n">Share</th>
+    <th>What it actually is, and whose P&amp;L it belongs in</th>
+  </tr></thead>
+  <tbody>
+    <tr class="tot">
+      <td><strong>Total commercial budget</strong></td>
+      <td class="n"><strong>₹31.75 Cr</strong></td>
+      <td class="n">100%</td>
+      <td><strong>The planning ceiling &mdash; not the ask</strong></td>
+    </tr>
+    <tr class="hl">
+      <td><strong>True marketing OPEX</strong></td>
+      <td class="n"><strong>₹23.80 Cr</strong></td>
+      <td class="n">75.0%</td>
+      <td><strong>The only line a marketing lead should be accountable for</strong> &nbsp;<i>&rarr; marketing</i></td>
+    </tr>
+    <tr>
+      <td>&nbsp;&nbsp;&mdash; of which <strong>media</strong></td>
+      <td class="n"><strong>₹14.65 Cr</strong></td>
+      <td class="n">46.1%</td>
+      <td><strong>62% of opex · ₹32.6 lakh a month</strong> across 45 months &nbsp;<i>&rarr; marketing</i></td>
+    </tr>
+    <tr>
+      <td>&nbsp;&nbsp;&mdash; of which agency, content, tech, research</td>
+      <td class="n">₹9.15 Cr</td>
+      <td class="n">28.8%</td>
+      <td>People, production, platforms, validation &nbsp;<i>&rarr; marketing</i></td>
+    </tr>
+    <tr>
+      <td><strong>Cost of sale</strong></td>
+      <td class="n">₹4.04 Cr</td>
+      <td class="n">12.7%</td>
+      <td>Channel-partner commission and referral &mdash; <strong>paid only on performance</strong> &nbsp;<i>&rarr; sales</i></td>
+    </tr>
+    <tr>
+      <td><strong>Sales infrastructure capex</strong></td>
+      <td class="n">₹3.15 Cr</td>
+      <td class="n">9.9%</td>
+      <td><strong>A building.</strong> An asset, amortised &nbsp;<i>&rarr; capex</i></td>
+    </tr>
+    <tr>
+      <td><strong>Technology capex</strong></td>
+      <td class="n">₹0.76 Cr</td>
+      <td class="n">2.4%</td>
+      <td><strong>A system.</strong> An asset, amortised &nbsp;<i>&rarr; capex</i></td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>Contingency reserve</strong> <i>(inside opex)</i></td>
+      <td class="n">₹1.90 Cr</td>
+      <td class="n">8.0% of opex</td>
+      <td><strong>Finance-held, not marketing-held.</strong> Released on a named event only &nbsp;<i>&rarr; finance</i></td>
+    </tr>
+  </tbody></table></div>
+<p class="tnote">₹23.80 + ₹4.04 + ₹3.15 + ₹0.76 = ₹31.75 Cr. The reserve sits inside the ₹23.80 Cr opex, alongside a ₹21.90 Cr deployable core.</p>
+</div>
+<div>
+<div class="figs">
+  <div class="fig ev"><span class="fn">₹6.33</span><span class="fu">lakh · per unit</span><span class="fd"><b>Marketing opex per unit</b> once reclassified</span></div>
+  <div class="fig key"><span class="fn">₹8.44</span><span class="fu">lakh · per unit</span><span class="fd"><b>All-in acquisition cost (CAC)</b>, every category included</span></div>
+</div>
+<div class="co calc"><span class="col">The convergence that tells me the reclassification is right</span><p>Two corrections arrived at independently land on the same number. <strong>Stripping cost of sale and capex out gives ₹6.33 lakh per unit. The allowable ceiling the analysis had set for itself was ₹6.30 lakh.</strong> A 0.5% difference.</p><p>Put the other way: <strong>the overshoot against the allowable is ₹8.06 crore, and the misclassified money is ₹7.95 crore. They are the same ₹8 crore.</strong></p></div>
+<div class="co "><span class="col">And the correction that raises the number, which I would rather bring than have found</span><p><strong>The model carries agency fees and no internal marketing headcount.</strong> I have not invented KMV&rsquo;s team size &mdash; no such information was available. But the line cannot be zero.</p><p><strong>Adding a labelled range for two people over the window takes the envelope up, not down: ₹25.33&ndash;26.86 Cr of marketing opex</strong>, ₹33.28&ndash;34.81 Cr all-in, CAC ₹8.85&ndash;9.26 L. <strong>Both ends stay inside a 30%-of-gross-profit ceiling.</strong></p></div>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Basis</b> <b>Derived calculation on stated assumptions.</b> Reclassification is mine; no vendor quote underlies any line</span><span><b>Not a KMV figure</b> <b>No estimate is offered anywhere for KMV&rsquo;s actual budget, spend, headcount or historical CPL</b> &mdash; none was available</span><span><b>Requires validation</b> Internal team structure, agency contracts, and whether the sales office is capex or leased</span></div>
+</section>
+
+<section class="slide " id="s18" style="--pz:0.895">
+  <span class="snum">18</span>
+  <div class="sbody">
+    <p class="seyebrow">Budget governance</p>
+    <h2 class="stitle">The envelope is a planning ceiling. Only ₹25 lakh is an ask</h2>
+    <p class="sdek">I would not release ₹23.80 crore against a forecast. <strong>I would release it in six tranches, each against a KPI gate, a named decision-maker and a written stop condition.</strong></p>
+<div class="gsplit">
+<div>
+<div class="tr"><span class="tr-k"><b>Phase 0 · Validation</b>2 months</span><span class="tr-t"><span class="tr-f now" style="width:2.8%"></span></span><span class="tr-v">₹0.25 Cr <i>· 1.0%</i></span></div>
+<div class="tr"><span class="tr-k"><b>Phase 1 · Launch prep</b>months 3&ndash;6</span><span class="tr-t"><span class="tr-f " style="width:29.5%"></span></span><span class="tr-v">₹2.60 Cr <i>· 10.9%</i></span></div>
+<div class="tr"><span class="tr-k"><b>Phase 2 · Market entry</b>months 7&ndash;15</span><span class="tr-t"><span class="tr-f " style="width:47.7%"></span></span><span class="tr-v">₹4.20 Cr <i>· 17.6%</i></span></div>
+<div class="tr"><span class="tr-k"><b>Phase 3 · Scale</b>months 16&ndash;30</span><span class="tr-t"><span class="tr-f " style="width:92.0%"></span></span><span class="tr-v">₹8.10 Cr <i>· 34.0%</i></span></div>
+<div class="tr"><span class="tr-k"><b>Phase 4 · Optimise</b>months 31&ndash;42</span><span class="tr-t"><span class="tr-f " style="width:57.4%"></span></span><span class="tr-v">₹5.05 Cr <i>· 21.2%</i></span></div>
+<div class="tr"><span class="tr-k"><b>Phase 5 · Clearance</b>months 43&ndash;51</span><span class="tr-t"><span class="tr-f " style="width:19.3%"></span></span><span class="tr-v">₹1.70 Cr <i>· 7.1%</i></span></div>
+<div class="tr"><span class="tr-k"><b>Contingency reserve</b>CFO-held</span><span class="tr-t"><span class="tr-f res" style="width:21.6%"></span></span><span class="tr-v">₹1.90 Cr <i>· 8.0%</i></span></div>
+<p class="tnote">Deployable core ₹21.90 Cr (92.0%) + reserve ₹1.90 Cr (8.0%) = <strong>₹23.80 Cr marketing opex</strong>. Before the internal-team line on slide 17.</p>
+</div>
+<div>
+<div class="figs">
+  <div class="fig key"><span class="fn">1.0</span><span class="fu">% of opex</span><span class="fd"><b>What I am actually asking for today</b> &mdash; ₹25 lakh, and 0.8% of the ₹31.75 Cr headline</span></div>
+</div>
+<div class="g2">
+  <div class="card warn"><h4>Three rules across every tranche</h4><ul><li><strong>A saving is never banked.</strong> Underspend moves to the highest-leverage stage &mdash; the site visit</li><li><strong>A missed gate cuts inventory before it cuts price, and cuts inventory before it raises budget</strong></li><li><strong>A gate missed twice consecutively releases nothing</strong>, regardless of explanation</li></ul></div>
+  <div class="card ev"><h4>Why this is strategically safer than approving the total</h4><ul><li><strong>The largest risk is not overspending &mdash; it is spending correctly against a wrong price assumption.</strong> A tranche structure detects that in weeks, not at year end</li><li>Only <strong>₹14.65 Cr is genuinely variable.</strong> Outdoor, print, retainers and CRM are fixed or contracted once committed &mdash; <strong>so a mid-flight 30% cut lands almost entirely on the one line that generates leads</strong></li><li>Which is an argument for committing to outdoor and print <em>later</em> &mdash; not for cutting media <em>first</em></li></ul></div>
+</div>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Basis</b> <b>Derived.</b> Tranche sizes, windows and gates are my recommendation</span><span><b>Governance</b> Phase 0 and 4&ndash;5 at marketing level with CFO notified; Phases 1&ndash;3 require CEO + CFO</span><span><b>Status</b> <b>A controlled investment framework, not a commitment</b></span></div>
+</section>
+
+<section class="slide " id="s19" style="--pz:0.844">
+  <span class="snum">19</span>
+  <div class="sbody">
+    <p class="seyebrow">Measurement &amp; attribution</p>
+    <h2 class="stitle">Three reading rules, in the reporting template before the first review</h2>
+    <p class="sdek">Attribution arguments are always won by whoever wrote the template. <strong>I would write it before the spend, not when the spend is challenged.</strong></p>
+<div class="g3">
+<div class="g3">
+  <div class="card warn"><h4>Rule 1 · Compare within a layer, never across</h4><p>Judging brand against performance on cost per booking <strong>defunds ₹10.25 crore of the highest-value spend.</strong> It is the most common way a sound budget is destroyed by a reasonable-sounding question.</p></div>
+  <div class="card warn"><h4>Rule 2 · Judge demand generation on CPQL</h4><p>Not CPL. <strong>Cheap leads that fail the cash gate are a cost, not a result.</strong> Reporting CPL as the headline optimises the media buy against the business.</p></div>
+  <div class="card warn"><h4>Rule 3 · Judge brand, outdoor and the site on holdouts</h4><p><strong>First-touch and geo holdouts &mdash; never last click.</strong> Last click will always find in favour of the search line and against everything that made the search happen.</p></div>
+</div>
+</div>
+<div class="gsplit" style="margin-top:1rem">
+<div>
+<h3 class="sh" style="margin-top:0">The attribution model I would install</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Layer</th>
+    <th>Attribution method</th>
+    <th>Why</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Performance media</strong></td>
+      <td><strong>First-touch, mandatory CRM picklist</strong></td>
+      <td>The check on ₹9.84 Cr of allocation. Values must reconcile to the budget lines</td>
+    </tr>
+    <tr>
+      <td><strong>Brand, outdoor, OTT, print</strong></td>
+      <td><strong>Geo or time-based holdout, agreed in advance</strong></td>
+      <td>Cannot be defended under click reporting and will be the first line cut in a bad quarter</td>
+    </tr>
+    <tr>
+      <td><strong>Referral and channel partner</strong></td>
+      <td>Source field at booking + discount register</td>
+      <td>Referral is the cheapest revenue in the model; it must not be mis-credited to media</td>
+    </tr>
+    <tr>
+      <td><strong>Site and experience centre</strong></td>
+      <td>Visit debrief, by consultant</td>
+      <td>The ₹39.4 Cr-per-point stage. Unmeasured from day one, it stays unmeasured</td>
+    </tr>
+  </tbody></table></div>
+</div>
+<div>
+<div class="co calc"><span class="col">What I would report, and what I would refuse to report</span><p><strong>Report revenue at risk, not spend efficiency.</strong> &ldquo;CPL improved 12%&rdquo; is not a result. <strong>&ldquo;Site-visit conversion moved 0.4 points, worth ₹15.8 crore&rdquo;</strong> is.</p><p><strong>Deliberately absent from every report: impressions, reach, followers, page views.</strong> None of them can change a decision, and each of them can be used to defend a bad quarter.</p></div>
+<div class="co "><span class="col">And the honest caveat on ROI</span><p><strong>Revenue &divide; spend would read 16.0&times;.</strong> It is meaningless &mdash; most of that revenue pays for land, construction and finance. <strong>Any development deck showing 16&times; should be disbelieved, including this one.</strong></p><p><strong>ROMI here is (gross profit &minus; marketing) &divide; marketing: 3.47&times; at an assumed 28% margin</strong> &mdash; <strong>2.99&times; at 25% and 3.95&times; at 31%.</strong> The margin is a placeholder, because no construction cost data exists anywhere behind this work, <strong>so the ROMI figure moves 32% across a range nobody has tested.</strong></p></div>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Basis</b> <b>Recommended.</b> The ₹10.25 Cr and ₹39.4 Cr figures are derived from the modelled funnel</span><span><b>Requires validation</b> A 28% gross margin &mdash; <b>the single largest unvalidated input in the entire model</b></span><span><b>Rule</b> Attribution method is agreed before the spend, never after the challenge</span></div>
+</section>
+
+<section class="slide band">
+  <div class="sbody">
+    <p class="seyebrow">Part three</p>
+    <h1 class="stitle">The decision, and what would change it</h1>
+  </div>
+</section>
+
+<section class="slide " id="s20" style="--pz:0.878">
+  <span class="snum">20</span>
+  <div class="sbody">
+    <p class="seyebrow">Gaps &amp; what I would fix first</p>
+    <h2 class="stitle">Thirty-six gaps across twelve domains &mdash; and eighteen close for ₹41.5 lakh</h2>
+    <p class="sdek">Prioritised by <strong>impact &times; urgency &divide; effort.</strong> Eleven of the first thirteen actions cost nothing at all &mdash; they are decisions, not budgets.</p>
+<div class="gsplit">
+<div>
+<h3 class="sh" style="margin-top:0">Free &mdash; do these before any money commits</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Domain</th>
+    <th>Action</th>
+    <th>What it settles</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Brand</strong></td>
+      <td>Consolidate domain and social identity</td>
+      <td>Splits authority every day it waits</td>
+    </tr>
+    <tr>
+      <td><strong>Measurement</strong></td>
+      <td>Reconcile every published project figure</td>
+      <td>A transparency launch over contradictory numbers</td>
+    </tr>
+    <tr>
+      <td><strong>CX</strong></td>
+      <td>Reverse the site photography restriction, publicly</td>
+      <td>A live review complaint that contradicts the position</td>
+    </tr>
+    <tr>
+      <td><strong>Content</strong></td>
+      <td>Bound the density claim and write the footnote</td>
+      <td><strong>The campaign&rsquo;s central claim</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Attribution</strong></td>
+      <td>Specify first-touch, consultation and negotiation as CRM events</td>
+      <td><strong>₹9.84 Cr of allocation</strong>, and a diagnosable funnel</td>
+    </tr>
+    <tr>
+      <td><strong>CRM</strong></td>
+      <td>Name the CRM owner; write the qualification criteria</td>
+      <td><strong>₹17.2 Cr per point</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Performance</strong></td>
+      <td>Put the three reading rules in the reporting template</td>
+      <td><strong>₹10.25 Cr of defensible spend</strong></td>
+    </tr>
+  </tbody></table></div>
+</div>
+<div>
+<h3 class="sh" style="margin-top:0">Paid &mdash; ₹41.5 lakh total, and it buys evidence, not media</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Action</th>
+    <th class="n">Cost</th>
+    <th>What it settles</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>IGRS registration series, 24 months, two mandals</td>
+      <td class="n">₹2.5 L</td>
+      <td>Up to <strong>₹50.7 Cr</strong> of price risk</td>
+    </tr>
+    <tr>
+      <td>Segment sizing from registration and institutional data</td>
+      <td class="n">₹4.0 L</td>
+      <td>Six of eight segments</td>
+    </tr>
+    <tr>
+      <td>Competitor velocity in the ₹2.2&ndash;2.8 Cr band, 8 weeks</td>
+      <td class="n">₹3.5 L</td>
+      <td><strong>₹158.8 Cr</strong> &mdash; the largest open question</td>
+    </tr>
+    <tr>
+      <td>30&ndash;40 depth interviews + landowner families</td>
+      <td class="n">₹12.0 L</td>
+      <td>The behavioural attributes of all eight segments</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>Paid media test across four community audiences</strong></td>
+      <td class="n"><strong>₹17.5 L</strong></td>
+      <td><strong>The CPLs underwriting ₹11.02 Cr</strong></td>
+    </tr>
+    <tr>
+      <td>Twenty proxy visits on an existing project</td>
+      <td class="n">₹2.0 L</td>
+      <td><strong>₹12.63 Cr</strong> of Community B budget</td>
+    </tr>
+    <tr class="tot">
+      <td><strong>Total</strong></td>
+      <td class="n"><strong>₹41.5 L</strong></td>
+      <td><strong>= 1.3% of the ₹31.75 Cr planning envelope</strong></td>
+    </tr>
+  </tbody></table></div>
+<div class="co calc"><span class="col">The honest framing</span><p><strong>₹41.5 lakh does not de-risk ₹158.8 crore.</strong> It tells you whether ₹158.8 crore is real <em>before</em> you spend ₹31.75 crore finding out.</p><p><strong>Those are different claims and only the second one is honest.</strong></p></div>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Basis</b> <b>Derived.</b> Every cost is my assumption; a quote would replace it</span><span><b>Overlap</b> The ₹17.5 L media test is the media component of the ₹25 lakh validation tranche on slide 16</span><span><b>Sequence</b> Free actions first, then the paid ones, then any launch commitment</span></div>
+</section>
+
+<section class="slide " id="s21" style="--pz:0.859">
+  <span class="snum">21</span>
+  <div class="sbody">
+    <p class="seyebrow">Risks &amp; mitigation</p>
+    <h2 class="stitle">Ten risks &mdash; each with an early signal that fires without a meeting</h2>
+    <p class="sdek"><strong>The two critical risks are both pricing risks, and neither is a marketing risk.</strong> That is the honest hierarchy: the largest threats sit above the marketing function, and marketing&rsquo;s first job is to detect them cheaply.</p>
+<div class="tw "><table>
+  <thead><tr>
+    <th class="n"></th>
+    <th>Risk</th>
+    <th>Tier</th>
+    <th>Early signal</th>
+    <th>Mitigation / kill trigger</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl">
+      <td class="n">1</td>
+      <td><strong>The price ladder does not clear</strong> &mdash; a 50% premium to the locality asking average, untested</td>
+      <td><span class="lab lab-w">Critical</span></td>
+      <td>Achieved sits &gt;12% below list in any band</td>
+      <td><strong>Test before Phase 1. Re-cut that band</strong></td>
+    </tr>
+    <tr class="hl">
+      <td class="n">2</td>
+      <td><strong>The ₹2.2&ndash;2.8 Cr band is thin</strong> &mdash; ₹268 Cr of the plan sits in it</td>
+      <td><span class="lab lab-w">Critical</span></td>
+      <td>Competitor absorption &lt; 1.5 units/month</td>
+      <td><strong>Re-cut D toward C before launch</strong></td>
+    </tr>
+    <tr>
+      <td class="n">3</td>
+      <td><strong>CPL is materially worse than assumed</strong> &mdash; the media line is derived, never quoted</td>
+      <td>High</td>
+      <td>Observed CPL &gt;30% above assumption</td>
+      <td><strong>Stop and re-base.</strong> Not reduced scale</td>
+    </tr>
+    <tr>
+      <td class="n">4</td>
+      <td><strong>Conservative scenario materialises</strong> &mdash; CAC at 46.3% of gross profit</td>
+      <td>High</td>
+      <td>CAC &gt; ₹11.32 L for two quarters</td>
+      <td><strong>Halt tranche release</strong></td>
+    </tr>
+    <tr>
+      <td class="n">5</td>
+      <td><strong>Lead quality collapses</strong> &mdash; volume holds, cash-gate pass rate falls</td>
+      <td>High</td>
+      <td>Lead-to-qualified drifts below 12%</td>
+      <td>Tighten qualification and creative, <strong>not media spend</strong></td>
+    </tr>
+    <tr>
+      <td class="n">6</td>
+      <td><strong>Sales follow-up fails</strong> &mdash; the highest-leverage stage is not marketing-controlled</td>
+      <td>High</td>
+      <td>Follow-up latency &gt; 24h; show rate &lt; 60%</td>
+      <td>Coaching and confirmation process, weekly by consultant</td>
+    </tr>
+    <tr>
+      <td class="n">7</td>
+      <td><strong>Over-dependence on paid media</strong> &mdash; only ₹14.65 Cr is genuinely variable</td>
+      <td>Medium</td>
+      <td>Referral below 0.15/owner-year at Phase 4</td>
+      <td><strong>Cap outdoor and print until Phase 3</strong></td>
+    </tr>
+    <tr>
+      <td class="n">8</td>
+      <td><strong>The brand credential cannot be documented</strong> at the scope implied <span class="sid">[S05][S17]</span></td>
+      <td>Medium</td>
+      <td>No work order produced on request</td>
+      <td><strong>Fall back to density arithmetic and ungated pricing</strong> &mdash; both provable without credentials</td>
+    </tr>
+    <tr>
+      <td class="n">9</td>
+      <td><strong>Attribution never gets installed</strong> &mdash; spend without learning</td>
+      <td>Medium</td>
+      <td>Phase 1 gates are binary</td>
+      <td><strong>No CRM, no Phase 2</strong></td>
+    </tr>
+    <tr>
+      <td class="n">10</td>
+      <td><strong>Budget leakage</strong> &mdash; discounting by channel partners erodes achieved price</td>
+      <td>Medium</td>
+      <td>Partner discount &gt; direct +1.0 pt</td>
+      <td>Discount register reviewed monthly; <strong>partner termination</strong></td>
+    </tr>
+  </tbody></table></div>
+  </div>
+  <div class="strip"><span><b>Sources</b> <span class="sid">[S05]</span> <span class="sid">[S17]</span> for risk 8; all others derived from the model</span><span><b>Basis</b> <b>Derived.</b> Tiers and triggers are my assessment</span><span><b>Design principle</b> A register whose entries need a judgement call under stress is a list, not a control</span></div>
+</section>
+
+<section class="slide " id="s22" style="--pz:0.968">
+  <span class="snum">22</span>
+  <div class="sbody">
+    <p class="seyebrow">45-month growth roadmap</p>
+    <h2 class="stitle">What changes quarter by quarter &mdash; and what the mix looks like at each stage</h2>
+    <p class="sdek"><strong>Year one is not steady state.</strong> Referral requires prior owners, and in year one there are none &mdash; so year one must carry more demand generation than the 45-month average implies.</p>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Stage</th>
+    <th>Months</th>
+    <th>What the marketing function is doing</th>
+    <th>Mix</th>
+    <th>Leading metric</th>
+    <th class="n">Cumulative release</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl">
+      <td><strong>Validate</strong></td>
+      <td>1&ndash;2</td>
+      <td>Discover the economics. Twelve creative variants, four audiences, five channels</td>
+      <td><strong>100% test media</strong></td>
+      <td>Cost per qualified site visit</td>
+      <td class="n"><strong>₹0.25 Cr</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Build</strong></td>
+      <td>3&ndash;6</td>
+      <td>CRM, attribution, website, price sheet, first show home, sales training</td>
+      <td><strong>0% media</strong></td>
+      <td>Binary readiness gates</td>
+      <td class="n">₹2.85 Cr</td>
+    </tr>
+    <tr>
+      <td><strong>Enter</strong></td>
+      <td>7&ndash;15</td>
+      <td>Controlled launch. Digital performance only; two outdoor boards</td>
+      <td>~70% digital</td>
+      <td>Bookings; CPL vs Phase 0</td>
+      <td class="n">₹7.05 Cr</td>
+    </tr>
+    <tr>
+      <td><strong>Scale</strong></td>
+      <td>16&ndash;30</td>
+      <td>Full mix unlocks. Outdoor, print, OTT, PR added on validated economics</td>
+      <td>~55% digital, 25% brand</td>
+      <td>Site-visit-to-booking</td>
+      <td class="n">₹15.15 Cr</td>
+    </tr>
+    <tr>
+      <td><strong>Compound</strong></td>
+      <td>31&ndash;42</td>
+      <td>Referral and owner community take share from paid; CAC should fall</td>
+      <td>~40% digital, rising referral</td>
+      <td>CAC quarter on quarter</td>
+      <td class="n">₹20.20 Cr</td>
+    </tr>
+    <tr>
+      <td><strong>Clear</strong></td>
+      <td>43&ndash;51</td>
+      <td>Residual inventory. Retargeting, partners, resale, owner referral</td>
+      <td>Mostly earned</td>
+      <td>Inventory &lt; 15%</td>
+      <td class="n"><strong>₹21.90 Cr</strong></td>
+    </tr>
+  </tbody></table></div>
+<div class="g3">
+<div class="co calc"><span class="col">Community sequencing</span><p><strong>C first, then D, then A, then B.</strong> C is the lowest-risk business in the portfolio and it proves the site. D needs seeded buyers before its first visit converts. <strong>B is last because its capability must be piloted first.</strong></p></div>
+<div class="co "><span class="col">The year-one correction</span><p>The model assumes <strong>18.5% referral across the whole period.</strong> That is structurally back-loaded. I would model referral <strong>ramping from ~0% in year one</strong> rather than flat &mdash; and fund year one accordingly.</p></div>
+<div class="co ev"><span class="col">What re-bases the roadmap</span><p>A failed Phase 0. A price test that comes back &gt;12% below list. A construction timeline that moves. <strong>The roadmap is a sequence of gates, not a calendar commitment.</strong></p></div>
+</div>
+  </div>
+  <div class="strip"><span><b>Basis</b> <b>Derived.</b> The 45-month window follows from 376 units at the modelled velocity</span><span><b>Requires validation</b> Construction and handover milestones, and approvals status</span><span><b>Note</b> Sequencing is my recommendation; it is not a KMV release plan</span></div>
+</section>
+
+<section class="slide " id="s23" style="--pz:0.687">
+  <span class="snum">23</span>
+  <div class="sbody">
+    <p class="seyebrow">Executive decision framework</p>
+    <h2 class="stitle">The diagnostic that tells you <em>which</em> problem you have</h2>
+    <p class="sdek">Every funnel number falls into one of five states. <strong>Each state has one correct response, and three incorrect ones that all look reasonable in a meeting.</strong></p>
+<div class="dx">
+  <div class="dxr"><span class="if"><b>CPQL within target</b> AND qualified site visits healthy AND sales follow-up SLA met</span><span class="ar">&rarr;</span><span class="th"><b>Increase spend.</b> Release the next tranche</span></div>
+  <div class="dxr"><span class="if"><b>CPL is good but CPQL is poor</b></span><span class="ar">&rarr;</span><span class="th">You are buying the wrong people. <b>Fix targeting, qualification criteria and creative</b> &mdash; not budget</span></div>
+  <div class="dxr"><span class="if"><b>CPQL is good but site visits are poor</b></span><span class="ar">&rarr;</span><span class="th">The offer or the process is failing. <b>Fix scheduling, follow-up, trust and the reason to travel</b></span></div>
+  <div class="dxr"><span class="if"><b>Site visits are strong but bookings are weak</b></span><span class="ar">&rarr;</span><span class="th">This is not a marketing problem. <b>Investigate pricing, product, sales capability and the offer</b></span></div>
+  <div class="dxr"><span class="if"><b>Everything is weak</b></span><span class="ar">&rarr;</span><span class="th"><b>Stop.</b> The model is wrong, not the execution. Re-base before spending more</span></div>
+</div>
+<div class="gsplit" style="margin-top:1.1rem">
+<div>
+<h3 class="sh" style="margin-top:0">The governance loop</h3>
+<div class="chain"><div class="ch sa">TEST</div><div class="ch">&rarr;</div><div class="ch sa">VALIDATE</div><div class="ch">&rarr;</div><div class="ch mk">SCALE</div><div class="ch">&rarr;</div><div class="ch mk">OPTIMISE</div><div class="ch">&rarr;</div><div class="ch sa">RELEASE NEXT TRANCHE</div></div>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Cadence</th>
+    <th>Who is in the room</th>
+    <th>What is decided</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Weekly</strong></td>
+      <td>Marketing + Sales Head</td>
+      <td>CPQL, cost per qualified site visit, visit-to-booking, follow-up latency. <strong>Channel and creative reallocation</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Monthly</strong></td>
+      <td>Marketing + Sales + Finance</td>
+      <td>CAC, conversion by source and community, discount register, cancellation. <strong>Inventory release</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Quarterly</strong></td>
+      <td>CEO + CFO + Marketing</td>
+      <td>Gate pass/fail, ROMI, envelope review. <strong>Tranche release &mdash; or halt</strong></td>
+    </tr>
+  </tbody></table></div>
+</div>
+<div>
+<h3 class="sh" style="margin-top:0">Who owns what</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Function</th>
+    <th>Owns</th>
+    <th>Is measured on</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Marketing</strong></td>
+      <td>Everything up to the <strong>booked</strong> visit</td>
+      <td>CPQL · cost per qualified site visit</td>
+    </tr>
+    <tr>
+      <td><strong>Sales</strong></td>
+      <td>The visit onward</td>
+      <td><strong>Site-visit-to-booking</strong>, by consultant</td>
+    </tr>
+    <tr>
+      <td><strong>CRM</strong></td>
+      <td>Lead-to-qualified rate</td>
+      <td>Data quality; attribution completeness</td>
+    </tr>
+    <tr>
+      <td><strong>Channel partners</strong></td>
+      <td>28% of bookings, paid on performance</td>
+      <td>Bookings <strong>and discount discipline</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Finance</strong></td>
+      <td>The reserve and the gates</td>
+      <td>CAC ceiling; tranche release</td>
+    </tr>
+    <tr>
+      <td><strong>Management</strong></td>
+      <td>Price, product, inventory release</td>
+      <td><strong>Achieved price vs list</strong></td>
+    </tr>
+  </tbody></table></div>
+<div class="co "><span class="col">The rule that makes this work</span><p><strong>Marketing and sales are read on the same number</strong> &mdash; site-visit-to-booking, weekly, by community and by consultant &mdash; <strong>so neither can blame the other&rsquo;s stage.</strong></p></div>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Basis</b> <b>Recommended framework.</b> The diagnostic states follow from the funnel arithmetic</span><span><b>Not derived from</b> Any KMV organisational structure &mdash; none was provided</span><span><b>Purpose</b> So that a bad quarter produces a diagnosis, not an argument</span></div>
+</section>
+
+<section class="slide " id="s24" style="--pz:0.826">
+  <span class="snum">24</span>
+  <div class="sbody">
+    <p class="seyebrow">Final recommendation</p>
+    <h2 class="stitle">I would not release the full investment upfront</h2>
+    <p class="sdek">Not because the number is wrong. <strong>Because releasing it against a forecast, rather than against evidence, is the avoidable risk in a ₹500 crore project.</strong></p>
+<div class="gsplit">
+<div>
+<div class="tw "><table>
+  <thead><tr>
+    <th></th>
+    <th>My recommendation</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>1</strong></td>
+      <td><strong>Establish a planning envelope</strong> &mdash; ₹23.80 Cr of marketing opex, rising to <strong>₹25.33&ndash;26.86 Cr</strong> once an internal team line is added. Book cost of sale and capex separately</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>2</strong></td>
+      <td><strong>Validate with ₹25 lakh</strong> &mdash; about 1% of the envelope &mdash; with the kill condition agreed in advance</td>
+    </tr>
+    <tr>
+      <td><strong>3</strong></td>
+      <td><strong>Measure CPL, CPQL and cost per qualified site visit.</strong> Not cost per booking &mdash; the sample cannot support it</td>
+    </tr>
+    <tr>
+      <td><strong>4</strong></td>
+      <td><strong>Validate audience, proposition and channel fit</strong> across four community audiences and three creative territories</td>
+    </tr>
+    <tr>
+      <td><strong>5</strong></td>
+      <td><strong>Release budget in tranches</strong> &mdash; six of them, each against a KPI gate with a named decision-maker</td>
+    </tr>
+    <tr>
+      <td><strong>6</strong></td>
+      <td><strong>Scale only when the gates are achieved.</strong> A missed gate cuts inventory before it raises budget</td>
+    </tr>
+    <tr>
+      <td><strong>7</strong></td>
+      <td><strong>Keep the reserve under finance control</strong> &mdash; ₹1.90 Cr, released on a named event only</td>
+    </tr>
+    <tr>
+      <td><strong>8</strong></td>
+      <td><strong>Reallocate continuously on marginal return</strong>, comparing within a funnel layer and never across</td>
+    </tr>
+  </tbody></table></div>
+</div>
+<div>
+<div class="figs">
+  <div class="fig key"><span class="fn">₹25</span><span class="fu">lakh · released now</span><span class="fd"><b>The ask.</b> 1.0% of the marketing opex envelope, 0.8% of the ₹31.75 Cr headline</span></div>
+  <div class="fig ev"><span class="fn">₹23.80</span><span class="fu">crore · planning envelope</span><span class="fd"><b>Not a commitment.</b> A ceiling under governance, released in six gated tranches</span></div>
+</div>
+<div class="co "><span class="col">What I would ask you to judge</span><p>Not whether the numbers are right &mdash; <strong>most of them are labelled assumptions and I have said so on every slide.</strong></p><p><strong>Whether the framework protects the capital.</strong> If a quarter goes badly, you would know within weeks rather than at year end, and the response is written down before the money moves.</p></div>
+<div class="co ev"><span class="col">And what this deck does not claim</span><p><strong>No estimate of KMV&rsquo;s actual marketing budget, spend, headcount, historical CPL, sales velocity or inventory position</strong> appears anywhere. None was available.</p><p><strong>No industry benchmark has been manufactured.</strong> Where a published rate exists it is cited; where none exists, a range is labelled as an assumption.</p><p><strong>The revenue base itself is unproven.</strong> A 50% premium to the locality asking average sits underneath every figure here. If it does not hold, this entire strategy re-bases.</p></div>
+</div>
+</div>
+  </div>
+  <div class="strip"><span><b>Status</b> <b>A recommendation prepared for discussion.</b> Nothing here has been confirmed by KMV Spaces</span><span><b>Next step</b> Fifteen questions for management &mdash; Appendix A. Several are free and settle more than any test</span><span><b>Prepared by</b> Kiran Basa · submitted to Mr. Anudeep</span></div>
+</section>
+
+<section class="slide band" id="close">
+  <div class="sbody">
+    <p class="seyebrow">In closing</p>
+    <h1 class="stitle">Marketing investment should be earned by performance, not committed by forecast.</h1>
+    <p class="sdek">This strategy is intentionally designed as a <strong>decision framework, not a fixed media plan.</strong> The objective is to validate the market, earn the right to scale, and connect every additional rupee of marketing investment to a measurable commercial outcome.</p>
+    <div class="cmeta" style="border-top-color:rgba(245,245,241,.22);margin-top:1.6rem">
+      <div><span class="ck" style="color:rgba(245,245,241,.5)">Prepared by</span><b style="color:var(--band-ink)">Kiran Basa</b></div>
+      <div><span class="ck" style="color:rgba(245,245,241,.5)">Assignment</span><span style="color:rgba(245,245,241,.8)">Marketing Strategy &mdash; KMV Spaces, Amaravati / Mangalagiri</span></div>
+      <div><span class="ck" style="color:rgba(245,245,241,.5)">Submitted to</span><b style="color:var(--band-ink)">Mr. Anudeep</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide band">
+  <div class="sbody">
+    <p class="seyebrow">Appendices</p>
+    <h1 class="stitle">The working papers</h1>
+    <p class="sdek">Seven appendices: assumptions, pricing evidence, competitor evidence, the budget model, KPI definitions, the full source register, and what this research could not establish.</p>
+  </div>
+</section>
+
+<section class="apx" id="apxA">
+  <p class="ax">Appendix A</p>
+  <h2>Assumptions register</h2>
+  <p class="sdek">Every number in this deck that is not sourced. <strong>Each one requires KMV validation, and each names what would replace it.</strong></p>
+<div class="tw "><table>
+  <thead><tr>
+    <th class="n"></th>
+    <th>Assumption</th>
+    <th>Value used</th>
+    <th>Label</th>
+    <th>What would replace it</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td class="n">A1</td>
+      <td>Unit count on 25 acres</td>
+      <td><strong>376 units</strong> · 15.0/acre</td>
+      <td>Derived</td>
+      <td>A masterplan and approvals</td>
+    </tr>
+    <tr>
+      <td class="n">A2</td>
+      <td>Community mix</td>
+      <td>A 169 · B 84 · C 60 · D 63</td>
+      <td>Derived</td>
+      <td>A product decision</td>
+    </tr>
+    <tr>
+      <td class="n">A3</td>
+      <td>Price ladder</td>
+      <td>₹5,150 / 5,700 / 6,500 / 7,200 per sq ft</td>
+      <td>Derived from researched competitor tickets</td>
+      <td>IGRS registration data, 24 months</td>
+    </tr>
+    <tr>
+      <td class="n">A4</td>
+      <td>Blended realisation</td>
+      <td><strong>₹6,098/sq ft</strong></td>
+      <td>Derived</td>
+      <td>As above</td>
+    </tr>
+    <tr>
+      <td class="n">A5</td>
+      <td>Revenue</td>
+      <td><strong>₹506.7 Cr</strong></td>
+      <td>Derived</td>
+      <td>As above</td>
+    </tr>
+    <tr class="hl">
+      <td class="n">A6</td>
+      <td><strong>Development gross margin</strong></td>
+      <td><strong>28%</strong></td>
+      <td><strong>Working assumption &mdash; a placeholder</strong></td>
+      <td><strong>Contractor quotations. No cost data exists anywhere behind this work</strong></td>
+    </tr>
+    <tr>
+      <td class="n">A7</td>
+      <td>Sell window</td>
+      <td>45 months <i>(51 including clearance)</i></td>
+      <td>Working assumption</td>
+      <td>Construction and handover milestones</td>
+    </tr>
+    <tr>
+      <td class="n">A8</td>
+      <td>Cost per lead</td>
+      <td>₹1,247 blended</td>
+      <td>Derived from the media assumption</td>
+      <td>24 months of historical lead data</td>
+    </tr>
+    <tr>
+      <td class="n">A9</td>
+      <td>Lead &rarr; qualified</td>
+      <td>15.81% compound <i>(45% &times; 55% &times; 63.9%)</i></td>
+      <td>Working assumption &mdash; a decomposition</td>
+      <td>90 days of CRM data</td>
+    </tr>
+    <tr>
+      <td class="n">A10</td>
+      <td>Qualified &rarr; site visit held</td>
+      <td>23.4%</td>
+      <td>Working assumption</td>
+      <td>As above</td>
+    </tr>
+    <tr>
+      <td class="n">A11</td>
+      <td>Site-visit show rate</td>
+      <td>60%</td>
+      <td>Working assumption</td>
+      <td>As above</td>
+    </tr>
+    <tr>
+      <td class="n">A12</td>
+      <td>Site visit &rarr; booking</td>
+      <td>6.9%</td>
+      <td>Working assumption</td>
+      <td><strong>Two quarters of live trading &mdash; not a ₹25 lakh test</strong></td>
+    </tr>
+    <tr>
+      <td class="n">A13</td>
+      <td>Source mix</td>
+      <td>53% marketing · 28% channel partner · 19% referral</td>
+      <td>Working assumption</td>
+      <td>First-touch attribution field</td>
+    </tr>
+    <tr class="hl">
+      <td class="n">A14</td>
+      <td><strong>Cancellation rate</strong></td>
+      <td><strong>8%</strong></td>
+      <td><strong>Working assumption &mdash; the model originally had none</strong></td>
+      <td><strong>Historical cancellation data. Moves revenue by ₹40.5 Cr</strong></td>
+    </tr>
+    <tr>
+      <td class="n">A15</td>
+      <td>Reach</td>
+      <td>6,573,000</td>
+      <td>Working assumption &mdash; <strong>an output of the lead rate, not an input</strong></td>
+      <td>Platform reach data once live</td>
+    </tr>
+    <tr>
+      <td class="n">A16</td>
+      <td>Marketing opex</td>
+      <td>₹23.80 Cr</td>
+      <td>Derived by reclassifying the ₹31.75 Cr model</td>
+      <td>A committee decision on the envelope</td>
+    </tr>
+    <tr>
+      <td class="n">A17</td>
+      <td>Internal marketing team</td>
+      <td>₹1.53&ndash;3.06 Cr over the window</td>
+      <td><strong>Working assumption &mdash; a range, not a quote</strong></td>
+      <td>KMV&rsquo;s actual team structure and payroll</td>
+    </tr>
+    <tr>
+      <td class="n">A18</td>
+      <td>Performance agency fee</td>
+      <td>12% of digital media</td>
+      <td>Working assumption</td>
+      <td>An agency contract</td>
+    </tr>
+    <tr>
+      <td class="n">A19</td>
+      <td>Referral rate</td>
+      <td>18.5% of bookings, flat</td>
+      <td>Working assumption &mdash; <strong>structurally back-loaded</strong></td>
+      <td>Should be modelled ramping from ~0% in year one</td>
+    </tr>
+    <tr>
+      <td class="n">A20</td>
+      <td>Segment sizes and behaviour</td>
+      <td>Eight segments, scored</td>
+      <td><strong>Working assumption throughout</strong></td>
+      <td><strong>Primary buyer research. None exists</strong></td>
+    </tr>
+  </tbody></table></div>
+<div class="co "><span class="col">The five that would change the strategy if wrong</span><p><strong>A6 (gross margin)</strong> &mdash; every ROI figure rests on it. <strong>A3/A4 (the price ladder)</strong> &mdash; a 50% premium to the locality asking average, untested. <strong>A12 (visit-to-booking)</strong> &mdash; ₹39.4 Cr per point. <strong>A14 (cancellation)</strong> &mdash; ₹40.5 Cr. <strong>A20 (segments)</strong> &mdash; the entire targeting plan.</p></div>
+</section>
+
+<section class="apx" id="apxB">
+  <p class="ax">Appendix B</p>
+  <h2>Pricing evidence</h2>
+  <p class="sdek">How every ₹/sq ft figure was derived, the external benchmark it was tested against, and the exposure that testing revealed.</p>
+<h3 class="sh">The method</h3>
+<p class="fine">Published locality averages for this micro-market disagree by up to 40%. So every rate here is derived as <strong>published ticket price &divide; published unit size</strong>, for named projects. <strong>Seven of the eight projects publishing both ends of a range agree internally within 0.7%</strong>, which is why derived bands are preferred over any locality average.</p>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Reference point</th>
+    <th class="n">₹/sq ft</th>
+    <th>Type</th>
+    <th>Source</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>Mangalagiri locality average, asking <i>(Sept 2025)</i></td>
+      <td class="n"><strong>4,062</strong></td>
+      <td>Portal</td>
+      <td><span class="sid">[S11]</span></td>
+    </tr>
+    <tr>
+      <td>Mangalagiri, June 2025</td>
+      <td class="n">4,098</td>
+      <td>Portal</td>
+      <td><span class="sid">[S11]</span></td>
+    </tr>
+    <tr>
+      <td>Wider micromarket, Mar 2025</td>
+      <td class="n">4,805</td>
+      <td>Portal</td>
+      <td><span class="sid">[S11]</span></td>
+    </tr>
+    <tr>
+      <td>Wider micromarket, Dec 2025</td>
+      <td class="n">5,489</td>
+      <td>Portal</td>
+      <td><span class="sid">[S11]</span></td>
+    </tr>
+    <tr>
+      <td>SLV Amaravathi Pride</td>
+      <td class="n">4,210</td>
+      <td>Portal, project-level</td>
+      <td><span class="sid">[S15]</span></td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>Manjeera Monarch &mdash; delivered comparable</strong></td>
+      <td class="n"><strong>5,100</strong></td>
+      <td>Portal, project-level</td>
+      <td><span class="sid">[S12]</span></td>
+    </tr>
+    <tr>
+      <td>Prime Grandeur</td>
+      <td class="n">5,394&ndash;5,403</td>
+      <td>Portal, project-level</td>
+      <td><span class="sid">[S13]</span></td>
+    </tr>
+    <tr>
+      <td>IJM Villas 64</td>
+      <td class="n">10,143</td>
+      <td>Portal, project-level</td>
+      <td><span class="sid">[S13]</span></td>
+    </tr>
+    <tr class="hl">
+      <td><strong>&mdash; This plan, blended</strong></td>
+      <td class="n"><strong>6,098</strong></td>
+      <td><strong>Derived calculation</strong></td>
+      <td>&mdash;</td>
+    </tr>
+  </tbody></table></div>
+<div class="g2">
+<div class="co "><span class="col">What the comparison says</span><p><strong>The plan asks a 50% premium to the Mangalagiri locality average and 11% to the wider micromarket.</strong></p><p>That is not automatically wrong &mdash; a 15-per-acre scheme with villas <em>should</em> price above a locality average dominated by towers. <strong>But the premium had never been sized before, and it is the largest commercial assumption in the project.</strong></p></div>
+<div class="co "><span class="col">Community A is the exposure nobody flagged</span><p>At ₹5,150/sq ft, Community A prices <strong>above a delivered apartment comparable at ₹5,100</strong> in the same locality <span class="sid">[S12]</span> and 27% above the locality average.</p><p><strong>A is 169 units &mdash; 45% of the scheme &mdash; and the community least able to command a premium</strong>, because a garden apartment competes directly on rate.</p></div>
+</div>
+<div class="co ev"><span class="col">And a finding that points the other way</span><p>KMV Vivaan asks <strong>₹3.59 Cr (Phase I) and ₹5.21 Cr (Phase II)</strong> <span class="sid">[S14]</span>. If those clear, Community D at ₹2.30&ndash;2.74 Cr sits <strong>below the developer&rsquo;s own achieved range</strong> &mdash; and may be under-priced.</p><p><strong>These two observations point in opposite directions, and both are testable from data KMV already holds.</strong> Note also that Vivaan is at Poranki / Penamaluru, east Vijayawada &mdash; <strong>not on the corridor</strong>, so it is a pricing reference, not a location comparable.</p></div>
+<p class="fine"><strong>The caveat that governs this entire appendix: every price above is an asking price.</strong> No transaction or registration data was obtained. IGRS AP registration data for Mangalagiri and Thullur mandals &mdash; a 24-month series &mdash; is the single highest-value missing source behind this work, and it would settle up to <strong>₹50.7 crore</strong> of price risk for about ₹2.5 lakh.</p>
+</section>
+
+<section class="apx" id="apxC">
+  <p class="ax">Appendix C</p>
+  <h2>Competitor evidence</h2>
+  <p class="sdek">The screen, the field, and the three claims that did <em>not</em> survive it.</p>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Project</th>
+    <th>Developer</th>
+    <th>Scale · density</th>
+    <th>Price evidence</th>
+    <th>Positioning</th>
+    <th>Weakness</th>
+    <th>Source</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Raintree Park Dwaraka Krishna</strong></td>
+      <td>IJM Lingamaneni (IJM + LEPL)</td>
+      <td>120 ac · ~3,300 planned</td>
+      <td>Apartments ~₹3,900/sq ft; villas to ₹10,143</td>
+      <td>&ldquo;International class integrated township&rdquo;</td>
+      <td><strong>Has the full ladder and never markets it as one</strong> &mdash; five names, 18 years</td>
+      <td><span class="sid">[S13]</span></td>
+    </tr>
+    <tr>
+      <td><strong>IJM Villas 64</strong></td>
+      <td>IJM Lingamaneni</td>
+      <td>33.69 ac · 64 villas · <strong>1.9/acre</strong></td>
+      <td>From ₹3.75 Cr</td>
+      <td>&ldquo;A private enclave of just 64 homes&rdquo;</td>
+      <td>₹3.75 Cr floor excludes almost the whole corridor buyer base; <strong>no proof layer</strong></td>
+      <td><span class="sid">[S13]</span></td>
+    </tr>
+    <tr>
+      <td><strong>Prime Grandeur</strong></td>
+      <td>Prime Constructions</td>
+      <td>10 ac · 119 villas · 11.9/acre</td>
+      <td>₹1.34&ndash;1.82 Cr · ₹5,394&ndash;5,403/sq ft</td>
+      <td>Mid-premium villa living, value-led</td>
+      <td><strong>The most direct competitor.</strong> No delivery evidence published</td>
+      <td>&mdash;</td>
+    </tr>
+    <tr>
+      <td><strong>Manjeera Monarch</strong></td>
+      <td>Manjeera Constructions</td>
+      <td>Apartments · 113/acre</td>
+      <td><strong>₹5,100/sq ft &mdash; delivered</strong></td>
+      <td>Amenity-led apartments</td>
+      <td><strong>Documented carpet-area complaint</strong>; developer satisfaction described as very low</td>
+      <td><span class="sid">[S12]</span></td>
+    </tr>
+    <tr>
+      <td>Srivalli Pravas</td>
+      <td>Undavalli Constructions</td>
+      <td>2BHK to duplex on one site</td>
+      <td>&mdash;</td>
+      <td>&ldquo;Luxury apartments&rdquo;</td>
+      <td><strong>Has stumbled into a ladder without articulating it</strong></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr>
+      <td>Jayabheri The Capital</td>
+      <td>Jayabheri Group</td>
+      <td>&mdash;</td>
+      <td>&mdash;</td>
+      <td>Amenity-led</td>
+      <td><strong>Returned no search result at all</strong> &mdash; and it anchors a density comparison</td>
+      <td><strong>Gap</strong></td>
+    </tr>
+    <tr>
+      <td>Grand Project Capitol</td>
+      <td>Kalidindi Real Konsult</td>
+      <td>95.4/acre</td>
+      <td>&mdash;</td>
+      <td>&ldquo;68% open spaces, only 32% construction&rdquo;</td>
+      <td><strong>Open ground, but not a low-density community</strong></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr>
+      <td>Aparna Amaravati One</td>
+      <td>Aparna Constructions</td>
+      <td>612 units, ~30% occupied</td>
+      <td>Below the target band</td>
+      <td>Ready gated community</td>
+      <td><strong>A gated community two-thirds empty is not a community</strong></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr>
+      <td>TAG AIRA · KMV Vivaan · CRDA plots</td>
+      <td>Various</td>
+      <td>&mdash;</td>
+      <td>Vivaan ₹3.59&ndash;5.21 Cr</td>
+      <td>Smart homes · villas · land</td>
+      <td>Sub-scale, off-corridor, or a different product</td>
+      <td><span class="sid">[S14]</span></td>
+    </tr>
+  </tbody></table></div>
+<div class="co "><span class="col">Three claims that did not survive the evidence</span><p><strong>&ldquo;The corridor&rsquo;s largest project&rdquo; &mdash; false.</strong> Raintree Park is 120 acres.</p><p><strong>&ldquo;The lowest density in the corridor&rsquo; &mdash; false.</strong> IJM Villas 64 runs 1.9/acre; Prime Grandeur 11.9 <span class="sid">[S13]</span>. The defensible formulation is narrower: <em>the lowest density for a community that includes apartments</em>, bounded to all 25 acres.</p><p><strong>&ldquo;The only large villa community&rdquo; &mdash; false.</strong> Prime Grandeur has 119 villas; Raintree Park Phase 1 delivered 116.</p></div>
+<p class="fine"><strong>Two limits on this appendix.</strong> Densities are derived from published acreage &divide; published unit counts <em>where both exist</em> &mdash; for two comparators they do not, so the density claim on slide 13 must be footnoted rather than asserted. And <strong>no velocity or absorption data was obtained for any competitor</strong>, because the RERA tier returned nothing.</p>
+</section>
+
+<section class="apx" id="apxD">
+  <p class="ax">Appendix D</p>
+  <h2>Detailed budget model</h2>
+  <p class="sdek">The full line-item build, the reclassification that separates four kinds of money, and the tranche schedule.</p>
+<h3 class="sh">The reclassification &mdash; why ₹31.75 Cr is not a marketing budget</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Category</th>
+    <th class="n">Amount</th>
+    <th class="n">% of total</th>
+    <th>Nature</th>
+    <th>Whose P&amp;L</th>
+  </tr></thead>
+  <tbody>
+    <tr class="tot">
+      <td><strong>TOTAL COMMERCIAL BUDGET</strong></td>
+      <td class="n"><strong>₹31.75 Cr</strong></td>
+      <td class="n">100%</td>
+      <td><strong>A planning ceiling, not an ask</strong></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>True marketing OPEX</strong></td>
+      <td class="n"><strong>₹23.80 Cr</strong></td>
+      <td class="n">75.0%</td>
+      <td>Operating expense</td>
+      <td><strong>Marketing</strong></td>
+    </tr>
+    <tr>
+      <td>Cost of sale</td>
+      <td class="n">₹4.04 Cr</td>
+      <td class="n">12.7%</td>
+      <td>Channel-partner commission + referral &mdash; <strong>paid only on performance</strong></td>
+      <td>Sales</td>
+    </tr>
+    <tr>
+      <td>Sales infrastructure capex</td>
+      <td class="n">₹3.15 Cr</td>
+      <td class="n">9.9%</td>
+      <td>A building &mdash; an asset, amortised</td>
+      <td>Capex</td>
+    </tr>
+    <tr>
+      <td>Technology capex</td>
+      <td class="n">₹0.76 Cr</td>
+      <td class="n">2.4%</td>
+      <td>A system &mdash; an asset, amortised</td>
+      <td>Capex</td>
+    </tr>
+  </tbody></table></div>
+<h3 class="sh">Inside the ₹23.80 Cr of marketing opex</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th class="n"></th>
+    <th>Line</th>
+    <th class="n">Amount</th>
+    <th class="n">% of opex</th>
+    <th>Fixed / variable</th>
+    <th>Controllable?</th>
+    <th>KPI</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl2">
+      <td class="n">1</td>
+      <td><strong>Digital performance media</strong></td>
+      <td class="n"><strong>₹9.84 Cr</strong></td>
+      <td class="n">41.3%</td>
+      <td>Variable</td>
+      <td>Partly &mdash; <strong>the auction price is not</strong></td>
+      <td>CPQL, CPSV</td>
+    </tr>
+    <tr>
+      <td class="n">2</td>
+      <td>Outdoor (OOH)</td>
+      <td class="n">₹2.13 Cr</td>
+      <td class="n">8.9%</td>
+      <td><strong>Fixed once committed</strong></td>
+      <td>No &mdash; contracted</td>
+      <td>Recall, geo holdout</td>
+    </tr>
+    <tr>
+      <td class="n">3</td>
+      <td>Content production</td>
+      <td class="n">₹2.44 Cr</td>
+      <td class="n">10.3%</td>
+      <td>Semi-fixed</td>
+      <td>Yes</td>
+      <td>Hook rate, CPQL by variant</td>
+    </tr>
+    <tr>
+      <td class="n">4</td>
+      <td>Performance agency fee</td>
+      <td class="n">₹1.18 Cr</td>
+      <td class="n">5.0%</td>
+      <td>Variable with media</td>
+      <td>Yes</td>
+      <td>Blended CPQL vs target</td>
+    </tr>
+    <tr>
+      <td class="n">5</td>
+      <td>Events / experiences</td>
+      <td class="n">₹1.17 Cr</td>
+      <td class="n">4.9%</td>
+      <td>Semi-fixed</td>
+      <td>Yes</td>
+      <td>Site visits generated</td>
+    </tr>
+    <tr>
+      <td class="n">6</td>
+      <td>Print</td>
+      <td class="n">₹1.17 Cr</td>
+      <td class="n">4.9%</td>
+      <td><strong>Fixed per insertion</strong></td>
+      <td>No &mdash; rate card</td>
+      <td>Recall, holdout</td>
+    </tr>
+    <tr>
+      <td class="n">7</td>
+      <td>NRI infrastructure</td>
+      <td class="n">₹1.05 Cr</td>
+      <td class="n">4.4%</td>
+      <td>Semi-fixed</td>
+      <td>Yes</td>
+      <td>B&rsquo;s qualified-to-visit rate</td>
+    </tr>
+    <tr>
+      <td class="n">8</td>
+      <td>Telugu OTT + YouTube brand</td>
+      <td class="n">₹0.99 Cr</td>
+      <td class="n">4.2%</td>
+      <td>Variable</td>
+      <td>Yes</td>
+      <td>Assisted conversions</td>
+    </tr>
+    <tr>
+      <td class="n">9</td>
+      <td>Brand agency retainer</td>
+      <td class="n">₹0.81 Cr</td>
+      <td class="n">3.4%</td>
+      <td>Fixed</td>
+      <td>Yes</td>
+      <td>Output SLA</td>
+    </tr>
+    <tr>
+      <td class="n">10</td>
+      <td>PR</td>
+      <td class="n">₹0.75 Cr</td>
+      <td class="n">3.2%</td>
+      <td>Fixed</td>
+      <td>Partly</td>
+      <td>Earned coverage</td>
+    </tr>
+    <tr>
+      <td class="n">11</td>
+      <td>Collateral + sales training</td>
+      <td class="n">₹0.47 Cr</td>
+      <td class="n">2.0%</td>
+      <td>Semi-fixed</td>
+      <td>Yes</td>
+      <td>Site-visit-to-booking</td>
+    </tr>
+    <tr>
+      <td class="n">12</td>
+      <td>Launch digital burst</td>
+      <td class="n">₹0.40 Cr</td>
+      <td class="n">1.7%</td>
+      <td>Variable</td>
+      <td>Yes</td>
+      <td>Launch-window CPQL</td>
+    </tr>
+    <tr>
+      <td class="n">13</td>
+      <td>CRM / marketing automation</td>
+      <td class="n">₹0.33 Cr</td>
+      <td class="n">1.4%</td>
+      <td>Fixed</td>
+      <td>Yes</td>
+      <td>Lead-to-qualified rate</td>
+    </tr>
+    <tr>
+      <td class="n">14</td>
+      <td>Technology <i>(opex)</i></td>
+      <td class="n">₹0.33 Cr</td>
+      <td class="n">1.4%</td>
+      <td>Fixed</td>
+      <td>Yes</td>
+      <td>LP conversion rate</td>
+    </tr>
+    <tr>
+      <td class="n">15</td>
+      <td>Brand identity + design system</td>
+      <td class="n">₹0.30 Cr</td>
+      <td class="n">1.3%</td>
+      <td>Fixed, one-time</td>
+      <td>Yes</td>
+      <td>Delivery milestone</td>
+    </tr>
+    <tr>
+      <td class="n">16</td>
+      <td>Channel / broker enablement</td>
+      <td class="n">₹0.16 Cr</td>
+      <td class="n">0.7%</td>
+      <td>Semi-fixed</td>
+      <td>Yes</td>
+      <td>CP bookings, discount discipline</td>
+    </tr>
+    <tr class="hl">
+      <td class="n">17</td>
+      <td><strong>Research &amp; experiments</strong></td>
+      <td class="n"><strong>₹0.25 Cr</strong></td>
+      <td class="n">1.1%</td>
+      <td>Variable</td>
+      <td>Yes</td>
+      <td><strong>Gate pass / fail</strong></td>
+    </tr>
+    <tr class="hl">
+      <td class="n">18</td>
+      <td><strong>Internal team</strong></td>
+      <td class="n"><strong>₹1.53&ndash;3.06 Cr</strong></td>
+      <td class="n">6&ndash;11%</td>
+      <td>Fixed</td>
+      <td>Yes</td>
+      <td><strong>Working assumption &mdash; a range, not a quote</strong></td>
+    </tr>
+    <tr class="hl">
+      <td class="n">19</td>
+      <td><strong>Contingency reserve</strong></td>
+      <td class="n"><strong>₹1.90 Cr</strong></td>
+      <td class="n">8.0%</td>
+      <td>&mdash;</td>
+      <td><strong>No &mdash; finance-held</strong></td>
+      <td>Released on a named event only</td>
+    </tr>
+  </tbody></table></div>
+<div class="tw "><table>
+  <thead><tr>
+    <th></th>
+    <th class="n">Amount</th>
+    <th>Note</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl2">
+      <td><strong>MEDIA total</strong></td>
+      <td class="n"><strong>₹14.65 Cr</strong></td>
+      <td>62% of opex · 46% of the total commercial budget · <strong>₹32.6 lakh a month across 45 months</strong></td>
+    </tr>
+    <tr>
+      <td><strong>NON-MEDIA total</strong></td>
+      <td class="n"><strong>₹9.15 Cr</strong></td>
+      <td>Plus the internal-team range</td>
+    </tr>
+    <tr class="tot">
+      <td><strong>REVISED ENVELOPE</strong> <i>(with internal team)</i></td>
+      <td class="n"><strong>₹25.33&ndash;26.86 Cr</strong></td>
+      <td>All-in ₹33.28&ndash;34.81 Cr · CAC ₹8.85&ndash;9.26 L · <strong>both ends inside the 30%-of-gross-profit ceiling</strong></td>
+    </tr>
+  </tbody></table></div>
+<h3 class="sh">Tranche schedule</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Phase</th>
+    <th class="n">Release</th>
+    <th class="n">% opex</th>
+    <th class="n">Cumulative</th>
+    <th>Gate</th>
+  </tr></thead>
+  <tbody>
+    <tr class="hl">
+      <td><strong>0 · Validation</strong></td>
+      <td class="n"><strong>₹0.25 Cr</strong></td>
+      <td class="n">1.0%</td>
+      <td class="n">₹0.25 Cr</td>
+      <td>CPL ≤ ₹1,550 · CPQSV ≤ ₹42,000</td>
+    </tr>
+    <tr>
+      <td>1 · Launch prep</td>
+      <td class="n">₹2.60 Cr</td>
+      <td class="n">10.9%</td>
+      <td class="n">₹2.85 Cr</td>
+      <td>CRM live · attribution mandatory · WhatsApp integrated · figures reconciled</td>
+    </tr>
+    <tr>
+      <td>2 · Market entry</td>
+      <td class="n">₹4.20 Cr</td>
+      <td class="n">17.6%</td>
+      <td class="n">₹7.05 Cr</td>
+      <td>≥ 55 bookings · CPL within +25% · show rate ≥ 60%</td>
+    </tr>
+    <tr>
+      <td>3 · Scale</td>
+      <td class="n">₹8.10 Cr</td>
+      <td class="n">34.0%</td>
+      <td class="n">₹15.15 Cr</td>
+      <td>V2B ≥ 5.5% over two quarters · CAC ≤ ₹9.5 L</td>
+    </tr>
+    <tr>
+      <td>4 · Optimise</td>
+      <td class="n">₹5.05 Cr</td>
+      <td class="n">21.2%</td>
+      <td class="n">₹20.20 Cr</td>
+      <td>Referral ≥ 0.15/owner-year · CAC falling QoQ</td>
+    </tr>
+    <tr>
+      <td>5 · Clearance</td>
+      <td class="n">₹1.70 Cr</td>
+      <td class="n">7.1%</td>
+      <td class="n">₹21.90 Cr</td>
+      <td>Inventory &lt; 15% · referral ≥ 25% of bookings</td>
+    </tr>
+    <tr class="tot">
+      <td><strong>Deployable core</strong></td>
+      <td class="n"><strong>₹21.90 Cr</strong></td>
+      <td class="n"><strong>92.0%</strong></td>
+      <td class="n"></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr>
+      <td>Contingency reserve</td>
+      <td class="n">₹1.90 Cr</td>
+      <td class="n">8.0%</td>
+      <td class="n"></td>
+      <td><strong>Finance-held.</strong> Named event only</td>
+    </tr>
+    <tr class="tot">
+      <td><strong>MARKETING OPEX</strong></td>
+      <td class="n"><strong>₹23.80 Cr</strong></td>
+      <td class="n"><strong>100%</strong></td>
+      <td class="n"></td>
+      <td><i>before the internal-team line</i></td>
+    </tr>
+  </tbody></table></div>
+<h3 class="sh">Community allocation</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th></th>
+    <th class="n">A</th>
+    <th class="n">B</th>
+    <th class="n">C</th>
+    <th class="n">D</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>Marketing opex</td>
+      <td class="n"><strong>₹4.26 Cr</strong> <i>(17.9%)</i></td>
+      <td class="n"><strong>₹9.47 Cr</strong> <i>(39.8%)</i></td>
+      <td class="n"><strong>₹3.78 Cr</strong> <i>(15.9%)</i></td>
+      <td class="n"><strong>₹6.28 Cr</strong> <i>(26.4%)</i></td>
+    </tr>
+    <tr>
+      <td>Opex per unit</td>
+      <td class="n">₹2.52 L</td>
+      <td class="n"><strong>₹11.28 L</strong></td>
+      <td class="n">₹6.31 L</td>
+      <td class="n">₹9.97 L</td>
+    </tr>
+    <tr>
+      <td>As % of its own revenue</td>
+      <td class="n">3.38%</td>
+      <td class="n"><strong>8.42%</strong></td>
+      <td class="n">3.47%</td>
+      <td class="n">3.96%</td>
+    </tr>
+    <tr>
+      <td>Target CAC</td>
+      <td class="n">₹3.4 L</td>
+      <td class="n">₹15.0 L</td>
+      <td class="n">₹8.4 L</td>
+      <td class="n">₹13.3 L</td>
+    </tr>
+  </tbody></table></div>
+<p class="fine"><strong>Allocation principle.</strong> Directly attributable costs are traced &mdash; performance media by community, the agency fee pro-rata, and the NRI infrastructure that serves B alone. <strong>Everything shared is allocated by revenue share</strong>, because the brand, the site, the technology and the launch serve all four. Allocating by unit count instead would load Community A with 45% of the shared cost for 25% of the revenue.</p>
+<div class="co calc"><span class="col">Scenario sensitivity &mdash; media held constant in all three cases</span><p><strong>Conservative</strong> &mdash; 194 net units, ₹240.9 Cr, CAC ₹16.09 L, ROMI 1.16&times;, <strong>CAC at 46.3% of gross profit.</strong> This breaches the policy ceiling and should not be funded as planned.</p><p><strong>Base</strong> &mdash; 346 net units, ₹466.2 Cr, CAC ₹9.23 L, ROMI 3.09&times;. <strong>Note this is ₹40.5 Cr below the ₹506.7 Cr plan target, because cancellation was never modelled.</strong></p><p><strong>Upside</strong> &mdash; 572 net units, ₹793.6 Cr, CAC ₹5.66 L, ROMI 5.86&times;.</p><p><strong>Margin sensitivity, base case:</strong> ROMI reads <strong>2.99&times; at a 25% gross margin, 3.47&times; at 28% and 3.95&times; at 31%</strong> &mdash; a 32% swing on an assumption nobody has tested. <strong>Break-even is the statement that survives it: 94 / 84 / 76 bookings of 376.</strong></p><p><strong>The spread between conservative and upside is ₹552.6 crore &mdash; 109% of the base case. Establishing which world this is, is what the ₹25 lakh buys.</strong></p></div>
+</section>
+
+<section class="apx" id="apxE">
+  <p class="ax">Appendix E</p>
+  <h2>KPI definitions</h2>
+  <p class="sdek">Every metric used in this deck, with its formula and its target. <strong>Targets are derived from the modelled funnel; ceilings are derived from a 30%-of-gross-profit policy, not from an industry norm.</strong></p>
+<div class="tw "><table>
+  <thead><tr>
+    <th>Metric</th>
+    <th>Formula</th>
+    <th class="n">Target</th>
+    <th class="n">Ceiling</th>
+    <th>Reads as</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>Reach</td>
+      <td>Unique individuals exposed</td>
+      <td class="n">6,573,000</td>
+      <td class="n">&mdash;</td>
+      <td><span class="lab lab-d">Derived</span> <strong>an output, not an input</strong></td>
+    </tr>
+    <tr>
+      <td>Impressions</td>
+      <td>Total ad deliveries</td>
+      <td class="n">Not targeted</td>
+      <td class="n">&mdash;</td>
+      <td>Diagnostic only</td>
+    </tr>
+    <tr>
+      <td>CTR</td>
+      <td>Clicks &divide; impressions</td>
+      <td class="n">≥ 1.2%</td>
+      <td class="n">&mdash;</td>
+      <td>Leading</td>
+    </tr>
+    <tr>
+      <td>CPC</td>
+      <td>Media &divide; clicks</td>
+      <td class="n">Platform-dependent</td>
+      <td class="n">&mdash;</td>
+      <td>Diagnostic</td>
+    </tr>
+    <tr>
+      <td>Hook rate</td>
+      <td>3-second views &divide; impressions</td>
+      <td class="n">≥ 25%</td>
+      <td class="n">&mdash;</td>
+      <td>Leading &mdash; creative</td>
+    </tr>
+    <tr>
+      <td>Leads</td>
+      <td>CRM records created</td>
+      <td class="n">78,880</td>
+      <td class="n">&mdash;</td>
+      <td>Volume</td>
+    </tr>
+    <tr class="hl2">
+      <td><strong>CPL</strong></td>
+      <td>Media &divide; leads</td>
+      <td class="n"><strong>₹1,247</strong></td>
+      <td class="n">₹1,672</td>
+      <td>Leading &mdash; <strong>a buying metric, not a business metric</strong></td>
+    </tr>
+    <tr>
+      <td>MQL rate</td>
+      <td>MQL &divide; leads</td>
+      <td class="n">45.0%</td>
+      <td class="n">&mdash;</td>
+      <td>Leading</td>
+    </tr>
+    <tr>
+      <td>SQL rate</td>
+      <td>SQL &divide; MQL</td>
+      <td class="n">55.0%</td>
+      <td class="n">&mdash;</td>
+      <td>Leading</td>
+    </tr>
+    <tr>
+      <td>Qualification rate</td>
+      <td>Qualified &divide; SQL</td>
+      <td class="n">63.9%</td>
+      <td class="n">&mdash;</td>
+      <td>Leading</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>CPQL</strong></td>
+      <td>Media &divide; qualified leads</td>
+      <td class="n"><strong>₹7,889</strong></td>
+      <td class="n"><strong>₹10,576</strong></td>
+      <td><strong>Leading &mdash; the metric campaigns are optimised against</strong></td>
+    </tr>
+    <tr>
+      <td>Lead-to-visit</td>
+      <td>Visits held &divide; leads</td>
+      <td class="n">3.7%</td>
+      <td class="n">&mdash;</td>
+      <td>Leading</td>
+    </tr>
+    <tr>
+      <td>Qualified-to-visit rate</td>
+      <td>Visits held &divide; qualified leads</td>
+      <td class="n">23.4%</td>
+      <td class="n">&mdash;</td>
+      <td>Leading</td>
+    </tr>
+    <tr>
+      <td>Site-visit show rate</td>
+      <td>Held &divide; booked</td>
+      <td class="n">≥ 60%</td>
+      <td class="n">&mdash;</td>
+      <td>Leading</td>
+    </tr>
+    <tr>
+      <td>Cost per site visit <i>(booked)</i></td>
+      <td>Media &divide; visits booked</td>
+      <td class="n">₹20,205</td>
+      <td class="n">&mdash;</td>
+      <td>Leading</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>Cost per qualified site visit</strong></td>
+      <td>Media &divide; visits held</td>
+      <td class="n"><strong>₹33,676</strong></td>
+      <td class="n"><strong>₹45,144</strong></td>
+      <td><strong>Leading &mdash; the Phase 0 decision metric</strong></td>
+    </tr>
+    <tr>
+      <td>Cost per opportunity</td>
+      <td>Media &divide; negotiations</td>
+      <td class="n">₹1,71,429</td>
+      <td class="n">₹2,29,810</td>
+      <td>Leading &mdash; late funnel</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>Visit-to-booking</strong></td>
+      <td>Bookings &divide; visits held</td>
+      <td class="n"><strong>≥ 6.9%</strong></td>
+      <td class="n">&mdash;</td>
+      <td><strong>Leading &mdash; one point is worth ₹39.4 Cr</strong></td>
+    </tr>
+    <tr>
+      <td>Cost per booking <i>(media only)</i></td>
+      <td>Media &divide; marketing-sourced bookings</td>
+      <td class="n">₹4.90 L</td>
+      <td class="n">&mdash;</td>
+      <td>Lagging</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>CAC</strong></td>
+      <td><strong>Total acquisition cost &divide; net units sold</strong></td>
+      <td class="n"><strong>₹8.44 L</strong></td>
+      <td class="n"><strong>₹11.32 L</strong></td>
+      <td><strong>Lagging &mdash; the board number</strong></td>
+    </tr>
+    <tr>
+      <td>Marketing cost per booking <i>(opex only)</i></td>
+      <td>Marketing opex &divide; net units</td>
+      <td class="n">₹6.33 L</td>
+      <td class="n">&mdash;</td>
+      <td>Lagging</td>
+    </tr>
+    <tr>
+      <td>Revenue</td>
+      <td>Net units &times; achieved ticket</td>
+      <td class="n">₹506.7 Cr at plan</td>
+      <td class="n">&mdash;</td>
+      <td>Lagging</td>
+    </tr>
+    <tr>
+      <td>Gross profit</td>
+      <td>Revenue &times; gross margin</td>
+      <td class="n">₹141.9 Cr <i>@28%</i></td>
+      <td class="n">&mdash;</td>
+      <td>Lagging <span class="lab lab-w">margin is a placeholder</span></td>
+    </tr>
+    <tr>
+      <td>Marketing investment</td>
+      <td>Marketing opex</td>
+      <td class="n">₹23.80 Cr</td>
+      <td class="n">&mdash;</td>
+      <td>Lagging</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>ROMI</strong></td>
+      <td><strong>(Gross profit &minus; marketing investment) &divide; marketing investment</strong></td>
+      <td class="n"><strong>3.47&times;</strong> <i>@28%</i></td>
+      <td class="n">≥ 3.0&times;</td>
+      <td><strong>Lagging &mdash; on gross profit, never on revenue</strong></td>
+    </tr>
+    <tr class="dim">
+      <td>ROAS <i>(media only)</i></td>
+      <td>Revenue &divide; media</td>
+      <td class="n"><strong>Diagnostic only</strong></td>
+      <td class="n">&mdash;</td>
+      <td><strong>Never a decision metric</strong></td>
+    </tr>
+    <tr class="dim">
+      <td>Revenue &divide; marketing spend</td>
+      <td>Revenue &divide; marketing opex</td>
+      <td class="n"><strong>Would read 16.0&times;</strong></td>
+      <td class="n">&mdash;</td>
+      <td><strong>Meaningless. Not ROMI. Do not present it</strong></td>
+    </tr>
+    <tr>
+      <td>Break-even</td>
+      <td>Bookings needed for gross profit to cover marketing</td>
+      <td class="n"><strong>84 units of 376</strong> <i>@28%</i></td>
+      <td class="n">&mdash;</td>
+      <td>Lagging &mdash; <strong>the statement that survives every margin</strong></td>
+    </tr>
+    <tr>
+      <td>Incremental return</td>
+      <td>Bookings needed per ₹1 Cr of marketing</td>
+      <td class="n"><strong>2.65</strong> <i>@28%</i></td>
+      <td class="n">&mdash;</td>
+      <td>The test for any additional crore</td>
+    </tr>
+    <tr>
+      <td>Payback</td>
+      <td>Months to recover CAC from gross profit</td>
+      <td class="n">≤ 9 months</td>
+      <td class="n">&mdash;</td>
+      <td>Lagging</td>
+    </tr>
+    <tr>
+      <td>Cancellation rate</td>
+      <td>Cancelled &divide; gross bookings</td>
+      <td class="n">≤ 8%</td>
+      <td class="n">12%</td>
+      <td>Lagging</td>
+    </tr>
+    <tr>
+      <td>Referral rate</td>
+      <td>Referrals per owner-year</td>
+      <td class="n">≥ 0.15</td>
+      <td class="n">&mdash;</td>
+      <td>Lagging &mdash; the compounding asset</td>
+    </tr>
+    <tr>
+      <td>Marketing % of GDV</td>
+      <td>Marketing opex &divide; GDV</td>
+      <td class="n">4.70% <i>(opex)</i> · 6.27% <i>(all-in)</i></td>
+      <td class="n">8.40%</td>
+      <td><strong>Stated last because it is the least useful</strong></td>
+    </tr>
+  </tbody></table></div>
+<div class="co "><span class="col">Three reading rules that belong in the reporting template</span><p><strong>1 · Compare within a layer, never across.</strong> Judging brand against performance on cost per booking defunds ₹10.25 Cr of the highest-value spend.</p><p><strong>2 · Judge demand generation on CPQL, not CPL.</strong> Cheap leads that fail the cash gate are a cost, not a result.</p><p><strong>3 · Judge brand, outdoor and the site on holdouts and first-touch, never on last click.</strong></p></div>
+<p class="fine"><strong>Deliberately absent from the dashboard: impressions, reach, followers and page views as reported metrics.</strong> None of them can change a decision, and each can be used to defend a bad quarter.</p>
+</section>
+
+<section class="apx" id="apxF">
+  <p class="ax">Appendix F</p>
+  <h2>Source register</h2>
+  <p class="sdek">Twenty source IDs covering <strong>forty distinct URLs</strong> across six tiers. Every [Sxx] reference in this deck resolves here.</p>
+<div class="tw"><table>
+  <thead><tr><th>ID</th><th>Tier</th><th>Source</th><th>What it supports</th><th>Date</th></tr></thead>
+  <tbody>
+    <tr class="srcrow"><td>[S01]</td><td>1 — Government / official</td><td><strong>Prasar Bharati / NewsOnAir (Govt of India)</strong></td><td>Amaravati granted statutory status as Andhra Pradesh&rsquo;s sole capital<div class="url">https://www.newsonair.gov.in/parliament-clears-capf-general-administration-also-grants-statutory-status-to-amaravati-as-andhra-pradeshs-sole-capital</div></td><td>2 Apr 2026</td></tr>
+    <tr class="srcrow"><td>[S02]</td><td>1 — Government / official</td><td><strong>Prasar Bharati / NewsOnAir</strong></td><td>Capital-city construction works active; APCRDA progress briefings to the Chief Minister<div class="url">https://www.newsonair.gov.in/andhra-pradesh-cm-holds-high-level-review-of-ongoing-capital-city-construction-works-at-his-camp-office-in-amaravati<br>https://www.newsonair.gov.in/apcrda-updates-cm-chandrababu-naidu-on-amaravati-development-progress<br>https://www.newsonair.gov.in/andhra-pradesh-chief-minister-n-chandrababu-naidu-to-chair-review-meeting-at-state-secretariat</div></td><td>Feb–Apr 2026</td></tr>
+    <tr class="srcrow"><td>[S03]</td><td>1 — Government / official</td><td><strong>Press Information Bureau, Government of India</strong></td><td>AIIMS Mangalagiri — dedication to the nation<div class="url">https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2008922&amp;reg=48&amp;lang=2</div></td><td>Feb 2024</td></tr>
+    <tr class="srcrow"><td>[S04]</td><td>1 — Government / official</td><td><strong>Prasar Bharati / NewsOnAir</strong></td><td>PRAGATI review of the AIIMS Mangalagiri project<div class="url">https://www.newsonair.gov.in/pms-flagship-platform-pragati-accelerates-aiims-mangalagiri-project-in-andhra-pradesh/</div></td><td>21 Jan 2026</td></tr>
+    <tr class="srcrow"><td>[S05]</td><td>1 — Government / official</td><td><strong>Ministry of Health &amp; Family Welfare — PMSSY tender</strong></td><td><strong>Names HSCC as executing agency for the AIIMS Guntur/Mangalagiri package</strong> — the document that puts the KMV credential in question<div class="url">https://pmssy.mohfw.gov.in/files/tender/GUNTUR_RFP.pdf</div></td><td>undated</td></tr>
+    <tr class="srcrow"><td>[S06]</td><td>1 — Government / official</td><td><strong>MoEFCC environment-clearance filing</strong></td><td>KMV Vivaan — Form 1 filing, establishing the project&rsquo;s existence and location<div class="url">https://environmentclearance.nic.in/writereaddata/FormB/EC/FORM_1/020620163BFNM71GKMVVivaanForms.pdf</div></td><td>2016</td></tr>
+    <tr class="srcrow"><td>[S07]</td><td>6 — Major business / news</td><td><strong>ThePrint</strong></td><td>APCRDA returnable-plot allotment to Amaravati farmers by e-lottery<div class="url">https://theprint.in/india/crda-allots-returnable-plots-to-amaravati-farmers-through-e-lottery/2835222/</div></td><td>23 Jan 2026</td></tr>
+    <tr class="srcrow"><td>[S08]</td><td>6 — Major business / news</td><td><strong>Deccan Herald</strong></td><td>Amaravati relaunch; second-phase land pooling (16,666.57 acres across 7 villages)<div class="url">https://www.deccanherald.com/india/andhra-pradesh/amaravati-relaunch-farmers-rejoice-at-revival-of-their-capital-city-dream-after-a-more-than-5-year-fight-3522352<br>https://www.deccanherald.com/india/andhra-pradesh/andhra-pradesh-gets-ready-for-another-round-of-land-pooling-for-amaravati-3817447<br>https://www.deccanherald.com/india/andhra-pradesh/farmers-ready-to-offer-36000-acres-under-second-phase-land-pooling-for-amaravati-minister-3568780</div></td><td>2025–26</td></tr>
+    <tr class="srcrow"><td>[S09]</td><td>6 — Major business / news</td><td><strong>Indian Infrastructure · Construction World</strong></td><td>Amaravati Outer Ring Road — 189 km, ₹16,000 Cr, MoRTH approval of 140 m width. <strong>Approved; land acquisition begun</strong><div class="url">https://indianinfrastructure.com/2025/01/16/centre-approves-amaravati-outer-ring-road-project/<br>https://indianinfrastructure.com/2025/05/05/morth-approves-140-m-of-width-for-amaravati-six-lane-outer-ring-road-in-andhra-pradesh/<br>https://www.constructionworld.in/transport-infrastructure/highways-and-roads-infrastructure/centre-approves-amaravati-outer-ring-road-project/67638/</div></td><td>2025</td></tr>
+    <tr class="srcrow"><td>[S10]</td><td>6 — Major business / news</td><td><strong>BlackRidge Research</strong></td><td>Bangalore–Vijayawada Expressway — under construction<div class="url">https://www.blackridgeresearch.com/project-profiles/bangalore-vijayawada-expressway-length-route-map-cost-contractors-current-status-completion-date-updates</div></td><td>Jan 2025</td></tr>
+    <tr class="srcrow"><td>[S11]</td><td>5 — Property portals</td><td><strong>SquareYards — locality data</strong></td><td>Mangalagiri locality asking average ₹4,062/sq ft (and the ₹4,098 / ₹4,805 / ₹5,489 series)<div class="url">https://www.squareyards.com/property-rates/mangalagiri-vijayawada</div></td><td>Sept 2025 · page dated Mar 2026</td></tr>
+    <tr class="srcrow"><td>[S12]</td><td>5 — Property portals</td><td><strong>SquareYards · CommonFloor</strong></td><td>Manjeera Monarch — <strong>delivered apartment comparable at ₹5,100/sq ft</strong>, and its documented carpet-area complaint<div class="url">https://www.squareyards.com/vijayawada-residential-property/manjeera-monarch/10076/project<br>https://www.commonfloor.com/manjeera-monarch-vijayawada/povp-iot2f8</div></td><td>2026</td></tr>
+    <tr class="srcrow"><td>[S13]</td><td>5 — Property portals</td><td><strong>99acres · SquareYards</strong></td><td>IJM Raintree Park Dwaraka Krishna and IJM Villas 64 — 33.69 ac, 64 villas, <strong>1.9 units/acre</strong>, from ₹3.75 Cr<div class="url">https://www.99acres.com/ijm-rtpdk-villas-64-mangalagiri-guntur-npxid-r438456<br>https://www.squareyards.com/vijayawada-residential-property/ijm-township/45093/project<br>https://www.99acres.com/villas-in-mangalagiri-guntur-ffid</div></td><td>2026</td></tr>
+    <tr class="srcrow"><td>[S14]</td><td>5 — Property portals</td><td><strong>99acres · Regrob</strong></td><td>KMV Vivaan villas — <strong>asking ₹3.59 Cr (Ph I) and ₹5.21 Cr (Ph II)</strong>; located Poranki/Penamaluru, east Vijayawada — not the corridor<div class="url">https://www.99acres.com/kmv-vivaan-villas-penamaluru-vijayawada-npxid-r370665<br>https://regrob.com/project/kmv-vivaan-villas-poranki-vijayawada/</div></td><td>2026</td></tr>
+    <tr class="srcrow"><td>[S15]</td><td>5 — Property portals</td><td><strong>SquareYards</strong></td><td>SLV Amaravathi Pride — ₹4,210/sq ft<div class="url">https://www.squareyards.com/vijayawada-residential-property/slv-amaravathi-pride/102855/project</div></td><td>2026</td></tr>
+    <tr class="srcrow"><td>[S16]</td><td>3 — Official developer</td><td><strong>KMV Spaces (official site)</strong></td><td>Villa product pages, Vijayawada<div class="url">https://www.kmvspaces.com/projects/villas-in-vijayawada<br>https://www.kmvspaces.com/projects/luxury-villas-for-sale-in-vijayawada</div></td><td>undated</td></tr>
+    <tr class="srcrow"><td>[S17]</td><td>3 — Official developer</td><td><strong>KMV Projects (official site)</strong></td><td>The AIIMS Mangalagiri credential as the group states it — <strong>scope not defined on the page</strong><div class="url">https://www.kmvprojects.com/building-factories/all-india-institute-of-medical-and-sciences-(aiims),-mangalagiri<br>https://www.kmvprojects.com/building-factories<br>https://www.kmvspaces.com/about-us</div></td><td>undated</td></tr>
+    <tr class="srcrow"><td>[S18]</td><td>7 — Credible local</td><td><strong>The South First</strong></td><td>Capital-status timelines; land-pooling grievance resolution timelines<div class="url">https://thesouthfirst.com/andhrapradesh/as-overhang-on-capital-status-lifts-naidu-sets-clock-ticking-for-amaravati/<br>https://thesouthfirst.com/andhrapradesh/amaravati-land-pooling-government-sets-tight-timelines-to-resolve-decade-long-farmer-grievances/</div></td><td>2026</td></tr>
+    <tr class="srcrow"><td>[S19]</td><td>6 — Major business / news</td><td><strong>Deccan Chronicle</strong></td><td>Secretariat staff relocation — ~2,000 staff, a 15,000 target. <strong>Nine years stale; the only headcount evidence found</strong><div class="url">https://www.deccanchronicle.com/nation/current-affairs/021016/andhra-pradesh-staff-begin-to-shift-to-secretariat-in-amaravati.html</div></td><td>2 Oct 2016</td></tr>
+    <tr class="srcrow"><td>[S20]</td><td>7–8 — Corroboration only</td><td><strong>CellIT · Wikipedia · Topline Realty · others</strong></td><td>Secondary corroboration only — AIIMS OPD commencement, land-rate context. <strong>Never load-bearing</strong><div class="url">https://cellit.in/aiims-mangalagiri-to-commence-opd-services-from-12th-march/<br>https://en.wikipedia.org/wiki/All_India_Institute_of_Medical_Sciences,_Mangalagiri<br>https://crda.toplinerealty.in/amaravathi-land-rates/<br>https://orramaravati.in/<br>https://www.youtube.com/watch?v=5_zfst5xEYY<br>https://pollent.co.in/project/shared-time-human-resources-management/<br>https://www.sitaramgroup.org/villas-sale-guntur-amaravati.html</div></td><td>2026</td></tr>
+  </tbody></table></div>
+<div class="g2">
+<div class="tw "><table>
+  <thead><tr>
+    <th>Tier</th>
+    <th class="n">URLs</th>
+    <th>Status</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>1 &mdash; Government / official</strong></td>
+      <td class="n">8</td>
+      <td>Used</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>2 &mdash; RERA / regulatory</strong></td>
+      <td class="n"><strong>0</strong></td>
+      <td><strong>Empty</strong></td>
+    </tr>
+    <tr>
+      <td><strong>3 &mdash; Official developer</strong></td>
+      <td class="n">5</td>
+      <td>Used</td>
+    </tr>
+    <tr class="hl">
+      <td><strong>4 &mdash; Established research</strong></td>
+      <td class="n"><strong>0</strong></td>
+      <td><strong>Empty</strong></td>
+    </tr>
+    <tr>
+      <td><strong>5 &mdash; Property portals</strong></td>
+      <td class="n">9</td>
+      <td>Used &mdash; <strong>asking prices only</strong></td>
+    </tr>
+    <tr>
+      <td><strong>6 &mdash; Major business / news</strong></td>
+      <td class="n">9</td>
+      <td>Used</td>
+    </tr>
+    <tr>
+      <td><strong>7 &mdash; Credible local</strong></td>
+      <td class="n">3</td>
+      <td>Used</td>
+    </tr>
+    <tr>
+      <td><strong>8 &mdash; Secondary</strong></td>
+      <td class="n">6</td>
+      <td><strong>Corroboration only</strong></td>
+    </tr>
+    <tr class="tot">
+      <td><strong>Total</strong></td>
+      <td class="n"><strong>40</strong></td>
+      <td>across six tiers</td>
+    </tr>
+  </tbody></table></div>
+<div class="co "><span class="col">What the two empty tiers cost</span><p><strong>RERA / regulatory</strong> would have settled achieved prices, absorption, unsold inventory, published unit counts and the legitimacy of every named competitor.</p><p><strong>Established research</strong> would have given corridor-level demand and supply, velocity, and an independent price series to test the portal figures against.</p><p><strong>Their absence is why Appendix B cannot escape asking prices and Appendix C cannot establish velocity.</strong> Both are obtainable and neither is expensive.</p></div>
+</div>
+</section>
+
+<section class="apx" id="apxG">
+  <p class="ax">Appendix G</p>
+  <h2>Research limitations</h2>
+  <p class="sdek">Stated plainly, because a strategy that hides its own limits is not one.</p>
+<div class="g2">
+<div class="co "><span class="col">1 &mdash; Search worked. Page retrieval did not</span><p><strong>Every URL in Appendix F is real and resolves. Not one of them was opened.</strong> Outbound page fetches returned <span class="mono">EGRESS_BLOCKED</span>, and direct requests to <span class="mono">crda.ap.gov.in</span> and <span class="mono">rera.ap.gov.in</span> returned <span class="mono">403</span> policy denials.</p><p>Claim content therefore comes from search-result summaries, not from reading the source. <strong>A Tier 1 domain means the domain is authoritative &mdash; not that the document was verified.</strong></p></div>
+<div class="co "><span class="col">2 &mdash; No primary buyer research exists</span><p><strong>No surveys, interviews, focus groups, CRM data or walk-in analysis of any kind.</strong> Every behavioural attribute across all eight segments is hypothesis, and the priority scores are a weighted judgement, not a measurement.</p></div>
+<div class="co "><span class="col">3 &mdash; Every price is an asking price</span><p><strong>No transaction or registration data was obtained.</strong> The 50% locality premium underneath the whole revenue model is therefore untested, and Community A prices above a delivered comparable with no delivery record to justify it.</p></div>
+<div class="co "><span class="col">4 &mdash; No construction cost data</span><p><strong>The 28% gross margin is a placeholder.</strong> Every ROI, ROMI, break-even and CAC-ceiling figure in this deck is arithmetic on that placeholder. Contractor quotations are the only fix.</p></div>
+</div>
+<h3 class="sh">Five things this research searched for and could not find</h3>
+<div class="tw "><table>
+  <thead><tr>
+    <th>What was sought</th>
+    <th>Why it matters</th>
+    <th>Status</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>A verified 2026 headcount for people working in Amaravati</strong></td>
+      <td>The government segment is sized against 2016 reporting <span class="sid">[S19]</span> &mdash; nine years stale</td>
+      <td><strong>Not found.</strong> Segment de-weighted</td>
+    </tr>
+    <tr>
+      <td><strong>Project-level evidence of ₹2.2&ndash;2.8 Cr villa depth</strong></td>
+      <td><strong>₹268 Cr of the plan is priced into that band</strong></td>
+      <td><strong>Not found across eight rounds.</strong> Weak evidence of absence</td>
+    </tr>
+    <tr>
+      <td><strong>A DPR or notification for an Amaravati greenfield airport</strong></td>
+      <td>It appears in competitor marketing</td>
+      <td><strong>Not found in two separate searches. Excluded entirely</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Corroboration of a net-zero-energy villa claim</strong></td>
+      <td>It would be a creative pillar</td>
+      <td><strong>Not found.</strong> Not used</td>
+    </tr>
+    <tr>
+      <td><strong>KMV&rsquo;s contractual scope on AIIMS Mangalagiri</strong></td>
+      <td>The Ministry names HSCC as executing agency <span class="sid">[S05]</span>; the group&rsquo;s own page does not define scope <span class="sid">[S17]</span></td>
+      <td><strong>Not established.</strong> The credential is not claimed anywhere in this deck</td>
+    </tr>
+  </tbody></table></div>
+<div class="co calc"><span class="col">The single most valuable next step is not more analysis</span><p>It is <strong>three conversations.</strong> KMV on the AIIMS work order and the Vivaan booking book; a records agent on 24 months of IGRS registrations; a mystery shopper on two villa projects.</p><p><strong>Between them they close the four items that carry more risk than everything else in this deck combined</strong> &mdash; and two of the three are free.</p></div>
+<p class="fine" style="margin-top:1.3rem"><strong>Prepared by Kiran Basa.</strong> Marketing Strategy Assignment &mdash; KMV Spaces, Amaravati / Mangalagiri. Submitted to Mr. Anudeep. <strong>Nothing in this deck has been confirmed by KMV Spaces</strong>, and no figure here should be represented as a KMV fact. The project described is the hypothetical one set out in the assignment brief.</p>
+</section>
+<footer class="close">
+  <p><strong>Marketing Strategy Assignment &mdash; KMV Spaces, Amaravati / Mangalagiri.</strong> Prepared by Kiran Basa, submitted to Mr. Anudeep.</p>
+  <p>The exact project location, product mix, launch dates, approvals, final pricing, inventory, construction status and commercial assumptions were not provided in the brief. <strong>Everything derived from them is labelled Derived calculation or Working assumption and requires KMV validation.</strong> No industry benchmark has been manufactured, and no estimate is offered anywhere for KMV&rsquo;s actual marketing budget, spend, headcount, cost per lead, sales velocity or inventory position &mdash; none was available.</p>
+</footer>
+</div>
